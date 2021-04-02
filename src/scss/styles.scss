@@ -1,14 +1,94 @@
 @import "theme";
+@import "fonts";
 
 * {
   box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%; /* 10px */
 }
 
 html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: "OpenSans", sans-serif;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: $text;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+.page-title {
+  font-size: 2.2rem;
+  line-height: 1.28;
+  font-weight: 600;
+  margin-top: 2.4rem;
+}
+
+.subtitle-text {
+  margin-top: 0.9rem;
+  font-size: 1.2rem;
+  line-height: 1.34;
+  color: $gray;
+}
+
+.page-container {
+  padding: 0 2rem;
+}
+
+.button {
+  background-color: transparent;
+  color: $light;
+  display: flex;
+  align-items: center;
+  font: 600 1.2rem/1.397 "OpenSans", sans-serif;
+
+  > * {
+    &:not(:first-child) {
+      margin-left: 0.8rem;
+    }
+  }
+
+  svg {
+    fill: $light;
+  }
+}
+
+.buttons-group {
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  width: 100%;
+  bottom: 3.2rem;
+  padding-left: 20px;
+  padding-right: 20px;
+  display: flex;
+  justify-content: space-between;
+
+  > * {
+    &:not(:first-child) {
+      margin-left: 1.6rem;
+    }
+  }
+
+  .button {
+    flex: 1;
+  }
 }
