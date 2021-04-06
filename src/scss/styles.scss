@@ -117,3 +117,50 @@ img {
     flex: 1;
   }
 }
+
+.form-controls {
+  margin-top: 2.4rem;
+
+  > * {
+    &:not(:first-child) {
+      margin-top: 1.6rem;
+    }
+  }
+}
+
+.form-control {
+  input {
+    width: 100%;
+    padding: 1.1rem 1.6rem;
+    color: $dark;
+    border: 0.1rem solid $light-gray;
+    font: 400 1.6rem/1.5 "OpenSans", sans-serif;
+    appearance: none;
+
+    &::placeholder {
+      color: rgba($dark, 0.4);
+    }
+
+    &:focus {
+      border-color: $secondary;
+      outline: none;
+      box-shadow: 0 0 0 0.1rem $secondary;
+    }
+
+    &.ng-invalid {
+    }
+  }
+
+  &.invalid {
+    input {
+      border-color: $error;
+      box-shadow: 0 0 0 0.1rem $error;
+    }
+  }
+}
+
+.form-control-text {
+  font-size: 1.2rem;
+  margin-top: 0.8rem;
+  line-height: 1.34;
+}

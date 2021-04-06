@@ -1,0 +1,30 @@
+<ng-container *ngIf="errors">
+  <ng-container *ngFor="let error of errors | keyvalue">
+    <ng-container
+      *ngIf="errorMessages && errorMessages[error.key]; else defaultMessages"
+    >
+      {{ errorMessages[error.key] }}
+    </ng-container>
+    <ng-template #defaultMessages>
+      <ng-container [ngSwitch]="error.key">
+        <ng-container *ngSwitchCase="'required'">
+          {{
+            errorMessages && errorMessages["required"]
+              ? errorMessages["required"]
+              : "Является обязательным для заполнения"
+          }}
+        </ng-container>
+        <ng-container *ngSwitchCase="'email'">
+          Введите корректный email
+        </ng-container>
+        <ng-container *ngSwitchCase="'minlength'">
+          {{
+            errorMessages && errorMessages["minlength"]
+              ? errorMessages["minlength"]
+              : "Минимальная длина: " + error.value["requiredLength"]
+          }}
+        </ng-container>
+      </ng-container>
+    </ng-template>
+  </ng-container>
+</ng-container>
