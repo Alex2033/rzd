@@ -1,0 +1,168 @@
+<div class="page-content">
+  <form
+    class="registration-form"
+    (submit)="submit()"
+    [formGroup]="registerForm"
+  >
+    <div class="page-container">
+      <h1 class="page-title">Регистрация</h1>
+
+      <!-- form contols -->
+      <div class="form-controls">
+        <!-- name -->
+        <div class="form-control">
+          <mat-form-field appearance="outline">
+            <mat-label>Имя</mat-label>
+
+            <input #name matInput formControlName="name" />
+
+            <button
+              *ngIf="nameControl.value"
+              (click)="nameControl.setValue(null)"
+              type="button"
+              class="icon-button"
+            >
+              <svg width="2rem" height="2rem">
+                <use xlink:href="assets/sprites/icons.svg#close"></use>
+              </svg>
+            </button>
+
+            <mat-error
+              ><app-error-messages
+                *ngIf="nameControl.touched && nameControl.invalid"
+                [errors]="nameControl.errors"
+                [errorMessages]="{ required: 'Введите имя' }"
+              ></app-error-messages
+            ></mat-error>
+          </mat-form-field>
+
+          <p
+            *ngIf="!(nameControl.touched && nameControl.invalid)"
+            class="form-control-text"
+          >
+            Чтобы мы могли обратиться к вам по имени.
+          </p>
+        </div>
+
+        <!-- phone -->
+        <div class="form-control">
+          <mat-form-field appearance="outline">
+            <mat-label>Телефон</mat-label>
+
+            <input
+              #phone
+              matInput
+              mask="0 (000) 000 00 00"
+              [validation]="true"
+              prefix="+"
+              type="text"
+              formControlName="phone"
+            />
+
+            <button
+              *ngIf="phoneControl.value"
+              (click)="phoneControl.setValue(null)"
+              type="button"
+              class="icon-button"
+            >
+              <svg width="2rem" height="2rem">
+                <use xlink:href="assets/sprites/icons.svg#close"></use>
+              </svg>
+            </button>
+
+            <mat-error
+              ><app-error-messages
+                *ngIf="phoneControl.touched && phoneControl.invalid"
+                [errors]="phoneControl.errors"
+                [errorMessages]="{
+                  minlength:
+                    'Минимальная длина ' +
+                    phoneControl.errors.minlength?.requiredLength +
+                    ' символов',
+                  required: 'Введите номер телефона'
+                }"
+              ></app-error-messages
+            ></mat-error>
+          </mat-form-field>
+
+          <p
+            *ngIf="!(phoneControl.touched && phoneControl.invalid)"
+            class="form-control-text"
+          >
+            Пришлем код подтверждения регистрациии оповестим о готовности
+            результата.
+          </p>
+        </div>
+
+        <!-- email -->
+        <div class="form-control">
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+
+            <input
+              #email
+              matInput
+              type="email"
+              name="email"
+              formControlName="email"
+            />
+
+            <button
+              *ngIf="emailControl.value"
+              (click)="emailControl.setValue(null)"
+              type="button"
+              class="icon-button"
+            >
+              <svg width="2rem" height="2rem">
+                <use xlink:href="assets/sprites/icons.svg#close"></use>
+              </svg>
+            </button>
+
+            <mat-error
+              ><app-error-messages
+                *ngIf="emailControl.touched && emailControl.invalid"
+                [errors]="emailControl.errors"
+                [errorMessages]="{ required: 'Введите email' }"
+              ></app-error-messages
+            ></mat-error>
+          </mat-form-field>
+
+          <p
+            *ngIf="!(emailControl.touched && emailControl.invalid)"
+            class="form-control-text"
+          >
+            Укажите Email, чтобы результаты исследований пришли на электронную
+            почту.
+          </p>
+        </div>
+
+        <!-- <div
+          class="form-control"
+          [class.invalid]="nameControl.touched && nameControl.invalid"
+        >
+          <input type="text" placeholder="Имя" formControlName="name" />
+          <app-error-messages
+            *ngIf="nameControl.touched && nameControl.invalid; else nameMessage"
+            [errors]="nameControl.errors"
+            [errorMessages]="{ required: 'Введите имя' }"
+          ></app-error-messages>
+
+          <ng-template #nameMessage>
+            <p class="form-control-text">
+              Чтобы мы могли обратиться к вам по имени.
+            </p>
+          </ng-template>
+        </div> -->
+      </div>
+    </div>
+
+    <div class="buttons-group">
+      <button type="submit" class="button" [disabled]="registerForm.invalid">
+        <span>Далее</span>
+        <svg width="1.6rem" height="1.6rem">
+          <use xlink:href="assets/sprites/icons.svg#next"></use>
+        </svg>
+      </button>
+    </div>
+  </form>
+</div>

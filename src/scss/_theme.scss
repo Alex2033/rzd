@@ -1,4 +1,52 @@
+@import "~@angular/material/theming";
 @import "colors";
-$primary: #e3051c;
-$secondary: #0066a2;
-$primary-disabled: #f1828d;
+
+// theme colors
+$primary: #0066a2;
+$accent: #e3051c;
+$accent-disabled: #f1828d;
+
+// palettes
+$primary-palette: (
+  100: lighten($primary, 10%),
+  500: $primary,
+  600: darken($primary, 10%),
+  700: darken($primary, 15%),
+  contrast: (
+    100: white,
+    500: white,
+    700: white,
+  ),
+);
+$accent-palette: (
+  100: lighten($accent, 10%),
+  500: $accent,
+  600: darken($accent, 10%),
+  700: darken($accent, 15%),
+  contrast: (
+    100: white,
+    500: white,
+    700: white,
+  ),
+);
+$error-palette: (
+  100: lighten($error, 10%),
+  500: $error,
+  600: darken($error, 10%),
+  700: darken($error, 15%),
+  contrast: (
+    100: white,
+    500: white,
+    700: white,
+  ),
+);
+
+@include mat-core();
+
+// custom themes
+$app-primary: mat-palette($primary-palette);
+$app-accent: mat-palette($accent-palette);
+$app-error: mat-palette($error-palette);
+$app-theme: mat-light-theme($app-primary, $app-accent, $app-error);
+
+@include angular-material-theme($app-theme);

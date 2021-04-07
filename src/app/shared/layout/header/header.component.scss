@@ -24,7 +24,7 @@
 
 .menu-button {
   svg {
-    stroke: $secondary;
+    stroke: $primary;
     stroke-width: 0.2rem;
   }
 }
@@ -37,6 +37,6 @@
   justify-content: center;
 
   svg {
-    fill: $secondary;
+    fill: $primary;
   }
 }

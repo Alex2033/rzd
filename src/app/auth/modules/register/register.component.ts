@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import {
+  FormGroup,
   AbstractControl,
   FormBuilder,
   FormControl,
-  FormGroup,
   Validators,
 } from '@angular/forms';
 
 @Component({
-  selector: 'app-registration',
-  templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.scss'],
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss'],
 })
-export class RegistrationComponent implements OnInit {
+export class RegisterComponent implements OnInit {
   public registerForm: FormGroup;
   public nameControl: AbstractControl;
   public phoneControl: AbstractControl;
@@ -48,7 +48,7 @@ export class RegistrationComponent implements OnInit {
       name: new FormControl(null, [Validators.required]),
       phone: new FormControl(null, [
         Validators.required,
-        Validators.minLength(10),
+        Validators.minLength(11),
       ]),
       email: new FormControl(null, [Validators.required, Validators.email]),
     });
