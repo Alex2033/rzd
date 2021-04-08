@@ -228,6 +228,12 @@ img {
         }
       }
     }
+
+    &.mat-form-field-invalid {
+      .primary-color {
+        color: $error;
+      }
+    }
   }
 
   .mat-form-field {

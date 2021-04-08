@@ -10,9 +10,10 @@ import { ErrorMessagesComponent } from '../shared/components/error-messages/erro
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { SmsCodeComponent } from './modules/register/sms-code/sms-code.component';
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, ErrorMessagesComponent],
+  declarations: [LoginComponent, RegisterComponent, ErrorMessagesComponent, SmsCodeComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,

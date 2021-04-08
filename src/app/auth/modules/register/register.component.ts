@@ -6,6 +6,7 @@ import {
   FormControl,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -30,7 +31,7 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.get('email');
   }
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
     this.createForm();
@@ -54,5 +55,7 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  submit(): void {}
+  submit(): void {
+    this.router.navigate(['sms-code']);
+  }
 }
