@@ -2,3 +2,17 @@
 <div class="content">
   <router-outlet></router-outlet>
 </div>
+<app-navigation-menu
+  [@slideInOut]
+  *ngIf="navigationMenu$ | async"
+></app-navigation-menu>
+<app-user-menu *ngIf="userMenu$ | async"></app-user-menu>
+<div
+  (click)="closeMenus()"
+  class="menu-overlay"
+  *ngIf="(navigationMenu$ | async) || (userMenu$ | async)"
+>
+  <svg class="close-menu-icon" width="1.5rem" height="1.5rem">
+    <use xlink:href="assets/sprites/icons.svg#close"></use>
+  </svg>
+</div>

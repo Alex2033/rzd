@@ -1,0 +1,20 @@
+@import "theme";
+
+:host {
+  display: block;
+  width: 30.7rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  z-index: 1000;
+  background-color: $light;
+}
+
+.logo {
+  margin: 1.6rem 2rem;
+
+  img {
+    width: 26.7rem;
+  }
+}

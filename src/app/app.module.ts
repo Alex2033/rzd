@@ -6,9 +6,11 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './shared/layout/header/header.component';
 import { HttpClientModule } from '@angular/common/http';
+import { NavigationMenuComponent } from './shared/layout/navigation-menu/navigation-menu.component';
+import { UserMenuComponent } from './shared/layout/user-menu/user-menu.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent],
+  declarations: [AppComponent, HeaderComponent, NavigationMenuComponent, UserMenuComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

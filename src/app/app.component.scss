@@ -1,3 +1,5 @@
+@import "theme";
+
 :host {
   display: flex;
   flex-direction: column;
@@ -25,4 +27,22 @@
       flex-direction: column;
     }
   }
+}
+
+.menu-overlay {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.65);
+}
+
+.close-menu-icon {
+  stroke-width: 0.2rem;
+  stroke: $light;
+  position: absolute;
+  right: 2rem;
+  top: 4.2rem;
 }
