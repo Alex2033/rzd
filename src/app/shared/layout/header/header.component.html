@@ -10,17 +10,31 @@
     <!-- language -->
     <div class="language-select">
       <div class="flag">
-        <img src="assets/flags/russia.svg" alt="russia flag" />
+        <img [src]="(activeLanguage$ | async).flag" alt="country flag" />
       </div>
-      <div class="language">
-        <span>Rus</span>
-        <svg width="1.4rem" height="1.4rem">
+      <div class="language" (click)="showDropdown = !showDropdown">
+        <span>{{ (activeLanguage$ | async).label }}</span>
+        <svg
+          class="language-arrow"
+          [class.rotated]="showDropdown"
+          width="1.4rem"
+          height="1.4rem"
+        >
           <use xlink:href="assets/sprites/icons.svg#arrow-down"></use>
         </svg>
       </div>
 
       <!-- language dropdown -->
-      <ul class="language-dropdown"></ul>
+      <ul class="language-dropdown" [class.is-visible]="showDropdown">
+        <li
+          (click)="setActiveLanguage(language)"
+          class="language-item"
+          *ngFor="let language of languages$ | async"
+        >
+          <img [src]="language.flag" alt="country flag" />
+          <span>{{ language.label }}</span>
+        </li>
+      </ul>
     </div>
 
     <button class="header-button logout-button">

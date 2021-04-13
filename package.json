@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "svg-sprite": "svg-sprite --config src/svg-sprite/sprite-config.json src/assets/icons/*.svg"
+    "svg-sprite": "svg-sprite --config src/svg-sprite/sprite-config.json src/assets/icons/*.svg",
+    "mock:server": "json-server --watch mocks/data.json"
   },
   "private": true,
   "dependencies": {

@@ -1,0 +1,14 @@
+{
+  "languages": [
+    {
+      "langId": 1,
+      "flag": "assets/flags/russia.svg",
+      "label": "Rus"
+    },
+    {
+      "langId": 2,
+      "flag": "assets/flags/eng.svg",
+      "label": "En"
+    }
+  ]
+}
