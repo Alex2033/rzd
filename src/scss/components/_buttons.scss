@@ -1,0 +1,62 @@
+.button {
+  color: $light;
+  display: flex;
+  border: 0;
+  align-items: center;
+  font: 600 1.2rem/1.397 "OpenSans", sans-serif;
+  background-color: $accent;
+  justify-content: center;
+  padding: 1.6rem 1.2rem;
+
+  > * {
+    &:not(:first-child) {
+      margin-left: 0.8rem;
+    }
+  }
+
+  svg {
+    fill: $light;
+  }
+
+  &.primary {
+    background-color: $primary;
+  }
+
+  &:disabled {
+    background-color: $accent-disabled;
+  }
+}
+
+.icon-button {
+  width: 2.4rem;
+  height: 2.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  padding: 0;
+  border: 0;
+  flex-shrink: 0;
+}
+
+.buttons-group {
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  width: 100%;
+  bottom: 1.6rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  display: flex;
+  justify-content: space-between;
+
+  > * {
+    &:not(:first-child) {
+      margin-left: 1.6rem;
+    }
+  }
+
+  .button {
+    flex: 1;
+  }
+}
