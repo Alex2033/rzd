@@ -8,12 +8,15 @@
     <div class="spacer"></div>
 
     <!-- language -->
-    <div class="language-select">
+    <div
+      class="language-select"
+      *ngIf="activeLanguage$ | async as activeLanguage"
+    >
       <div class="flag">
-        <img [src]="(activeLanguage$ | async).flag" alt="country flag" />
+        <img [src]="activeLanguage.flag" alt="country flag" />
       </div>
       <div class="language" (click)="showDropdown = !showDropdown">
-        <span>{{ (activeLanguage$ | async).label }}</span>
+        <span>{{ activeLanguage.label }}</span>
         <svg
           class="language-arrow"
           [class.rotated]="showDropdown"
@@ -31,8 +34,10 @@
           class="language-item"
           *ngFor="let language of languages$ | async"
         >
-          <img [src]="language.flag" alt="country flag" />
-          <span>{{ language.label }}</span>
+          <ng-container *ngIf="activeLanguage['langId'] !== language['langId']">
+            <img [src]="language.flag" alt="country flag" />
+            <span>{{ language.label }}</span>
+          </ng-container>
         </li>
       </ul>
     </div>

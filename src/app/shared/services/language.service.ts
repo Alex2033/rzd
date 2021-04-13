@@ -22,7 +22,8 @@ export class LanguageService {
       .get<LanguageInterface[]>(environment.api + 'languages')
       .pipe(
         tap((languages) => {
-          this.activeLanguage.next(languages[0]);
+          const rusLang = languages.find((lang) => lang.langId === 1);
+          this.activeLanguage.next(rusLang);
         })
       );
   }
