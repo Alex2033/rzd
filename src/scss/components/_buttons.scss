@@ -6,7 +6,7 @@
   font: 600 1.6rem/1.397 "OpenSans", sans-serif;
   background-color: $accent;
   justify-content: center;
-  padding: 1.6rem 1.2rem;
+  padding: 1.3rem 1.2rem;
   text-decoration: none;
 
   > * {
@@ -17,6 +17,11 @@
 
   svg {
     fill: $light;
+  }
+
+  &.no-bg {
+    background-color: transparent;
+    color: $accent;
   }
 
   &.primary {
