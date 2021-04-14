@@ -1,0 +1,39 @@
+@import "theme";
+
+.introduce-section {
+  padding-bottom: 1.6rem;
+}
+
+.introduce-image {
+  width: 100%;
+}
+
+.introduce-description {
+  margin-top: -3.4rem;
+  position: relative;
+}
+
+.introduce-text {
+  margin-top: 1.8rem;
+
+  p {
+    line-height: 1.397;
+  }
+}
+
+.introduce-title {
+  background-color: darken($accent, 7.5%);
+  margin-right: 2rem;
+  padding: 1.2rem 2rem 1.4rem;
+}
+
+.introduce-button {
+  margin-top: 3rem;
+}
+
+.login-link {
+  text-align: center;
+  color: $gray;
+  margin-top: 1.6rem;
+  display: block;
+}

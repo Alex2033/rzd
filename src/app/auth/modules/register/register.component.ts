@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
   public nameControl: AbstractControl;
   public phoneControl: AbstractControl;
   public emailControl: AbstractControl;
-  public submitted: boolean = true;
+  public submitted: boolean = false;
   public counter$: Observable<number>;
   public resendCode: boolean = false;
 

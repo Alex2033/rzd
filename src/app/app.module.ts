@@ -8,14 +8,21 @@ import { HeaderComponent } from './shared/layout/header/header.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NavigationMenuComponent } from './shared/layout/navigation-menu/navigation-menu.component';
 import { UserMenuComponent } from './shared/layout/user-menu/user-menu.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, NavigationMenuComponent, UserMenuComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    NavigationMenuComponent,
+    UserMenuComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    MatExpansionModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

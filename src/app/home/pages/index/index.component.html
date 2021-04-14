@@ -1,1 +1,28 @@
-<p>index works!</p>
+<!-- introduce -->
+<section class="introduce-section">
+  <img
+    class="introduce-image"
+    src="assets/home/pexels-jeshootscom.jpg"
+    alt="pexels jeshootscom"
+  />
+
+  <div class="introduce-description">
+    <div class="introduce-title">
+      <h1 class="home-title">Сдайте анализы на COVID-19 прямо в аэропорту</h1>
+    </div>
+    <div class="page-container">
+      <div class="introduce-text">
+        <p>
+          Перечисление доступных тестов, упоминание о том, что можно и для себя,
+          и добавить еще несколько человек
+        </p>
+      </div>
+      <a [routerLink]="['auth', 'register']" class="introduce-button button"
+        >Зарегистрироваться</a
+      >
+      <a class="login-link" [routerLink]="['auth', 'login']"
+        >Уже есть аккаунт? Войти</a
+      >
+    </div>
+  </div>
+</section>
