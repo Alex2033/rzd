@@ -1,5 +1,10 @@
 @import "theme";
 
+:host {
+  line-height: 1.397;
+}
+
+// introduce
 .introduce-section {
   padding-bottom: 1.6rem;
 }
@@ -15,10 +20,6 @@
 
 .introduce-text {
   margin-top: 1.8rem;
-
-  p {
-    line-height: 1.397;
-  }
 }
 
 .introduce-title {
@@ -36,4 +37,75 @@
   color: $gray;
   margin-top: 1.6rem;
   display: block;
+}
+
+// how works
+.how-works-section {
+  padding: 3rem 0 2.6rem;
+}
+
+.works-list {
+  list-style: none;
+  padding: 0;
+  margin: 3.2rem 0 0;
+
+  > * {
+    &:not(:first-child) {
+      margin-top: 2.4rem;
+    }
+  }
+}
+
+.works-list-image {
+  width: 4.8rem;
+  height: 4.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.works-list-item {
+  display: flex;
+  align-items: center;
+
+  > * {
+    &:not(:first-child) {
+      margin-left: 1.8rem;
+    }
+  }
+}
+
+// test necessity
+.test-necessity {
+  padding: 2.4rem 0 4rem;
+
+  p {
+    margin-top: 1.8rem;
+  }
+
+  a {
+    color: $text;
+  }
+}
+
+.citizen-type {
+  margin-top: 3rem;
+}
+
+.citizen-type-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+
+  svg {
+    fill: none;
+    stroke: $primary;
+    stroke-width: 0.2rem;
+  }
+
+  > * {
+    &:not(:first-child) {
+      margin-left: 1.2rem;
+    }
+  }
 }

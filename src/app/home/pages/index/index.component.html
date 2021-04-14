@@ -17,12 +17,86 @@
           и добавить еще несколько человек
         </p>
       </div>
-      <a [routerLink]="['auth', 'register']" class="introduce-button button"
+      <a [routerLink]="['/auth', 'register']" class="introduce-button button"
         >Зарегистрироваться</a
       >
-      <a class="login-link" [routerLink]="['auth', 'login']"
+      <a class="login-link" [routerLink]="['/auth', 'login']"
         >Уже есть аккаунт? Войти</a
       >
+    </div>
+  </div>
+</section>
+
+<!-- how works -->
+<section class="how-works-section">
+  <div class="page-container">
+    <h2 class="section-title">Как это работает?</h2>
+
+    <ul class="works-list">
+      <li class="works-list-item">
+        <div class="works-list-image">
+          <img src="assets/home/questionnaire.svg" alt="questionnaire icon" />
+        </div>
+        <span>Зарегистрируйтесь на сайте и заполните анкету</span>
+      </li>
+      <li class="works-list-item">
+        <div class="works-list-image">
+          <img src="assets/home/qr-code.svg" alt="qr-code icon" />
+        </div>
+        <span>Отсканируйте полученный QR-код в терминале оплаты</span>
+      </li>
+      <li class="works-list-item">
+        <div class="works-list-image">
+          <img src="assets/home/undraw-map.svg" alt="undraw map icon" />
+        </div>
+        <span>Сдайте анализ в мед. центре, находящимся в аэропорту</span>
+      </li>
+      <li class="works-list-item">
+        <div class="works-list-image">
+          <img src="assets/home/result.svg" alt="result icon" />
+        </div>
+        <span>Результат теста будет известен в течение 1 - 24 часов</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- test necessity -->
+<section class="test-necessity">
+  <div class="page-container">
+    <h2 class="section-title">
+      Зачем путешественникам сдавать анализ на COVID-19 в России?
+    </h2>
+    <p>
+      В соответствии с
+      <a href="#" target="_blank">
+        Постановлением Главного государственного санитарного врача РФ от 7 июля
+        2020 г. № 18</a
+      >
+    </p>
+    <div class="citizen-type">
+      <h5 class="citizen-type-title primary-color">
+        <svg width="1.4rem" height="1.4rem">
+          <use xlink:href="assets/sprites/icons.svg#chevron-right"></use>
+        </svg>
+        <span>Граждане Российской Федерации</span>
+      </h5>
+      <p>
+        В течение 3 календарных дней с даты возвращения в Россию должны пройти
+        обследование на COVID-19 методом ПЦР
+      </p>
+    </div>
+    <div class="citizen-type">
+      <h5 class="citizen-type-title primary-color">
+        <svg width="1.4rem" height="1.4rem">
+          <use xlink:href="assets/sprites/icons.svg#chevron-right"></use>
+        </svg>
+        <span>Иностранные граждане</span>
+      </h5>
+      <p>
+        При отсутствии медицинской справки должны обследоваться на COVID-19
+        методом ПЦР в течение 3 календарных дней на территории РФ
+      </p>
     </div>
   </div>
 </section>
