@@ -276,26 +276,125 @@
 <!-- faq -->
 <section class="faq-section">
   <div class="page-container">
-    <h2 class="section-title">Часто задаваемые вопросы</h2>
+    <h2 class="section-title">
+      Часто задаваемые <br />
+      вопросы
+    </h2>
   </div>
 
   <div class="custom-expansions">
-    <mat-expansion-panel
-      hideToggle
-      class="custom-expansion"
-      *ngFor="let question of faq$ | async"
-    >
+    <!-- 1 -->
+    <mat-expansion-panel hideToggle class="custom-expansion">
       <mat-expansion-panel-header
         [expandedHeight]="'90px'"
         [collapsedHeight]="'90px'"
       >
-        <mat-panel-title>
-          {{ question.title }}
+        <mat-panel-title>Как получить результат?</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="custom-expansion-text">
+        <p>
+          Забрать результат можно в печатном виде у администратора мед. центра
+          или получить его на указанный при регистрации адрес электронной почты.
+        </p>
+      </div>
+    </mat-expansion-panel>
+    <!-- 2 -->
+    <mat-expansion-panel hideToggle class="custom-expansion">
+      <mat-expansion-panel-header
+        [expandedHeight]="'90px'"
+        [collapsedHeight]="'90px'"
+      >
+        <mat-panel-title>На каких языках доступен результат?</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="custom-expansion-text">
+        <p>Сразу на двух языках – русский и английский (RUS + ENG).</p>
+      </div>
+    </mat-expansion-panel>
+    <!-- 3 -->
+    <mat-expansion-panel hideToggle class="custom-expansion">
+      <mat-expansion-panel-header
+        [expandedHeight]="'90px'"
+        [collapsedHeight]="'90px'"
+      >
+        <mat-panel-title>Какие рекомендации передсдачей теста?</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="custom-expansion-text">
+        <p>
+          Минимум за 1 час до сдачи теста нельзя: употреблять пищу, пить,
+          чистить зубы, полоскать рот/горло, жевать жевательную резинку, курить,
+          закапывать капли/спреи и промывать нос.
+        </p>
+      </div>
+    </mat-expansion-panel>
+    <!-- 4 -->
+    <mat-expansion-panel hideToggle class="custom-expansion">
+      <mat-expansion-panel-header
+        [expandedHeight]="'90px'"
+        [collapsedHeight]="'90px'"
+      >
+        <mat-panel-title>Способы оплаты</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="custom-expansion-text">
+        <p>
+          Безналичная оплата на сайте или в медицинском центре, на терминалах
+          или у администратора.
+        </p>
+      </div>
+    </mat-expansion-panel>
+    <!-- 5 -->
+    <mat-expansion-panel hideToggle class="custom-expansion">
+      <mat-expansion-panel-header
+        [expandedHeight]="'90px'"
+        [collapsedHeight]="'90px'"
+      >
+        <mat-panel-title>Как берется тест?</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="custom-expansion-text">
+        <p>Мазок берется зондом из ротоглоткии носоглотки.</p>
+      </div>
+    </mat-expansion-panel>
+    <!-- 6 -->
+    <mat-expansion-panel hideToggle class="custom-expansion">
+      <mat-expansion-panel-header
+        [expandedHeight]="'90px'"
+        [collapsedHeight]="'90px'"
+      >
+        <mat-panel-title
+          >Если у меня признаки ОРВИ или я контактировал с пациентом, больным
+          коронавирусной инфекцией?
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="custom-expansion-text">
-        <p>{{ question.text }}</p>
+        <p>
+          Исследование доступно только бессимптомным пациентам. Пациентам,
+          контактировавшим с больными COVID-19, или имеющим повышенную
+          температуру тела и/или явные симптомы ОРВИ, рекомендуем обратиться в
+          единый консультационный центр Роспотребнадзора по тел.: <br />
+          <a class="custom-expansion-phone" href="tel:88005554943"
+            >8-800-555-49-43</a
+          >
+        </p>
+      </div>
+    </mat-expansion-panel>
+    <!-- 7 -->
+    <mat-expansion-panel hideToggle class="custom-expansion">
+      <mat-expansion-panel-header
+        [expandedHeight]="'90px'"
+        [collapsedHeight]="'90px'"
+      >
+        <mat-panel-title
+          >Что делать, если результат положительный?
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="custom-expansion-text">
+        <p>
+          Все положительные результаты выполненных лабораторных исследований
+          будут передаваться в Роспотребнадзор, ведомство самостоятельно
+          свяжется с пациентами для дальнейших действий.
+        </p>
       </div>
     </mat-expansion-panel>
   </div>
 </section>
+
+<app-footer></app-footer>
