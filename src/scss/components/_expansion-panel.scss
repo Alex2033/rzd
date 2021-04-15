@@ -1,0 +1,100 @@
+.custom-expansions {
+  margin-top: 3rem;
+
+  .custom-expansion {
+    box-shadow: none;
+
+    &::after {
+      content: "";
+      height: 0.1rem;
+      background-color: #e6e6e6;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 0;
+      width: calc(100% - 4rem);
+    }
+
+    .mat-expansion-panel-header {
+      font-weight: 600;
+      padding: 0 2rem;
+      position: relative;
+    }
+
+    ::ng-deep {
+      .mat-content {
+        position: relative;
+        overflow: visible;
+
+        &::after {
+          content: "";
+          position: absolute;
+          top: calc(50% - 0.5rem);
+          color: $gray;
+          right: 0;
+          border-style: solid;
+          border-width: 0 0.2rem 0.2rem 0;
+          content: "";
+          display: inline-block;
+          padding: 0.3rem;
+          transform: rotate(-45deg);
+          vertical-align: middle;
+          transition: transform 0.15s;
+        }
+      }
+
+      .mat-expansion-panel-body {
+        padding: 1.6rem 2rem 1.2rem;
+      }
+    }
+
+    &.mat-expanded {
+      border-bottom: none;
+
+      .mat-expansion-panel-header {
+        background-color: $concrete;
+      }
+
+      ::ng-deep {
+        .mat-content {
+          &::after {
+            color: darken($accent, 7.5%);
+            transform: rotate(45deg);
+          }
+        }
+      }
+
+      .mat-expansion-panel-header-title {
+        color: darken($accent, 7.5%);
+      }
+    }
+  }
+}
+
+.custom-expansion-info {
+  a {
+    color: $text;
+  }
+
+  &:not(:first-child) {
+    margin-top: 2.4rem;
+  }
+}
+
+.custom-expansion-caption {
+  color: $primary;
+
+  + * {
+    margin-top: 1rem;
+  }
+}
+
+.custom-expansion-buttons {
+  margin-top: 2.4rem;
+
+  > * {
+    &:not(:first-child) {
+      margin-top: 0.8rem;
+    }
+  }
+}

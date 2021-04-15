@@ -1,4 +1,5 @@
 @import "theme";
+@import "./components/expansion-panel";
 
 :host {
   line-height: 1.397;
@@ -113,99 +114,15 @@
 // test types
 .test-types {
   padding: 2.4rem 0 2rem;
-
-  .test-type-expansion {
-    margin-top: 3rem;
-    box-shadow: none;
-
-    .mat-expansion-panel-header {
-      font-weight: 600;
-    }
-
-    ::ng-deep {
-      .mat-content {
-        position: relative;
-        overflow: visible;
-
-        &::after {
-          content: "";
-          position: absolute;
-          top: calc(50% - 0.5rem);
-          color: $gray;
-          right: 0;
-          border-style: solid;
-          border-width: 0 0.2rem 0.2rem 0;
-          content: "";
-          display: inline-block;
-          padding: 0.3rem;
-          transform: rotate(-45deg);
-          vertical-align: middle;
-          transition: transform 0.15s;
-        }
-      }
-
-      .mat-expansion-panel-body {
-        padding: 1.6rem 2rem 1.2rem;
-      }
-    }
-
-    &.mat-expanded {
-      .mat-expansion-panel-header {
-        background-color: $concrete;
-      }
-
-      ::ng-deep {
-        .mat-content {
-          &::after {
-            color: darken($accent, 7.5%);
-            transform: rotate(45deg);
-          }
-        }
-      }
-
-      .mat-expansion-panel-header-title {
-        color: darken($accent, 7.5%);
-      }
-    }
-  }
 }
 
-.test-type-info {
-  a {
-    color: $text;
-  }
-
-  &:not(:first-child) {
-    margin-top: 2.4rem;
-  }
-}
-
-.type-info-caption {
-  color: $primary;
-
-  + * {
-    margin-top: 1rem;
-  }
-}
-
-.test-type-buttons {
-  margin-top: 2.4rem;
-
-  > * {
-    &:not(:first-child) {
-      margin-top: 0.8rem;
-    }
-  }
-}
-
-.show-all-types {
+.detailed-link {
   display: flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
   color: $accent;
   padding-top: 1.2rem;
-  border-top: 1px solid #e6e6e6;
 
   > * {
     &:not(:first-child) {
@@ -215,5 +132,33 @@
 
   svg {
     stroke: $accent;
+  }
+}
+
+// test location
+.test-locaiton {
+  padding-bottom: 2.4rem;
+}
+
+.test-location-text {
+  margin-top: 1.8rem;
+}
+
+// faq section
+.faq-section {
+  padding-bottom: 2.2rem;
+
+  .custom-expansion {
+    .mat-expansion-panel-header {
+      font-weight: 400;
+
+      &::after {
+        display: none;
+      }
+    }
+
+    .mat-expansion-panel-body {
+      padding: 1.2rem 2rem 1.2rem;
+    }
   }
 }
