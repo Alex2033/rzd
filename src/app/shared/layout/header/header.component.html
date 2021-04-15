@@ -42,9 +42,15 @@
       </ul>
     </div>
 
-    <button class="header-button logout-button">
+    <!-- <button class="header-button login-button">
       <svg width="2.223rem" height="2.34rem">
-        <use xlink:href="assets/sprites/icons.svg#logout"></use>
+        <use xlink:href="assets/sprites/icons.svg#login"></use>
+      </svg>
+    </button> -->
+
+    <button class="header-button user-button" (click)="setUserMenu(true)">
+      <svg width="2.6rem" height="2.6rem">
+        <use xlink:href="assets/sprites/icons.svg#user"></use>
       </svg>
     </button>
   </div>

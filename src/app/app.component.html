@@ -5,13 +5,18 @@
 <app-navigation-menu
   [class.is-visible]="navigationMenu$ | async"
 ></app-navigation-menu>
-<app-user-menu *ngIf="userMenu$ | async"></app-user-menu>
+<app-user-menu [@slideInOut] *ngIf="userMenu$ | async"></app-user-menu>
 <div
   (click)="closeMenus()"
   class="menu-overlay"
   *ngIf="(navigationMenu$ | async) || (userMenu$ | async)"
 >
-  <svg class="close-menu-icon" width="1.5rem" height="1.5rem">
+  <svg
+    [class.left]="userMenu$ | async"
+    class="close-menu-icon"
+    width="1.5rem"
+    height="1.5rem"
+  >
     <use xlink:href="assets/sprites/icons.svg#close"></use>
   </svg>
 </div>

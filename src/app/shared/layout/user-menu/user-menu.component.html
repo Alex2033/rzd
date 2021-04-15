@@ -1,1 +1,50 @@
-<div class="user-menu"></div>
+<div class="user-menu">
+  <div
+    class="user-block"
+    style="background-image: url(assets/home/user-menu-bg.svg)"
+  >
+    <div class="user-image">
+      <img src="assets/home/user-avatar.png" alt="user avatar" />
+    </div>
+    <div class="user-name">
+      <div>Константинопольский</div>
+      <div>Константин</div>
+    </div>
+  </div>
+
+  <ul class="user-nav">
+    <li class="user-nav-item">
+      <a [routerLink]="['cabinet', 'questionnaire']" (click)="closeMenu()">
+        <span class="user-nav-text">анкеты</span>
+      </a>
+    </li>
+    <li class="user-nav-item">
+      <a [routerLink]="['cabinet', 'orders']" (click)="closeMenu()">
+        <span class="user-nav-text">заказы</span>
+      </a>
+    </li>
+    <li class="user-nav-item">
+      <a [routerLink]="['cabinet', 'queue']" (click)="closeMenu()">
+        <span class="user-nav-text">моя очередь</span>
+      </a>
+    </li>
+  </ul>
+
+  <div class="qr-code-block">
+    <img
+      class="qr-code-image"
+      src="assets/home/qr-code.png"
+      alt="qr code image"
+    />
+    <div class="qr-code-text">
+      <p>QR-код для быстрой авторизации в мед. центре</p>
+    </div>
+  </div>
+
+  <button class="logout-button" (click)="logout()">
+    <svg width="2rem" height="2rem">
+      <use xlink:href="assets/sprites/icons.svg#logout"></use>
+    </svg>
+    <span>Выйти</span>
+  </button>
+</div>
