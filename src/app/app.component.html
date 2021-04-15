@@ -3,8 +3,7 @@
   <router-outlet></router-outlet>
 </div>
 <app-navigation-menu
-  [@slideInOut]
-  *ngIf="navigationMenu$ | async"
+  [class.is-visible]="navigationMenu$ | async"
 ></app-navigation-menu>
 <app-user-menu *ngIf="userMenu$ | async"></app-user-menu>
 <div

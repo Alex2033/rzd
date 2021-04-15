@@ -1,16 +1,33 @@
 <div class="navigation-menu">
-  <div class="logo">
+  <div class="logo" (click)="goHome()">
     <img src="assets/logo.svg" alt="logotype" />
   </div>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title> Personal data </mat-panel-title>
-      <mat-panel-description> Type your name and age </mat-panel-description>
+  <mat-expansion-panel hideToggle class="nav-item navigation-expansion-panel">
+    <mat-expansion-panel-header
+      [expandedHeight]="'6rem'"
+      [collapsedHeight]="'6rem'"
+    >
+      <mat-panel-title> Путешественникам </mat-panel-title>
     </mat-expansion-panel-header>
-    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nulla, dolorem
-    iste quisquam a dolore odio pariatur, nisi eaque provident repudiandae,
-    nihil quis repellat quia totam iusto modi possimus doloremque atque maxime
-    molestias non. Provident error vitae doloremque enim alias soluta eveniet
-    consectetur blanditiis! Facere numquam, animi ex placeat rerum a!
+    <ul class="expansion-nav">
+      <li
+        (click)="scrollToElement('test-necessity')"
+        class="expansion-nav-item"
+      >
+        Для чего нужно
+      </li>
+      <li (click)="scrollToElement('how-works')" class="expansion-nav-item">
+        Как работает
+      </li>
+      <li (click)="scrollToElement('test-type')" class="expansion-nav-item">
+        Какие анализы
+      </li>
+      <li (click)="scrollToElement('test-location')" class="expansion-nav-item">
+        Где находится
+      </li>
+    </ul>
   </mat-expansion-panel>
+  <a [routerLink]="['']" class="nav-item nav-link">Услуги</a>
+  <a [routerLink]="['']" class="nav-item nav-link">Точки обслуживания</a>
+  <a (click)="scrollToElement('faq')" class="nav-item nav-link">FAQ</a>
 </div>
