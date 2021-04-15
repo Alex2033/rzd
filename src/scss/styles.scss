@@ -107,3 +107,13 @@ img {
 .spacer {
   flex: 1 1 auto;
 }
+
+.home-inner-header {
+  display: flex;
+  align-items: center;
+  min-height: 7.2rem;
+  padding: 1.2rem 2rem;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url("/assets/home/landing-pages-bg.svg");
+}

@@ -27,7 +27,17 @@
       </li>
     </ul>
   </mat-expansion-panel>
-  <a [routerLink]="['']" class="nav-item nav-link">Услуги</a>
-  <a [routerLink]="['']" class="nav-item nav-link">Точки обслуживания</a>
+  <a
+    [routerLink]="['/home', 'services']"
+    class="nav-item nav-link"
+    (click)="closeMenu()"
+    >Услуги</a
+  >
+  <a
+    [routerLink]="['/home', 'service-points']"
+    class="nav-item nav-link"
+    (click)="closeMenu()"
+    >Точки обслуживания</a
+  >
   <a (click)="scrollToElement('faq')" class="nav-item nav-link">FAQ</a>
 </div>

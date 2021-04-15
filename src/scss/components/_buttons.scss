@@ -28,6 +28,14 @@
     background-color: $primary;
   }
 
+  &.stroke {
+    border: 0.2rem solid $primary;
+    color: $primary;
+    background-color: transparent;
+    padding-top: 1.1rem;
+    padding-bottom: 1.1rem;
+  }
+
   &:disabled {
     background-color: $accent-disabled;
   }

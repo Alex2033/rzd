@@ -11,14 +11,14 @@ import { MenuService } from '../../services/menu.service';
 export class NavigationMenuComponent implements OnInit {
   constructor(
     @Inject(DOCUMENT) private document,
-    private menuService: MenuService,
+    private menu: MenuService,
     private router: Router
   ) {}
 
   ngOnInit(): void {}
 
   scrollToElement(anchor: string): void {
-    this.menuService.setNavigationMenu(false);
+    this.menu.setNavigationMenu(false);
     const element = this.document.querySelector('#' + anchor);
     element.scrollIntoView({
       block: 'center',
@@ -27,7 +27,11 @@ export class NavigationMenuComponent implements OnInit {
   }
 
   goHome(): void {
-    this.menuService.setNavigationMenu(false);
+    this.menu.setNavigationMenu(false);
     this.router.navigate(['/home']);
+  }
+
+  closeMenu(): void {
+    this.menu.setNavigationMenu(false);
   }
 }
