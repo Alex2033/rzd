@@ -9,6 +9,8 @@ import { ServicesComponent } from './pages/services/services.component';
 import { ServicePointsComponent } from './pages/service-points/service-points.component';
 import { ServiceDetailComponent } from './pages/service-detail/service-detail.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { SearchPipe } from '../shared/pipes/search.pipe';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,14 @@ import { MatTabsModule } from '@angular/material/tabs';
     ServicesComponent,
     ServicePointsComponent,
     ServiceDetailComponent,
+    SearchPipe,
   ],
-  imports: [CommonModule, HomeRoutingModule, MatExpansionModule, MatTabsModule],
+  imports: [
+    CommonModule,
+    HomeRoutingModule,
+    MatExpansionModule,
+    MatTabsModule,
+    FormsModule,
+  ],
 })
 export class HomeModule {}

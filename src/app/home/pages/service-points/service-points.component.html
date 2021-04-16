@@ -1,1 +1,57 @@
-<p>service-points works!</p>
+<div class="home-inner-page">
+  <header class="home-inner-header">
+    <h1 class="home-title">Точки обслуживания</h1>
+  </header>
+  <div class="page-container">
+    <!-- search -->
+    <div class="search-block">
+      <input
+        type="text"
+        name="search"
+        placeholder="Введите адрес"
+        class="search-control"
+        [(ngModel)]="searchText"
+      />
+      <svg width="2rem" height="2rem">
+        <use xlink:href="assets/sprites/icons.svg#search"></use>
+      </svg>
+    </div>
+
+    <h2 class="section-title">
+      {{
+        (points | search: searchText)?.length
+          ? (points | search: searchText)?.length + " медицинских
+      центров"
+          : "По вашему запросу ничего не найдено"
+      }}
+    </h2>
+
+    <div class="service-points-cards">
+      <div
+        class="service-points-card"
+        #points
+        *ngFor="let card of points | search: searchText:'title' as result"
+      >
+        <h3 class="card-title">{{ card.title }}</h3>
+        <div class="card-body">
+          <div class="card-info">
+            <div class="card-icon">
+              <svg width="1.4rem" height="1.8rem">
+                <use xlink:href="assets/sprites/icons.svg#gps"></use>
+              </svg>
+            </div>
+            <span>{{ card.locationText }}</span>
+          </div>
+          <div class="card-info">
+            <div class="card-icon">
+              <svg width="1.5rem" height="1.5rem">
+                <use xlink:href="assets/sprites/icons.svg#clock"></use>
+              </svg>
+            </div>
+            <span>{{ card.timeText }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -28,7 +28,7 @@ export class NavigationMenuComponent implements OnInit {
 
   goHome(): void {
     this.menu.setNavigationMenu(false);
-    this.router.navigate(['/home']);
+    this.router.navigate(['/']);
   }
 
   closeMenu(): void {

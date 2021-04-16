@@ -1,0 +1,102 @@
+@import "theme";
+
+.home-inner-page {
+  padding-bottom: 3.6rem;
+}
+
+.service-points-cards {
+  margin-top: 3.2rem;
+
+  > * {
+    &:not(:first-child) {
+      margin-top: 1.6rem;
+    }
+  }
+}
+
+.service-points-card {
+  transition: box-shadow 0.2s;
+  background-color: $light;
+  padding: 2rem 1.2rem;
+  color: $dark;
+  border-bottom: 1px solid transparent;
+
+  &:not(:hover) {
+    border-bottom-color: #e5e5e5;
+  }
+
+  &:hover {
+    box-shadow: 0 0 1rem rgba(120, 120, 120, 0.25);
+  }
+}
+
+.search-block {
+  position: relative;
+  margin-top: 3rem;
+
+  svg {
+    position: absolute;
+    top: 50%;
+    right: 1.8rem;
+    transform: translateY(-50%);
+    fill: $placeholder;
+  }
+}
+
+.search-control {
+  width: 100%;
+  padding: 1.1rem 4rem 1.1rem 1.8rem;
+  border: 0.1rem solid #d3d3d3;
+  font: 400 1.6rem/1.394 "OpenSans", sans-serif;
+
+  &:focus {
+    border-color: lighten($primary, 17.95%);
+    outline: 0;
+  }
+
+  &::placeholder {
+    opacity: 1;
+    color: $placeholder;
+  }
+}
+
+.section-title {
+  margin-top: 3rem;
+}
+
+.card-title {
+  font-size: 1.8rem;
+  line-height: 1.397;
+}
+
+.card-info {
+  margin-top: 2rem;
+  display: flex;
+  align-items: flex-start;
+  line-height: 1.394;
+  color: $dark;
+
+  > * {
+    &:not(:first-child) {
+      margin-left: 1.4rem;
+    }
+  }
+
+  a {
+    color: $dark;
+  }
+}
+
+.card-icon {
+  margin-top: 0.2rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    fill: $primary;
+  }
+}
