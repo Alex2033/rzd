@@ -91,6 +91,7 @@ img {
   color: $gray;
   fill: $gray;
   line-height: 1.375;
+  text-decoration: none;
   margin-top: 1.6rem;
 
   > * {
@@ -106,6 +107,12 @@ img {
 
 .spacer {
   flex: 1 1 auto;
+}
+
+.home-inner-page {
+  .back-link {
+    margin-bottom: 1.6rem;
+  }
 }
 
 .home-inner-header {

@@ -1,0 +1,47 @@
+@import "theme";
+@import "./components/expansion-panel";
+
+.home-inner-page {
+  padding-bottom: 4rem;
+}
+
+.service-detail-body {
+  padding-top: 3.2rem;
+  > * {
+    &:not(:first-child) {
+      margin-top: 2.4rem;
+    }
+  }
+}
+
+.infocard-field {
+  > * {
+    &:not(:first-child) {
+      margin-top: 1.2rem;
+    }
+  }
+}
+
+.infocard-caption {
+  font-weight: 600;
+  color: $primary;
+}
+
+.infocard-text {
+  color: $dark;
+}
+
+.infocard-price {
+  font-weight: 600;
+  font-size: 2.6rem;
+  line-height: 1.394;
+}
+
+.custom-expansions {
+  margin-top: 0;
+}
+
+.service-detail-signup {
+  margin-top: 2.4rem;
+  width: 100%;
+}
