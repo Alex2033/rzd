@@ -2,42 +2,75 @@
   <div class="logo" (click)="goHome()">
     <img src="assets/logo.svg" alt="logotype" />
   </div>
-  <mat-expansion-panel hideToggle class="nav-item navigation-expansion-panel">
-    <mat-expansion-panel-header
-      [expandedHeight]="'6rem'"
-      [collapsedHeight]="'6rem'"
-    >
-      <mat-panel-title> Путешественникам </mat-panel-title>
-    </mat-expansion-panel-header>
-    <ul class="expansion-nav">
+  <nav class="navigation">
+    <ul class="navigation-list">
+      <li class="navigation-list-item">
+        <mat-expansion-panel
+          hideToggle
+          class="nav-item navigation-expansion-panel"
+        >
+          <mat-expansion-panel-header
+            [expandedHeight]="'6rem'"
+            [collapsedHeight]="'6rem'"
+          >
+            <mat-panel-title> Путешественникам </mat-panel-title>
+          </mat-expansion-panel-header>
+          <ul class="expansion-nav">
+            <li
+              class="expansion-nav-item"
+              [routerLink]="['/']"
+              (click)="closeMenu()"
+            >
+              <a href="#test-necessity"> Для чего нужно</a>
+            </li>
+            <li
+              (click)="closeMenu()"
+              [routerLink]="['/']"
+              class="expansion-nav-item"
+            >
+              <a href="#how-works">Как работает</a>
+            </li>
+            <li
+              (click)="closeMenu()"
+              [routerLink]="['/']"
+              class="expansion-nav-item"
+            >
+              <a href="#test-type">Какие анализы</a>
+            </li>
+            <li
+              (click)="closeMenu()"
+              [routerLink]="['/']"
+              class="expansion-nav-item"
+            >
+              <a href="#test-location">Где находится</a>
+            </li>
+          </ul>
+        </mat-expansion-panel>
+      </li>
+
+      <li class="navigation-list-item">
+        <a
+          [routerLink]="['/services']"
+          class="nav-item nav-link"
+          (click)="closeMenu()"
+          >Услуги</a
+        >
+      </li>
+      <li class="navigation-list-item">
+        <a
+          [routerLink]="['/service-points']"
+          class="nav-item nav-link"
+          (click)="closeMenu()"
+          >Точки обслуживания</a
+        >
+      </li>
       <li
-        (click)="scrollToElement('test-necessity')"
-        class="expansion-nav-item"
+        class="navigation-list-item"
+        (click)="closeMenu()"
+        [routerLink]="['/']"
       >
-        Для чего нужно
-      </li>
-      <li (click)="scrollToElement('how-works')" class="expansion-nav-item">
-        Как работает
-      </li>
-      <li (click)="scrollToElement('test-type')" class="expansion-nav-item">
-        Какие анализы
-      </li>
-      <li (click)="scrollToElement('test-location')" class="expansion-nav-item">
-        Где находится
+        <a href="#faq" class="nav-item nav-link">FAQ</a>
       </li>
     </ul>
-  </mat-expansion-panel>
-  <a
-    [routerLink]="['/services']"
-    class="nav-item nav-link"
-    (click)="closeMenu()"
-    >Услуги</a
-  >
-  <a
-    [routerLink]="['/service-points']"
-    class="nav-item nav-link"
-    (click)="closeMenu()"
-    >Точки обслуживания</a
-  >
-  <a (click)="scrollToElement('faq')" class="nav-item nav-link">FAQ</a>
+  </nav>
 </div>

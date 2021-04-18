@@ -25,7 +25,7 @@
     border-bottom-color: #e5e5e5;
   }
 
-  &:hover {
+  &.focused {
     box-shadow: 0 0 1rem rgba(120, 120, 120, 0.25);
   }
 }

@@ -11,6 +11,7 @@ import { ServiceDetailComponent } from './pages/service-detail/service-detail.co
 import { MatTabsModule } from '@angular/material/tabs';
 import { SearchPipe } from '../shared/pipes/search.pipe';
 import { FormsModule } from '@angular/forms';
+import { ServicePointDetailComponent } from './pages/service-point-detail/service-point-detail.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { FormsModule } from '@angular/forms';
     ServicePointsComponent,
     ServiceDetailComponent,
     SearchPipe,
+    ServicePointDetailComponent,
   ],
   imports: [
     CommonModule,

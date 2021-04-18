@@ -91,13 +91,17 @@
   &:not(:first-child) {
     margin-top: 2.4rem;
   }
+
+  p {
+    font-size: 1.6rem;
+    line-height: 1.394;
+  }
 }
 
-.custom-expansion-caption {
-  color: $primary;
-
+.caption {
   + * {
     margin-top: 1rem;
+    color: $dark;
   }
 }
 

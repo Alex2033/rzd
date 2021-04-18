@@ -1,0 +1,39 @@
+@import "theme";
+@import "./components/expansion-panel";
+
+.service-point-body {
+  padding-top: 1.6rem;
+}
+
+.infocard-field {
+  &:not(:first-child) {
+    margin-top: 2.4rem;
+  }
+
+  > * {
+    &:not(:first-child) {
+      margin-top: 1.2rem;
+    }
+  }
+}
+
+.infocard-text {
+  color: $dark;
+}
+
+.service-point-button {
+  width: 100%;
+  margin-top: 2.4rem;
+}
+
+.infocard-phone {
+  color: $dark;
+}
+
+.services-block {
+  margin-top: 4rem;
+}
+
+.custom-expansions {
+  margin-top: 2.4rem;
+}

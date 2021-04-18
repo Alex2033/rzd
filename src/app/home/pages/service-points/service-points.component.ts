@@ -1,4 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import { ServicePointInterface } from '../../types/service-point.interface';
 
 @Component({
@@ -6,7 +14,9 @@ import { ServicePointInterface } from '../../types/service-point.interface';
   templateUrl: './service-points.component.html',
   styleUrls: ['./service-points.component.scss'],
 })
-export class ServicePointsComponent implements OnInit {
+export class ServicePointsComponent implements OnInit, AfterViewInit {
+  @ViewChildren('cards') cards: QueryList<ElementRef>;
+
   public searchText: string = '';
 
   public points: ServicePointInterface[] = [
@@ -36,4 +46,26 @@ export class ServicePointsComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  ngAfterViewInit(): void {
+    this.focusBlock();
+  }
+
+  @HostListener('window:scroll', ['$event']) checkScroll() {
+    this.focusBlock();
+  }
+
+  focusBlock(): void {
+    const viewportHeight = window.innerHeight;
+
+    this.cards.forEach((card) => {
+      const topPos = card.nativeElement.getBoundingClientRect().top;
+
+      if (topPos > viewportHeight / 3.5 && topPos < viewportHeight / 1.5) {
+        card.nativeElement.classList.add('focused');
+      } else {
+        card.nativeElement.classList.remove('focused');
+      }
+    });
+  }
 }

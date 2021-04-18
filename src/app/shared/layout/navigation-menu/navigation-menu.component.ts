@@ -17,15 +17,6 @@ export class NavigationMenuComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  scrollToElement(anchor: string): void {
-    this.menu.setNavigationMenu(false);
-    const element = this.document.querySelector('#' + anchor);
-    element.scrollIntoView({
-      block: 'center',
-      behavior: 'smooth',
-    });
-  }
-
   goHome(): void {
     this.menu.setNavigationMenu(false);
     this.router.navigate(['/']);

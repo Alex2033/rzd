@@ -28,8 +28,9 @@
 
     <div class="service-points-cards">
       <div
+        [routerLink]="['/', card.id]"
         class="service-points-card"
-        #points
+        #cards
         *ngFor="let card of points | search: searchText:'title' as result"
       >
         <h3 class="card-title">{{ card.title }}</h3>
