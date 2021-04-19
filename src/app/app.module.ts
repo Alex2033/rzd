@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NavigationMenuComponent } from './shared/layout/navigation-menu/navigation-menu.component';
 import { UserMenuComponent } from './shared/layout/user-menu/user-menu.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { PlugComponent } from './plug/plug.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     HeaderComponent,
     NavigationMenuComponent,
     UserMenuComponent,
+    PlugComponent,
   ],
   imports: [
     BrowserModule,

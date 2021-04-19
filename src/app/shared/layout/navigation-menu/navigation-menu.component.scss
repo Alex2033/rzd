@@ -26,9 +26,11 @@
   }
 }
 
-.nav-item {
-  &:not(:last-child) {
-    border-bottom: 1px solid rgba($light-gray, 0.8);
+.navigation-list-item {
+  &:not(:last-child):not(:first-child) {
+    span {
+      border-bottom: 1px solid rgba($light-gray, 0.8);
+    }
   }
 }
 
@@ -91,13 +93,19 @@
 
 .nav-link {
   text-transform: uppercase;
-  padding: 1.8rem 2rem 1.8rem 2rem;
+  padding: 0 2rem;
   display: flex;
   font-size: 1.8rem;
   line-height: 1.284;
   align-items: center;
   text-decoration: none;
   color: $dark;
+
+  span {
+    padding: 1.8rem 0;
+    width: 100%;
+    display: inline-block;
+  }
 }
 
 .expansion-nav {

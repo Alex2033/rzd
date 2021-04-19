@@ -53,23 +53,27 @@
           [routerLink]="['/services']"
           class="nav-item nav-link"
           (click)="closeMenu()"
-          >Услуги</a
         >
+          <span>Услуги</span>
+        </a>
       </li>
       <li class="navigation-list-item">
         <a
           [routerLink]="['/service-points']"
           class="nav-item nav-link"
           (click)="closeMenu()"
-          >Точки обслуживания</a
         >
+          <span>Точки обслуживания</span>
+        </a>
       </li>
       <li
         class="navigation-list-item"
         (click)="closeMenu()"
         [routerLink]="['/']"
       >
-        <a href="#faq" class="nav-item nav-link">FAQ</a>
+        <a href="#faq" class="nav-item nav-link">
+          <span>FAQ</span>
+        </a>
       </li>
     </ul>
   </nav>

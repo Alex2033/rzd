@@ -42,7 +42,10 @@
       </ul>
     </div>
 
-    <button class="header-button login-button">
+    <button
+      [routerLink]="['/auth', 'login']"
+      class="header-button login-button"
+    >
       <svg width="2.223rem" height="2.34rem">
         <use xlink:href="assets/sprites/icons.svg#login"></use>
       </svg>
