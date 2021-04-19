@@ -8,10 +8,10 @@ import { FooterComponent } from '../shared/layout/footer/footer.component';
 import { ServicesComponent } from './pages/services/services.component';
 import { ServicePointsComponent } from './pages/service-points/service-points.component';
 import { ServiceDetailComponent } from './pages/service-detail/service-detail.component';
-import { MatTabsModule } from '@angular/material/tabs';
 import { SearchPipe } from '../shared/pipes/search.pipe';
 import { FormsModule } from '@angular/forms';
 import { ServicePointDetailComponent } from './pages/service-point-detail/service-point-detail.component';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 @NgModule({
   declarations: [
@@ -27,8 +27,8 @@ import { ServicePointDetailComponent } from './pages/service-point-detail/servic
     CommonModule,
     HomeRoutingModule,
     MatExpansionModule,
-    MatTabsModule,
     FormsModule,
+    CarouselModule,
   ],
 })
 export class HomeModule {}

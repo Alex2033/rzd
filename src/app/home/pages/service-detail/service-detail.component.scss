@@ -40,3 +40,56 @@
   margin-top: 2.4rem;
   width: 100%;
 }
+
+.tabs {
+  margin-top: 4rem;
+
+  ::ng-deep {
+    .owl-carousel {
+      &::after {
+        content: "";
+        height: 100%;
+        width: 4rem;
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-image: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.4) 0%,
+          #ffffff 100%
+        );
+      }
+    }
+  }
+}
+
+.tabs-labels {
+  display: flex;
+
+  > * {
+    &:not(:first-child) {
+      margin-left: 2rem;
+    }
+  }
+}
+
+.tab-label {
+  padding-bottom: 0.4rem;
+  border-bottom: 0.1rem solid transparent;
+  display: inline-block;
+
+  &.selected {
+    color: $primary;
+    border-bottom-color: $primary;
+  }
+}
+
+.active-tab {
+  margin-top: 2.4rem;
+}
+
+.detailed-link {
+  font-weight: 700;
+  justify-content: flex-start;
+  padding-top: 2.4rem;
+}

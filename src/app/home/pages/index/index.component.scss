@@ -116,25 +116,6 @@
   padding: 2.4rem 0 2rem;
 }
 
-.detailed-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  color: $accent;
-  padding-top: 1.2rem;
-
-  > * {
-    &:not(:first-child) {
-      margin-left: 1.2rem;
-    }
-  }
-
-  svg {
-    stroke: $accent;
-  }
-}
-
 // test location
 .test-location {
   padding-bottom: 2.4rem;

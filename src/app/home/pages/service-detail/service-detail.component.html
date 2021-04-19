@@ -102,14 +102,37 @@
   </div>
   <div class="page-container">
     <button class="accent button service-detail-signup">Записаться</button>
-    <mat-tab-group>
-      <mat-tab label="First"> Content 1 </mat-tab>
-      <mat-tab label="Second"> Content 2 </mat-tab>
-      <mat-tab label="Third"> Content 3 </mat-tab>
-      <mat-tab label="ashasd qwp dqwd"> Content 1 </mat-tab>
-      <mat-tab label="oiuri qpw"> Content 2 </mat-tab>
-      <mat-tab label="airak uqw"> Content 3 </mat-tab>
-    </mat-tab-group>
+
+    <!-- tabs -->
+    <div class="tabs">
+      <owl-carousel-o [options]="customOptions" #owlElement>
+        <ng-template
+          carouselSlide
+          [width]="tab.labelWidth"
+          [id]="tab.id"
+          *ngFor="let tab of tabs; index as i"
+        >
+          <div
+            class="tab-label"
+            [class.selected]="activeLabel === tab.id"
+            (click)="selectTab(tab)"
+          >
+            {{ tab.label }}
+          </div>
+        </ng-template>
+      </owl-carousel-o>
+
+      <div class="active-tab" *ngIf="activeTab">
+        {{ activeTab.text }}
+        <br />
+        <a [routerLink]="['']" class="detailed-link">
+          <span>Записаться на исследование</span>
+          <svg width="2.2rem" height="1rem">
+            <use xlink:href="assets/sprites/icons.svg#arrow-right"></use>
+          </svg>
+        </a>
+      </div>
+    </div>
   </div>
 </div>
 

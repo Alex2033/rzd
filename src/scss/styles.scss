@@ -4,6 +4,9 @@
 @import "./components/auth";
 @import "./components/buttons";
 
+@import "~ngx-owl-carousel-o/lib/styles/scss/owl.carousel";
+@import "~ngx-owl-carousel-o/lib/styles/scss/owl.theme.default";
+
 * {
   box-sizing: border-box;
 }
@@ -128,4 +131,23 @@ img {
 .caption {
   font-weight: 600;
   color: $primary;
+}
+
+.detailed-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: $accent;
+  padding-top: 1.2rem;
+
+  > * {
+    &:not(:first-child) {
+      margin-left: 1.2rem;
+    }
+  }
+
+  svg {
+    stroke: $accent;
+  }
 }

@@ -28,7 +28,7 @@
 
     <div class="service-points-cards">
       <div
-        [routerLink]="['/', card.id]"
+        [routerLink]="['/service-points', card.id]"
         class="service-points-card"
         #cards
         *ngFor="let card of points | search: searchText:'title' as result"
