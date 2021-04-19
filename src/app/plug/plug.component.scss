@@ -1,0 +1,42 @@
+@import "theme";
+
+.plug-page {
+  padding: 2rem 0 9.2rem;
+  overflow: scroll;
+  min-height: 0rem;
+  height: 100%;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  display: flex;
+  flex-direction: column;
+  color: $dark;
+}
+
+.page-container {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.plug-image {
+  width: 22.3rem;
+  height: 14.8rem;
+  margin-top: auto;
+}
+
+.plug-title {
+  margin-top: 2.4rem;
+  font-weight: 600;
+  font-size: 2.2rem;
+  line-height: 1.27;
+}
+
+.plug-text {
+  margin-top: 6.25rem;
+  line-height: 1.37;
+}
