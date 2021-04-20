@@ -1,4 +1,4 @@
-<div class="home-inner-page">
+<div class="home-inner-page" *ngIf="points$ | async as points">
   <header class="home-inner-header">
     <h1 class="home-title">Точки обслуживания</h1>
   </header>
@@ -19,15 +19,14 @@
 
     <h2 class="section-title">
       {{
-        (points$ | async | search: searchText)?.length
-          ? (points$ | async | search: searchText)?.length +
-            " медицинских
+        (points | search: searchText)?.length
+          ? (points | search: searchText)?.length + " медицинских
       центров"
           : "По вашему запросу ничего не найдено"
       }}
     </h2>
 
-    <div class="service-points-cards" *ngIf="points$ | async as points">
+    <div class="service-points-cards" *ngIf="points">
       <div
         [routerLink]="['/service-points', card.id]"
         class="service-points-card"

@@ -48,6 +48,7 @@
   padding: 1.1rem 4rem 1.1rem 1.8rem;
   border: 0.1rem solid #d3d3d3;
   font: 400 1.6rem/1.394 "OpenSans", sans-serif;
+  appearance: none;
 
   &:focus {
     border-color: lighten($primary, 17.95%);
