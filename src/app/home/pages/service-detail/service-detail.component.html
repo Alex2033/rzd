@@ -1,139 +1,106 @@
-<div class="home-inner-page">
-  <div class="page-container">
-    <a [routerLink]="['/services']" class="back-link">
-      <svg width="1rem" height="1rem">
-        <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
-      </svg>
-      <span>Услуги</span>
-    </a>
-  </div>
-
-  <header class="home-inner-header">
-    <h1 class="home-title">
-      Экспресс тест на COVID-19 (качетсвенное определение РНК короновируса
-      SARS-COV-2)
-    </h1>
-  </header>
-
-  <div class="page-container service-detail-body">
-    <div class="infocard-field">
-      <div class="caption">Цена:</div>
-      <div class="infocard-text infocard-price">2750 руб</div>
+<ng-container *ngIf="service">
+  <div class="home-inner-page">
+    <div class="page-container">
+      <a [routerLink]="['/services']" class="back-link">
+        <svg width="1rem" height="1rem">
+          <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
+        </svg>
+        <span>Услуги</span>
+      </a>
     </div>
-    <div class="infocard-field">
-      <div class="caption">Срок исполнения:</div>
-      <div class="infocard-text">1 час</div>
+
+    <header class="home-inner-header">
+      <h1 class="home-title">
+        {{ service.name }}
+      </h1>
+    </header>
+
+    <div class="page-container service-detail-body">
+      <div class="infocard-field">
+        <div class="caption">Цена:</div>
+        <div class="infocard-text infocard-price">
+          {{ service.price }} {{ service.priceType }}
+        </div>
+      </div>
+      <div class="infocard-field">
+        <div class="caption">Срок исполнения:</div>
+        <div class="infocard-text">{{ service.duration }}</div>
+      </div>
+      <div class="infocard-field">
+        <div class="caption">Адрес:</div>
+      </div>
+
+      <button class="button primary service-detail-button">Списком</button>
     </div>
-    <div class="infocard-field">
-      <div class="caption">Адрес:</div>
-    </div>
-  </div>
-  <div class="custom-expansions">
-    <!-- 1 -->
-    <mat-expansion-panel hideToggle class="custom-expansion">
-      <mat-expansion-panel-header
-        [expandedHeight]="'9rem'"
-        [collapsedHeight]="'9rem'"
+
+    <!-- points -->
+    <div class="custom-expansions">
+      <mat-expansion-panel
+        hideToggle
+        class="custom-expansion"
+        *ngFor="let point of points$ | async"
       >
-        <mat-panel-title>
-          Международный аэропорт Шереметьево, терминал B
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <div class="custom-expansion-info">
-        <p class="caption">Адрес:</p>
-        <p>Московская обл., г. Химки, аэропорт Шереметьево терминал B</p>
-      </div>
-      <div class="custom-expansion-info">
-        <p class="caption">Время работы:</p>
-        <p>Круглосуточно</p>
-      </div>
-
-      <div class="custom-expansion-buttons">
-        <a [routerLink]="['']" class="button">Записаться</a>
-        <a [routerLink]="['']" class="button no-bg">Подробнее</a>
-      </div>
-    </mat-expansion-panel>
-    <!-- 2 -->
-    <mat-expansion-panel hideToggle class="custom-expansion">
-      <mat-expansion-panel-header
-        [expandedHeight]="'9rem'"
-        [collapsedHeight]="'9rem'"
-      >
-        <mat-panel-title>
-          Международный аэропорт Шереметьево, терминал D
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <div class="custom-expansion-info">
-        <p class="caption">Адрес:</p>
-        <p>Московская обл., г. Химки, аэропорт Шереметьево терминал D</p>
-      </div>
-      <div class="custom-expansion-info">
-        <p class="caption">Время работы:</p>
-        <p>Круглосуточно</p>
-      </div>
-
-      <div class="custom-expansion-buttons">
-        <a [routerLink]="['']" class="button">Записаться</a>
-        <a [routerLink]="['']" class="button no-bg">Подробнее</a>
-      </div>
-    </mat-expansion-panel>
-    <!-- 3 -->
-    <mat-expansion-panel hideToggle class="custom-expansion">
-      <mat-expansion-panel-header
-        [expandedHeight]="'9rem'"
-        [collapsedHeight]="'9rem'"
-      >
-        <mat-panel-title> Международный аэропорт Внуково </mat-panel-title>
-      </mat-expansion-panel-header>
-      <div class="custom-expansion-info">
-        <p class="caption">Адрес:</p>
-        <p>Московская обл., г. Химки, аэропорт Шереметьево терминал B</p>
-      </div>
-      <div class="custom-expansion-info">
-        <p class="caption">Время работы:</p>
-        <p>Круглосуточно</p>
-      </div>
-
-      <div class="custom-expansion-buttons">
-        <a [routerLink]="['']" class="button">Записаться</a>
-        <a [routerLink]="['']" class="button no-bg">Подробнее</a>
-      </div>
-    </mat-expansion-panel>
-  </div>
-  <div class="page-container">
-    <button class="accent button service-detail-signup">Записаться</button>
-
-    <!-- tabs -->
-    <div class="tabs">
-      <owl-carousel-o [options]="customOptions" #owlElement>
-        <ng-template
-          carouselSlide
-          [width]="tab.labelWidth"
-          [id]="tab.id"
-          *ngFor="let tab of tabs; index as i"
+        <mat-expansion-panel-header
+          [expandedHeight]="'9rem'"
+          [collapsedHeight]="'9rem'"
         >
-          <div
-            class="tab-label"
-            [class.selected]="activeLabel === tab.id"
-            (click)="selectTab(tab)"
-          >
-            {{ tab.label }}
-          </div>
-        </ng-template>
-      </owl-carousel-o>
+          <mat-panel-title>
+            {{ point.name }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="custom-expansion-info">
+          <p class="caption">Адрес:</p>
+          <p>{{ point.address }}</p>
+        </div>
+        <div class="custom-expansion-info">
+          <p class="caption">Время работы:</p>
+          <p>{{ point.worktime }}</p>
+        </div>
 
-      <div class="active-tab" *ngIf="activeTab">
-        {{ activeTab.text }}
-        <br />
-        <a [routerLink]="['/cabinet']" class="detailed-link">
-          <span>Записаться на исследование</span>
-          <svg width="2.2rem" height="1rem">
-            <use xlink:href="assets/sprites/icons.svg#arrow-right"></use>
-          </svg>
-        </a>
+        <div class="custom-expansion-buttons">
+          <a [routerLink]="['/auth', 'login']" class="button">Записаться</a>
+          <a
+            [routerLink]="['/service-points', point.id]"
+            class="button no-bg accent"
+            >Подробнее</a
+          >
+        </div>
+      </mat-expansion-panel>
+    </div>
+
+    <div class="page-container">
+      <!-- tabs -->
+      <div class="tabs">
+        <owl-carousel-o [options]="customOptions" #owlElement>
+          <ng-template
+            carouselSlide
+            [width]="tab.labelWidth"
+            [id]="tab.id"
+            *ngFor="let tab of tabs; index as i"
+          >
+            <div
+              class="tab-label"
+              [class.selected]="activeLabel === tab.id"
+              (click)="selectTab(tab)"
+            >
+              {{ tab.label }}
+            </div>
+          </ng-template>
+        </owl-carousel-o>
+
+        <div class="active-tab" *ngIf="activeTab">
+          {{ activeTab.text }}
+          <br />
+          <a [routerLink]="['/cabinet']" class="detailed-link">
+            <span>Записаться на исследование</span>
+            <svg width="2.2rem" height="1rem">
+              <use xlink:href="assets/sprites/icons.svg#arrow-right"></use>
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<app-footer></app-footer>
+  <app-footer></app-footer>
+</ng-container>

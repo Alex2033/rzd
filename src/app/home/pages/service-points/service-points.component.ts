@@ -44,7 +44,6 @@ export class ServicePointsComponent implements OnInit, AfterViewInit {
     const viewportHeight = window.innerHeight;
 
     this.cards.forEach((card) => {
-      console.log('card:', card);
       const topPos = card.nativeElement.getBoundingClientRect().top;
 
       if (topPos > viewportHeight / 3.5 && topPos < viewportHeight / 1.5) {

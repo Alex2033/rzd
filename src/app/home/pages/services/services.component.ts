@@ -7,6 +7,11 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ServicePointsService } from '../../services/service-points.service';
+import { ServicesService } from '../../services/services.service';
+import { ServicePointInterface } from '../../types/service-point.interface';
+import { ServiceInterface } from '../../types/service.interface';
 
 @Component({
   selector: 'app-services',
@@ -16,9 +21,18 @@ import {
 export class ServicesComponent implements OnInit, AfterViewInit {
   @ViewChildren('services') services: QueryList<ElementRef>;
 
-  constructor() {}
+  public services$: Observable<ServiceInterface[]>;
+  public servicePoints$: Observable<ServicePointInterface[]>;
 
-  ngOnInit(): void {}
+  constructor(
+    private servicesService: ServicesService,
+    private servicePoints: ServicePointsService
+  ) {}
+
+  ngOnInit(): void {
+    this.services$ = this.servicesService.getServices(1);
+    this.servicePoints$ = this.servicePoints.getServicePoints(1);
+  }
 
   ngAfterViewInit(): void {
     // todo: пофиксить этот костыль

@@ -5,11 +5,14 @@
 
   <div class="page-container">
     <div class="services-blocks">
-      <!-- 1 -->
-      <div class="services-block" #services>
+      <div
+        class="services-block"
+        #services
+        [routerLink]="['/services', service.id]"
+        *ngFor="let service of services$ | async"
+      >
         <h2 class="services-block-title">
-          Экспресс тест на COVID-19 (качетсвенное определение РНК короновируса
-          SARS-COV-2)
+          {{ service.name }}
         </h2>
         <div class="infocard-field">
           <div class="infocard-icon">
@@ -17,7 +20,7 @@
               <use xlink:href="assets/sprites/icons.svg#calendar"></use>
             </svg>
           </div>
-          <span>1 час</span>
+          <span>{{ service.duration }}</span>
         </div>
         <div class="infocard-field">
           <div class="infocard-icon">
@@ -25,41 +28,18 @@
               <use xlink:href="assets/sprites/icons.svg#gps"></use>
             </svg>
           </div>
-          <span>Доступно в <a [routerLink]="['']">3 мед. центрах</a></span>
+          <span
+            >Доступно в
+            <a [routerLink]="['/service-points']"
+              >{{ (servicePoints$ | async)?.length }} мед. центрах</a
+            ></span
+          >
         </div>
-        <div class="service-price">2750 руб</div>
+        <div class="service-price">
+          {{ service.price }} {{ service.priceType }}
+        </div>
         <button
-          [routerLink]="['/services', 1]"
-          class="button stroke services-block-button"
-        >
-          Записаться
-        </button>
-      </div>
-      <!-- 2 -->
-      <div class="services-block" #services>
-        <h2 class="services-block-title">
-          Стандартный тест на COVID-19 (качественное определение РНК
-          коронавируса SARS-CoV-2)
-        </h2>
-        <div class="infocard-field">
-          <div class="infocard-icon">
-            <svg width="1.8rem" height="1.8rem">
-              <use xlink:href="assets/sprites/icons.svg#calendar"></use>
-            </svg>
-          </div>
-          <span>24 часа</span>
-        </div>
-        <div class="infocard-field">
-          <div class="infocard-icon">
-            <svg width="1.4rem" height="1.8rem">
-              <use xlink:href="assets/sprites/icons.svg#gps"></use>
-            </svg>
-          </div>
-          <span>Доступно в <a [routerLink]="['']">3 мед. центрах</a></span>
-        </div>
-        <div class="service-price">1800 руб</div>
-        <button
-          [routerLink]="['/services', 2]"
+          [routerLink]="['/auth', 'login']"
           class="button stroke services-block-button"
         >
           Записаться
