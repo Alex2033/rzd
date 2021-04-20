@@ -1,6 +1,11 @@
 export interface ServicePointInterface {
   id: number;
-  title: string;
-  locationText: string;
-  timeText: string;
+  extId: string;
+  name: string;
+  address: string;
+  location: string;
+  worktime: string;
+  contacts: string;
+  latitude: number;
+  longtitude: number;
 }

@@ -1,38 +1,50 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { of } from 'rxjs';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+import { first } from 'rxjs/operators';
 import { DictionaryRecord } from '../types/dictionary-record.interface';
-import { LanguageInterface } from '../types/language.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LanguageService {
-  public activeLanguage: BehaviorSubject<LanguageInterface> = new BehaviorSubject<LanguageInterface>(
-    {} as LanguageInterface
-  );
-  private langId: number = 1;
+  public langId: BehaviorSubject<number> = new BehaviorSubject<number>(1);
 
-  constructor(private http: HttpClient) {}
+  private resources: [DictionaryRecord[]?] = [];
 
-  getLanguages(): Observable<LanguageInterface[]> {
-    return this.http
-      .get<LanguageInterface[]>(environment.api + 'languages')
-      .pipe(
-        tap((languages) => {
-          const rusLang = languages.find((lang) => lang.langId === 1);
-          this.activeLanguage.next(rusLang);
-        })
-      );
+  constructor(private http: HttpClient) {
+    this.init();
   }
 
-  get(langId: number): Observable<DictionaryRecord[]> {
-    const urlParams =
-      langId === undefined ? '' : '?langId=' + langId.toString();
+  get(key: string) {
+    for (let resource of this.resources) {
+      let element = resource.find((x) => {
+        return x.key === key;
+      });
+      if (element) {
+        return element.value;
+      }
+    }
+    return key;
+  }
+
+  init(langId: number = 1) {
+    this.loadFromLocal(langId)
+      .pipe(first())
+      .subscribe((res: any) => {
+        this.resources = res;
+      });
+  }
+
+  setLangId(langId: number = 1): Observable<void> {
+    this.langId.next(langId);
+    return of(void 0);
+  }
+
+  loadFromLocal(langId: number): Observable<DictionaryRecord[]> {
     return this.http.get<DictionaryRecord[]>(
-      environment.api + 'dictionary' + urlParams
+      `assets/dictionaries/${langId}.json`
     );
   }
 }

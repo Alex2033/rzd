@@ -21,7 +21,10 @@ export class ServicesComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {
-    this.focusBlock();
+    // todo: пофиксить этот костыль
+    setTimeout(() => {
+      this.focusBlock();
+    }, 500);
   }
 
   @HostListener('window:scroll', ['$event']) checkScroll() {

@@ -7,6 +7,8 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ServicePointsService } from '../../services/service-points.service';
 import { ServicePointInterface } from '../../types/service-point.interface';
 
 @Component({
@@ -19,36 +21,19 @@ export class ServicePointsComponent implements OnInit, AfterViewInit {
 
   public searchText: string = '';
 
-  public points: ServicePointInterface[] = [
-    {
-      id: 1,
-      title: 'Международный аэропорт Шереметьево, терминал B',
-      locationText:
-        'Московская обл., г. Химки, аэропорт Шереметьево терминал B',
-      timeText: 'Круглосуточно',
-    },
-    {
-      id: 2,
-      title: 'Международный аэропорт Шереметьево, терминал D',
-      locationText:
-        'Московская обл., г. Химки, аэропорт Шереметьево терминал D',
-      timeText: 'Круглосуточно',
-    },
-    {
-      id: 3,
-      title: 'Международный аэропорт Внуково',
-      locationText:
-        'г. Москва, Рейсовая 2-ая улица, дом 2, корпус 4, сооружение 1',
-      timeText: 'Круглосуточно',
-    },
-  ];
+  public points$: Observable<ServicePointInterface[]>;
 
-  constructor() {}
+  constructor(private servicePoints: ServicePointsService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.points$ = this.servicePoints.getServicePoints(1);
+  }
 
   ngAfterViewInit(): void {
-    this.focusBlock();
+    // todo: пофиксить этот костыль
+    setTimeout(() => {
+      this.focusBlock();
+    }, 500);
   }
 
   @HostListener('window:scroll', ['$event']) checkScroll() {
@@ -59,6 +44,7 @@ export class ServicePointsComponent implements OnInit, AfterViewInit {
     const viewportHeight = window.innerHeight;
 
     this.cards.forEach((card) => {
+      console.log('card:', card);
       const topPos = card.nativeElement.getBoundingClientRect().top;
 
       if (topPos > viewportHeight / 3.5 && topPos < viewportHeight / 1.5) {

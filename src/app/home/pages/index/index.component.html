@@ -110,68 +110,48 @@
     <h2 class="section-title">Какой тест можно сдать прямо в аэропорту?</h2>
   </div>
   <div class="custom-expansions">
-    <!-- 1 -->
-    <mat-expansion-panel hideToggle class="custom-expansion">
+    <mat-expansion-panel
+      hideToggle
+      class="custom-expansion"
+      *ngFor="let service of services$ | async"
+    >
       <mat-expansion-panel-header
         [expandedHeight]="'9rem'"
         [collapsedHeight]="'9rem'"
       >
         <mat-panel-title>
-          Экспресс тест на COVID-19 (качетсвенное определение РНК короновируса
-          SARS-COV-2)
+          {{ service.name }}
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="custom-expansion-info">
         <p class="caption">Стоимость анализа:</p>
-        <p>2750 рублей</p>
+        <p>{{ service.price }} {{ service.priceType }}</p>
       </div>
       <div class="custom-expansion-info">
         <p class="caption">Срок исполнения:</p>
-        <p>1 час</p>
+        <p>{{ service.duration }}</p>
       </div>
       <div class="custom-expansion-info">
         <p class="caption">Местоположение:</p>
-        <p>Доступно в <a [routerLink]="['']">3 мед. центрах</a></p>
+        <p>
+          Доступно в
+          <a [routerLink]="['']"
+            >{{ (servicePoints$ | async)?.length }} мед. центрах</a
+          >
+        </p>
       </div>
 
       <div class="custom-expansion-buttons">
-        <a [routerLink]="['']" class="button">Записаться</a>
-        <a [routerLink]="['']" class="button no-bg">Подробнее</a>
-      </div>
-    </mat-expansion-panel>
-    <!-- 2 -->
-    <mat-expansion-panel hideToggle class="custom-expansion">
-      <mat-expansion-panel-header
-        [expandedHeight]="'9rem'"
-        [collapsedHeight]="'9rem'"
-      >
-        <mat-panel-title>
-          Стандартный тест на COVID-19 (качественное определение РНК
-          коронавируса SARS-CoV-2)
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <div class="custom-expansion-info">
-        <p class="caption">Стоимость анализа:</p>
-        <p>1800 рублей</p>
-      </div>
-      <div class="custom-expansion-info">
-        <p class="caption">Срок исполнения:</p>
-        <p>24 часа</p>
-      </div>
-      <div class="custom-expansion-info">
-        <p class="caption">Местоположение:</p>
-        <p>Доступно в <a [routerLink]="['']">3 мед. центрах</a></p>
-      </div>
-
-      <div class="custom-expansion-buttons">
-        <a [routerLink]="['']" class="button">Записаться</a>
-        <a [routerLink]="['']" class="button no-bg">Подробнее</a>
+        <a [routerLink]="['/auth', 'login']" class="button">Записаться</a>
+        <a [routerLink]="['/services', 1]" class="button no-bg accent"
+          >Подробнее</a
+        >
       </div>
     </mat-expansion-panel>
   </div>
 
   <div class="page-container">
-    <a [routerLink]="['']" class="detailed-link">
+    <a [routerLink]="['/services']" class="detailed-link">
       <span>Посмотреть все</span>
       <svg width="2.2rem" height="1rem">
         <use xlink:href="assets/sprites/icons.svg#arrow-right"></use>
@@ -192,79 +172,40 @@
     </div>
   </div>
   <div class="custom-expansions">
-    <!-- 1 -->
-    <mat-expansion-panel hideToggle class="custom-expansion">
+    <mat-expansion-panel
+      hideToggle
+      class="custom-expansion"
+      *ngFor="let point of servicePoints$ | async"
+    >
       <mat-expansion-panel-header
         [expandedHeight]="'9rem'"
         [collapsedHeight]="'9rem'"
       >
         <mat-panel-title>
-          Международный аэропорт Шереметьево, терминал B
+          {{ point.name }}
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="custom-expansion-info">
         <p class="caption">Адрес:</p>
-        <p>Московская обл., г. Химки, аэропорт Шереметьево терминал B</p>
+        <p>{{ point.address }}</p>
       </div>
       <div class="custom-expansion-info">
         <p class="caption">Время работы:</p>
-        <p>Круглосуточно</p>
+        <p>{{ point.worktime }}</p>
       </div>
 
       <div class="custom-expansion-buttons">
-        <a [routerLink]="['']" class="button">Записаться</a>
-        <a [routerLink]="['']" class="button no-bg">Подробнее</a>
-      </div>
-    </mat-expansion-panel>
-    <!-- 2 -->
-    <mat-expansion-panel hideToggle class="custom-expansion">
-      <mat-expansion-panel-header
-        [expandedHeight]="'9rem'"
-        [collapsedHeight]="'9rem'"
-      >
-        <mat-panel-title>
-          Международный аэропорт Шереметьево, терминал D
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <div class="custom-expansion-info">
-        <p class="caption">Адрес:</p>
-        <p>Московская обл., г. Химки, аэропорт Шереметьево терминал D</p>
-      </div>
-      <div class="custom-expansion-info">
-        <p class="caption">Время работы:</p>
-        <p>Круглосуточно</p>
-      </div>
-
-      <div class="custom-expansion-buttons">
-        <a [routerLink]="['']" class="button">Записаться</a>
-        <a [routerLink]="['']" class="button no-bg">Подробнее</a>
-      </div>
-    </mat-expansion-panel>
-    <!-- 3 -->
-    <mat-expansion-panel hideToggle class="custom-expansion">
-      <mat-expansion-panel-header
-        [expandedHeight]="'9rem'"
-        [collapsedHeight]="'9rem'"
-      >
-        <mat-panel-title> Международный аэропорт Внуково </mat-panel-title>
-      </mat-expansion-panel-header>
-      <div class="custom-expansion-info">
-        <p class="caption">Адрес:</p>
-        <p>Московская обл., г. Химки, аэропорт Шереметьево терминал B</p>
-      </div>
-      <div class="custom-expansion-info">
-        <p class="caption">Время работы:</p>
-        <p>Круглосуточно</p>
-      </div>
-
-      <div class="custom-expansion-buttons">
-        <a [routerLink]="['']" class="button">Записаться</a>
-        <a [routerLink]="['']" class="button no-bg">Подробнее</a>
+        <a [routerLink]="['/auth', 'login']" class="button">Записаться</a>
+        <a
+          [routerLink]="['/service-points', point.id]"
+          class="button no-bg accent"
+          >Подробнее</a
+        >
       </div>
     </mat-expansion-panel>
   </div>
   <div class="page-container">
-    <a [routerLink]="['']" class="detailed-link">
+    <a [routerLink]="['/service-points']" class="detailed-link">
       <span>Подробнее</span>
       <svg width="2.2rem" height="1rem">
         <use xlink:href="assets/sprites/icons.svg#arrow-right"></use>

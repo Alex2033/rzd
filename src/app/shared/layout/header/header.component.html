@@ -8,10 +8,7 @@
     <div class="spacer"></div>
 
     <!-- language -->
-    <div
-      class="language-select"
-      *ngIf="activeLanguage$ | async as activeLanguage"
-    >
+    <div class="language-select">
       <div class="flag">
         <img [src]="activeLanguage.flag" alt="country flag" />
       </div>
@@ -32,7 +29,7 @@
         <li
           (click)="setActiveLanguage(language)"
           class="language-item"
-          *ngFor="let language of languages$ | async"
+          *ngFor="let language of languages"
         >
           <ng-container *ngIf="activeLanguage['langId'] !== language['langId']">
             <img [src]="language.flag" alt="country flag" />

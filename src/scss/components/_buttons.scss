@@ -22,6 +22,10 @@
   &.no-bg {
     background-color: transparent;
     color: $primary;
+
+    &.accent {
+      color: $accent;
+    }
   }
 
   &.primary {

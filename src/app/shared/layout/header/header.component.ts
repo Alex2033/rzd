@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { first } from 'rxjs/internal/operators/first';
 import { LanguageService } from '../../services/language.service';
 import { MenuService } from '../../services/menu.service';
 import { LanguageInterface } from '../../types/language.interface';
@@ -10,22 +11,40 @@ import { LanguageInterface } from '../../types/language.interface';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  public languages$: Observable<LanguageInterface[]>;
-  public activeLanguage$: Observable<LanguageInterface>;
+  public activeLanguage: LanguageInterface = {} as LanguageInterface;
   public showDropdown: boolean = false;
+  public languages: LanguageInterface[] = [
+    {
+      langId: 1,
+      flag: 'assets/flags/russia.svg',
+      label: 'Rus',
+    },
+    {
+      langId: 2,
+      flag: 'assets/flags/eng.svg',
+      label: 'En',
+    },
+  ];
 
   constructor(
-    private language: LanguageService,
-    private menuService: MenuService
+    private menuService: MenuService,
+    private language: LanguageService
   ) {}
 
   ngOnInit(): void {
-    this.languages$ = this.language.getLanguages();
-    this.activeLanguage$ = this.language.activeLanguage;
+    this.language.langId.subscribe((langId: number) => {
+      if (langId) {
+        this.activeLanguage = this.languages.find(
+          (language: LanguageInterface) => {
+            return language.langId === langId;
+          }
+        );
+      }
+    });
   }
 
   setActiveLanguage(language: LanguageInterface): void {
-    this.language.activeLanguage.next(language);
+    this.activeLanguage = language;
     this.showDropdown = false;
   }
 
