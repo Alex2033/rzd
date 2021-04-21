@@ -7,7 +7,11 @@
 
 // introduce
 .introduce-section {
-  padding-bottom: 1.6rem;
+  padding-bottom: 3.2rem;
+
+  .home-title {
+    max-width: 74%;
+  }
 }
 
 .introduce-image {
@@ -21,6 +25,14 @@
 
 .introduce-text {
   margin-top: 1.8rem;
+  color: $dark;
+  line-height: 1.5;
+
+  > * {
+    &:not(:first-child) {
+      margin-top: 2.6rem;
+    }
+  }
 }
 
 .introduce-title {
@@ -30,7 +42,7 @@
 }
 
 .introduce-button {
-  margin-top: 3rem;
+  margin-top: 1.6rem;
 }
 
 .login-link {
