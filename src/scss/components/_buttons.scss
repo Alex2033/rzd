@@ -11,7 +11,7 @@
 
   > * {
     &:not(:first-child) {
-      margin-left: 0.8rem;
+      margin-left: 1.6rem;
     }
   }
 
@@ -57,7 +57,7 @@
   flex-shrink: 0;
 }
 
-.buttons-group {
+.buttons {
   position: fixed;
   z-index: 100;
   left: 0;
@@ -71,6 +71,24 @@
   > * {
     &:not(:first-child) {
       margin-left: 1.6rem;
+    }
+  }
+
+  &.group {
+    .button {
+      font-size: 1.2rem;
+
+      > * {
+        &:not(:first-child) {
+          margin-left: 0.8rem;
+        }
+      }
+    }
+
+    > * {
+      &:not(:first-child) {
+        margin-left: 0.8rem;
+      }
     }
   }
 
