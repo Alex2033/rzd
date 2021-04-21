@@ -1,4 +1,4 @@
-import { AfterViewInit } from '@angular/core';
+import { AfterViewInit, OnDestroy } from '@angular/core';
 import {
   Component,
   ElementRef,
@@ -7,7 +7,7 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ServicePointsService } from '../../services/service-points.service';
 import { ServicePointInterface } from '../../types/service-point.interface';
 
@@ -16,12 +16,14 @@ import { ServicePointInterface } from '../../types/service-point.interface';
   templateUrl: './service-points.component.html',
   styleUrls: ['./service-points.component.scss'],
 })
-export class ServicePointsComponent implements OnInit, AfterViewInit {
+export class ServicePointsComponent
+  implements OnInit, AfterViewInit, OnDestroy {
   @ViewChildren('cards') cards: QueryList<ElementRef>;
 
   public searchText: string = '';
-
   public points$: Observable<ServicePointInterface[]>;
+
+  private cardsSub: Subscription;
 
   constructor(private servicePoints: ServicePointsService) {}
 
@@ -30,10 +32,15 @@ export class ServicePointsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // todo: пофиксить этот костыль
-    setTimeout(() => {
+    this.cardsSub = this.cards.changes.subscribe(() => {
       this.focusBlock();
-    }, 500);
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.cardsSub) {
+      this.cardsSub.unsubscribe();
+    }
   }
 
   @HostListener('window:scroll', ['$event']) checkScroll() {

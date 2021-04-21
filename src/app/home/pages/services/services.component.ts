@@ -3,11 +3,12 @@ import {
   Component,
   ElementRef,
   HostListener,
+  OnDestroy,
   OnInit,
   QueryList,
   ViewChildren,
 } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ServicePointsService } from '../../services/service-points.service';
 import { ServicesService } from '../../services/services.service';
 import { ServicePointInterface } from '../../types/service-point.interface';
@@ -18,11 +19,13 @@ import { ServiceInterface } from '../../types/service.interface';
   templateUrl: './services.component.html',
   styleUrls: ['./services.component.scss'],
 })
-export class ServicesComponent implements OnInit, AfterViewInit {
+export class ServicesComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChildren('services') services: QueryList<ElementRef>;
 
   public services$: Observable<ServiceInterface[]>;
   public servicePoints$: Observable<ServicePointInterface[]>;
+
+  private servicesSub: Subscription;
 
   constructor(
     private servicesService: ServicesService,
@@ -35,10 +38,15 @@ export class ServicesComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // todo: пофиксить этот костыль
-    setTimeout(() => {
+    this.servicesSub = this.services.changes.subscribe(() => {
       this.focusBlock();
-    }, 500);
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.servicesSub) {
+      this.servicesSub.unsubscribe();
+    }
   }
 
   @HostListener('window:scroll', ['$event']) checkScroll() {
