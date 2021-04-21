@@ -31,7 +31,7 @@ export class ServicesComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.services$ = this.servicesService.getServices();
-    this.servicePoints$ = this.servicePoints.getServicePoints(1);
+    this.servicePoints$ = this.servicePoints.getServicePoints();
   }
 
   ngAfterViewInit(): void {
