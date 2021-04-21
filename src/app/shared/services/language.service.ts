@@ -13,9 +13,7 @@ export class LanguageService {
 
   private resources: [DictionaryRecord[]?] = [];
 
-  constructor(private http: HttpClient) {
-    this.init();
-  }
+  constructor(private http: HttpClient) {}
 
   get(key: string) {
     for (let resource of this.resources) {
@@ -29,7 +27,18 @@ export class LanguageService {
     return key;
   }
 
-  init(langId: number = 1) {
+  init(langId: number): void {
+    const newLangId = +localStorage.getItem('newLangId');
+
+    if (!langId && newLangId) {
+      langId = newLangId;
+    }
+
+    if (!langId) {
+      langId = 1;
+    }
+
+    this.setLangId(langId);
     this.loadFromLocal(langId)
       .pipe(first())
       .subscribe((res: any) => {
@@ -37,9 +46,13 @@ export class LanguageService {
       });
   }
 
-  setLangId(langId: number = 1): Observable<void> {
+  setLangId(langId: number = 1): void {
     this.langId.next(langId);
-    return of(void 0);
+    localStorage.setItem('newLangId', JSON.stringify(langId));
+  }
+
+  getLangId(): Observable<number> {
+    return this.langId.asObservable();
   }
 
   loadFromLocal(langId: number): Observable<DictionaryRecord[]> {

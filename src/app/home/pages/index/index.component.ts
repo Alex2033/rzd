@@ -21,9 +21,9 @@ export class IndexComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.services$ = this.services.getServices(1);
+    this.services$ = this.services.getServices();
     this.servicePoints$ = this.servicePoints
-      .getServicePoints(1)
+      .getServicePoints()
       .pipe(publish(), refCount());
   }
 }

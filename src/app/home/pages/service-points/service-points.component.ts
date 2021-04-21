@@ -26,7 +26,7 @@ export class ServicePointsComponent implements OnInit, AfterViewInit {
   constructor(private servicePoints: ServicePointsService) {}
 
   ngOnInit(): void {
-    this.points$ = this.servicePoints.getServicePoints(1);
+    this.points$ = this.servicePoints.getServicePoints();
   }
 
   ngAfterViewInit(): void {

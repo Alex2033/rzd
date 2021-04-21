@@ -28,7 +28,7 @@ export class ServicePointDetailComponent implements OnInit {
       .pipe(
         switchMap((params: Params) => {
           this.point$ = this.points.getServicePoint(+params.id);
-          this.services$ = this.services.getServices(1, +params.id);
+          this.services$ = this.services.getServices(+params.id);
           return of();
         })
       )

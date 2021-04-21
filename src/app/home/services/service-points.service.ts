@@ -9,11 +9,13 @@ import { ServicePointInterface } from '../types/service-point.interface';
   providedIn: 'root',
 })
 export class ServicePointsService {
+  public langId: number;
+
   constructor(private http: HttpClient) {}
 
   getServicePoints(
-    langId: number = 1,
-    serviceId?: number
+    serviceId?: number,
+    langId: number = this.langId
   ): Observable<ServicePointInterface[]> {
     return this.http.get<ServicePointInterface[]>(
       environment.api +
@@ -23,11 +25,8 @@ export class ServicePointsService {
     );
   }
 
-  getServicePoint(
-    id: number,
-    langId: number = 1
-  ): Observable<ServicePointInterface> {
-    return this.getServicePoints(langId).pipe(
+  getServicePoint(id: number): Observable<ServicePointInterface> {
+    return this.getServicePoints().pipe(
       map((services) => services.find((service) => service.id === id))
     );
   }

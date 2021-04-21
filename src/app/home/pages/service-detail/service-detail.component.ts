@@ -69,7 +69,7 @@ export class ServiceDetailComponent implements OnInit {
     this.route.params
       .pipe(
         switchMap((params: Params) => {
-          this.points$ = this.points.getServicePoints(1, +params.id);
+          this.points$ = this.points.getServicePoints(+params.id);
           return this.services.getService(+params.id);
         })
       )

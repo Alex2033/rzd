@@ -1,8 +1,19 @@
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import {
+  ActivatedRoute,
+  Event,
+  NavigationEnd,
+  Params,
+  Router,
+} from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { switchMap, takeWhile } from 'rxjs/operators';
+import {
+  distinctUntilChanged,
+  filter,
+  switchMap,
+  takeWhile,
+} from 'rxjs/operators';
 import { LanguageService } from './shared/services/language.service';
 import { MenuService } from './shared/services/menu.service';
 
@@ -29,7 +40,8 @@ export class AppComponent implements OnInit {
   constructor(
     private menuService: MenuService,
     private route: ActivatedRoute,
-    private language: LanguageService
+    private language: LanguageService,
+    private router: Router
   ) {
     this.getQueryParams();
   }
@@ -39,13 +51,13 @@ export class AppComponent implements OnInit {
   }
 
   getQueryParams(): void {
-    this.route.queryParams
+    this.router.events
       .pipe(
+        filter((event: Event) => event instanceof NavigationEnd),
+        switchMap(() => this.route.queryParams),
+        distinctUntilChanged(),
         switchMap((params: Params) => {
-          if (+params.langId === 2) {
-            this.language.setLangId(2);
-            this.language.init(2);
-          }
+          this.language.init(+params.langId);
           return of(void 0);
         })
       )

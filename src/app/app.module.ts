@@ -10,6 +10,7 @@ import { NavigationMenuComponent } from './shared/layout/navigation-menu/navigat
 import { UserMenuComponent } from './shared/layout/user-menu/user-menu.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { PlugComponent } from './plug/plug.component';
+import { LanguagesResolver } from './shared/resolvers/language.resolver';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { PlugComponent } from './plug/plug.component';
     HttpClientModule,
     MatExpansionModule,
   ],
-  providers: [],
+  providers: [LanguagesResolver],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

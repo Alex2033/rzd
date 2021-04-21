@@ -9,9 +9,13 @@ import { ServiceInterface } from '../types/service.interface';
   providedIn: 'root',
 })
 export class ServicesService {
+  public langId: number;
   constructor(private http: HttpClient) {}
 
-  getServices(langId: number, point?: number): Observable<ServiceInterface[]> {
+  getServices(
+    point?: number,
+    langId: number = this.langId
+  ): Observable<ServiceInterface[]> {
     return this.http.get<ServiceInterface[]>(
       environment.api +
         `api/contents/services?lang=${langId}${
@@ -20,8 +24,8 @@ export class ServicesService {
     );
   }
 
-  getService(id: number, langId: number = 1): Observable<ServiceInterface> {
-    return this.getServices(langId).pipe(
+  getService(id: number): Observable<ServiceInterface> {
+    return this.getServices().pipe(
       map((services) => services.find((service) => service.id === id))
     );
   }
