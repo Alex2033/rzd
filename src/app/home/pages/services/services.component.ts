@@ -9,6 +9,7 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
+import { publish, refCount } from 'rxjs/operators';
 import { ServicePointsService } from '../../services/service-points.service';
 import { ServicesService } from '../../services/services.service';
 import { ServicePointInterface } from '../../types/service-point.interface';
@@ -34,7 +35,9 @@ export class ServicesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.services$ = this.servicesService.getServices();
-    this.servicePoints$ = this.servicePoints.getServicePoints();
+    this.servicePoints$ = this.servicePoints
+      .getServicePoints()
+      .pipe(publish(), refCount());
   }
 
   ngAfterViewInit(): void {
@@ -59,7 +62,7 @@ export class ServicesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.services.forEach((card) => {
       const topPos = card.nativeElement.getBoundingClientRect().top;
 
-      if (topPos > viewportHeight / 4.5 && topPos < viewportHeight / 1.3) {
+      if (topPos > viewportHeight / 4.5 && topPos < viewportHeight / 1.4) {
         card.nativeElement.classList.add('focused');
       } else {
         card.nativeElement.classList.remove('focused');
