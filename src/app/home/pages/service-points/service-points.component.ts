@@ -50,10 +50,23 @@ export class ServicePointsComponent
   focusBlock(): void {
     const viewportHeight = window.innerHeight;
 
-    this.cards.forEach((card) => {
+    this.cards.forEach((card, index) => {
       const topPos = card.nativeElement.getBoundingClientRect().top;
 
-      if (topPos > viewportHeight / 3.5 && topPos < viewportHeight / 1.5) {
+      if (this.cards.length <= 1) {
+        card.nativeElement.classList.add('focused');
+      } else if (
+        topPos > viewportHeight / 4.5 &&
+        topPos < viewportHeight / 1.4
+      ) {
+        if (this.cards.length > 1) {
+          this.cards.forEach((filteredCard, filteredIndex) => {
+            if (index !== filteredIndex) {
+              filteredCard.nativeElement.classList.remove('focused');
+            }
+          });
+        }
+
         card.nativeElement.classList.add('focused');
       } else {
         card.nativeElement.classList.remove('focused');
