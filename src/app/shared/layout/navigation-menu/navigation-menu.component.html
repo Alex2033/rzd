@@ -5,47 +5,15 @@
   <nav class="navigation">
     <ul class="navigation-list">
       <li class="navigation-list-item">
-        <mat-expansion-panel
-          hideToggle
-          class="nav-item navigation-expansion-panel"
+        <a
+          [routerLink]="['/']"
+          routerLinkActive="active"
+          class="nav-item nav-link"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeMenu()"
         >
-          <mat-expansion-panel-header
-            [expandedHeight]="'6rem'"
-            [collapsedHeight]="'6rem'"
-          >
-            <mat-panel-title> Путешественникам </mat-panel-title>
-          </mat-expansion-panel-header>
-          <ul class="expansion-nav">
-            <li
-              class="expansion-nav-item"
-              [routerLink]="['/']"
-              (click)="closeMenu()"
-            >
-              <a href="#test-necessity"> Для чего нужно</a>
-            </li>
-            <li
-              (click)="closeMenu()"
-              [routerLink]="['/']"
-              class="expansion-nav-item"
-            >
-              <a href="#how-works">Как работает</a>
-            </li>
-            <li
-              (click)="closeMenu()"
-              [routerLink]="['/']"
-              class="expansion-nav-item"
-            >
-              <a href="#test-type">Какие анализы</a>
-            </li>
-            <li
-              (click)="closeMenu()"
-              [routerLink]="['/']"
-              class="expansion-nav-item"
-            >
-              <a href="#test-location">Где находится</a>
-            </li>
-          </ul>
-        </mat-expansion-panel>
+          <span>Путешественникам</span>
+        </a>
       </li>
 
       <li class="navigation-list-item">
@@ -53,6 +21,7 @@
           [routerLink]="['/services']"
           class="nav-item nav-link"
           (click)="closeMenu()"
+          routerLinkActive="active"
         >
           <span>Услуги</span>
         </a>
@@ -62,6 +31,7 @@
           [routerLink]="['/service-points']"
           class="nav-item nav-link"
           (click)="closeMenu()"
+          routerLinkActive="active"
         >
           <span>Точки обслуживания</span>
         </a>

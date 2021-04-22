@@ -1,5 +1,4 @@
-import { DOCUMENT } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuService } from '../../services/menu.service';
 
@@ -9,11 +8,7 @@ import { MenuService } from '../../services/menu.service';
   styleUrls: ['./navigation-menu.component.scss'],
 })
 export class NavigationMenuComponent implements OnInit {
-  constructor(
-    @Inject(DOCUMENT) private document,
-    private menu: MenuService,
-    private router: Router
-  ) {}
+  constructor(private menu: MenuService, private router: Router) {}
 
   ngOnInit(): void {}
 

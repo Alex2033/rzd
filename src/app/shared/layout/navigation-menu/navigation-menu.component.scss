@@ -27,66 +27,9 @@
 }
 
 .navigation-list-item {
-  &:not(:last-child):not(:first-child) {
+  &:not(:last-child) {
     span {
       border-bottom: 1px solid rgba($light-gray, 0.8);
-    }
-  }
-}
-
-.navigation-expansion-panel {
-  box-shadow: none !important;
-
-  .mat-expansion-panel-header {
-    padding: 0 2rem;
-    font-size: 1.8rem;
-    line-height: 1.284;
-    font-family: "Open Sans", sans-serif;
-    text-transform: uppercase;
-  }
-
-  ::ng-deep {
-    .mat-content {
-      position: relative;
-      overflow: visible;
-
-      &::after {
-        content: "";
-        position: absolute;
-        top: calc(50% - 0.5rem);
-        color: $gray;
-        right: 0;
-        border-style: solid;
-        border-width: 0 0.2rem 0.2rem 0;
-        content: "";
-        display: inline-block;
-        padding: 0.3rem;
-        transform: rotate(-45deg);
-        vertical-align: middle;
-        transition: transform 0.15s;
-      }
-    }
-
-    .mat-expansion-panel-body {
-      padding: 2.4rem 5rem;
-      background-color: rgba(215, 215, 215, 0.3);
-    }
-  }
-
-  &.mat-expanded {
-    border-bottom: none;
-
-    ::ng-deep {
-      mat-panel-title {
-        color: $primary;
-      }
-
-      .mat-content {
-        &::after {
-          transform: rotate(45deg);
-          color: $primary;
-        }
-      }
     }
   }
 }
@@ -106,26 +49,13 @@
     width: 100%;
     display: inline-block;
   }
-}
 
-.expansion-nav {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-
-  > * {
-    &:not(:first-child) {
-      margin-top: 2.5rem;
+  &.active,
+  &:focus,
+  &:active {
+    span {
+      color: $primary;
     }
-  }
-}
-
-.expansion-nav-item {
-  a {
-    font-size: 1.8rem;
-    line-height: 1.284;
-    color: $dark;
-    text-decoration: none;
   }
 }
 
