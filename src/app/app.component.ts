@@ -54,7 +54,12 @@ export class AppComponent implements OnInit {
     this.router.events
       .pipe(
         filter((event: Event) => event instanceof NavigationEnd),
-        switchMap(() => this.route.queryParams),
+        switchMap((event: NavigationEnd) => {
+          if (!event.url.includes('register')) {
+            localStorage.removeItem('registerForm');
+          }
+          return this.route.queryParams;
+        }),
         distinctUntilChanged(),
         switchMap((params: Params) => {
           this.language.init(+params.langId);

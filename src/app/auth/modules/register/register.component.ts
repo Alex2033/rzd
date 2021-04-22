@@ -46,22 +46,15 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.createForm();
     this.initializeValues();
+    this.getFormLocalStorage();
   }
 
-  initializeValues(): void {
-    this.nameControl = this.name;
-    this.phoneControl = this.phone;
-    this.emailControl = this.email;
-  }
+  getFormLocalStorage(): void {
+    const savedData = JSON.parse(localStorage.getItem('registerForm'));
 
-  timer(): void {
-    this.counter$ = timer(0, 1000).pipe(
-      take(this.count),
-      map(() => --this.count),
-      finalize(() => {
-        this.resendCode = true;
-      })
-    );
+    if (savedData) {
+      this.registerForm.patchValue(savedData);
+    }
   }
 
   createForm(): void {
@@ -79,6 +72,22 @@ export class RegisterComponent implements OnInit {
         control4: new FormControl(null, [Validators.required]),
       }),
     });
+  }
+
+  initializeValues(): void {
+    this.nameControl = this.name;
+    this.phoneControl = this.phone;
+    this.emailControl = this.email;
+  }
+
+  timer(): void {
+    this.counter$ = timer(0, 1000).pipe(
+      take(this.count),
+      map(() => --this.count),
+      finalize(() => {
+        this.resendCode = true;
+      })
+    );
   }
 
   submit(): void {
@@ -99,10 +108,17 @@ export class RegisterComponent implements OnInit {
 
     this.submitted = true;
     this.registerForm.get('code').reset();
+    localStorage.setItem(
+      'registerForm',
+      JSON.stringify(this.registerForm.value)
+    );
   }
 
   inputKeyup(inputNum: HTMLInputElement, e: any): void {
     const valueLength = inputNum.value.length;
+    const previousSibling = <HTMLInputElement>inputNum.previousElementSibling;
+    const nextSibling = <HTMLInputElement>inputNum.nextElementSibling;
+
     if (
       e.keyCode === 16 ||
       e.keyCode == 9 ||
@@ -119,29 +135,25 @@ export class RegisterComponent implements OnInit {
 
     if (
       (e.keyCode === 8 || e.keyCode === 37) &&
-      inputNum.previousElementSibling &&
-      inputNum.previousElementSibling.tagName === 'INPUT'
+      previousSibling &&
+      previousSibling.tagName === 'INPUT'
     ) {
-      (<HTMLInputElement>inputNum.previousElementSibling).select();
-    } else if (
-      e.keyCode !== 8 &&
-      inputNum.nextElementSibling &&
-      valueLength === 1
-    ) {
-      (<HTMLInputElement>inputNum.nextElementSibling).select();
+      previousSibling.select();
+    } else if (e.keyCode !== 8 && nextSibling && valueLength === 1) {
+      (<HTMLInputElement>nextSibling).select();
     }
 
     this.codeIsValidated();
   }
 
   check(inputNum: HTMLInputElement, e: any): void {
-    if (
-      (e.keyCode === 8 || e.keyCode === 37) &&
-      inputNum.previousElementSibling
-    ) {
-      (<HTMLInputElement>inputNum.previousElementSibling).select();
-    } else if (e.keyCode === 39 && inputNum.nextElementSibling) {
-      (<HTMLInputElement>inputNum.nextElementSibling).select();
+    const previousSibling = <HTMLInputElement>inputNum.previousElementSibling;
+    const nextSibling = <HTMLInputElement>inputNum.nextElementSibling;
+
+    if ((e.keyCode === 8 || e.keyCode === 37) && previousSibling) {
+      previousSibling.select();
+    } else if (e.keyCode === 39 && nextSibling) {
+      nextSibling.select();
     }
   }
 
