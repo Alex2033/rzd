@@ -12,6 +12,8 @@ import { SearchPipe } from '../shared/pipes/search.pipe';
 import { FormsModule } from '@angular/forms';
 import { ServicePointDetailComponent } from './pages/service-point-detail/service-point-detail.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { ParagraphsPipe } from '../shared/pipes/paragraphs.pipe';
+import { PluralRuDirective } from '../shared/directives/plural-ru.directive';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     ServiceDetailComponent,
     SearchPipe,
     ServicePointDetailComponent,
+    ParagraphsPipe,
+    PluralRuDirective,
   ],
   imports: [
     CommonModule,

@@ -18,12 +18,16 @@
     </div>
 
     <h2 class="section-title">
-      {{
-        (points | search: searchText)?.length
-          ? (points | search: searchText)?.length + " медицинских
-      центров"
-          : "По вашему запросу ничего не найдено"
-      }}
+      {{ (points | search: searchText)?.length }}
+      <span
+        appPluralRu=""
+        [value]="(points | search: searchText)?.length"
+        [arVariants]="[
+          'медицинский центр',
+          'медицинских центра',
+          'медицинских центров'
+        ]"
+      ></span>
     </h2>
 
     <div class="service-points-cards" *ngIf="points">

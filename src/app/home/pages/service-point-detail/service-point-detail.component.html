@@ -26,9 +26,10 @@
       </div>
       <div class="infocard-field">
         <div class="caption">Контакты:</div>
-        <div class="infocard-text">
-          {{ point.contacts }}
-        </div>
+        <div
+          class="infocard-text contacts"
+          [innerHTML]="point.contacts | paragraphs"
+        ></div>
         <!-- <div class="infocard-text">
         <a href="tel:89458888888" class="infocard-phone">8 (945) 888 88 88</a>
         - администрация
