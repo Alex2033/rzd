@@ -158,7 +158,7 @@
 
       <div class="custom-expansion-buttons">
         <a [routerLink]="['/auth', 'login']" class="button">Записаться</a>
-        <a [routerLink]="['/services', 1]" class="button no-bg accent"
+        <a [routerLink]="['/services', service.id]" class="button no-bg accent"
           >Подробнее</a
         >
       </div>
@@ -308,7 +308,7 @@
         <mat-panel-title>Как берется тест?</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="custom-expansion-text">
-        <p>Мазок берется зондом из ротоглоткии носоглотки.</p>
+        <p>Мазок берется зондом из ротоглотки и носоглотки.</p>
       </div>
     </mat-expansion-panel>
     <!-- 6 -->
