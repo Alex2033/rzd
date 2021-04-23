@@ -20,14 +20,20 @@
           {{ point.address }}
         </div>
       </div>
-      <div class="infocard-field">
+      <div class="infocard-field infocard-worktime">
         <div class="caption">Время работы:</div>
         <div class="infocard-text">{{ point.worktime }}</div>
+      </div>
+      <div class="infocard-field infocard-location">
+        <div class="caption">Где находится:</div>
+        <div class="infocard-text">
+          {{ point.address }}
+        </div>
       </div>
       <div class="infocard-field">
         <div class="caption">Контакты:</div>
         <div
-          class="infocard-text contacts"
+          class="infocard-text infocard-contacts"
           [innerHTML]="point.contacts | paragraphs"
         ></div>
       </div>
