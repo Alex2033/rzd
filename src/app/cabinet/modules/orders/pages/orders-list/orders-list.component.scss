@@ -48,6 +48,18 @@
   color: $light;
   padding: 0.3rem 0.8rem;
   flex-shrink: 0;
+
+  &.payment-awaiting {
+    background-color: lighten($primary, 17.95%);
+  }
+
+  &.research-awaiting {
+    background-color: $primary;
+  }
+
+  &.completed {
+    background-color: $gray;
+  }
 }
 
 .order-date {

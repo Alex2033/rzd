@@ -27,13 +27,20 @@
               </div>
               <div
                 class="order-status"
-                [ngStyle]="{
-                  'background-color':
-                    order.status === 'payment-awaiting' ? '#00A0DE' : null
+                [ngClass]="{
+                  'payment-awaiting': order.status === 'payment-awaiting',
+                  'research-awaiting': order.status === 'research-awaiting',
+                  completed: order.status === 'completed'
                 }"
               >
                 {{
-                  order.status === "payment-awaiting" ? "Ожидает оплаты" : null
+                  order.status === "payment-awaiting"
+                    ? "Ожидает оплаты"
+                    : order.status === "research-awaiting"
+                    ? "Ожидает исследования"
+                    : order.status === "completed"
+                    ? "Выполнено"
+                    : null
                 }}
               </div>
             </div>
@@ -49,7 +56,7 @@
   </div>
 
   <div class="buttons">
-    <button class="button">
+    <button class="button" [routerLink]="['/cabinet', 'questionnaire']">
       <svg width="1.6rem" height="1.6rem">
         <use xlink:href="assets/sprites/icons.svg#plus"></use>
       </svg>
