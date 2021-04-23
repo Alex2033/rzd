@@ -44,6 +44,7 @@
         </div>
         <button
           [routerLink]="['/auth', 'login']"
+          (click)="$event.stopPropagation()"
           class="button stroke services-block-button"
         >
           Записаться
