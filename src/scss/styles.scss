@@ -151,3 +151,15 @@ img {
     stroke: $accent;
   }
 }
+
+.document-image {
+  min-height: 0rem;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8rem;
+}

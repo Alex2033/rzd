@@ -1,14 +1,50 @@
 <div class="page-content">
   <div class="page-container">
     <h1 class="page-title">Заказы</h1>
-    <div class="subtitle-text">
-      <p>У вас пока нет ни одного заказа.</p>
-    </div>
-    <div class="document-image">
-      <img
-        src="assets/questionnaire/undraw_add_document.svg"
-        alt="undraw add document"
-      />
+
+    <ng-container *ngIf="!(orders$ | async)">
+      <div class="subtitle-text">
+        <p>У вас пока нет ни одного заказа.</p>
+      </div>
+
+      <div class="document-image">
+        <img
+          src="assets/questionnaire/undraw_add_document.svg"
+          alt="undraw add document"
+        />
+      </div>
+    </ng-container>
+
+    <!-- orders -->
+    <div class="orders-container" *ngIf="orders$ | async as orders">
+      <ul class="orders-list">
+        <li class="order-item" *ngFor="let order of orders">
+          <a [routerLink]="['/cabinet', 'orders', order.id]" class="order">
+            <div class="order-top">
+              <div class="order-top-info">
+                <div class="order-date">{{ order.date }}</div>
+                <div class="order-address">{{ order.shortAddress }}</div>
+              </div>
+              <div
+                class="order-status"
+                [ngStyle]="{
+                  'background-color':
+                    order.status === 'payment-awaiting' ? '#00A0DE' : null
+                }"
+              >
+                {{
+                  order.status === "payment-awaiting" ? "Ожидает оплаты" : null
+                }}
+              </div>
+            </div>
+            <div class="orders-users">
+              <div class="order-user" *ngFor="let user of order.services">
+                {{ user.userName }}
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
 

@@ -1,0 +1,69 @@
+@import "theme";
+
+.page-container {
+  min-height: 0rem;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.orders-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.6rem 0 0;
+}
+
+.order {
+  display: block;
+  color: $text;
+  text-decoration: none;
+  padding: 1.2rem 0;
+}
+
+.order-top {
+  display: flex;
+  align-items: flex-start;
+  font-size: 1.2rem;
+  line-height: 1.34;
+  justify-content: space-between;
+
+  > * {
+    &:not(:first-child) {
+      margin-left: 1.4rem;
+    }
+  }
+}
+
+.order-top-info {
+  > * {
+    &:not(:first-child) {
+      margin-top: 0.4rem;
+    }
+  }
+}
+
+.order-status {
+  color: $light;
+  padding: 0.3rem 0.8rem;
+  flex-shrink: 0;
+}
+
+.order-date {
+  font-weight: 600;
+}
+
+.orders-users {
+  margin-top: 0.8rem;
+
+  > * {
+    &:not(:first-child) {
+      margin-top: 0.4rem;
+    }
+  }
+}
+
+.order-user {
+  font-weight: 600;
+}
