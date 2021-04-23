@@ -37,7 +37,12 @@
           [innerHTML]="point.contacts | paragraphs"
         ></div>
       </div>
-      <button class="button accent service-point-button">Записаться</button>
+      <button
+        [routerLink]="['/auth', 'login']"
+        class="button accent service-point-button"
+      >
+        Записаться
+      </button>
     </div>
 
     <!-- services block -->
