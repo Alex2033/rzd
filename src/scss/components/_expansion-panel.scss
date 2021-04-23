@@ -24,7 +24,6 @@
     .custom-expansion-text {
       font-size: 1.6rem;
       line-height: 1.375;
-      font-family: "Open Sans", sans-serif;
     }
 
     .mat-expansion-panel-header {
@@ -34,6 +33,10 @@
     }
 
     ::ng-deep {
+      .mat-expansion-panel-content {
+        font: 400 1.6rem/1.394 "Open Sans", sans-serif;
+      }
+
       .mat-content {
         position: relative;
         overflow: visible;

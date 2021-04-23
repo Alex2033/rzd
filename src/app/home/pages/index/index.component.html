@@ -145,7 +145,7 @@
         <p class="caption">Местоположение:</p>
         <p>
           Доступно в
-          <a [routerLink]="['/service-points']"
+          <a [routerLink]="['/service-points']" class="points-link"
             >{{ (servicePoints$ | async)?.length }}
             <span
               appPluralRu=""
