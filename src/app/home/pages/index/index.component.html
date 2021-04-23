@@ -146,8 +146,13 @@
         <p>
           Доступно в
           <a [routerLink]="['/service-points']"
-            >{{ (servicePoints$ | async)?.length }} мед. центрах</a
-          >
+            >{{ (servicePoints$ | async)?.length }}
+            <span
+              appPluralRu=""
+              [value]="(servicePoints$ | async)?.length"
+              [arVariants]="['мед. центре', 'мед. центрах', 'мед. центрах']"
+            ></span
+          ></a>
         </p>
       </div>
 

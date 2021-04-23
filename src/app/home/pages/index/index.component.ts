@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { publish, refCount } from 'rxjs/operators';
+import { shareReplay } from 'rxjs/operators';
 import { ServicePointsService } from '../../services/service-points.service';
 import { ServicesService } from '../../services/services.service';
 import { ServicePointInterface } from '../../types/service-point.interface';
@@ -24,6 +24,6 @@ export class IndexComponent implements OnInit {
     this.services$ = this.services.getServices();
     this.servicePoints$ = this.servicePoints
       .getServicePoints()
-      .pipe(publish(), refCount());
+      .pipe(shareReplay());
   }
 }
