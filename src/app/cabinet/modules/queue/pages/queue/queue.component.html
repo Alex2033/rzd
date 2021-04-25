@@ -1,0 +1,41 @@
+<div class="page-content">
+  <div class="page-container">
+    <h2 class="queue-title">Моя очередь</h2>
+
+    <p class="queue-text">Запись на исследование</p>
+
+    <h1 class="queue-code-text">H67</h1>
+
+    <div class="queue-code" *ngIf="type !== 'missed-queue'">
+      <img src="assets/cabinet/qr-code.svg" alt="qr code image" />
+    </div>
+
+    <div
+      class="queue-info"
+      *ngIf="!(type === 'late-queue' || type === 'missed-queue')"
+    >
+      <div class="queue-info-block">
+        <div class="queue-info-caption">Перед вами</div>
+        <div class="queue-info-text">15 человек</div>
+      </div>
+      <div class="queue-info-block">
+        <div class="queue-info-caption">Время ожидания</div>
+        <div class="queue-info-text">~40мин</div>
+      </div>
+    </div>
+
+    <div class="status-text">
+      <p>{{ status }}</p>
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button
+      [disabled]="type === 'missed-queue'"
+      class="button"
+      (click)="openConfirmDialog()"
+    >
+      <span>Уведомить за 10 минут</span>
+    </button>
+  </div>
+</div>

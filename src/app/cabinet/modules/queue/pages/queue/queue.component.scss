@@ -1,0 +1,62 @@
+@import "theme";
+
+.page-content {
+  padding: 2.4rem 0 8rem;
+}
+
+.queue-title {
+  font-weight: 600;
+  font-size: 2.2rem;
+  line-height: 1.27;
+  text-align: center;
+}
+
+.queue-text {
+  margin-top: 1.6rem;
+  text-align: center;
+}
+
+.queue-code-text {
+  font-weight: 700;
+  font-size: 7.2rem;
+  line-height: 1.11;
+  text-align: center;
+  margin-top: 0.8rem;
+}
+
+.queue-code {
+  padding: 1.2rem;
+  margin-top: 2.4rem;
+  display: flex;
+  justify-content: center;
+}
+
+.queue-info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2.4rem;
+  text-align: center;
+
+  > * {
+    &:not(:first-child) {
+      margin-left: 1.2rem;
+    }
+  }
+}
+
+.queue-info-text {
+  font-size: 2.4rem;
+  line-height: 1.375;
+  margin-top: 0.4rem;
+}
+
+.status-text {
+  color: $accent;
+  text-align: center;
+  margin-top: 2.4rem;
+
+  &.late-queue {
+    max-width: 80%;
+    margin: 4.4rem auto 0;
+  }
+}
