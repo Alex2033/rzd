@@ -1,5 +1,6 @@
 @import "theme";
 @import "fonts";
+@import "vars";
 
 @import "./components/auth";
 @import "./components/buttons";
@@ -78,10 +79,12 @@ img {
   flex-grow: 1;
   flex-shrink: 1;
   flex-basis: auto;
+  overflow: scroll;
 }
 
 .page-container {
-  padding: 0 2rem;
+  padding-right: $container-gap;
+  padding-left: $container-gap;
 }
 
 .primary-color {

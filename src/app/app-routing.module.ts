@@ -5,13 +5,6 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { LanguagesResolver } from './shared/resolvers/language.resolver';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   loadChildren: () =>
-  //     import('./questionnaire/questionnaire.module').then(
-  //       (m) => m.QuestionnaireModule
-  //     ),
-  // },
   {
     path: '',
     resolve: { langId: LanguagesResolver },

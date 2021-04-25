@@ -1,1 +1,59 @@
-<div class="page-content" *ngIf="order$ | async as order"></div>
+<div class="page-content" *ngIf="order">
+  <div class="page-container">
+    <a [routerLink]="['/cabinet', 'orders']" class="back-link">
+      <svg width="1rem" height="1rem">
+        <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
+      </svg>
+      <span>Заказы</span>
+    </a>
+
+    <div
+      class="order-status"
+      [ngClass]="{
+        'payment-awaiting': order.status === 'payment-awaiting',
+        'research-awaiting': order.status === 'research-awaiting',
+        completed: order.status === 'completed'
+      }"
+    >
+      {{
+        order.status === "payment-awaiting"
+          ? "Ожидает оплаты"
+          : order.status === "research-awaiting"
+          ? "Ожидает исследования"
+          : order.status === "completed"
+          ? "Выполнено"
+          : null
+      }}
+    </div>
+
+    <div class="order-info">
+      <div class="order-number">№{{ order.id }}</div>
+      <div class="order-date">{{ order.date }}</div>
+    </div>
+    <div class="order-address">{{ order.address }}</div>
+  </div>
+
+  <!-- services -->
+  <ul class="services">
+    <li class="service" *ngFor="let service of order.services">
+      <div class="client-name">{{ service.userName }}</div>
+      <div class="service-body">
+        <div class="service-title">{{ service.title }}</div>
+        <div class="service-price">
+          {{ service.price }}{{ service.priceType }}
+        </div>
+      </div>
+    </li>
+  </ul>
+
+  <div class="page-container">
+    <div class="total-block">
+      <div class="total-block-text">Итого:</div>
+      <div class="total-price">{{ totalPrice }}₽</div>
+    </div>
+
+    <a [routerLink]="['documents']" class="documents-link"
+      >Документы по заказу</a
+    >
+  </div>
+</div>

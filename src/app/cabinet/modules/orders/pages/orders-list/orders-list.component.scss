@@ -1,12 +1,15 @@
 @import "theme";
+@import "vars";
 
 .page-container {
-  min-height: 0rem;
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: auto;
-  display: flex;
-  flex-direction: column;
+  &.full-height {
+    min-height: 0rem;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .orders-list {
@@ -19,7 +22,18 @@
   display: block;
   color: $text;
   text-decoration: none;
-  padding: 1.2rem 0;
+  padding: 1.2rem $container-gap;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: calc(100% - #{$container-gap});
+    height: 0.1rem;
+    background: rgba(33, 33, 33, 0.08);
+  }
 }
 
 .order-top {

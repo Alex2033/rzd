@@ -1,5 +1,5 @@
 <div class="page-content">
-  <div class="page-container">
+  <div class="page-container" [class.full-height]="!(orders$ | async)">
     <h1 class="page-title">Заказы</h1>
 
     <ng-container *ngIf="!(orders$ | async)">
@@ -14,45 +14,45 @@
         />
       </div>
     </ng-container>
+  </div>
 
-    <!-- orders -->
-    <div class="orders-container" *ngIf="orders$ | async as orders">
-      <ul class="orders-list">
-        <li class="order-item" *ngFor="let order of orders">
-          <a [routerLink]="['/cabinet', 'orders', order.id]" class="order">
-            <div class="order-top">
-              <div class="order-top-info">
-                <div class="order-date">{{ order.date }}</div>
-                <div class="order-address">{{ order.shortAddress }}</div>
-              </div>
-              <div
-                class="order-status"
-                [ngClass]="{
-                  'payment-awaiting': order.status === 'payment-awaiting',
-                  'research-awaiting': order.status === 'research-awaiting',
-                  completed: order.status === 'completed'
-                }"
-              >
-                {{
-                  order.status === "payment-awaiting"
-                    ? "Ожидает оплаты"
-                    : order.status === "research-awaiting"
-                    ? "Ожидает исследования"
-                    : order.status === "completed"
-                    ? "Выполнено"
-                    : null
-                }}
-              </div>
+  <!-- orders -->
+  <div class="orders-container" *ngIf="orders$ | async as orders">
+    <ul class="orders-list">
+      <li class="order-item" *ngFor="let order of orders">
+        <a [routerLink]="['/cabinet', 'orders', order.id]" class="order">
+          <div class="order-top">
+            <div class="order-top-info">
+              <div class="order-date">{{ order.date }}</div>
+              <div class="order-address">{{ order.shortAddress }}</div>
             </div>
-            <div class="orders-users">
-              <div class="order-user" *ngFor="let user of order.services">
-                {{ user.userName }}
-              </div>
+            <div
+              class="order-status"
+              [ngClass]="{
+                'payment-awaiting': order.status === 'payment-awaiting',
+                'research-awaiting': order.status === 'research-awaiting',
+                completed: order.status === 'completed'
+              }"
+            >
+              {{
+                order.status === "payment-awaiting"
+                  ? "Ожидает оплаты"
+                  : order.status === "research-awaiting"
+                  ? "Ожидает исследования"
+                  : order.status === "completed"
+                  ? "Выполнено"
+                  : null
+              }}
             </div>
-          </a>
-        </li>
-      </ul>
-    </div>
+          </div>
+          <div class="orders-users">
+            <div class="order-user" *ngFor="let user of order.services">
+              {{ user.userName }}
+            </div>
+          </div>
+        </a>
+      </li>
+    </ul>
   </div>
 
   <div class="buttons">

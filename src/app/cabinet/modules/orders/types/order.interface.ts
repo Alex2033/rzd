@@ -5,6 +5,7 @@ export interface OrderInterface {
   shortAddress: string;
   address: string;
   services: OrderServiceInterface[];
+  documents: DocumentInterface[];
 }
 
 interface OrderServiceInterface {
@@ -12,4 +13,14 @@ interface OrderServiceInterface {
   title: string;
   price: number;
   priceType: string;
+}
+
+interface DocumentInterface {
+  userName: string;
+  paths: PathDocumentInterface[];
+}
+
+interface PathDocumentInterface {
+  text: string;
+  path: string;
 }

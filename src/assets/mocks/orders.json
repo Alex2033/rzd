@@ -10,13 +10,57 @@
         "userName": "Резенков Пётр Константинович",
         "title": "Тест на COVID-19 методом ПЦР, результат в течении 1 дня",
         "price": 2990,
-        "priceType": "руб"
+        "priceType": "₽"
       },
       {
         "userName": "Резенкова Алла Николаевна",
         "title": "Тест на COVID-19 методом ПЦР, результат в течении 1 дня",
         "price": 2990,
-        "priceType": "руб"
+        "priceType": "₽"
+      }
+    ],
+    "documents": [
+      {
+        "userName": "Резенков Пётр Константинович",
+        "paths": [
+          {
+            "path": "assets/mocks/files/pdf.pdf",
+            "text": "Договор оферты"
+          },
+          {
+            "path": "assets/mocks/files/pdf.pdf",
+            "text": "Заказ к договору оферты"
+          },
+          {
+            "path": "assets/mocks/files/pdf.pdf",
+            "text": "Согласие на обработку персональных данных"
+          },
+          {
+            "path": "assets/mocks/files/pdf.pdf",
+            "text": "Добровольное согласие на медицинское вмешательство"
+          }
+        ]
+      },
+      {
+        "userName": "Резенкова Алла Николаевна",
+        "paths": [
+          {
+            "path": "assets/mocks/files/pdf.pdf",
+            "text": "Договор оферты"
+          },
+          {
+            "path": "assets/mocks/files/pdf.pdf",
+            "text": "Заказ к договору оферты"
+          },
+          {
+            "path": "assets/mocks/files/pdf.pdf",
+            "text": "Согласие на обработку персональных данных"
+          },
+          {
+            "path": "assets/mocks/files/pdf.pdf",
+            "text": "Добровольное согласие на медицинское вмешательство"
+          }
+        ]
       }
     ]
   },
@@ -31,7 +75,30 @@
         "userName": "Резенкова Алла Николаевна",
         "title": "Тест на COVID-19 методом ПЦР, результат в течении 1 дня",
         "price": 2990,
-        "priceType": "руб"
+        "priceType": "₽"
+      }
+    ],
+    "documents": [
+      {
+        "userName": "Резенкова Алла Николаевна",
+        "paths": [
+          {
+            "path": "assets/mocks/files/pdf.pdf",
+            "text": "Договор оферты"
+          },
+          {
+            "path": "assets/mocks/files/pdf.pdf",
+            "text": "Заказ к договору оферты"
+          },
+          {
+            "path": "assets/mocks/files/pdf.pdf",
+            "text": "Согласие на обработку персональных данных"
+          },
+          {
+            "path": "assets/mocks/files/pdf.pdf",
+            "text": "Добровольное согласие на медицинское вмешательство"
+          }
+        ]
       }
     ]
   },
@@ -46,7 +113,30 @@
         "userName": "Резенкова Алла Николаевна",
         "title": "Тест на COVID-19 методом ПЦР, результат в течении 1 дня",
         "price": 2990,
-        "priceType": "руб"
+        "priceType": "₽"
+      }
+    ],
+    "documents": [
+      {
+        "userName": "Резенкова Алла Николаевна",
+        "paths": [
+          {
+            "path": "assets/mocks/files/pdf.pdf",
+            "text": "Договор оферты"
+          },
+          {
+            "path": "assets/mocks/files/pdf.pdf",
+            "text": "Заказ к договору оферты"
+          },
+          {
+            "path": "assets/mocks/files/pdf.pdf",
+            "text": "Согласие на обработку персональных данных"
+          },
+          {
+            "path": "assets/mocks/files/pdf.pdf",
+            "text": "Добровольное согласие на медицинское вмешательство"
+          }
+        ]
       }
     ]
   }

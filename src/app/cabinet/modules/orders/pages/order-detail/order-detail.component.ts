@@ -11,7 +11,8 @@ import { OrderInterface } from '../../types/order.interface';
   styleUrls: ['./order-detail.component.scss'],
 })
 export class OrderDetailComponent implements OnInit {
-  public order$: Observable<OrderInterface>;
+  public order: OrderInterface = {} as OrderInterface;
+  public totalPrice: number = 0;
 
   constructor(
     private ordersService: OrdersService,
@@ -19,8 +20,17 @@ export class OrderDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.order$ = this.route.params.pipe(
-      switchMap((params: Params) => this.ordersService.getOrder(+params.id))
-    );
+    this.route.params
+      .pipe(
+        switchMap((params: Params) => this.ordersService.getOrder(+params.id))
+      )
+      .subscribe((order) => {
+        this.order = order;
+        this.totalPrice = this.calcTotalPrice();
+      });
+  }
+
+  calcTotalPrice(): number {
+    return this.order.services.reduce((prev, cur) => prev + cur['price'], 0);
   }
 }

@@ -1,0 +1,139 @@
+@import "theme";
+@import "vars";
+
+.page-content {
+  padding-bottom: 5.6rem;
+}
+
+.order-status {
+  color: $light;
+  padding: 0.3rem 1.1rem;
+  display: inline-block;
+  font-size: 1.2rem;
+  line-height: 1.34;
+
+  &.payment-awaiting {
+    background-color: lighten($primary, 17.95%);
+  }
+
+  &.research-awaiting {
+    background-color: $primary;
+  }
+
+  &.completed {
+    background-color: $gray;
+  }
+}
+
+.order-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.2rem;
+
+  > * {
+    &:not(:first-child) {
+      margin-left: 1.2rem;
+    }
+  }
+}
+
+.order-number {
+  line-height: 1.75;
+}
+
+.order-date {
+  color: $gray;
+  font-size: 1.2rem;
+}
+
+.order-address {
+  margin-top: 0.7rem;
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: $dark;
+  line-height: 1.34;
+  max-width: 80%;
+}
+
+.services {
+  list-style: none;
+  padding: 0;
+  margin: 2.5rem 0 0;
+
+  > * {
+    &:not(:first-child) {
+      margin-top: 2.4rem;
+    }
+  }
+}
+
+.service {
+  padding: 0 $container-gap;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: calc(100% - #{$container-gap});
+    height: 0.1rem;
+    background: rgba(33, 33, 33, 0.08);
+  }
+}
+
+.client-name {
+  font-weight: 600;
+}
+
+.service-body {
+  padding: 1.6rem 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  > * {
+    &:not(:first-child) {
+      margin-left: 1.2rem;
+    }
+  }
+}
+
+.service-title {
+  max-width: 61.5%;
+  color: $dark;
+}
+
+.service-price {
+  font-size: 2rem;
+  line-height: 1.4;
+  font-weight: 700;
+}
+
+.total-block {
+  margin-top: 2.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  > * {
+    &:not(:first-child) {
+      margin-left: 1.2rem;
+    }
+  }
+}
+
+.total-price {
+  font-size: 2.4rem;
+  line-height: 1.17;
+  font-weight: 700;
+}
+
+.documents-link {
+  display: block;
+  margin-top: 3.3rem;
+  color: $primary;
+  font-weight: 600;
+  text-decoration: none;
+}
