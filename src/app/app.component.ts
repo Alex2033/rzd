@@ -55,7 +55,9 @@ export class AppComponent implements OnInit {
       .pipe(
         filter((event: Event) => event instanceof NavigationEnd),
         switchMap((event: NavigationEnd) => {
-          if (!event.url.includes('register')) {
+          if (
+            !(event.url.includes('register') || event.url.includes('sms-info'))
+          ) {
             localStorage.removeItem('registerForm');
           }
           return this.route.queryParams;

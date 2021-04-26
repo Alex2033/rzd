@@ -1,4 +1,4 @@
-<div class="page-content">
+<div class="page-content" *ngIf="!isLoading">
   <form
     class="registration-form"
     (submit)="submit()"
@@ -189,7 +189,7 @@
         Получить новый код можно через {{ counter$ | async }} секунд
       </div>
 
-      <a [routerLink]="['auth', 'register', 'sms-info']" class="no-sms"
+      <a [routerLink]="['/auth', 'sms-info']" class="no-sms"
         >Не приходит СМС?</a
       >
     </div>
@@ -209,9 +209,25 @@
           <use xlink:href="assets/sprites/icons.svg#next"></use>
         </svg>
       </button>
-      <button *ngIf="resendCode" type="button" class="button">
+      <button
+        (click)="setTimer()"
+        *ngIf="resendCode"
+        type="button"
+        class="button"
+      >
         <span>Отправить код повторно</span>
       </button>
     </div>
   </form>
+</div>
+
+<!-- loader -->
+<div class="loader-container" *ngIf="isLoading">
+  <div class="loader">
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+  </div>
 </div>

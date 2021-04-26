@@ -13,7 +13,7 @@ const routes: Routes = [
   {
     path: 'auth',
     resolve: { langId: LanguagesResolver },
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
   {

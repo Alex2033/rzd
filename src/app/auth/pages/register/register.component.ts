@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import {
   FormGroup,
   AbstractControl,
@@ -7,15 +13,15 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, timer } from 'rxjs';
-import { finalize, map, take } from 'rxjs/operators';
+import { Observable, ReplaySubject, Subject, timer } from 'rxjs';
+import { finalize, map, take, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
   @ViewChild('otc') otc: ElementRef;
   @ViewChild('phone') phoneRef: ElementRef;
 
@@ -23,11 +29,14 @@ export class RegisterComponent implements OnInit {
   public nameControl: AbstractControl;
   public phoneControl: AbstractControl;
   public emailControl: AbstractControl;
-  public submitted: boolean = false;
   public counter$: Observable<number>;
+  public submitted: boolean = false;
   public resendCode: boolean = false;
+  public isLoading: boolean = false;
 
   private count: number = 60;
+  private readonly stopTimer = new Subject<void>();
+  private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   get name(): AbstractControl {
     return this.registerForm.get('name');
@@ -49,11 +58,19 @@ export class RegisterComponent implements OnInit {
     this.getFormLocalStorage();
   }
 
+  ngOnDestroy() {
+    this.destroy.next(null);
+    this.destroy.complete();
+    this.stopTimer.next();
+  }
+
   getFormLocalStorage(): void {
     const savedData = JSON.parse(localStorage.getItem('registerForm'));
 
     if (savedData) {
       this.registerForm.patchValue(savedData);
+      this.submitted = true;
+      this.setTimer();
     }
   }
 
@@ -80,14 +97,22 @@ export class RegisterComponent implements OnInit {
     this.emailControl = this.email;
   }
 
-  timer(): void {
+  setTimer(): void {
+    this.resetSmsTimer();
     this.counter$ = timer(0, 1000).pipe(
       take(this.count),
       map(() => --this.count),
+      takeUntil(this.stopTimer),
       finalize(() => {
         this.resendCode = true;
       })
     );
+  }
+
+  resetSmsTimer(): void {
+    this.count = 60;
+    this.stopTimer.next();
+    this.resendCode = false;
   }
 
   submit(): void {
@@ -98,12 +123,17 @@ export class RegisterComponent implements OnInit {
 
   codeIsValidated(): void {
     if (this.registerForm.get('code').valid) {
-      this.submit();
+      this.isLoading = true;
+
+      // todo: убрать этот таймер, когда будет идти ответ с сервера
+      timer(2000)
+        .pipe(takeUntil(this.destroy))
+        .subscribe(() => this.submit());
     }
   }
 
   register(): void {
-    this.timer();
+    this.setTimer();
     // todo: логика для отправки смс
 
     this.submitted = true;
@@ -167,6 +197,7 @@ export class RegisterComponent implements OnInit {
 
   back(): void {
     this.submitted = false;
+    this.resetSmsTimer();
     setTimeout(() => {
       this.phoneRef.nativeElement.select();
     }, 0);
