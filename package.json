@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "svg-sprite": "svg-sprite --config src/svg-sprite/sprite-config.json src/assets/icons/*.svg"
+    "svg-sprite": "svg-sprite --config src/svg-sprite/sprite-config.json src/assets/icons/*.svg",
+    "mock:server": "json-server --watch src/assets/mocks/data.json"
   },
   "private": true,
   "dependencies": {
@@ -22,6 +23,7 @@
     "@angular/platform-browser": "~11.2.3",
     "@angular/platform-browser-dynamic": "~11.2.3",
     "@angular/router": "~11.2.3",
+    "json-server": "^0.16.3",
     "ngx-mask": "^11.1.5",
     "ngx-owl-carousel-o": "^5.0.0",
     "rxjs": "~6.6.0",
