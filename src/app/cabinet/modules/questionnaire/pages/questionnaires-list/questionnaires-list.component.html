@@ -1,16 +1,16 @@
 <div class="page-content">
-  <div class="page-container" [class.full-height]="!(questionnaires$ | async)">
+  <div class="page-container" [class.full-height]="!questionnaires.length">
     <h1 class="page-title">Мои анкеты</h1>
     <div class="subtitle-text">
       <p>
         {{
-          (questionnaires$ | async)
+          questionnaires.length
             ? "Выберите анкету для заказа услуг"
             : "Вы не добавили ни одной анкеты."
         }}
       </p>
     </div>
-    <div class="document-image" *ngIf="!(questionnaires$ | async)">
+    <div class="document-image" *ngIf="!questionnaires.length">
       <img
         src="assets/questionnaire/undraw_add_document.svg"
         alt="undraw add document"
@@ -19,10 +19,7 @@
   </div>
 
   <!-- questionnaires -->
-  <div
-    class="questionnaires-container"
-    *ngIf="questionnaires$ | async as questionnaires"
-  >
+  <div class="questionnaires-container" *ngIf="questionnaires.length">
     <ul class="questionnaires">
       <li
         class="questionnaire"

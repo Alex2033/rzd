@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { DeleteComponent } from '../../components/delete/delete.component';
 import { QuestionnairesService } from '../../services/questionnaires.service';
 import { KidInterface } from '../../types/kid.interface';
@@ -11,8 +12,10 @@ import { QuestionnaireInterface } from '../../types/questionnaire.interface';
   templateUrl: './questionnaires-list.component.html',
   styleUrls: ['./questionnaires-list.component.scss'],
 })
-export class QuestionnairesListComponent implements OnInit {
-  public questionnaires$: Observable<QuestionnaireInterface[]>;
+export class QuestionnairesListComponent implements OnInit, OnDestroy {
+  public questionnaires: QuestionnaireInterface[] = [];
+
+  private destroy$ = new Subject<void>();
 
   constructor(
     private questionnairesService: QuestionnairesService,
@@ -20,7 +23,17 @@ export class QuestionnairesListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.questionnaires$ = this.questionnairesService.getQuestionnaires();
+    this.questionnairesService
+      .getQuestionnaires()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((questionnaires: QuestionnaireInterface[]) => {
+        this.questionnaires = questionnaires;
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   trackByFn(_, item: QuestionnaireInterface): number {
@@ -38,18 +51,34 @@ export class QuestionnairesListComponent implements OnInit {
       autoFocus: false,
     });
 
+    if (questionnaire.kids.length) {
+      return;
+    }
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         if (kid) {
-          const changedKids = questionnaire.kids.filter((k) => k.id !== kid.id);
-          const changedQuestionnaire = { ...questionnaire, kids: changedKids };
-          this.questionnairesService
-            .deleteKid(changedQuestionnaire)
-            .subscribe();
+          this.deleteKid(questionnaire, kid);
         } else {
-          this.questionnairesService.delete(questionnaire.id).subscribe();
+          this.deleteQuestionnaire(questionnaire);
         }
       }
     });
+  }
+
+  deleteKid(questionnaire: QuestionnaireInterface, kid: KidInterface) {
+    const changedKids = questionnaire.kids.filter((k) => k.id !== kid.id);
+    const changedQuestionnaire = { ...questionnaire, kids: changedKids };
+    this.questionnairesService
+      .deleteKid(changedQuestionnaire)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe();
+  }
+
+  deleteQuestionnaire(questionnaire: QuestionnaireInterface) {
+    this.questionnairesService
+      .delete(questionnaire.id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe();
   }
 }

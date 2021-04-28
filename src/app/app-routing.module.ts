@@ -19,7 +19,7 @@ const routes: Routes = [
   {
     path: 'cabinet',
     resolve: { langId: LanguagesResolver },
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     loadChildren: () =>
       import('./cabinet/cabinet.module').then((m) => m.CabinetModule),
   },
