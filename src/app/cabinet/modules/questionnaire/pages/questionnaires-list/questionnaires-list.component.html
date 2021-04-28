@@ -2,7 +2,13 @@
   <div class="page-container" [class.full-height]="!(questionnaires$ | async)">
     <h1 class="page-title">Мои анкеты</h1>
     <div class="subtitle-text">
-      <p>Вы не добавили ни одной анкеты.</p>
+      <p>
+        {{
+          (questionnaires$ | async)
+            ? "Выберите анкету для заказа услуг"
+            : "Вы не добавили ни одной анкеты."
+        }}
+      </p>
     </div>
     <div class="document-image" *ngIf="!(questionnaires$ | async)">
       <img
@@ -22,29 +28,96 @@
         class="questionnaire"
         *ngFor="let questionnaire of questionnaires; trackBy: trackByFn"
       >
-        <mat-checkbox class="questionnaire-checkbox" color="primary">
-          <div class="questionnaire-info">
-            <div class="questionnaire-name">
-              {{ questionnaire.surname }} <br />
-              {{ questionnaire.name }} {{ questionnaire.patronymic }},
+        <!-- adult -->
+        <div
+          class="questionnaire-body adult"
+          [class.small-offset]="questionnaire.kids?.length"
+        >
+          <mat-checkbox
+            #checkboxAdult
+            class="questionnaire-checkbox"
+            color="primary"
+          >
+          </mat-checkbox>
+          <div class="questionnaire-content" (click)="checkboxAdult.toggle()">
+            <div class="questionnaire-info">
+              <div class="questionnaire-personal-info">
+                <div class="questionnaire-name">
+                  {{ questionnaire.surname }} <br />
+                  {{ questionnaire.name }} {{ questionnaire.patronymic }},
+                </div>
+                <div class="questionnaire-age">{{ questionnaire.age }}</div>
+              </div>
             </div>
-            <div class="questionnaire-age">{{ questionnaire.age }}</div>
-          </div>
-        </mat-checkbox>
 
-        <!-- actions -->
-        <div class="actions">
-          <button class="icon-button big">
-            <svg width="1.5rem" height="1.5rem">
-              <use xlink:href="assets/sprites/icons.svg#pen"></use>
-            </svg>
-          </button>
-          <button class="icon-button big">
-            <svg width="1.2rem" height="1.4rem">
-              <use xlink:href="assets/sprites/icons.svg#delete"></use>
-            </svg>
-          </button>
+            <!-- actions -->
+            <div class="actions" (click)="$event.stopPropagation()">
+              <button class="icon-button big" type="button">
+                <svg width="1.5rem" height="1.5rem">
+                  <use xlink:href="assets/sprites/icons.svg#pen"></use>
+                </svg>
+              </button>
+              <button
+                type="button"
+                class="icon-button big"
+                (click)="openDeleteDialog(questionnaire)"
+              >
+                <svg width="1.2rem" height="1.4rem">
+                  <use xlink:href="assets/sprites/icons.svg#delete"></use>
+                </svg>
+              </button>
+            </div>
+          </div>
         </div>
+
+        <!-- kid -->
+        <ng-container *ngIf="questionnaire.kids?.length">
+          <div
+            class="questionnaire-body kid"
+            *ngFor="let kid of questionnaire.kids"
+          >
+            <mat-checkbox
+              #checkboxKid
+              class="questionnaire-checkbox"
+              color="primary"
+            >
+            </mat-checkbox>
+            <div class="questionnaire-content" (click)="checkboxKid.toggle()">
+              <div class="questionnaire-info">
+                <div class="kid-icon">
+                  <svg>
+                    <use xlink:href="assets/sprites/icons.svg#little-kid"></use>
+                  </svg>
+                </div>
+                <div class="questionnaire-personal-info">
+                  <div class="questionnaire-name">
+                    {{ kid.surname }} <br />
+                    {{ kid.name }} {{ kid.patronymic }},
+                  </div>
+                  <div class="questionnaire-age">{{ kid.age }}</div>
+                </div>
+              </div>
+
+              <!-- actions -->
+              <div class="actions" (click)="$event.stopPropagation()">
+                <button class="icon-button big" type="button">
+                  <svg width="1.5rem" height="1.5rem">
+                    <use xlink:href="assets/sprites/icons.svg#pen"></use>
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  class="icon-button big"
+                  (click)="openDeleteDialog(questionnaire, kid)"
+                >
+                  <svg width="1.2rem" height="1.4rem">
+                    <use xlink:href="assets/sprites/icons.svg#delete"></use>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
       </li>
     </ul>
   </div>

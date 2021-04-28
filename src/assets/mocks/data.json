@@ -10,30 +10,60 @@
       "email": "rzd@gmail.com",
       "age": "39 лет",
       "phone": "+7 (999) 999 99 99",
-      "document": [
+      "document": {
+        "citizenship": "Гражданин РФ (паспорт РФ)",
+        "docNumber": "4710 341234",
+        "issued": "ОУФМС России по г. Москве",
+        "issueDate": "01.01.2000"
+      },
+      "kids": [
         {
-          "citizenship": "Гражданин РФ (паспорт РФ)",
-          "docNumber": "4710 341234",
-          "issued": "ОУФМС России по г. Москве",
-          "issueDate": "01.01.2000"
-        }
-      ],
-      "kid": {
-        "id": 83729,
-        "name": "Виктория",
-        "surname": "Резенкова",
-        "patronymic": "Петровна",
-        "date": "18.02.1990",
-        "age": "8 лет",
-        "gender": "female",
-        "document": [
-          {
+          "id": 83729,
+          "name": "Ивана",
+          "surname": "Иванова",
+          "patronymic": "Ивановна",
+          "date": "18.02.2006",
+          "age": "14 лет",
+          "gender": "female",
+          "document": {
             "citizenship": "Гражданин РФ (свид. о рождении)",
             "docNumber": "4780 666555",
             "issued": "ОУФМС России по г. Москве",
             "issueDate": "15.08.2004"
           }
-        ]
+        },
+        {
+          "id": 62512,
+          "name": "Резенка",
+          "surname": "Викториева",
+          "patronymic": "Рофлянкина",
+          "date": "30.05.2005",
+          "age": "15 лет",
+          "gender": "female",
+          "document": {
+            "citizenship": "Гражданин РФ (свид. о рождении)",
+            "docNumber": "4780 666555",
+            "issued": "ОУФМС России по г. Москве",
+            "issueDate": "15.08.2010"
+          }
+        }
+      ]
+    },
+    {
+      "id": 901725,
+      "name": "Петр",
+      "surname": "Резенков",
+      "patronymic": "Петрович",
+      "date": "10.05.1992",
+      "gender": "male",
+      "email": "rzd1@gmail.com",
+      "age": "37 лет",
+      "phone": "+7 (888) 888 88 88",
+      "document": {
+        "citizenship": "Гражданин РФ (паспорт РФ)",
+        "docNumber": "4710 341234",
+        "issued": "ОУФМС России по г. Москве",
+        "issueDate": "01.01.2000"
       }
     }
   ]
