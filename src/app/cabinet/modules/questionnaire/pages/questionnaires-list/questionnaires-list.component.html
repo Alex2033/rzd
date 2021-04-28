@@ -1,15 +1,52 @@
 <div class="page-content">
-  <div class="page-container">
+  <div class="page-container" [class.full-height]="!(questionnaires$ | async)">
     <h1 class="page-title">Мои анкеты</h1>
     <div class="subtitle-text">
       <p>Вы не добавили ни одной анкеты.</p>
     </div>
-    <div class="document-image">
+    <div class="document-image" *ngIf="!(questionnaires$ | async)">
       <img
         src="assets/questionnaire/undraw_add_document.svg"
         alt="undraw add document"
       />
     </div>
+  </div>
+
+  <!-- questionnaires -->
+  <div
+    class="questionnaires-container"
+    *ngIf="questionnaires$ | async as questionnaires"
+  >
+    <ul class="questionnaires">
+      <li
+        class="questionnaire"
+        *ngFor="let questionnaire of questionnaires; trackBy: trackByFn"
+      >
+        <mat-checkbox class="questionnaire-checkbox" color="primary">
+          <div class="questionnaire-info">
+            <div class="questionnaire-name">
+              {{ questionnaire.surname }} <br />
+              {{ questionnaire.name }} {{ questionnaire.patronymic }},
+            </div>
+            <div class="questionnaire-age">{{ questionnaire.age }}</div>
+          </div>
+        </mat-checkbox>
+
+        <!-- actions -->
+        <div class="actions">
+          <button class="icon-button big">
+            <svg width="1.5rem" height="1.5rem">
+              <use xlink:href="assets/sprites/icons.svg#pen"></use>
+            </svg>
+          </button>
+          <button class="icon-button big">
+            <svg width="1.2rem" height="1.4rem">
+              <use xlink:href="assets/sprites/icons.svg#delete"></use>
+            </svg>
+          </button>
+        </div>
+      </li>
+    </ul>
   </div>
 
   <div class="buttons group">

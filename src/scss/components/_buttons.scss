@@ -55,6 +55,11 @@
   padding: 0;
   border: 0;
   flex-shrink: 0;
+
+  &.big {
+    width: 4rem;
+    height: 4rem;
+  }
 }
 
 .buttons {

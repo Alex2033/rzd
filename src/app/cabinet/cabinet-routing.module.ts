@@ -13,7 +13,7 @@ const routes: Routes = [
       import('./modules/queue/queue.module').then((m) => m.QueueModule),
   },
   {
-    path: 'questionnaire',
+    path: 'questionnaires',
     loadChildren: () =>
       import('./modules/questionnaire/questionnaire.module').then(
         (m) => m.QuestionnaireModule

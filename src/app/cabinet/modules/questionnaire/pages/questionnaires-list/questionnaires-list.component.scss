@@ -1,8 +1,84 @@
+@import "theme";
+@import "vars";
+
 .page-container {
-  min-height: 0rem;
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: auto;
+  &.full-height {
+    min-height: 0rem;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.questionnaires-container {
+  margin-top: 1.6rem;
+}
+
+.questionnaire {
+  position: relative;
+  padding: 1.2rem 1.6rem 1.2rem $container-gap;
   display: flex;
-  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  > * {
+    &:not(:first-child) {
+      margin-left: 1.6rem;
+    }
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: calc(100% - #{$container-gap});
+    height: 0.1rem;
+    background-color: $light-gray;
+  }
+
+  ::ng-deep {
+    .mat-checkbox-indeterminate.mat-primary .mat-checkbox-background,
+    .mat-checkbox-checked.mat-primary .mat-checkbox-background {
+      background-color: lighten($primary, 17.95%);
+    }
+  }
+}
+
+.questionnaire-checkbox {
+  width: 100%;
+  max-width: 59.7%;
+
+  ::ng-deep {
+    .mat-checkbox-layout {
+      white-space: normal;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .mat-checkbox-inner-container {
+      margin: 0;
+      top: 0.6rem;
+    }
+
+    .mat-checkbox-label {
+      margin-left: 1.6rem;
+      line-height: 1.5;
+      flex-grow: 1;
+    }
+  }
+}
+
+.questionnaire-info {
+  font-family: "Open Sans", sans-serif;
+}
+
+.questionnaire-age {
+  color: $gray;
+}
+
+.actions {
+  display: flex;
 }

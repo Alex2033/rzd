@@ -1,5 +1,5 @@
 {
-  "questionnaire-adults": [
+  "questionnaires": [
     {
       "id": 29238,
       "name": "Виктория",
@@ -8,6 +8,7 @@
       "date": "01.01.1982",
       "gender": "female",
       "email": "rzd@gmail.com",
+      "age": "39 лет",
       "phone": "+7 (999) 999 99 99",
       "document": [
         {
@@ -16,7 +17,24 @@
           "issued": "ОУФМС России по г. Москве",
           "issueDate": "01.01.2000"
         }
-      ]
+      ],
+      "kid": {
+        "id": 83729,
+        "name": "Виктория",
+        "surname": "Резенкова",
+        "patronymic": "Петровна",
+        "date": "18.02.1990",
+        "age": "8 лет",
+        "gender": "female",
+        "document": [
+          {
+            "citizenship": "Гражданин РФ (свид. о рождении)",
+            "docNumber": "4780 666555",
+            "issued": "ОУФМС России по г. Москве",
+            "issueDate": "15.08.2004"
+          }
+        ]
+      }
     }
   ]
 }
