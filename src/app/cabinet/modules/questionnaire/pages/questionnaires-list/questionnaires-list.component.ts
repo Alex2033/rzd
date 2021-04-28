@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DeleteComponent } from '../../components/delete/delete.component';
+import { WarningDialogComponent } from '../../components/warning-dialog/warning-dialog.component';
 import { QuestionnairesService } from '../../services/questionnaires.service';
 import { KidInterface } from '../../types/kid.interface';
 import { QuestionnaireInterface } from '../../types/questionnaire.interface';
@@ -44,16 +45,17 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
     questionnaire: QuestionnaireInterface,
     kid?: KidInterface
   ): void {
+    if (questionnaire.kids && !kid && questionnaire.kids.length) {
+      this.openWarningDialog();
+      return;
+    }
+
     const dialogRef = this.dialog.open(DeleteComponent, {
       panelClass: 'custom-dialog',
       backdropClass: 'custom-dialog-overlay',
       width: '28rem',
       autoFocus: false,
     });
-
-    if (questionnaire.kids.length) {
-      return;
-    }
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -66,9 +68,19 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
     });
   }
 
+  openWarningDialog(): void {
+    this.dialog.open(WarningDialogComponent, {
+      panelClass: 'custom-dialog',
+      backdropClass: 'custom-dialog-overlay',
+      width: '28rem',
+      autoFocus: false,
+    });
+  }
+
   deleteKid(questionnaire: QuestionnaireInterface, kid: KidInterface) {
     const changedKids = questionnaire.kids.filter((k) => k.id !== kid.id);
     const changedQuestionnaire = { ...questionnaire, kids: changedKids };
+
     this.questionnairesService
       .deleteKid(changedQuestionnaire)
       .pipe(takeUntil(this.destroy$))

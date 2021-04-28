@@ -9,9 +9,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DeleteComponent } from './components/delete/delete.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import { WarningDialogComponent } from './components/warning-dialog/warning-dialog.component';
 
 @NgModule({
-  declarations: [QuestionnairesListComponent, DeleteComponent],
+  declarations: [QuestionnairesListComponent, DeleteComponent, WarningDialogComponent],
   imports: [
     CommonModule,
     QuestionnaireRoutingModule,
