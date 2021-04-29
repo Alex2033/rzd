@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { CreateSheetComponent } from '../../components/create-sheet/create-sheet.component';
 import { DeleteComponent } from '../../components/delete/delete.component';
 import { WarningDialogComponent } from '../../components/warning-dialog/warning-dialog.component';
 import { QuestionnairesService } from '../../services/questionnaires.service';
@@ -20,7 +22,8 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
 
   constructor(
     private questionnairesService: QuestionnairesService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private _bottomSheet: MatBottomSheet
   ) {}
 
   ngOnInit(): void {
@@ -92,5 +95,15 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
       .delete(questionnaire.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe();
+  }
+
+  openBottomSheet(): void {
+    const bottomSheet = this._bottomSheet.open(CreateSheetComponent, {
+      panelClass: 'custom-bottom-sheet',
+      data: {
+        questionnaires: this.questionnaires,
+      },
+    });
+    bottomSheet.afterDismissed().subscribe((res) => console.log(res));
   }
 }
