@@ -31,12 +31,18 @@
           [class.small-offset]="questionnaire.kids?.length"
         >
           <mat-checkbox
-            #checkboxAdult
+            #checkbox
+            [(ngModel)]="questionnaire.checked"
             class="questionnaire-checkbox"
             color="primary"
           >
           </mat-checkbox>
-          <div class="questionnaire-content" (click)="checkboxAdult.toggle()">
+          <div
+            class="questionnaire-content"
+            (click)="
+              questionnaire.checked = !questionnaire.checked; detectChecked()
+            "
+          >
             <div class="questionnaire-info">
               <div class="questionnaire-personal-info">
                 <div class="questionnaire-name">
@@ -74,12 +80,16 @@
             *ngFor="let kid of questionnaire.kids"
           >
             <mat-checkbox
-              #checkboxKid
+              #checkbox
+              [(ngModel)]="kid.checked"
               class="questionnaire-checkbox"
               color="primary"
             >
             </mat-checkbox>
-            <div class="questionnaire-content" (click)="checkboxKid.toggle()">
+            <div
+              class="questionnaire-content"
+              (click)="kid.checked = !kid.checked; detectChecked()"
+            >
               <div class="questionnaire-info">
                 <div class="kid-icon">
                   <svg>
@@ -126,7 +136,7 @@
       </svg>
       <span>Добавить анкету</span>
     </button>
-    <button class="button" disabled>
+    <button class="button" [disabled]="!checkedQuestionnaires.length">
       <span>Выбор услуг</span>
       <svg width="1.6rem" height="1.6rem">
         <use xlink:href="assets/sprites/icons.svg#next"></use>

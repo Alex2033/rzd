@@ -1,5 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { MatCheckbox } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -16,7 +23,10 @@ import { QuestionnaireInterface } from '../../types/questionnaire.interface';
   styleUrls: ['./questionnaires-list.component.scss'],
 })
 export class QuestionnairesListComponent implements OnInit, OnDestroy {
+  @ViewChildren('checkbox') checkboxes: QueryList<MatCheckbox>;
+
   public questionnaires: QuestionnaireInterface[] = [];
+  public checkedQuestionnaires: QuestionnaireInterface[] = [];
 
   private destroy$ = new Subject<void>();
 
@@ -42,6 +52,22 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
 
   trackByFn(_, item: QuestionnaireInterface): number {
     return item.id;
+  }
+
+  detectChecked(): void {
+    this.checkedQuestionnaires = this.questionnaires.filter(
+      (q: QuestionnaireInterface) => {
+        if (q.kids && q.kids.filter((kid) => kid.checked).length) {
+          return true;
+        }
+        return q.checked;
+      }
+    );
+  }
+
+  toggleCheckbox(item: QuestionnaireInterface | KidInterface): void {
+    item.checked = !item.checked;
+    this.detectChecked();
   }
 
   openDeleteDialog(

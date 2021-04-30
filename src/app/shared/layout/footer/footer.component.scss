@@ -1,7 +1,7 @@
 @import "theme";
 
 .footer {
-  padding: 0.4rem 0 7.3rem;
+  padding: 0.4rem 0 3.944rem;
   background-color: $primary;
   background-repeat: no-repeat;
   background-size: cover;
@@ -13,6 +13,10 @@
   &:not(:last-of-type) {
     border-bottom: 1px solid rgba($border, 0.4);
   }
+}
+
+.footer-block-nav {
+  padding-bottom: 5rem;
 }
 
 .footer-description {

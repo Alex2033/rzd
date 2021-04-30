@@ -8,10 +8,6 @@
 // introduce
 .introduce-section {
   padding-bottom: 3.2rem;
-
-  .home-title {
-    max-width: 74%;
-  }
 }
 
 .introduce-image {
@@ -38,7 +34,7 @@
 .introduce-title {
   background-color: darken($accent, 7.5%);
   margin-right: 2rem;
-  padding: 1.2rem 2rem 1.4rem;
+  padding: 0.5rem 0.6rem 0.5rem 1.4rem;
 }
 
 .introduce-button {
@@ -124,11 +120,19 @@
 // test types
 .test-types {
   padding: 2.4rem 0 2rem;
+
+  .custom-expansions {
+    margin-top: 3.2rem;
+  }
 }
 
 // test location
 .test-location {
-  padding-bottom: 2.4rem;
+  padding: 4rem 0 2.4rem;
+
+  .custom-expansions {
+    margin-top: 2.4rem;
+  }
 }
 
 .test-location-text {
@@ -137,7 +141,7 @@
 
 // faq section
 .faq-section {
-  padding-bottom: 2.2rem;
+  padding: 2.4rem 0 4.2rem;
 
   .custom-expansions {
     margin-top: 2.4rem;

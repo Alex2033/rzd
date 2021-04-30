@@ -8,6 +8,7 @@ export interface QuestionnaireInterface {
   patronymic: string;
   date: string;
   gender: string;
+  checked: boolean;
   age: string;
   email: string;
   phone: string;

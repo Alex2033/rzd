@@ -11,6 +11,7 @@ import { QuestionnairesService } from './services/questionnaires.service';
 import { DeleteComponent } from './components/delete/delete.component';
 import { WarningDialogComponent } from './components/warning-dialog/warning-dialog.component';
 import { CreateSheetComponent } from './components/create-sheet/create-sheet.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { CreateSheetComponent } from './components/create-sheet/create-sheet.com
     MatDialogModule,
     MatButtonModule,
     MatBottomSheetModule,
+    FormsModule,
   ],
   providers: [QuestionnairesService],
 })

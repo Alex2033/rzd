@@ -9,6 +9,7 @@
       "gender": "female",
       "email": "rzd@gmail.com",
       "age": "39 лет",
+      "checked": false,
       "phone": "+7 (999) 999 99 99",
       "document": {
         "citizenship": "Гражданин РФ (паспорт РФ)",
@@ -24,6 +25,7 @@
           "patronymic": "Ивановна",
           "date": "18.02.2006",
           "age": "14 лет",
+          "checked": false,
           "gender": "female",
           "document": {
             "citizenship": "Гражданин РФ (свид. о рождении)",
@@ -39,6 +41,7 @@
           "patronymic": "Рофлянкина",
           "date": "30.05.2005",
           "age": "15 лет",
+          "checked": false,
           "gender": "female",
           "document": {
             "citizenship": "Гражданин РФ (свид. о рождении)",
@@ -55,6 +58,7 @@
       "surname": "Резенков",
       "patronymic": "Петрович",
       "date": "10.05.1992",
+      "checked": false,
       "gender": "male",
       "email": "rzd1@gmail.com",
       "age": "37 лет",

@@ -7,6 +7,7 @@ export interface KidInterface {
   surname: string;
   patronymic: string;
   date: string;
+  checked: boolean;
   gender: string;
   document: QuestionnaireDocumentInterface;
 }
