@@ -1,4 +1,7 @@
-export const environment = {
-  production: true,
-  api: 'http://87.242.76.45:8080/',
+import { EnvironmentInterface } from 'src/app/shared/types/environment.interface';
+
+export const environment: EnvironmentInterface = {
+  production: false,
+  api: '/',
+  fakeApi: ' http://localhost:3000/',
 };
