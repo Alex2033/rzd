@@ -1,12 +1,5 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  QueryList,
-  ViewChildren,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { MatCheckbox } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -23,8 +16,6 @@ import { QuestionnaireInterface } from '../../types/questionnaire.interface';
   styleUrls: ['./questionnaires-list.component.scss'],
 })
 export class QuestionnairesListComponent implements OnInit, OnDestroy {
-  @ViewChildren('checkbox') checkboxes: QueryList<MatCheckbox>;
-
   public questionnaires: QuestionnaireInterface[] = [];
   public checkedQuestionnaires: QuestionnaireInterface[] = [];
 
@@ -65,11 +56,6 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
     );
   }
 
-  toggleCheckbox(item: QuestionnaireInterface | KidInterface): void {
-    item.checked = !item.checked;
-    this.detectChecked();
-  }
-
   openDeleteDialog(
     questionnaire: QuestionnaireInterface,
     kid?: KidInterface
@@ -86,13 +72,11 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
       autoFocus: false,
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
-        if (kid) {
-          this.deleteKid(questionnaire, kid);
-        } else {
-          this.deleteQuestionnaire(questionnaire);
-        }
+        kid
+          ? this.deleteKid(questionnaire, kid)
+          : this.deleteQuestionnaire(questionnaire);
       }
     });
   }

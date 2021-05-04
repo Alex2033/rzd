@@ -33,6 +33,7 @@
           <mat-checkbox
             #checkbox
             [(ngModel)]="questionnaire.checked"
+            (ngModelChange)="detectChecked()"
             class="questionnaire-checkbox"
             color="primary"
           >
@@ -77,11 +78,12 @@
         <ng-container *ngIf="questionnaire.kids?.length">
           <div
             class="questionnaire-body kid"
-            *ngFor="let kid of questionnaire.kids"
+            *ngFor="let kid of questionnaire.kids; trackBy: trackByFn"
           >
             <mat-checkbox
               #checkbox
               [(ngModel)]="kid.checked"
+              (ngModelChange)="detectChecked()"
               class="questionnaire-checkbox"
               color="primary"
             >
