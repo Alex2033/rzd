@@ -11,7 +11,8 @@ import { QuestionnairesService } from './services/questionnaires.service';
 import { DeleteComponent } from './components/delete/delete.component';
 import { WarningDialogComponent } from './components/warning-dialog/warning-dialog.component';
 import { CreateSheetComponent } from './components/create-sheet/create-sheet.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CreateQuestionnaireComponent } from './pages/create-questionnaire/create-questionnaire.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { FormsModule } from '@angular/forms';
     DeleteComponent,
     WarningDialogComponent,
     CreateSheetComponent,
+    CreateQuestionnaireComponent,
   ],
   imports: [
     CommonModule,
@@ -28,6 +30,7 @@ import { FormsModule } from '@angular/forms';
     MatButtonModule,
     MatBottomSheetModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [QuestionnairesService],
 })

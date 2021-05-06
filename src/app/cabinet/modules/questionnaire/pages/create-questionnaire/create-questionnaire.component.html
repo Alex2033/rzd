@@ -1,0 +1,21 @@
+<div class="page-content">
+  <form (submit)="submit()" [formGroup]="createForm">
+    <div class="page-container">
+      <div class="page-title">Создание формы</div>
+
+      <div class="form-controls">
+        <div formGroupName="firstStep">
+          <input formControlName="searchTerm" />
+          <select formControlName="category">
+            <option value="one">One</option>
+            <option value="two">Two</option>
+          </select>
+        </div>
+        <div formGroupName="secondStep">
+          <input formControlName="surname" type="text" />
+          <input type="date" formControlName="date" />
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
