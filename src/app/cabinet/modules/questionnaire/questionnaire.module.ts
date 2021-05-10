@@ -5,6 +5,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { QuestionnairesListComponent } from './pages/questionnaires-list/questionnaires-list.component';
 import { QuestionnairesService } from './services/questionnaires.service';
@@ -33,6 +34,7 @@ import { ChooseAdultComponent } from './pages/choose-adult/choose-adult.componen
     MatBottomSheetModule,
     FormsModule,
     ReactiveFormsModule,
+    MatRadioModule,
   ],
   providers: [QuestionnairesService],
 })

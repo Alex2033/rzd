@@ -1,0 +1,54 @@
+@import "theme";
+@import "vars";
+
+.representatives-radio-group {
+  margin-top: 1.6rem;
+  display: block;
+}
+
+.representative-body {
+  display: flex;
+  padding-left: $container-gap;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  > * {
+    &:not(:first-child) {
+      margin-left: 1.2rem;
+    }
+  }
+}
+
+.mat-radio-button {
+  margin-top: 1rem;
+
+  ::ng-deep {
+    .mat-radio-label-content {
+      display: none;
+    }
+  }
+}
+
+.representative-button-info {
+  flex-grow: 1;
+  padding: 1.2rem 1.6rem 1.2rem 0;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 0.1rem;
+    background-color: $light-gray;
+  }
+}
+
+.representative-info-container {
+  max-width: 84%;
+}
+
+.representative-age {
+  color: $gray;
+}

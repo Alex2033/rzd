@@ -10,5 +10,43 @@
 
       <a class="close">Закрыть</a>
     </div>
+
+    <h1 class="page-title">Выберите законного представителя</h1>
+  </div>
+
+  <div class="representatives-container">
+    <mat-radio-group
+      aria-labelledby="Список законных представителей"
+      class="representatives-radio-group"
+      [(ngModel)]="selectedAdult"
+      color="primary"
+    >
+      <div class="representative-body" *ngFor="let adult of adults">
+        <mat-radio-button
+          class="representative-radio-button"
+          [value]="adult"
+          #radioButton
+        >
+        </mat-radio-button>
+        <div (click)="selectedAdult = adult" class="representative-button-info">
+          <div class="representative-info-container">
+            <span class="representative-name">
+              Резенкова <br />
+              Виктория Петровна,
+            </span>
+            <span class="representative-age">39 лет</span>
+          </div>
+        </div>
+      </div>
+    </mat-radio-group>
+  </div>
+
+  <div class="buttons">
+    <button class="button" [disabled]="!selectedAdult">
+      <span>Далее</span>
+      <svg width="1.6rem" height="1.6rem">
+        <use xlink:href="assets/sprites/icons.svg#next"></use>
+      </svg>
+    </button>
   </div>
 </div>
