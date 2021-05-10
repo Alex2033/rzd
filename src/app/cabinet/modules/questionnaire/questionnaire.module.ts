@@ -13,6 +13,7 @@ import { WarningDialogComponent } from './components/warning-dialog/warning-dial
 import { CreateSheetComponent } from './components/create-sheet/create-sheet.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreateQuestionnaireComponent } from './pages/create-questionnaire/create-questionnaire.component';
+import { ChooseAdultComponent } from './pages/choose-adult/choose-adult.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { CreateQuestionnaireComponent } from './pages/create-questionnaire/creat
     WarningDialogComponent,
     CreateSheetComponent,
     CreateQuestionnaireComponent,
+    ChooseAdultComponent,
   ],
   imports: [
     CommonModule,

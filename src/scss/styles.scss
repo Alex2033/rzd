@@ -195,3 +195,13 @@ ul {
   padding: 0 !important;
   font: 400 1.2rem/1.34 "Open Sans", sans-serif;
 }
+
+.page-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.close {
+  color: lighten($primary, 17.95%);
+}
