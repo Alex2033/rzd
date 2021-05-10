@@ -22,7 +22,6 @@ export class CreateQuestionnaireComponent implements OnInit {
         date: new FormControl('one'),
       }),
     });
-    console.log('this.createForm:', this.createForm);
   }
 
   submit(): void {}

@@ -14,7 +14,7 @@ export class LanguagesResolver implements Resolve<any> {
   ) {}
 
   resolve(snapshot: ActivatedRouteSnapshot): any {
-    this.language.getLangId().subscribe((res: number) => {
+    this.language.getLangId().subscribe((res) => {
       this.services.langId = res;
       this.points.langId = res;
     });

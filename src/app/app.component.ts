@@ -12,7 +12,6 @@ import {
   distinctUntilChanged,
   filter,
   switchMap,
-  takeWhile,
 } from 'rxjs/operators';
 import { LanguageService } from './shared/services/language.service';
 import { MenuService } from './shared/services/menu.service';

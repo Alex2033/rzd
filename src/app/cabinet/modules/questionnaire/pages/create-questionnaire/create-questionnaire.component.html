@@ -1,6 +1,17 @@
 <div class="page-content">
-  <form (submit)="submit()" [formGroup]="createForm">
-    <div class="page-container">
+  <div class="page-container">
+    <div class="page-top">
+      <a [routerLink]="['/cabinet', 'questionnaires']" class="back-link">
+        <svg width="1rem" height="1rem">
+          <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
+        </svg>
+        <span>Назад</span>
+      </a>
+
+      <a class="close">Закрыть</a>
+    </div>
+
+    <form (submit)="submit()" [formGroup]="createForm">
       <div class="page-title">Создание формы</div>
 
       <div class="form-controls">
@@ -16,6 +27,6 @@
           <input type="date" formControlName="date" />
         </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </div>
