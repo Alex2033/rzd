@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { ServicePointsService } from '../../services/service-points.service';
 import { ServicesService } from '../../services/services.service';
 import { ServicePointInterface } from '../../types/service-point.interface';
@@ -14,10 +16,13 @@ import { ServiceInterface } from '../../types/service.interface';
 export class IndexComponent implements OnInit {
   public services$: Observable<ServiceInterface[]>;
   public servicePoints$: Observable<ServicePointInterface[]>;
+  public isAuth: boolean;
 
   constructor(
     private services: ServicesService,
-    private servicePoints: ServicePointsService
+    private servicePoints: ServicePointsService,
+    private router: Router,
+    private auth: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -25,5 +30,12 @@ export class IndexComponent implements OnInit {
     this.servicePoints$ = this.servicePoints
       .getServicePoints()
       .pipe(shareReplay());
+    this.isAuth = this.auth.isAuth();
+  }
+
+  goToProfile(): void {
+    this.isAuth
+      ? this.router.navigate(['/profile'])
+      : this.router.navigate(['/auth', 'login']);
   }
 }

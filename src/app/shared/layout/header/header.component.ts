@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     private menuService: MenuService,
     private language: LanguageService,
-    private auth: AuthService
+    public auth: AuthService
   ) {}
 
   ngOnInit(): void {

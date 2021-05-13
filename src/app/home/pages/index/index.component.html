@@ -34,9 +34,7 @@
       <a [routerLink]="['/auth', 'register']" class="introduce-button button"
         >Зарегистрироваться</a
       >
-      <a class="login-link" [routerLink]="['/auth', 'login']"
-        >Уже есть аккаунт? Войти</a
-      >
+      <a class="login-link" (click)="goToProfile()">Уже есть аккаунт? Войти</a>
     </div>
   </div>
 </section>

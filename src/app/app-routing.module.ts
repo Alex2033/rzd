@@ -24,6 +24,13 @@ const routes: Routes = [
       import('./cabinet/cabinet.module').then((m) => m.CabinetModule),
   },
   {
+    path: 'profile',
+    resolve: { langId: LanguagesResolver },
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./profile/profile.module').then((m) => m.ProfileModule),
+  },
+  {
     path: 'plug',
     component: PlugComponent,
   },
