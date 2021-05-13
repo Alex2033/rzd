@@ -7,7 +7,7 @@ import {
   FormControl,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
@@ -27,7 +27,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   public submitted: boolean = false;
   public resendCode: boolean = false;
   public registrationLoading: boolean = false;
-  public confirmError: string;
   public doesEmailsMatch: boolean = false;
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
@@ -51,7 +50,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private auth: AuthService
+    private auth: AuthService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -113,7 +113,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   submit(): void {
-    this.router.navigate(['auth', 'login']);
+    this.router.navigate(['/']);
   }
 
   register(): void {
@@ -131,14 +131,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         finalize(() => (this.registrationLoading = false))
       )
       .subscribe(
-        () => {
-          this.submitted = true;
-          this.registerForm.get('code').reset();
-          localStorage.setItem(
-            'registerForm',
-            JSON.stringify(this.registerForm.value)
-          );
-        },
+        (res) => this.registerSuccess(res),
         (err) => {
           if (err instanceof HttpErrorResponse) {
             this.setErrors(err.error.error);
@@ -147,7 +140,18 @@ export class RegisterComponent implements OnInit, OnDestroy {
       );
   }
 
-  private setErrors(error: string): void {
+  registerSuccess(res): void {
+    this.submitted = true;
+    this.registerForm.get('code').reset();
+    localStorage.setItem(
+      'registerForm',
+      JSON.stringify(this.registerForm.value)
+    );
+    // todo: убрать
+    alert('Код: ' + res);
+  }
+
+  setErrors(error: string): void {
     switch (error) {
       case 'EMAIL_ALREADY_EXISTS':
         this.email.setErrors({

@@ -32,6 +32,9 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
   @Input() phoneValue: string;
   @Input() resendCode: boolean;
 
+  //todo: После того как сделать страницей, это убрать
+  @Input() isLogin: boolean = false;
+
   public confirmError: string;
   public counter$: Observable<number>;
   public isLoading: boolean = false;
@@ -57,10 +60,13 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
     this.auth
       .reInvite(this.phoneValue)
       .pipe(takeUntil(this.destroy))
-      .subscribe(() => {
+      .subscribe((res) => {
         this.codeForm.reset();
         this.confirmError = '';
         this.timeExpired = false;
+
+        // todo: убрать
+        alert('Код: ' + res);
       });
     this.setTimer();
   }
@@ -133,29 +139,57 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
 
       this.isLoading = true;
 
-      this.auth
-        .confirmInvite(confirmCode)
-        .pipe(
-          finalize(() => {
-            this.isLoading = false;
-          })
-        )
-        .subscribe(
-          () => {
-            this.submit.emit();
-          },
-          (err: HttpErrorResponse) => {
-            this.handleError(err.error.error);
-            console.log('err.error.error:', err.error.error);
-          }
-        );
+      this.isLogin
+        ? this.confirmLogin(confirmCode)
+        : this.confirmRegistration(confirmCode);
     }
+  }
+
+  confirmLogin(confirmCode: SmsConfirmInterface): void {
+    this.auth
+      .confirmLogin(confirmCode)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+        }),
+        takeUntil(this.destroy)
+      )
+      .subscribe(
+        () => {
+          this.submit.emit();
+        },
+        (err: HttpErrorResponse) => {
+          this.handleError(err.error.error);
+        }
+      );
+  }
+
+  confirmRegistration(confirmCode: SmsConfirmInterface): void {
+    this.auth
+      .confirmInvite(confirmCode)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+        }),
+        takeUntil(this.destroy)
+      )
+      .subscribe(
+        () => {
+          this.submit.emit();
+        },
+        (err: HttpErrorResponse) => {
+          this.handleError(err.error.error);
+        }
+      );
   }
 
   handleError(err: string): void {
     switch (err) {
       case 'SMS_AGE':
         this.timeExpired = true;
+        break;
+      case 'SMS_ERROR':
+        this.confirmError = 'Ошибка отправки кода';
         break;
       default:
         this.confirmError = 'Введен неверный код';

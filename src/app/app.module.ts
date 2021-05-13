@@ -5,12 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './shared/layout/header/header.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NavigationMenuComponent } from './shared/layout/navigation-menu/navigation-menu.component';
 import { UserMenuComponent } from './shared/layout/user-menu/user-menu.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { PlugComponent } from './plug/plug.component';
 import { LanguagesResolver } from './shared/resolvers/language.resolver';
+import { AuthInterceptor } from './auth/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,14 @@ import { LanguagesResolver } from './shared/resolvers/language.resolver';
     HttpClientModule,
     MatExpansionModule,
   ],
-  providers: [LanguagesResolver],
+  providers: [
+    LanguagesResolver,
+    {
+      provide: HTTP_INTERCEPTORS,
+      multi: true,
+      useClass: AuthInterceptor,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -40,6 +40,7 @@
     </div>
 
     <button
+      *ngIf="!isAuth"
       [routerLink]="['/auth', 'login']"
       class="header-button login-button"
     >
@@ -48,10 +49,14 @@
       </svg>
     </button>
 
-    <!-- <button class="header-button user-button" (click)="setUserMenu(true)">
+    <button
+      *ngIf="isAuth"
+      class="header-button user-button"
+      (click)="setUserMenu(true)"
+    >
       <svg width="2.6rem" height="2.6rem">
         <use xlink:href="assets/sprites/icons.svg#user"></use>
       </svg>
-    </button> -->
+    </button>
   </div>
 </header>

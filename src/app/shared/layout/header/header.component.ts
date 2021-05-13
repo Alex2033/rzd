@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { first } from 'rxjs/internal/operators/first';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { LanguageService } from '../../services/language.service';
 import { MenuService } from '../../services/menu.service';
 import { LanguageInterface } from '../../types/language.interface';
@@ -13,6 +13,7 @@ import { LanguageInterface } from '../../types/language.interface';
 export class HeaderComponent implements OnInit, OnDestroy {
   public activeLanguage: LanguageInterface = {} as LanguageInterface;
   public showDropdown: boolean = false;
+  public isAuth: boolean;
   public languages: LanguageInterface[] = [
     {
       langId: 1,
@@ -30,7 +31,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private menuService: MenuService,
-    private language: LanguageService
+    private language: LanguageService,
+    private auth: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -43,6 +45,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         );
       }
     });
+    this.isAuth = this.auth.isAuth();
   }
 
   ngOnDestroy(): void {

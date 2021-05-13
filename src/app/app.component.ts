@@ -8,11 +8,7 @@ import {
   Router,
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import {
-  distinctUntilChanged,
-  filter,
-  switchMap,
-} from 'rxjs/operators';
+import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 import { LanguageService } from './shared/services/language.service';
 import { MenuService } from './shared/services/menu.service';
 
@@ -54,11 +50,7 @@ export class AppComponent implements OnInit {
       .pipe(
         filter((event: Event) => event instanceof NavigationEnd),
         switchMap((event: NavigationEnd) => {
-          if (
-            !(event.url.includes('register') || event.url.includes('sms-info'))
-          ) {
-            localStorage.removeItem('registerForm');
-          }
+          this.removeAuthStorage(event);
           return this.route.queryParams;
         }),
         distinctUntilChanged(),
@@ -68,6 +60,17 @@ export class AppComponent implements OnInit {
         })
       )
       .subscribe();
+  }
+
+  removeAuthStorage(event: NavigationEnd): void {
+    if (!event.url.includes('sms-info')) {
+      if (!event.url.includes('register')) {
+        localStorage.removeItem('registerForm');
+      }
+      if (!event.url.includes('login')) {
+        localStorage.removeItem('loginForm');
+      }
+    }
   }
 
   initializeValues(): void {

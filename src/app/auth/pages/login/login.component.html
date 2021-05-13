@@ -1,9 +1,10 @@
 <div class="page-content">
-  <form class="login-form">
-    <div class="page-container">
+  <form class="login-form" (submit)="submit()" [formGroup]="loginForm">
+    <!-- login content -->
+    <div class="page-container" *ngIf="!submitted">
       <h1 class="page-title">Вход</h1>
 
-      <!-- controls -->
+      <!-- login controls -->
       <div class="form-controls">
         <!-- phone -->
         <div class="form-control">
@@ -11,7 +12,6 @@
             <mat-label>Телефон<span class="primary-color">*</span></mat-label>
 
             <input
-              #phone
               matInput
               mask="0 (000) 000 00 00"
               [validation]="true"
@@ -40,77 +40,34 @@
                     'Минимальная длина ' +
                     phoneControl.errors.minlength?.requiredLength +
                     ' символов',
-                  required: 'Введите номер телефона'
+                  required: 'Введите номер телефона',
+                  not_found: 'Пользователь с таким номером не найден',
+                  invalid_status: 'Пользователь не подтвержден'
                 }"
               ></app-error-messages
             ></mat-error>
           </mat-form-field>
 
-          <p
-            *ngIf="!(phoneControl.touched && phoneControl.invalid)"
-            class="form-control-text"
-          >
-            Пришлем код подтверждения регистрациии оповестим о готовности
-            результата.
-          </p>
-        </div>
-      </div>
-
-      <!-- sms code content -->
-      <div class="page-container" [hidden]="!submitted">
-        <a (click)="back()" class="back-link">
-          <svg width="1rem" height="1rem">
-            <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
-          </svg>
-          <span>Назад</span>
-        </a>
-
-        <h1 class="page-title">Введите код</h1>
-
-        <div class="sms-description">
           <p>
-            Ввведите код, полученный в СМС на номер
-            <strong class="primary-color">+79998888790</strong>
+            <a class="register-link" [routerLink]="['/auth', 'register']"
+              >Еще нет аккаунта? Зарегистрироваться</a
+            >
           </p>
         </div>
-
-        <div class="otc" name="one-time-code">
-          <fieldset>
-            <label for="otc-1" #otc>Number 1</label>
-            <label for="otc-2">Number 2</label>
-            <label for="otc-3">Number 3</label>
-            <label for="otc-4">Number 4</label>
-
-            <div formGroupName="code">
-              <input
-                *ngFor="let input of [1, 2, 3, 4]; index as i"
-                type="number"
-                [formControlName]="'control' + (i + 1)"
-                pattern="[0-9]*"
-                (click)="inputNum.select()"
-                maxlength="1"
-                (focus)="inputFocus(inputNum)"
-                (input)="inputKeyup(inputNum, $event)"
-                (keyup)="check(inputNum, $event)"
-                inputtype="numeric"
-                [autocomplete]="i === 0 ? 'one-time-code' : null"
-                id="{{ 'otc-' + (i + 1) }}"
-                #inputNum
-                required
-              />
-            </div>
-          </fieldset>
-        </div>
-
-        <div class="new-code-text" *ngIf="!resendCode">
-          Получить новый код можно через {{ counter$ | async }} секунд
-        </div>
-
-        <a [routerLink]="['/auth', 'sms-info']" class="no-sms"
-          >Не приходит СМС?</a
-        >
       </div>
     </div>
+
+    <!-- sms confirm -->
+    <app-sms-confirm
+      [codeForm]="loginForm.get('code')"
+      *ngIf="submitted"
+      [isLogin]="true"
+      (changeResendCode)="resendCode = $event"
+      [resendCode]="resendCode"
+      (submitted)="changeSubmitted($event)"
+      [phoneValue]="phoneControl.value"
+      (submit)="submit()"
+    ></app-sms-confirm>
 
     <div class="buttons">
       <button
@@ -118,20 +75,12 @@
         type="button"
         (click)="login()"
         class="button register-button"
-        [disabled]="phoneControl.invalid"
+        [disabled]="phoneControl.invalid || loginLoading"
       >
         <span>Далее</span>
         <svg width="1.6rem" height="1.6rem">
           <use xlink:href="assets/sprites/icons.svg#next"></use>
         </svg>
-      </button>
-      <button
-        (click)="setTimer()"
-        *ngIf="resendCode"
-        type="button"
-        class="button"
-      >
-        <span>Отправить код повторно</span>
       </button>
     </div>
   </form>
