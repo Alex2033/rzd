@@ -98,18 +98,29 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   private setErrors(err: HttpErrorResponse): void {
-    const { value } = err.error;
-    console.log('err.error:', err.error);
+    const { error, value } = err.error;
 
-    switch (value) {
+    switch (error) {
       case 'PHONE_NOT_FOUND':
         this.phone.setErrors({
-          not_found: 'Пользователь с таким номером не найден',
+          not_found: true,
         });
         break;
-      case 'INVALID_STATUS':
+
+      default:
+        break;
+    }
+
+    switch (value) {
+      case 'CREATED':
+      case 'REGISTERED':
         this.phone.setErrors({
-          invalid_status: 'Пользователь не подтвержден',
+          exists_without_confirm: true,
+        });
+        break;
+      case 'BLOCKED':
+        this.phone.setErrors({
+          blocked: true,
         });
         break;
       default:
