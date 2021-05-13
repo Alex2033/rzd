@@ -1,0 +1,80 @@
+<div class="page-container" [hidden]="isLoading">
+  <a (click)="back()" class="back-link">
+    <svg width="1rem" height="1rem">
+      <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
+    </svg>
+    <span>Назад</span>
+  </a>
+
+  <h1 class="page-title">
+    {{ timeExpired ? "Истекло время ожидания" : "Введите код" }}
+  </h1>
+
+  <ng-container *ngIf="!timeExpired">
+    <div class="sms-description">
+      <p>
+        Ввведите код, полученный в СМС на номер
+        <strong class="primary-color">{{ phoneValue }}</strong>
+      </p>
+    </div>
+
+    <div class="otc" name="one-time-code">
+      <fieldset>
+        <label for="otc-1" #otc>Number 1</label>
+        <label for="otc-2">Number 2</label>
+        <label for="otc-3">Number 3</label>
+        <label for="otc-4">Number 4</label>
+
+        <div [formGroup]="codeForm">
+          <input
+            *ngFor="let input of [1, 2, 3, 4]; index as i"
+            type="number"
+            [formControlName]="'control' + (i + 1)"
+            pattern="[0-9]*"
+            (click)="inputNum.select()"
+            maxlength="1"
+            (focus)="inputFocus(inputNum)"
+            (input)="inputKeyup(inputNum, $event)"
+            (keyup)="check(inputNum, $event)"
+            inputtype="numeric"
+            [autocomplete]="i === 0 ? 'one-time-code' : null"
+            id="{{ 'otc-' + (i + 1) }}"
+            #inputNum
+            class="confirm-control"
+            required
+            [class.invalid]="confirmError"
+          />
+        </div>
+      </fieldset>
+    </div>
+    <div class="confirm-error" *ngIf="confirmError">{{ confirmError }}</div>
+
+    <div class="new-code-text" *ngIf="!resendCode">
+      Получить новый код можно через {{ counter$ | async }} секунд
+    </div>
+
+    <a [routerLink]="['/auth', 'sms-info']" class="no-sms">Не приходит СМС?</a>
+  </ng-container>
+</div>
+
+<div class="buttons">
+  <button
+    (click)="getNewSmsCode()"
+    *ngIf="resendCode"
+    type="button"
+    class="button"
+  >
+    <span>Отправить код повторно</span>
+  </button>
+</div>
+
+<!-- loader -->
+<div class="loader-container" [hidden]="!isLoading">
+  <div class="loader">
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+  </div>
+</div>

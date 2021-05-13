@@ -1,10 +1,5 @@
-import {
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormGroup,
   AbstractControl,
@@ -13,8 +8,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, ReplaySubject, Subject, timer } from 'rxjs';
-import { finalize, map, take, takeUntil } from 'rxjs/operators';
+import { ReplaySubject } from 'rxjs';
+import { finalize, takeUntil } from 'rxjs/operators';
+import { AuthService } from '../../services/auth.service';
+import { AuthDataInterface } from '../../types/auth.interface';
 
 @Component({
   selector: 'app-register',
@@ -22,20 +19,17 @@ import { finalize, map, take, takeUntil } from 'rxjs/operators';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit, OnDestroy {
-  @ViewChild('otc') otc: ElementRef;
-  @ViewChild('phone') phoneRef: ElementRef;
-
   public registerForm: FormGroup;
   public nameControl: AbstractControl;
   public phoneControl: AbstractControl;
   public emailControl: AbstractControl;
-  public counter$: Observable<number>;
+  public emailConfirmControl: AbstractControl;
   public submitted: boolean = false;
   public resendCode: boolean = false;
-  public isLoading: boolean = false;
+  public registrationLoading: boolean = false;
+  public confirmError: string;
+  public doesEmailsMatch: boolean = false;
 
-  private count: number = 60;
-  private readonly stopTimer = new Subject<void>();
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   get name(): AbstractControl {
@@ -50,18 +44,45 @@ export class RegisterComponent implements OnInit, OnDestroy {
     return this.registerForm.get('email');
   }
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {}
+  get emailConfirm(): AbstractControl {
+    return this.registerForm.get('emailConfirm');
+  }
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private auth: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.createForm();
     this.initializeValues();
     this.getFormLocalStorage();
+    this.checkEmailsMatch();
   }
 
   ngOnDestroy() {
     this.destroy.next(null);
     this.destroy.complete();
-    this.stopTimer.next();
+  }
+
+  initializeValues(): void {
+    this.nameControl = this.name;
+    this.phoneControl = this.phone;
+    this.emailControl = this.email;
+    this.emailConfirmControl = this.emailConfirm;
+  }
+
+  checkEmailsMatch(): void {
+    this.registerForm.valueChanges.subscribe(() => {
+      if (this.email.value && this.email.value !== this.emailConfirm.value) {
+        this.emailConfirm.setErrors({ does_not_match: true });
+        this.doesEmailsMatch = false;
+      } else {
+        this.doesEmailsMatch = true;
+        this.emailConfirm.setErrors(null);
+      }
+    });
   }
 
   getFormLocalStorage(): void {
@@ -70,7 +91,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     if (savedData) {
       this.registerForm.patchValue(savedData);
       this.submitted = true;
-      this.setTimer();
     }
   }
 
@@ -82,6 +102,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         Validators.minLength(11),
       ]),
       email: new FormControl(null, [Validators.required, Validators.email]),
+      emailConfirm: new FormControl(null),
       code: new FormGroup({
         control1: new FormControl(null, [Validators.required]),
         control2: new FormControl(null, [Validators.required]),
@@ -91,115 +112,60 @@ export class RegisterComponent implements OnInit, OnDestroy {
     });
   }
 
-  initializeValues(): void {
-    this.nameControl = this.name;
-    this.phoneControl = this.phone;
-    this.emailControl = this.email;
-  }
-
-  setTimer(): void {
-    this.resetSmsTimer();
-    this.counter$ = timer(0, 1000).pipe(
-      take(this.count),
-      map(() => --this.count),
-      takeUntil(this.stopTimer),
-      finalize(() => {
-        this.resendCode = true;
-      })
-    );
-  }
-
-  resetSmsTimer(): void {
-    this.count = 60;
-    this.stopTimer.next();
-    this.resendCode = false;
-  }
-
   submit(): void {
-    // todo: Проверить совпадает ли введенный код с необходимым
-
     this.router.navigate(['auth', 'login']);
   }
 
-  codeIsValidated(): void {
-    if (this.registerForm.get('code').valid) {
-      this.isLoading = true;
-
-      // todo: убрать этот таймер, когда будет идти ответ с сервера
-      timer(2000)
-        .pipe(takeUntil(this.destroy))
-        .subscribe(() => this.submit());
-    }
-  }
-
   register(): void {
-    this.setTimer();
-    // todo: логика для отправки смс
+    this.registrationLoading = true;
+    const newUser: AuthDataInterface = {
+      email: this.email.value,
+      name: this.name.value,
+      phone: this.phone.value,
+    };
 
-    this.submitted = true;
-    this.registerForm.get('code').reset();
-    localStorage.setItem(
-      'registerForm',
-      JSON.stringify(this.registerForm.value)
-    );
+    this.auth
+      .register(newUser)
+      .pipe(
+        takeUntil(this.destroy),
+        finalize(() => (this.registrationLoading = false))
+      )
+      .subscribe(
+        () => {
+          this.submitted = true;
+          this.registerForm.get('code').reset();
+          localStorage.setItem(
+            'registerForm',
+            JSON.stringify(this.registerForm.value)
+          );
+        },
+        (err) => {
+          if (err instanceof HttpErrorResponse) {
+            this.setErrors(err.error.error);
+          }
+        }
+      );
   }
 
-  inputKeyup(inputNum: HTMLInputElement, e: any): void {
-    const valueLength = inputNum.value.length;
-    const previousSibling = <HTMLInputElement>inputNum.previousElementSibling;
-    const nextSibling = <HTMLInputElement>inputNum.nextElementSibling;
-
-    if (
-      e.keyCode === 16 ||
-      e.keyCode == 9 ||
-      e.keyCode == 224 ||
-      e.keyCode == 18 ||
-      e.keyCode == 17
-    ) {
-      return;
-    }
-
-    if (inputNum.value.length > inputNum.maxLength) {
-      inputNum.value = inputNum.value.slice(0, inputNum.maxLength);
-    }
-
-    if (
-      (e.keyCode === 8 || e.keyCode === 37) &&
-      previousSibling &&
-      previousSibling.tagName === 'INPUT'
-    ) {
-      previousSibling.select();
-    } else if (e.keyCode !== 8 && nextSibling && valueLength === 1) {
-      (<HTMLInputElement>nextSibling).select();
-    }
-
-    this.codeIsValidated();
-  }
-
-  check(inputNum: HTMLInputElement, e: any): void {
-    const previousSibling = <HTMLInputElement>inputNum.previousElementSibling;
-    const nextSibling = <HTMLInputElement>inputNum.nextElementSibling;
-
-    if ((e.keyCode === 8 || e.keyCode === 37) && previousSibling) {
-      previousSibling.select();
-    } else if (e.keyCode === 39 && nextSibling) {
-      nextSibling.select();
+  private setErrors(error: string): void {
+    switch (error) {
+      case 'EMAIL_ALREADY_EXISTS':
+        this.email.setErrors({
+          not_unique_email: 'Этот имейл уже используется',
+        });
+        break;
+      case 'PHONE_ALREADY_EXISTS':
+        this.phone.setErrors({
+          not_unique_phone: 'Этот номер уже используется',
+        });
+        break;
+      default:
+        break;
     }
   }
 
-  inputFocus(inputNum: HTMLInputElement): void {
-    if (inputNum === this.otc.nativeElement) return;
-
-    if (this.otc.nativeElement.value == '') {
-      this.otc.nativeElement.focus();
-    }
-  }
-
-  back(): void {
-    this.submitted = false;
-    this.resetSmsTimer();
-    setTimeout(() => {
-      this.phoneRef.nativeElement.select();
-    }, 0);
+  changeSubmitted(val: boolean): void {
+    this.submitted = val;
+    this.registerForm.markAllAsTouched();
   }
 }

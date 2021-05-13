@@ -11,9 +11,10 @@ import { ErrorMessagesComponent } from '../shared/components/error-messages/erro
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SmsInfoComponent } from './pages/sms-info/sms-info.component';
+import { SmsConfirmComponent } from './components/sms-confirm/sms-confirm.component';
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, ErrorMessagesComponent, SmsInfoComponent],
+  declarations: [LoginComponent, RegisterComponent, ErrorMessagesComponent, SmsInfoComponent, SmsConfirmComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,
