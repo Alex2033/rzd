@@ -15,6 +15,7 @@ import { CreateSheetComponent } from './components/create-sheet/create-sheet.com
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreateQuestionnaireComponent } from './pages/create-questionnaire/create-questionnaire.component';
 import { ChooseAdultComponent } from './pages/choose-adult/choose-adult.component';
+import { PluralRuModule } from 'src/app/shared/directives/plural-ru/plural-ru.module';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { ChooseAdultComponent } from './pages/choose-adult/choose-adult.componen
     FormsModule,
     ReactiveFormsModule,
     MatRadioModule,
+    PluralRuModule,
   ],
   providers: [QuestionnairesService],
 })

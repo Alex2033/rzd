@@ -14,7 +14,13 @@ import { SmsInfoComponent } from './pages/sms-info/sms-info.component';
 import { SmsConfirmComponent } from './components/sms-confirm/sms-confirm.component';
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, ErrorMessagesComponent, SmsInfoComponent, SmsConfirmComponent],
+  declarations: [
+    LoginComponent,
+    RegisterComponent,
+    ErrorMessagesComponent,
+    SmsInfoComponent,
+    SmsConfirmComponent,
+  ],
   imports: [
     CommonModule,
     AuthRoutingModule,

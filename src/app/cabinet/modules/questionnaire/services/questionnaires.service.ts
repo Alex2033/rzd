@@ -10,18 +10,25 @@ export class QuestionnairesService {
 
   getQuestionnaires(): Observable<QuestionnaireInterface[]> {
     return this.http.get<QuestionnaireInterface[]>(
-      environment.fakeApi + 'questionnaires'
+      environment.api + 'api/anketa'
     );
+  }
+
+  getQuestionnaire(id: number): Observable<QuestionnaireInterface> {
+    return this.http.get<QuestionnaireInterface>(
+      `${environment.api}api/anketa/${id}`
+    );
+  }
+
+  create(): Observable<void> {
+    return this.http.delete<void>(environment.api + '');
   }
 
   delete(id: number): Observable<void> {
-    return this.http.delete<void>(environment.fakeApi + 'questionnaires/' + id);
+    return this.http.delete<void>(`${environment.api}api/anketa/${id}`);
   }
 
-  deleteKid(changedQuestionnaire: QuestionnaireInterface): Observable<void> {
-    return this.http.patch<void>(
-      environment.fakeApi + 'questionnaires/' + changedQuestionnaire.id,
-      changedQuestionnaire
-    );
+  update(data): Observable<void> {
+    return this.http.put<void>(`${environment.api}api/anketa/${data.id}`, data);
   }
 }

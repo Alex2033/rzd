@@ -51,7 +51,7 @@
   }
 }
 
-.kid {
+.child {
   .questionnaire-content {
     padding-top: 0.4rem;
     padding-bottom: 0.4rem;
@@ -96,7 +96,7 @@
   }
 }
 
-.kid-icon {
+.child-icon {
   position: relative;
 
   svg {
@@ -122,4 +122,10 @@
   justify-content: space-between;
   align-items: flex-start;
   position: relative;
+}
+
+.draft {
+  font-size: 1.2rem;
+  opacity: 0.4;
+  margin-top: 0.4rem;
 }

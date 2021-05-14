@@ -1,13 +1,13 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Observable, of, Subject, throwError } from 'rxjs';
+import { catchError, switchMap, takeUntil } from 'rxjs/operators';
 import { CreateSheetComponent } from '../../components/create-sheet/create-sheet.component';
 import { DeleteComponent } from '../../components/delete/delete.component';
 import { WarningDialogComponent } from '../../components/warning-dialog/warning-dialog.component';
 import { QuestionnairesService } from '../../services/questionnaires.service';
-import { KidInterface } from '../../types/kid.interface';
 import { QuestionnaireInterface } from '../../types/questionnaire.interface';
 
 @Component({
@@ -46,25 +46,17 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
   }
 
   detectChecked(): void {
-    this.checkedQuestionnaires = this.questionnaires.filter(
-      (q: QuestionnaireInterface) => {
-        if (q.kids && q.kids.filter((kid) => kid.checked).length) {
-          return true;
-        }
-        return q.checked;
-      }
-    );
+    // this.checkedQuestionnaires = this.questionnaires.filter(
+    //   (q: QuestionnaireInterface) => {
+    //     if (q.children && q.children.filter((kid) => kid.checked).length) {
+    //       return true;
+    //     }
+    //     return q.checked;
+    //   }
+    // );
   }
 
-  openDeleteDialog(
-    questionnaire: QuestionnaireInterface,
-    kid?: KidInterface
-  ): void {
-    if (questionnaire.kids && !kid && questionnaire.kids.length) {
-      this.openWarningDialog();
-      return;
-    }
-
+  openDeleteDialog(questionnaire: QuestionnaireInterface): void {
     const dialogRef = this.dialog.open(DeleteComponent, {
       panelClass: 'custom-dialog',
       backdropClass: 'custom-dialog-overlay',
@@ -74,9 +66,7 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
-        kid
-          ? this.deleteKid(questionnaire, kid)
-          : this.deleteQuestionnaire(questionnaire);
+        this.deleteQuestionnaire(questionnaire);
       }
     });
   }
@@ -90,21 +80,26 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
     });
   }
 
-  deleteKid(questionnaire: QuestionnaireInterface, kid: KidInterface) {
-    const changedKids = questionnaire.kids.filter((k) => k.id !== kid.id);
-    const changedQuestionnaire = { ...questionnaire, kids: changedKids };
-
-    this.questionnairesService
-      .deleteKid(changedQuestionnaire)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe();
-  }
-
   deleteQuestionnaire(questionnaire: QuestionnaireInterface) {
     this.questionnairesService
       .delete(questionnaire.id)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe();
+      .pipe(
+        switchMap(() => this.questionnairesService.getQuestionnaires()),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(
+        (res) => {
+          this.questionnaires = res;
+        },
+        (err: HttpErrorResponse) => this.deleteErrorHandle(err)
+      );
+  }
+
+  deleteErrorHandle(err: HttpErrorResponse): void {
+    const { error } = err.error;
+    if (error === 'IS_PARENT') {
+      this.openWarningDialog();
+    }
   }
 
   openBottomSheet(): void {
