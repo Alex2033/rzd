@@ -1,0 +1,51 @@
+<div class="page-content" *ngIf="user">
+  <div class="page-container">
+    <div class="page-top">
+      <div class="spacer"></div>
+
+      <a class="close" [routerLink]="['/']">Закрыть</a>
+    </div>
+    <h1 class="profile-title">Редактирование телефона</h1>
+
+    <form (submit)="submit()" [formGroup]="editForm" class="form-controls">
+      <div class="form-control">
+        <mat-form-field appearance="outline">
+          <mat-label>Телефон</mat-label>
+
+          <input
+            matInput
+            mask="0 (000) 000 00 00"
+            [validation]="true"
+            prefix="+"
+            type="text"
+            formControlName="phone"
+          />
+
+          <mat-error
+            ><app-error-messages
+              *ngIf="
+                editForm.get('phone').touched && editForm.get('phone').invalid
+              "
+              [errors]="editForm.get('phone').errors"
+              [errorMessages]="{
+                required: 'Введите телефон',
+                not_unique_phone: editForm.get('phone').errors?.not_unique_phone
+              }"
+            ></app-error-messages
+          ></mat-error>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="buttons">
+  <button
+    type="button"
+    (click)="submit()"
+    [disabled]="loading || editForm.get('phone').invalid"
+    class="button"
+  >
+    <span>Подтвердить телефон</span>
+  </button>
+</div>

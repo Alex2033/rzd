@@ -9,9 +9,16 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ErrorMessagesModule } from '../shared/modules/error-messages/error-messages.module';
 import { EditEmailComponent } from './pages/edit-email/edit-email.component';
+import { EditPhoneComponent } from './pages/edit-phone/edit-phone.component';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
-  declarations: [ProfileComponent, EditNameComponent, EditEmailComponent],
+  declarations: [
+    ProfileComponent,
+    EditNameComponent,
+    EditEmailComponent,
+    EditPhoneComponent,
+  ],
   imports: [
     CommonModule,
     ProfileRoutingModule,
@@ -19,6 +26,7 @@ import { EditEmailComponent } from './pages/edit-email/edit-email.component';
     MatFormFieldModule,
     MatInputModule,
     ErrorMessagesModule,
+    NgxMaskModule.forRoot(),
   ],
 })
 export class ProfileModule {}
