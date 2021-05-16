@@ -1,0 +1,71 @@
+<div class="page-content" *ngIf="user">
+  <div class="page-container">
+    <div class="page-top">
+      <div class="spacer"></div>
+
+      <a class="close" [routerLink]="['/']">Закрыть</a>
+    </div>
+    <h1 class="profile-title">Редактирование E-mail</h1>
+
+    <form (submit)="submit()" [formGroup]="editForm" class="form-controls">
+      <!-- email -->
+      <div class="form-control">
+        <mat-form-field appearance="outline">
+          <mat-label>E-mail</mat-label>
+
+          <input matInput type="email" name="email" formControlName="email" />
+
+          <mat-error
+            ><app-error-messages
+              *ngIf="emailControl.touched && emailControl.invalid"
+              [errors]="emailControl.errors"
+              [errorMessages]="{
+                required: 'Введите email',
+                incorrect_email_length:
+                  emailControl.errors?.incorrect_email_length,
+                email_already_exists: emailControl.errors?.email_already_exists
+              }"
+            ></app-error-messages
+          ></mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- confirm email -->
+      <div class="form-control">
+        <mat-form-field appearance="outline">
+          <mat-label>Повторите ваш E-mail</mat-label>
+
+          <input
+            matInput
+            (paste)="$event.preventDefault()"
+            autocomplete="off"
+            type="email"
+            name="emailConfirm"
+            formControlName="emailConfirm"
+          />
+
+          <mat-error
+            ><app-error-messages
+              *ngIf="emailConfirmControl.touched && emailConfirmControl.invalid"
+              [errors]="emailConfirmControl.errors"
+              [errorMessages]="{
+                does_not_match: emailConfirmControl.errors?.does_not_match
+              }"
+            ></app-error-messages
+          ></mat-error>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="buttons">
+  <button
+    type="button"
+    (click)="submit()"
+    [disabled]="loading || !emailsMatches"
+    class="button"
+  >
+    <span>Сохранить</span>
+  </button>
+</div>

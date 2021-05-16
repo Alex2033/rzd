@@ -159,8 +159,8 @@
             />
 
             <button
-              *ngIf="emailConfirm.value"
-              (click)="emailConfirm.setValue(null)"
+              *ngIf="emailConfirmControl.value"
+              (click)="emailConfirmControl.setValue(null)"
               type="button"
               class="icon-button"
             >
@@ -171,10 +171,12 @@
 
             <mat-error
               ><app-error-messages
-                *ngIf="emailConfirm.touched && emailConfirm.invalid"
-                [errors]="emailConfirm.errors"
+                *ngIf="
+                  emailConfirmControl.touched && emailConfirmControl.invalid
+                "
+                [errors]="emailConfirmControl.errors"
                 [errorMessages]="{
-                  does_not_match: 'Поля Email не совпадают'
+                  does_not_match: emailConfirmControl.errors?.does_not_match
                 }"
               ></app-error-messages
             ></mat-error>

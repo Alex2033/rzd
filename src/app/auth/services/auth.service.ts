@@ -101,6 +101,11 @@ export class AuthService {
   updateUser(user: AuthResponseInterface): Observable<void> {
     return this.http
       .post<void>(environment.api + 'api/account/update', user)
-      .pipe(tap(() => this.setUserSettings(user)));
+      .pipe(
+        tap(() => {
+          this.user$.next(user);
+          localStorage.setItem('rzd-saved-user', JSON.stringify(user));
+        })
+      );
   }
 }

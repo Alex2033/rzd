@@ -8,9 +8,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ErrorMessagesModule } from '../shared/modules/error-messages/error-messages.module';
+import { EditEmailComponent } from './pages/edit-email/edit-email.component';
 
 @NgModule({
-  declarations: [ProfileComponent, EditNameComponent],
+  declarations: [ProfileComponent, EditNameComponent, EditEmailComponent],
   imports: [
     CommonModule,
     ProfileRoutingModule,

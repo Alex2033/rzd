@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { EditEmailComponent } from './pages/edit-email/edit-email.component';
 import { EditNameComponent } from './pages/edit-name/edit-name.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 
@@ -11,6 +12,10 @@ const routes: Routes = [
   {
     path: 'edit-name',
     component: EditNameComponent,
+  },
+  {
+    path: 'edit-email',
+    component: EditEmailComponent,
   },
 ];
 

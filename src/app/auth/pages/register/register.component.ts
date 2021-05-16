@@ -27,7 +27,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   public submitted: boolean = false;
   public resendCode: boolean = false;
   public registrationLoading: boolean = false;
-  public doesEmailsMatch: boolean = false;
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -76,10 +75,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
   checkEmailsMatch(): void {
     this.registerForm.valueChanges.subscribe(() => {
       if (this.email.value && this.email.value !== this.emailConfirm.value) {
-        this.emailConfirm.setErrors({ does_not_match: true });
-        this.doesEmailsMatch = false;
+        this.emailConfirm.setErrors({
+          does_not_match: 'Поля Email не совпадают',
+        });
       } else {
-        this.doesEmailsMatch = true;
         this.emailConfirm.setErrors(null);
       }
     });

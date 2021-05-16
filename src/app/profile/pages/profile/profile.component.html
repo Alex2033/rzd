@@ -27,7 +27,7 @@
     </div>
 
     <!-- email -->
-    <div class="user-data-field">
+    <div class="user-data-field" [routerLink]="['/profile', 'edit-email']">
       <div class="user-label">E-mail</div>
       <div class="user-body">
         <div class="user-info">{{ user.email }}</div>
