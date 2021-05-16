@@ -22,9 +22,21 @@
   padding: 3rem 2rem 2rem;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+
+  > * {
+    &:not(:first-child) {
+      margin-left: 1rem;
+    }
+  }
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
 
   > * {
     &:not(:first-child) {
@@ -118,5 +130,11 @@
 
   svg {
     stroke: $dark;
+  }
+}
+
+.edit-profile {
+  svg {
+    fill: $light;
   }
 }

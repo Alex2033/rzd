@@ -1,0 +1,12 @@
+.profile-title {
+  font-size: 1.6rem;
+  margin-top: 2.4rem;
+}
+
+.page-top {
+  margin-top: 1.6rem;
+
+  + .profile-title {
+    margin-top: 1.6rem;
+  }
+}

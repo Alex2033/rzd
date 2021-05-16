@@ -84,8 +84,10 @@ export class LoginComponent implements OnInit, OnDestroy {
         (res) => {
           this.loginSuccess(res);
         },
-        (err: HttpErrorResponse) => {
-          this.setErrors(err);
+        (err) => {
+          if (err instanceof HttpErrorResponse) {
+            this.setErrors(err);
+          }
         }
       );
   }
@@ -94,6 +96,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.submitted = true;
     this.loginForm.get('code').reset();
     localStorage.setItem('loginForm', JSON.stringify(this.loginForm.value));
+    // todo: убрать
     alert('Код: ' + res);
   }
 
@@ -103,7 +106,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     switch (error) {
       case 'PHONE_NOT_FOUND':
         this.phone.setErrors({
-          not_found: true,
+          not_found: 'Пользователь с таким номером не найден',
         });
         break;
 
@@ -115,12 +118,12 @@ export class LoginComponent implements OnInit, OnDestroy {
       case 'CREATED':
       case 'REGISTERED':
         this.phone.setErrors({
-          exists_without_confirm: true,
+          exists_without_confirm: 'Пользователь не подтвержден',
         });
         break;
       case 'BLOCKED':
         this.phone.setErrors({
-          blocked: true,
+          blocked: 'Пользователь заблокирован',
         });
         break;
       default:

@@ -107,6 +107,12 @@
   }
 }
 
+.edit-questionnaire {
+  svg {
+    fill: $primary;
+  }
+}
+
 .questionnaire-age {
   color: $gray;
 }

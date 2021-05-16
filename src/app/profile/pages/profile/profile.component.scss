@@ -1,0 +1,48 @@
+@import "theme";
+@import "vars";
+@import "./components/profile";
+
+.user-data {
+  margin-top: 2rem;
+
+  > * {
+    &:not(:first-child) {
+      margin-top: 0.8rem;
+    }
+  }
+}
+
+.user-data-field {
+  margin-left: $container-gap;
+  padding: 0 $container-gap 1.5rem;
+  padding-left: 0.3rem;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 0.1rem;
+    background-color: rgba(33, 33, 33, 0.08);
+  }
+}
+
+.user-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.7rem;
+}
+
+.user-info {
+  color: $dark;
+  letter-spacing: 0.044rem;
+}
+
+.user-label {
+  letter-spacing: 0.04rem;
+  font-size: 1.2rem;
+  color: $gray;
+}

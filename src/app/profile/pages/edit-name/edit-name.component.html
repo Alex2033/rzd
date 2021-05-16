@@ -1,0 +1,45 @@
+<div class="page-content" *ngIf="user">
+  <div class="page-container">
+    <div class="page-top">
+      <div class="spacer"></div>
+
+      <a class="close" [routerLink]="['/']">Закрыть</a>
+    </div>
+    <h1 class="profile-title">Редактирование имени</h1>
+
+    <form (submit)="submit()" [formGroup]="editForm" class="form-controls">
+      <div class="form-control">
+        <mat-form-field appearance="outline">
+          <mat-label>Имя</mat-label>
+
+          <input matInput type="text" name="name" formControlName="name" />
+
+          <mat-error
+            ><app-error-messages
+              *ngIf="
+                editForm.get('name').touched && editForm.get('name').invalid
+              "
+              [errors]="editForm.get('name').errors"
+              [errorMessages]="{
+                required: 'Введите имя',
+                incorrect_name_length:
+                  editForm.get('name').errors?.incorrect_name_length
+              }"
+            ></app-error-messages
+          ></mat-error>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="buttons">
+  <button
+    type="button"
+    (click)="submit()"
+    [disabled]="loading || editForm.get('name').invalid"
+    class="button"
+  >
+    <span>Сохранить</span>
+  </button>
+</div>

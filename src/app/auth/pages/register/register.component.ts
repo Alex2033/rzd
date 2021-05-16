@@ -134,7 +134,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         (res) => this.registerSuccess(res),
         (err) => {
           if (err instanceof HttpErrorResponse) {
-            this.setErrors(err.error.error);
+            this.setErrors(err);
           }
         }
       );
@@ -151,16 +151,28 @@ export class RegisterComponent implements OnInit, OnDestroy {
     alert('Код: ' + res);
   }
 
-  setErrors(error: string): void {
+  setErrors(err: HttpErrorResponse): void {
+    const { error, value } = err.error;
+
     switch (error) {
       case 'EMAIL_ALREADY_EXISTS':
         this.email.setErrors({
-          not_unique_email: 'Этот имейл уже используется',
+          not_unique_email: 'Этот email уже используется',
         });
         break;
       case 'PHONE_ALREADY_EXISTS':
         this.phone.setErrors({
-          not_unique_phone: 'Этот номер уже используется',
+          not_unique_phone: 'Номер телефона уже зарегистрирован',
+        });
+        break;
+      case 'NAME_LENGTH':
+        this.name.setErrors({
+          incorrect_name_length: `Не более ${value} символов`,
+        });
+        break;
+      case 'EMAIL_LENGTH':
+        this.email.setErrors({
+          incorrect_email_length: `Не более ${value} символов`,
         });
         break;
       default:

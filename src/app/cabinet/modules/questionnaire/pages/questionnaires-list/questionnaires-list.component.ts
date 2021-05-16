@@ -91,7 +91,11 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
         (res) => {
           this.questionnaires = res;
         },
-        (err: HttpErrorResponse) => this.deleteErrorHandle(err)
+        (err) => {
+          if (err instanceof HttpErrorResponse) {
+            this.deleteErrorHandle(err);
+          }
+        }
       );
   }
 

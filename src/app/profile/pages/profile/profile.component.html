@@ -1,3 +1,40 @@
-<div class="page-container">
-  <h1 class="page-title">Здесь будет профиль</h1>
+<div class="page-content" *ngIf="user$ | async as user">
+  <div class="page-container">
+    <h1 class="profile-title">Мой профиль</h1>
+  </div>
+
+  <div class="user-data">
+    <!-- name -->
+    <div class="user-data-field" [routerLink]="['/profile', 'edit-name']">
+      <div class="user-label">Имя</div>
+      <div class="user-body">
+        <div class="user-info">{{ user.name }}</div>
+        <svg width="1.4rem" height="1.4rem">
+          <use xlink:href="assets/sprites/icons.svg#chevron-right"></use>
+        </svg>
+      </div>
+    </div>
+
+    <!-- phone -->
+    <div class="user-data-field">
+      <div class="user-label">Телефон</div>
+      <div class="user-body">
+        <div class="user-info">{{ user.phone }}</div>
+        <svg width="1.4rem" height="1.4rem">
+          <use xlink:href="assets/sprites/icons.svg#chevron-right"></use>
+        </svg>
+      </div>
+    </div>
+
+    <!-- email -->
+    <div class="user-data-field">
+      <div class="user-label">E-mail</div>
+      <div class="user-body">
+        <div class="user-info">{{ user.email }}</div>
+        <svg width="1.4rem" height="1.4rem">
+          <use xlink:href="assets/sprites/icons.svg#chevron-right"></use>
+        </svg>
+      </div>
+    </div>
+  </div>
 </div>

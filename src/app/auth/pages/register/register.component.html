@@ -32,7 +32,11 @@
               ><app-error-messages
                 *ngIf="nameControl.touched && nameControl.invalid"
                 [errors]="nameControl.errors"
-                [errorMessages]="{ required: 'Введите имя' }"
+                [errorMessages]="{
+                  required: 'Введите имя',
+                  incorrect_name_length:
+                    nameControl.errors?.incorrect_name_length
+                }"
               ></app-error-messages
             ></mat-error>
           </mat-form-field>
@@ -80,7 +84,7 @@
                     phoneControl.errors.minlength?.requiredLength +
                     ' символов',
                   required: 'Введите номер телефона',
-                  not_unique_phone: 'Этот номер уже используется'
+                  not_unique_phone: phoneControl.errors?.not_unique_phone
                 }"
               ></app-error-messages
             ></mat-error>
@@ -119,7 +123,9 @@
                 [errors]="emailControl.errors"
                 [errorMessages]="{
                   required: 'Введите email',
-                  not_unique_email: 'Этот email уже используется'
+                  not_unique_email: emailControl.errors?.not_unique_email,
+                  incorrect_email_length:
+                    emailControl.errors?.incorrect_email_length
                 }"
               ></app-error-messages
             ></mat-error>

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { AuthResponseInterface } from '../types/auth-response.interface';
@@ -11,6 +11,9 @@ import { SmsConfirmInterface } from '../types/sms-confirm.interface';
   providedIn: 'root',
 })
 export class AuthService {
+  public user$: BehaviorSubject<AuthResponseInterface> =
+    new BehaviorSubject<AuthResponseInterface>({} as AuthResponseInterface);
+
   get token(): string {
     const expDate = new Date(localStorage.getItem('rzd-token-exp'));
     if (new Date() > expDate) {
@@ -20,7 +23,12 @@ export class AuthService {
     return localStorage.getItem('rzd-token');
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    const savedUser: AuthResponseInterface = JSON.parse(
+      localStorage.getItem('rzd-saved-user')
+    );
+    this.user$.next(savedUser);
+  }
 
   register(data: AuthDataInterface): Observable<{}> {
     return this.http.post<{}>(environment.api + 'api/account/register', data);
@@ -32,17 +40,19 @@ export class AuthService {
         environment.api + 'api/account/confirm_invite',
         data
       )
-      .pipe(tap(this.setToken));
+      .pipe(tap((res) => this.setUserSettings(res)));
   }
 
-  reInvite(phone: string): Observable<{}> {
-    return this.http.post<{}>(environment.api + 'api/account/reinvite', {
+  reInvite(phone: string): Observable<void> {
+    return this.http.post<void>(environment.api + 'api/account/reinvite', {
       phone,
     });
   }
 
-  login(phone: string): Observable<{}> {
-    return this.http.post<{}>(environment.api + 'api/account/login', { phone });
+  login(phone: string): Observable<void> {
+    return this.http.post<void>(environment.api + 'api/account/login', {
+      phone,
+    });
   }
 
   confirmLogin(data: SmsConfirmInterface): Observable<AuthResponseInterface> {
@@ -51,18 +61,29 @@ export class AuthService {
         environment.api + 'api/account/confirm_login',
         data
       )
-      .pipe(tap(this.setToken));
+      .pipe(tap((res) => this.setUserSettings(res)));
   }
 
-  private setToken(res: AuthResponseInterface | null): void {
+  setUserSettings(res: AuthResponseInterface): void {
+    this.user$.next(res);
+    localStorage.setItem('rzd-saved-user', JSON.stringify(res));
+    this.setToken(res);
+  }
+
+  setToken(res: AuthResponseInterface | null): void {
     if (res) {
       const expDate = new Date(new Date().getTime() + 3600 * 1000);
       localStorage.setItem('rzd-token', res.token);
       localStorage.setItem('rzd-token-exp', expDate.toString());
     } else {
-      localStorage.removeItem('rzd-token');
-      localStorage.removeItem('rzd-token-exp');
+      this.clearLocalStorage();
     }
+  }
+
+  clearLocalStorage(): void {
+    localStorage.removeItem('rzd-saved-user');
+    localStorage.removeItem('rzd-token');
+    localStorage.removeItem('rzd-token-exp');
   }
 
   logout(): void {
@@ -71,5 +92,15 @@ export class AuthService {
 
   isAuth(): boolean {
     return !!this.token;
+  }
+
+  getUser(): Observable<AuthResponseInterface> {
+    return this.user$.asObservable();
+  }
+
+  updateUser(user: AuthResponseInterface): Observable<void> {
+    return this.http
+      .post<void>(environment.api + 'api/account/update', user)
+      .pipe(tap(() => this.setUserSettings(user)));
   }
 }

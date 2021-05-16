@@ -3,13 +3,23 @@
     class="user-block"
     style="background-image: url(assets/home/user-menu-bg.svg)"
   >
-    <div class="user-image">
-      <img src="assets/home/user-avatar.png" alt="user avatar" />
+    <div class="user-info">
+      <div class="user-image">
+        <img src="assets/home/user-avatar.png" alt="user avatar" />
+      </div>
+      <div class="user-name">
+        <div>{{ (user$ | async).name }}</div>
+      </div>
     </div>
-    <div class="user-name">
-      <div>Константинопольский</div>
-      <div>Константин</div>
-    </div>
+    <button
+      [routerLink]="['/profile']"
+      (click)="closeMenu()"
+      class="icon-button edit-profile"
+    >
+      <svg width="1.6rem" height="1.6rem">
+        <use xlink:href="assets/sprites/icons.svg#pen"></use>
+      </svg>
+    </button>
   </div>
 
   <ul class="user-nav">

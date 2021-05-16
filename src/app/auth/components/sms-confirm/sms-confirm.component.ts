@@ -158,8 +158,10 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
         () => {
           this.submit.emit();
         },
-        (err: HttpErrorResponse) => {
-          this.handleError(err.error.error);
+        (err) => {
+          if (err instanceof HttpErrorResponse) {
+            this.handleError(err.error.error);
+          }
         }
       );
   }
@@ -177,8 +179,10 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
         () => {
           this.submit.emit();
         },
-        (err: HttpErrorResponse) => {
-          this.handleError(err.error.error);
+        (err) => {
+          if (err instanceof HttpErrorResponse) {
+            this.handleError(err.error.error);
+          }
         }
       );
   }

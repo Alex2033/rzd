@@ -24,6 +24,13 @@
               : "Минимальная длина: " + error.value["requiredLength"]
           }}
         </ng-container>
+        <ng-container *ngSwitchCase="'incorrect_name_length'">
+          {{
+            errorMessages && errorMessages["incorrect_name_length"]
+              ? errorMessages["incorrect_name_length"]
+              : "Превышено максимальное количество символов"
+          }}
+        </ng-container>
       </ng-container>
     </ng-template>
   </ng-container>
