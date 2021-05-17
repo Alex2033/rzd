@@ -56,7 +56,22 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
     this.stopTimer.next();
   }
 
-  getNewSmsCode(): void {
+  getNewLoginCode(): void {
+    this.auth
+      .login(this.phoneValue)
+      .pipe(takeUntil(this.destroy))
+      .subscribe((res) => {
+        this.codeForm.reset();
+        this.confirmError = '';
+        this.timeExpired = false;
+
+        // todo: убрать
+        alert('Код: ' + res);
+      });
+    this.setTimer();
+  }
+
+  getNewRegisterCode(): void {
     this.auth
       .reInvite(this.phoneValue)
       .pipe(takeUntil(this.destroy))
