@@ -113,18 +113,4 @@ export class AuthService {
         })
       );
   }
-
-  checkPhone(data: CheckPhoneDataInterface): Observable<void> {
-    return this.http.post<void>(
-      environment.api + 'api/account/check_phone',
-      data
-    );
-  }
-
-  confirmPhone(data: SmsConfirmInterface): Observable<void> {
-    return this.http.post<void>(
-      environment.api + 'api/account/confirm_check_phone',
-      data
-    );
-  }
 }

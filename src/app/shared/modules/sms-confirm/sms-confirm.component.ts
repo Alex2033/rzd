@@ -15,6 +15,7 @@ import { takeUntil, take, map, finalize } from 'rxjs/operators';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { SmsConfirmInterface } from 'src/app/auth/types/sms-confirm.interface';
 import { CheckPhoneDataInterface } from '../../types/phone-data.interface';
+import { ProfileService } from 'src/app/profile/services/profile.service';
 
 @Component({
   selector: 'app-sms-confirm',
@@ -46,7 +47,10 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
   private readonly stopTimer = new Subject<void>();
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
-  constructor(private auth: AuthService) {}
+  constructor(
+    private auth: AuthService,
+    private profileService: ProfileService
+  ) {}
 
   ngOnInit(): void {
     this.setTimer();
@@ -64,7 +68,7 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
       isProfilePhone: true,
     };
 
-    this.auth
+    this.profileService
       .checkPhone(phoneData)
       .pipe(takeUntil(this.destroy))
       .subscribe((res) => {
@@ -181,7 +185,7 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
   }
 
   confirmEditedPhone(confirmCode: SmsConfirmInterface): void {
-    this.auth
+    this.profileService
       .confirmPhone(confirmCode)
       .pipe(
         finalize(() => {
