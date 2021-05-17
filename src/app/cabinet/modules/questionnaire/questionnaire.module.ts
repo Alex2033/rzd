@@ -21,6 +21,7 @@ import { AdultFirstStepComponent } from './components/adult-first-step/adult-fir
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ErrorMessagesModule } from 'src/app/shared/modules/error-messages/error-messages.module';
+import { CyrillicToLatinPipe } from 'src/app/shared/pipes/cyrilic-to-latin.pipe';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,6 @@ import { ErrorMessagesModule } from 'src/app/shared/modules/error-messages/error
     MatInputModule,
     ErrorMessagesModule,
   ],
-  providers: [QuestionnairesService],
+  providers: [QuestionnairesService, CyrillicToLatinPipe],
 })
 export class QuestionnaireModule {}
