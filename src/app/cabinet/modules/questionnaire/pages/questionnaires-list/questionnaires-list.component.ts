@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, switchMap, takeUntil } from 'rxjs/operators';
 import { CreateSheetComponent } from '../../components/create-sheet/create-sheet.component';
@@ -24,7 +25,8 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
   constructor(
     private questionnairesService: QuestionnairesService,
     private dialog: MatDialog,
-    private _bottomSheet: MatBottomSheet
+    private _bottomSheet: MatBottomSheet,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -113,6 +115,10 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
         questionnaires: this.questionnaires,
       },
     });
-    bottomSheet.afterDismissed().subscribe((res) => console.log(res));
+    bottomSheet.afterDismissed().subscribe((res: string) => {
+      if (res === 'child') {
+        this.router.navigate(['/cabinet', 'questionnaires', 'choose-adult']);
+      }
+    });
   }
 }
