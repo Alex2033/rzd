@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-adult-create',
@@ -10,10 +15,10 @@ export class AdultCreateComponent implements OnInit {
   public createForm: FormGroup;
   public currentStep: number = 1;
 
-  constructor() {}
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
-    this.createForm = new FormGroup({
+    this.createForm = this.formBuilder.group({
       firstStep: new FormGroup({
         name: new FormControl('', Validators.required),
         name_lat: new FormControl('', [Validators.required]),

@@ -18,6 +18,9 @@ import { ChooseAdultComponent } from './pages/choose-adult/choose-adult.componen
 import { PluralRuModule } from 'src/app/shared/directives/plural-ru/plural-ru.module';
 import { AdultCreateComponent } from './pages/adult-create/adult-create.component';
 import { AdultFirstStepComponent } from './components/adult-first-step/adult-first-step.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { ErrorMessagesModule } from 'src/app/shared/modules/error-messages/error-messages.module';
 
 @NgModule({
   declarations: [
@@ -41,6 +44,9 @@ import { AdultFirstStepComponent } from './components/adult-first-step/adult-fir
     ReactiveFormsModule,
     MatRadioModule,
     PluralRuModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ErrorMessagesModule,
   ],
   providers: [QuestionnairesService],
 })

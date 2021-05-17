@@ -24,20 +24,20 @@
 
   <ul class="user-nav">
     <li class="user-nav-item">
-      <!-- <a [routerLink]="['cabinet', 'questionnaires']" (click)="closeMenu()">
-        <span class="user-nav-text">анкеты</span>
-      </a> -->
-      <a (click)="closeMenu()">
+      <a [routerLink]="['/cabinet', 'questionnaires']" (click)="closeMenu()">
         <span class="user-nav-text">анкеты</span>
       </a>
+      <!-- <a (click)="closeMenu()">
+        <span class="user-nav-text">анкеты</span>
+      </a> -->
     </li>
     <li class="user-nav-item">
-      <a [routerLink]="['cabinet', 'orders']" (click)="closeMenu()">
+      <a [routerLink]="['/cabinet', 'orders']" (click)="closeMenu()">
         <span class="user-nav-text">заказы</span>
       </a>
     </li>
     <li class="user-nav-item">
-      <a [routerLink]="['cabinet', 'queue']" (click)="closeMenu()">
+      <a [routerLink]="['/cabinet', 'queue']" (click)="closeMenu()">
         <span class="user-nav-text">моя очередь</span>
       </a>
     </li>

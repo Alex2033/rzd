@@ -7,7 +7,7 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./adult-first-step.component.scss'],
 })
 export class AdultFirstStepComponent implements OnInit {
-  @Input() adultFirstStep: FormGroup;
+  @Input() firstStep: FormGroup;
 
   constructor() {}
 

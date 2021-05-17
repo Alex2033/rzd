@@ -15,7 +15,10 @@
       <h2 class="create-form-title">Шаг {{ currentStep }} из 5</h2>
       <div class="create-form-description">Основные данные</div>
 
-      <app-adult-first-step *ngIf="currentStep === 1"></app-adult-first-step>
+      <app-adult-first-step
+        [firstStep]="createForm.get('firstStep')"
+        *ngIf="currentStep === 1"
+      ></app-adult-first-step>
     </form>
   </div>
 </div>

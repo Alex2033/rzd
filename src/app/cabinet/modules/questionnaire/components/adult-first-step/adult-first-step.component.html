@@ -1,3 +1,64 @@
-<div class="form-controls">
+<div class="form-controls" [formGroup]="firstStep">
   <!-- name -->
+  <div class="form-control">
+    <mat-form-field appearance="outline">
+      <mat-label>Имя<span class="primary-color">*</span></mat-label>
+
+      <input name="name" type="text" matInput formControlName="name" />
+
+      <button
+        *ngIf="firstStep.get('name').value"
+        (click)="firstStep.get('name').setValue(null)"
+        type="button"
+        class="icon-button"
+      >
+        <svg width="2rem" height="2rem">
+          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+        </svg>
+      </button>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="firstStep.get('name').touched && firstStep.get('name').invalid"
+          [errors]="firstStep.get('name').errors"
+          [errorMessages]="{
+            required: 'Введите имя'
+          }"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- name -->
+  <div class="form-control">
+    <mat-form-field appearance="outline">
+      <mat-label>Имя латиницей<span class="primary-color">*</span></mat-label>
+
+      <input name="name_lat" type="text" matInput formControlName="name_lat" />
+
+      <button
+        *ngIf="firstStep.get('name_lat').value"
+        (click)="firstStep.get('name_lat').setValue(null)"
+        type="button"
+        class="icon-button"
+      >
+        <svg width="2rem" height="2rem">
+          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+        </svg>
+      </button>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="
+            firstStep.get('name_lat').touched &&
+            firstStep.get('name_lat').invalid
+          "
+          [errors]="firstStep.get('name_lat').errors"
+          [errorMessages]="{
+            required: 'Введите имя'
+          }"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
 </div>
