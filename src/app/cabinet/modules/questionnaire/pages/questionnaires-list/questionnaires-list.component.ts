@@ -118,6 +118,8 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
     bottomSheet.afterDismissed().subscribe((res: string) => {
       if (res === 'child') {
         this.router.navigate(['/cabinet', 'questionnaires', 'choose-adult']);
+      } else {
+        this.router.navigate(['/cabinet', 'questionnaires', 'adult-create']);
       }
     });
   }

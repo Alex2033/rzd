@@ -1,48 +1,63 @@
 <div class="page-content" *ngIf="user">
-  <div class="page-container">
-    <div class="page-top">
-      <div class="spacer"></div>
+  <form [formGroup]="editForm" class="edit-form">
+    <div class="page-container" *ngIf="!submitted">
+      <div class="page-top">
+        <div class="spacer"></div>
 
-      <a class="close" [routerLink]="['/']">Закрыть</a>
-    </div>
-    <h1 class="profile-title">Редактирование телефона</h1>
-
-    <form (submit)="submit()" [formGroup]="editForm" class="form-controls">
-      <div class="form-control">
-        <mat-form-field appearance="outline">
-          <mat-label>Телефон</mat-label>
-
-          <input
-            matInput
-            mask="0 (000) 000 00 00"
-            [validation]="true"
-            prefix="+"
-            type="text"
-            formControlName="phone"
-          />
-
-          <mat-error
-            ><app-error-messages
-              *ngIf="
-                editForm.get('phone').touched && editForm.get('phone').invalid
-              "
-              [errors]="editForm.get('phone').errors"
-              [errorMessages]="{
-                required: 'Введите телефон',
-                not_unique_phone: editForm.get('phone').errors?.not_unique_phone
-              }"
-            ></app-error-messages
-          ></mat-error>
-        </mat-form-field>
+        <a class="close" [routerLink]="['/']">Закрыть</a>
       </div>
-    </form>
-  </div>
+      <h1 class="profile-title">Редактирование телефона</h1>
+
+      <div class="form-controls">
+        <div class="form-control">
+          <mat-form-field appearance="outline">
+            <mat-label>Телефон</mat-label>
+
+            <input
+              matInput
+              mask="0 (000) 000 00 00"
+              [validation]="true"
+              prefix="+"
+              type="text"
+              formControlName="phone"
+            />
+
+            <mat-error
+              ><app-error-messages
+                *ngIf="
+                  editForm.get('phone').touched && editForm.get('phone').invalid
+                "
+                [errors]="editForm.get('phone').errors"
+                [errorMessages]="{
+                  required: 'Введите телефон',
+                  not_unique_phone:
+                    editForm.get('phone').errors?.not_unique_phone
+                }"
+              ></app-error-messages
+            ></mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <!-- sms confirm -->
+    <app-sms-confirm
+      [codeForm]="editForm.get('code')"
+      *ngIf="submitted"
+      [isEditPhone]="true"
+      (changeResendCode)="resendCode = $event"
+      [resendCode]="resendCode"
+      (submitted)="changeSubmitted($event)"
+      [phoneValue]="editForm.get('phone').value"
+      (submit)="submit()"
+    ></app-sms-confirm>
+  </form>
 </div>
 
 <div class="buttons">
   <button
+    *ngIf="!submitted"
     type="button"
-    (click)="submit()"
+    (click)="checkPhone()"
     [disabled]="loading || editForm.get('phone').invalid"
     class="button"
   >

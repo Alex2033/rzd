@@ -1,0 +1,21 @@
+<div class="page-content">
+  <div class="page-container">
+    <div class="page-top">
+      <a [routerLink]="['/cabinet', 'questionnaires']" class="back-link">
+        <svg width="1rem" height="1rem">
+          <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
+        </svg>
+        <span>Назад</span>
+      </a>
+
+      <a class="close" [routerLink]="['/cabinet', 'questionnaires']">Закрыть</a>
+    </div>
+
+    <form (submit)="submit()" [formGroup]="createForm" class="create-form">
+      <h2 class="create-form-title">Шаг {{ currentStep }} из 5</h2>
+      <div class="create-form-description">Основные данные</div>
+
+      <app-adult-first-step *ngIf="currentStep === 1"></app-adult-first-step>
+    </form>
+  </div>
+</div>

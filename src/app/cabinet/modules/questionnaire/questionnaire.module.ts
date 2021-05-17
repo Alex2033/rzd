@@ -16,6 +16,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreateQuestionnaireComponent } from './pages/create-questionnaire/create-questionnaire.component';
 import { ChooseAdultComponent } from './pages/choose-adult/choose-adult.component';
 import { PluralRuModule } from 'src/app/shared/directives/plural-ru/plural-ru.module';
+import { AdultCreateComponent } from './pages/adult-create/adult-create.component';
+import { AdultFirstStepComponent } from './components/adult-first-step/adult-first-step.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { PluralRuModule } from 'src/app/shared/directives/plural-ru/plural-ru.mo
     CreateSheetComponent,
     CreateQuestionnaireComponent,
     ChooseAdultComponent,
+    AdultCreateComponent,
+    AdultFirstStepComponent,
   ],
   imports: [
     CommonModule,

@@ -11,6 +11,7 @@ import { ReplaySubject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { AuthResponseInterface } from 'src/app/auth/types/auth-response.interface';
+import { CheckPhoneDataInterface } from 'src/app/shared/types/phone-data.interface';
 
 @Component({
   selector: 'app-edit-phone',
@@ -21,6 +22,8 @@ export class EditPhoneComponent implements OnInit, OnDestroy {
   public editForm: FormGroup;
   public user: AuthResponseInterface = {} as AuthResponseInterface;
   public loading: boolean = false;
+  public submitted: boolean = false;
+  public resendCode: boolean = false;
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -50,11 +53,48 @@ export class EditPhoneComponent implements OnInit, OnDestroy {
         Validators.required,
         Validators.minLength(11),
       ]),
+      code: new FormGroup({
+        control1: new FormControl(null, [Validators.required]),
+        control2: new FormControl(null, [Validators.required]),
+        control3: new FormControl(null, [Validators.required]),
+        control4: new FormControl(null, [Validators.required]),
+      }),
     });
+  }
+
+  checkPhone(): void {
+    this.loading = true;
+
+    const phoneData: CheckPhoneDataInterface = {
+      phone: this.editForm.get('phone').value,
+      isProfilePhone: true,
+    };
+
+    this.auth
+      .checkPhone(phoneData)
+      .pipe(
+        takeUntil(this.destroy),
+        finalize(() => (this.loading = false))
+      )
+      .subscribe(
+        (res) => {
+          this.submitted = true;
+          this.editForm.get('code').reset();
+
+          // todo: убрать
+          alert('Код: ' + res);
+        },
+        (err) => {
+          if (err instanceof HttpErrorResponse) {
+            this.setErrors(err);
+          }
+        }
+      );
   }
 
   submit(): void {
     this.loading = true;
+
     const updatedUser: AuthResponseInterface = {
       ...this.user,
       phone: this.editForm.get('phone').value,
@@ -78,7 +118,7 @@ export class EditPhoneComponent implements OnInit, OnDestroy {
   }
 
   private setErrors(err: HttpErrorResponse): void {
-    const { error, value } = err.error;
+    const { error } = err.error;
 
     switch (error) {
       case 'PHONE_ALREADY_EXISTS':
@@ -90,5 +130,10 @@ export class EditPhoneComponent implements OnInit, OnDestroy {
       default:
         break;
     }
+  }
+
+  changeSubmitted(val: boolean): void {
+    this.submitted = val;
+    this.editForm.markAllAsTouched();
   }
 }

@@ -6,19 +6,14 @@ import { NgxMaskModule } from 'ngx-mask';
 import { ErrorMessagesModule } from '../shared/modules/error-messages/error-messages.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { SmsConfirmModule } from '../shared/modules/sms-confirm/sms-confirm.module';
 
 import { SmsInfoComponent } from './pages/sms-info/sms-info.component';
-import { SmsConfirmComponent } from './components/sms-confirm/sms-confirm.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 
 @NgModule({
-  declarations: [
-    LoginComponent,
-    RegisterComponent,
-    SmsInfoComponent,
-    SmsConfirmComponent,
-  ],
+  declarations: [LoginComponent, RegisterComponent, SmsInfoComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,
@@ -28,6 +23,7 @@ import { RegisterComponent } from './pages/register/register.component';
     MatFormFieldModule,
     MatInputModule,
     ErrorMessagesModule,
+    SmsConfirmModule,
   ],
 })
 export class AuthModule {}

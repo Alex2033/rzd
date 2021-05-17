@@ -21,7 +21,9 @@
           {{
             errorMessages && errorMessages["minlength"]
               ? errorMessages["minlength"]
-              : "Минимальная длина: " + error.value["requiredLength"]
+              : "Минимальная длина: " +
+                error.value["requiredLength"] +
+                " символов"
           }}
         </ng-container>
         <ng-container *ngSwitchCase="'incorrect_name_length'">

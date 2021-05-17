@@ -9,7 +9,7 @@ import { QuestionnaireInterface } from '../../types/questionnaire.interface';
   styleUrls: ['./choose-adult.component.scss'],
 })
 export class ChooseAdultComponent implements OnInit {
-  public selectedAdult: string;
+  public selectedAdult: QuestionnaireInterface;
   public adults$: Observable<QuestionnaireInterface[]>;
 
   constructor(private questionnairesService: QuestionnairesService) {}

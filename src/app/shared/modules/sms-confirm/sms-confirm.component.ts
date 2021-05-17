@@ -12,8 +12,9 @@ import {
 import { FormGroup } from '@angular/forms';
 import { Observable, ReplaySubject, Subject, timer } from 'rxjs';
 import { takeUntil, take, map, finalize } from 'rxjs/operators';
-import { AuthService } from '../../services/auth.service';
-import { SmsConfirmInterface } from '../../types/sms-confirm.interface';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { SmsConfirmInterface } from 'src/app/auth/types/sms-confirm.interface';
+import { CheckPhoneDataInterface } from '../../types/phone-data.interface';
 
 @Component({
   selector: 'app-sms-confirm',
@@ -32,8 +33,9 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
   @Input() phoneValue: string;
   @Input() resendCode: boolean;
 
-  //todo: После того как сделать страницей, это убрать
+  // todo: После того как сделать страницей, это убрать
   @Input() isLogin: boolean = false;
+  @Input() isEditPhone: boolean = false;
 
   public confirmError: string;
   public counter$: Observable<number>;
@@ -54,6 +56,21 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
     this.destroy.next(null);
     this.destroy.complete();
     this.stopTimer.next();
+  }
+
+  getNewEditPhoneCode(): void {
+    const phoneData: CheckPhoneDataInterface = {
+      phone: this.phoneValue,
+      isProfilePhone: true,
+    };
+
+    this.auth
+      .checkPhone(phoneData)
+      .pipe(takeUntil(this.destroy))
+      .subscribe((res) => {
+        this.newCodeSuccess(res);
+      });
+    this.setTimer();
   }
 
   getNewLoginCode(): void {
@@ -153,10 +170,35 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
 
       this.isLoading = true;
 
-      this.isLogin
-        ? this.confirmLogin(confirmCode)
-        : this.confirmRegistration(confirmCode);
+      if (this.isLogin) {
+        this.confirmLogin(confirmCode);
+      } else if (this.isEditPhone) {
+        this.confirmEditedPhone(confirmCode);
+      } else {
+        this.confirmRegistration(confirmCode);
+      }
     }
+  }
+
+  confirmEditedPhone(confirmCode: SmsConfirmInterface): void {
+    this.auth
+      .confirmPhone(confirmCode)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+        }),
+        takeUntil(this.destroy)
+      )
+      .subscribe(
+        () => {
+          this.submit.emit();
+        },
+        (err) => {
+          if (err instanceof HttpErrorResponse) {
+            this.handleError(err.error.error);
+          }
+        }
+      );
   }
 
   confirmLogin(confirmCode: SmsConfirmInterface): void {
