@@ -8,7 +8,7 @@
         <span>Назад</span>
       </a>
 
-      <a class="close">Закрыть</a>
+      <a class="close" [routerLink]="['/cabinet', 'questionnaires']">Закрыть</a>
     </div>
 
     <h1 class="page-title">Выберите законного представителя</h1>
@@ -21,7 +21,7 @@
       [(ngModel)]="selectedAdult"
       color="primary"
     >
-      <div class="representative-body" *ngFor="let adult of adults">
+      <div class="representative-body" *ngFor="let adult of adults$ | async">
         <mat-radio-button
           class="representative-radio-button"
           [value]="adult"
@@ -31,10 +31,17 @@
         <div (click)="selectedAdult = adult" class="representative-button-info">
           <div class="representative-info-container">
             <span class="representative-name">
-              Резенкова <br />
-              Виктория Петровна,
+              {{ adult.surname }} <br />
+              {{ adult.name }} {{ adult.patronymic }},
             </span>
-            <span class="representative-age">39 лет</span>
+            <span class="representative-age">
+              {{ adult.age }}
+              <span
+                appPluralRu
+                [value]="adult.age"
+                [arVariants]="['год', 'года', 'лет']"
+              ></span>
+            </span>
           </div>
         </div>
       </div>

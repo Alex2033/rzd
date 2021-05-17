@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { QuestionnairesService } from '../../services/questionnaires.service';
+import { QuestionnaireInterface } from '../../types/questionnaire.interface';
 
 @Component({
   selector: 'app-choose-adult',
@@ -7,9 +10,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChooseAdultComponent implements OnInit {
   public selectedAdult: string;
-  public adults: string[] = ['Victoria', 'Ivan'];
+  public adults$: Observable<QuestionnaireInterface[]>;
 
-  constructor() {}
+  constructor(private questionnairesService: QuestionnairesService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.adults$ = this.questionnairesService.getQuestionnaires();
+  }
 }
