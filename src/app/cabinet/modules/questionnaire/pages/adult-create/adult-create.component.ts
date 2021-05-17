@@ -17,6 +17,10 @@ export class AdultCreateComponent implements OnInit {
   public createForm: FormGroup;
   public currentStep: number = 1;
 
+  get currentGroup(): FormGroup {
+    return this.getGroupAt(this.currentStep);
+  }
+
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -27,6 +31,7 @@ export class AdultCreateComponent implements OnInit {
     this.buildForm();
     this.getQueryParams();
     this.nameControlChanges();
+    this.surnameControlChanges();
   }
 
   buildForm(): void {
@@ -63,5 +68,35 @@ export class AdultCreateComponent implements OnInit {
     });
   }
 
+  surnameControlChanges(): void {
+    const surname = this.createForm.get('firstStep').get('surname');
+    const surname_lat = this.createForm.get('firstStep').get('surname_lat');
+
+    surname.valueChanges.subscribe((res: string) => {
+      if (!surname_lat.touched) {
+        surname_lat.markAsTouched();
+      }
+      surname_lat.setValue(this.cyrillicToLatin.transform(res));
+    });
+  }
+
   submit(): void {}
+
+  next(): void {
+    if (this.currentGroup.valid) {
+      this.currentStep += 1;
+      return;
+    }
+
+    this.currentGroup.markAllAsTouched();
+    this.currentGroup.updateValueAndValidity();
+  }
+
+  getGroupAt(index: number): FormGroup {
+    const groups = Object.keys(this.createForm.controls).map((groupName) =>
+      this.createForm.get(groupName)
+    ) as FormGroup[];
+
+    return groups[index - 1];
+  }
 }

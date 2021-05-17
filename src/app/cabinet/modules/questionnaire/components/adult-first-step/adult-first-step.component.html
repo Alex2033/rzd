@@ -61,4 +61,111 @@
       ></mat-error>
     </mat-form-field>
   </div>
+
+  <!-- surname -->
+  <div class="form-control">
+    <mat-form-field appearance="outline">
+      <mat-label>Фамилия<span class="primary-color">*</span></mat-label>
+
+      <input name="surname" type="text" matInput formControlName="surname" />
+
+      <button
+        *ngIf="firstStep.get('surname').value"
+        (click)="firstStep.get('surname').setValue(null)"
+        type="button"
+        class="icon-button"
+      >
+        <svg width="2rem" height="2rem">
+          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+        </svg>
+      </button>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="
+            firstStep.get('surname').touched && firstStep.get('surname').invalid
+          "
+          [errors]="firstStep.get('surname').errors"
+          [errorMessages]="{
+            required: 'Введите фамилию'
+          }"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- latin surname -->
+  <div class="form-control">
+    <mat-form-field appearance="outline">
+      <mat-label
+        >Фамилия латиницей<span class="primary-color">*</span></mat-label
+      >
+
+      <input
+        name="surname_lat"
+        type="text"
+        matInput
+        formControlName="surname_lat"
+      />
+
+      <button
+        *ngIf="firstStep.get('surname_lat').value"
+        (click)="firstStep.get('surname_lat').setValue(null)"
+        type="button"
+        class="icon-button"
+      >
+        <svg width="2rem" height="2rem">
+          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+        </svg>
+      </button>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="
+            firstStep.get('surname_lat').touched &&
+            firstStep.get('surname_lat').invalid
+          "
+          [errors]="firstStep.get('surname_lat').errors"
+          [errorMessages]="{
+            required: 'Введите фамилию'
+          }"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- patronymic -->
+  <div class="form-control">
+    <mat-form-field appearance="outline">
+      <mat-label>Отчество (если есть)</mat-label>
+
+      <input
+        name="patronymic"
+        type="text"
+        matInput
+        formControlName="patronymic"
+      />
+
+      <button
+        *ngIf="firstStep.get('patronymic').value"
+        (click)="firstStep.get('patronymic').setValue(null)"
+        type="button"
+        class="icon-button"
+      >
+        <svg width="2rem" height="2rem">
+          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+        </svg>
+      </button>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="
+            firstStep.get('patronymic').touched &&
+            firstStep.get('patronymic').invalid
+          "
+          [errors]="firstStep.get('patronymic').errors"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
 </div>

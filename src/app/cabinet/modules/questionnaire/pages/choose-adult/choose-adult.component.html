@@ -49,7 +49,7 @@
   </div>
 
   <div class="buttons">
-    <button class="button" [disabled]="!selectedAdult">
+    <button class="button" (click)="selectAdult()" [disabled]="!selectedAdult">
       <span>Далее</span>
       <svg width="1.6rem" height="1.6rem">
         <use xlink:href="assets/sprites/icons.svg#next"></use>
