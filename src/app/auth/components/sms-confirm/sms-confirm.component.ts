@@ -61,12 +61,7 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
       .login(this.phoneValue)
       .pipe(takeUntil(this.destroy))
       .subscribe((res) => {
-        this.codeForm.reset();
-        this.confirmError = '';
-        this.timeExpired = false;
-
-        // todo: убрать
-        alert('Код: ' + res);
+        this.newCodeSuccess(res);
       });
     this.setTimer();
   }
@@ -76,14 +71,18 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
       .reInvite(this.phoneValue)
       .pipe(takeUntil(this.destroy))
       .subscribe((res) => {
-        this.codeForm.reset();
-        this.confirmError = '';
-        this.timeExpired = false;
-
-        // todo: убрать
-        alert('Код: ' + res);
+        this.newCodeSuccess(res);
       });
     this.setTimer();
+  }
+
+  newCodeSuccess(res): void {
+    this.codeForm.reset();
+    this.confirmError = '';
+    this.timeExpired = false;
+
+    // todo: убрать
+    alert('Код: ' + res);
   }
 
   setTimer(): void {
