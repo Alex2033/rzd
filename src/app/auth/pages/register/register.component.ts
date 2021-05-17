@@ -10,7 +10,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../shared/services/auth.service';
 import { AuthDataInterface } from '../../types/auth.interface';
 
 @Component({

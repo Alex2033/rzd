@@ -9,7 +9,7 @@ import {
 import { Router } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
-import { AuthService } from 'src/app/auth/services/auth.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { AuthResponseInterface } from 'src/app/auth/types/auth-response.interface';
 
 @Component({

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
-import { AuthService } from 'src/app/auth/services/auth.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { ServicePointsService } from '../../services/service-points.service';
 import { ServicesService } from '../../services/services.service';
 import { ServicePointInterface } from '../../types/service-point.interface';

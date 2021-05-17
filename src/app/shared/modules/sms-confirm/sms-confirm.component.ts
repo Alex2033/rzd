@@ -12,7 +12,7 @@ import {
 import { FormGroup } from '@angular/forms';
 import { Observable, ReplaySubject, Subject, timer } from 'rxjs';
 import { takeUntil, take, map, finalize } from 'rxjs/operators';
-import { AuthService } from 'src/app/auth/services/auth.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { SmsConfirmInterface } from 'src/app/auth/types/sms-confirm.interface';
 import { CheckPhoneDataInterface } from '../../types/phone-data.interface';
 

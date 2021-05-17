@@ -4,9 +4,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { CheckPhoneDataInterface } from 'src/app/shared/types/phone-data.interface';
 import { environment } from 'src/environments/environment';
-import { AuthResponseInterface } from '../types/auth-response.interface';
-import { AuthDataInterface } from '../types/auth.interface';
-import { SmsConfirmInterface } from '../types/sms-confirm.interface';
+import { AuthResponseInterface } from '../../auth/types/auth-response.interface';
+import { AuthDataInterface } from '../../auth/types/auth.interface';
+import { SmsConfirmInterface } from '../../auth/types/sms-confirm.interface';
 
 @Injectable({
   providedIn: 'root',
