@@ -46,8 +46,10 @@
           >
             <div class="questionnaire-info">
               <div class="questionnaire-personal-info">
-                <div class="questionnaire-name">
-                  {{ questionnaire.surname }} <br />
+                <div class="questionnaire-fio">
+                  <div class="questionnare-surname">
+                    {{ questionnaire.surname }}
+                  </div>
                   {{ questionnaire.name }} {{ questionnaire.patronymic }}
                 </div>
                 <div class="questionnaire-age">
@@ -66,7 +68,17 @@
 
             <!-- actions -->
             <div class="actions" (click)="$event.stopPropagation()">
-              <button class="icon-button big edit-questionnaire" type="button">
+              <button
+                class="icon-button big edit-questionnaire"
+                [routerLink]="[
+                  '/cabinet',
+                  'questionnaires',
+                  'adult-create',
+                  questionnaire.id
+                ]"
+                [queryParams]="{step: 1}"
+                type="button"
+              >
                 <svg width="1.5rem" height="1.5rem">
                   <use xlink:href="assets/sprites/icons.svg#pen"></use>
                 </svg>
@@ -109,8 +121,10 @@
                   </svg>
                 </div>
                 <div class="questionnaire-personal-info">
-                  <div class="questionnaire-name">
-                    {{ child.surname }} <br />
+                  <div class="questionnaire-fio">
+                    <div class="questionnare-surname">
+                      {{ child.surname }}
+                    </div>
                     {{ child.name }} {{ child.patronymic }}
                   </div>
                   <div class="questionnaire-age">
@@ -132,6 +146,12 @@
                 <button
                   class="icon-button big edit-questionnaire"
                   type="button"
+                  [routerLink]="[
+                    '/cabinet',
+                    'questionnaires',
+                    'child-create',
+                    child.id
+                  ]"
                 >
                   <svg width="1.5rem" height="1.5rem">
                     <use xlink:href="assets/sprites/icons.svg#pen"></use>

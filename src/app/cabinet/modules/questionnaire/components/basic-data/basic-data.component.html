@@ -1,0 +1,301 @@
+<div class="create-form-description">Основные данные</div>
+
+<div class="form-controls" [formGroup]="basicData">
+  <!-- name -->
+  <div class="form-control">
+    <mat-form-field appearance="outline">
+      <mat-label>Имя<span class="primary-color">*</span></mat-label>
+
+      <input name="name" type="text" matInput formControlName="name" />
+
+      <button
+        *ngIf="basicData.get('name').value"
+        (click)="basicData.get('name').setValue(null)"
+        type="button"
+        class="icon-button"
+      >
+        <svg width="2rem" height="2rem">
+          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+        </svg>
+      </button>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="basicData.get('name').touched && basicData.get('name').invalid"
+          [errors]="basicData.get('name').errors"
+          [errorMessages]="{
+            required: 'Введите имя'
+          }"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- latin name -->
+  <div class="form-control">
+    <mat-form-field appearance="outline">
+      <mat-label>Имя латиницей<span class="primary-color">*</span></mat-label>
+
+      <input name="name_lat" type="text" matInput formControlName="name_lat" />
+
+      <button
+        *ngIf="basicData.get('name_lat').value"
+        (click)="basicData.get('name_lat').setValue(null)"
+        type="button"
+        class="icon-button"
+      >
+        <svg width="2rem" height="2rem">
+          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+        </svg>
+      </button>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="
+            basicData.get('name_lat').touched &&
+            basicData.get('name_lat').invalid
+          "
+          [errors]="basicData.get('name_lat').errors"
+          [errorMessages]="{
+            required: 'Введите имя'
+          }"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- surname -->
+  <div class="form-control">
+    <mat-form-field appearance="outline">
+      <mat-label>Фамилия<span class="primary-color">*</span></mat-label>
+
+      <input name="surname" type="text" matInput formControlName="surname" />
+
+      <button
+        *ngIf="basicData.get('surname').value"
+        (click)="basicData.get('surname').setValue(null)"
+        type="button"
+        class="icon-button"
+      >
+        <svg width="2rem" height="2rem">
+          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+        </svg>
+      </button>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="
+            basicData.get('surname').touched && basicData.get('surname').invalid
+          "
+          [errors]="basicData.get('surname').errors"
+          [errorMessages]="{
+            required: 'Введите фамилию'
+          }"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- latin surname -->
+  <div class="form-control">
+    <mat-form-field appearance="outline">
+      <mat-label
+        >Фамилия латиницей<span class="primary-color">*</span></mat-label
+      >
+
+      <input
+        name="surname_lat"
+        type="text"
+        matInput
+        formControlName="surname_lat"
+      />
+
+      <button
+        *ngIf="basicData.get('surname_lat').value"
+        (click)="basicData.get('surname_lat').setValue(null)"
+        type="button"
+        class="icon-button"
+      >
+        <svg width="2rem" height="2rem">
+          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+        </svg>
+      </button>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="
+            basicData.get('surname_lat').touched &&
+            basicData.get('surname_lat').invalid
+          "
+          [errors]="basicData.get('surname_lat').errors"
+          [errorMessages]="{
+            required: 'Введите фамилию'
+          }"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- patronymic -->
+  <div class="form-control">
+    <mat-form-field appearance="outline">
+      <mat-label>Отчество (если есть)</mat-label>
+
+      <input
+        name="patronymic"
+        type="text"
+        matInput
+        formControlName="patronymic"
+      />
+
+      <button
+        *ngIf="basicData.get('patronymic').value"
+        (click)="basicData.get('patronymic').setValue(null)"
+        type="button"
+        class="icon-button"
+      >
+        <svg width="2rem" height="2rem">
+          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+        </svg>
+      </button>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="
+            basicData.get('patronymic').touched &&
+            basicData.get('patronymic').invalid
+          "
+          [errors]="basicData.get('patronymic').errors"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- date picker -->
+  <div class="form-control date-form-control">
+    <mat-form-field appearance="outline">
+      <mat-label>Дата рождения<span class="primary-color">*</span></mat-label>
+
+      <input
+        matInput
+        name="birthday"
+        formControlName="birthday"
+        [matDatepicker]="picker"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker">
+        <svg matDatepickerToggleIcon width="2rem" height="2.2rem">
+          <use xlink:href="assets/sprites/icons.svg#calendar-today"></use>
+        </svg>
+      </mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="
+            basicData.get('birthday').touched &&
+            basicData.get('birthday').invalid
+          "
+          [errors]="basicData.get('birthday').errors"
+          [errorMessages]="{
+            required: 'Введите дату рождения'
+          }"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- email -->
+  <div class="form-control">
+    <mat-form-field appearance="outline">
+      <mat-label>E-mail<span class="primary-color">*</span></mat-label>
+
+      <input name="email" type="email" matInput formControlName="email" />
+
+      <button
+        *ngIf="basicData.get('email').value"
+        (click)="basicData.get('email').setValue(null)"
+        type="button"
+        class="icon-button"
+      >
+        <svg width="2rem" height="2rem">
+          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+        </svg>
+      </button>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="
+            basicData.get('email').touched && basicData.get('email').invalid
+          "
+          [errors]="basicData.get('email').errors"
+          [errorMessages]="{
+            required: 'Введите email'
+          }"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- phone -->
+  <div class="form-control">
+    <mat-form-field appearance="outline">
+      <mat-label>Телефон<span class="primary-color">*</span></mat-label>
+
+      <input
+        matInput
+        mask="0 (000) 000 00 00"
+        [validation]="true"
+        prefix="+"
+        type="text"
+        formControlName="phone"
+      />
+
+      <button
+        *ngIf="basicData.get('phone').value"
+        (click)="basicData.get('phone').setValue(null)"
+        type="button"
+        class="icon-button"
+      >
+        <svg width="2rem" height="2rem">
+          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+        </svg>
+      </button>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="
+            basicData.get('phone').touched && basicData.get('phone').invalid
+          "
+          [errors]="basicData.get('phone').errors"
+          [errorMessages]="{
+            minlength:
+              'Минимальная длина ' +
+              basicData.get('phone').errors.minlength?.requiredLength +
+              ' символов',
+            required: 'Введите номер телефона',
+            not_unique_phone: basicData.get('phone').errors?.not_unique_phone
+          }"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- sex -->
+  <div class="form-control">
+    <div class="sex-label">Пол</div>
+    <mat-radio-group formControlName="sex" color="primary">
+      <mat-radio-button value="MALE">Мужской</mat-radio-button>
+      <mat-radio-button value="FEMALE">Женский</mat-radio-button>
+    </mat-radio-group>
+
+    <mat-error>
+      <app-error-messages
+        *ngIf="basicData.get('sex').touched && basicData.get('sex').invalid"
+        [errors]="basicData.get('sex').errors"
+        [errorMessages]="{
+          required: 'Выберите пол'
+        }"
+      ></app-error-messages>
+    </mat-error>
+  </div>
+</div>

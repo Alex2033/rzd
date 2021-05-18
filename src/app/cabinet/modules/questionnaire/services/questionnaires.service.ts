@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { QuestionnaireDetailInterface } from '../types/questionnaire-detail.interface';
 import { QuestionnaireInterface } from '../types/questionnaire.interface';
+import { UpdatedFieldInterface } from '../types/updated-field.interface';
 
 @Injectable()
 export class QuestionnairesService {
@@ -15,8 +16,8 @@ export class QuestionnairesService {
     );
   }
 
-  getQuestionnaire(id: number): Observable<QuestionnaireInterface> {
-    return this.http.get<QuestionnaireInterface>(
+  getQuestionnaire(id: number): Observable<QuestionnaireDetailInterface> {
+    return this.http.get<QuestionnaireDetailInterface>(
       `${environment.api}api/anketa/${id}`
     );
   }
@@ -29,7 +30,10 @@ export class QuestionnairesService {
     return this.http.delete<void>(`${environment.api}api/anketa/${id}`);
   }
 
-  update(data): Observable<void> {
-    return this.http.put<void>(`${environment.api}api/anketa/${data.id}`, data);
+  updateField(updatedField: UpdatedFieldInterface): Observable<void> {
+    return this.http.put<void>(
+      environment.api + 'api/anketa/autofield',
+      updatedField
+    );
   }
 }

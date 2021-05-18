@@ -79,7 +79,6 @@ export class EditNameComponent implements OnInit, OnDestroy {
 
     switch (error) {
       case 'NAME_LENGTH':
-        console.log('this.editForm.get(name):', this.editForm.get('name'));
         this.editForm.get('name').setErrors({
           incorrect_name_length: `Не более ${value} символов`,
         });

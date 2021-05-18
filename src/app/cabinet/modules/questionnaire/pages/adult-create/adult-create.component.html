@@ -1,7 +1,7 @@
 <div class="page-content">
   <div class="page-container">
     <div class="page-top">
-      <a [routerLink]="['/cabinet', 'questionnaires']" class="back-link">
+      <a (click)="back()" class="back-link">
         <svg width="1rem" height="1rem">
           <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
         </svg>
@@ -13,12 +13,11 @@
 
     <form (submit)="submit()" [formGroup]="createForm" class="create-form">
       <h2 class="create-form-title">Шаг {{ currentStep }} из 5</h2>
-      <div class="create-form-description">Основные данные</div>
 
-      <app-adult-first-step
-        [firstStep]="createForm.get('firstStep')"
+      <app-basic-data
+        [basicData]="currentGroup"
         *ngIf="currentStep === 1"
-      ></app-adult-first-step>
+      ></app-basic-data>
     </form>
   </div>
 </div>

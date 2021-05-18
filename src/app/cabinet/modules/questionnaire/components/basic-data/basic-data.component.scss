@@ -1,0 +1,30 @@
+@import "theme";
+
+.sex-label {
+  color: #333;
+}
+
+.form-control {
+  ::ng-deep {
+    mat-radio-group {
+      display: block;
+      margin-top: 0.9rem;
+
+      > * {
+        &:not(:first-child) {
+          margin-left: 3.5rem;
+        }
+      }
+    }
+
+    .mat-radio-outer-circle {
+      border-width: 0.1rem;
+      border-color: #999999;
+    }
+  }
+
+  app-error-messages {
+    font-size: 1.2rem;
+    line-height: 1.34;
+  }
+}

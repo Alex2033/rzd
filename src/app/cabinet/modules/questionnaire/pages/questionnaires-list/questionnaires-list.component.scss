@@ -1,6 +1,10 @@
 @import "theme";
 @import "vars";
 
+.page-content {
+  padding-bottom: 9rem;
+}
+
 .page-container {
   &.full-height {
     min-height: 0rem;

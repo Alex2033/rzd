@@ -9,6 +9,25 @@
 }
 
 .form-control {
+  &.date-form-control {
+    .mat-button-focus-overlay {
+      display: none;
+    }
+
+    .mat-form-field-flex {
+      padding-right: 1.2rem;
+    }
+
+    .mat-form-field-appearance-outline .mat-form-field-suffix {
+      top: -0.1rem;
+
+      .mat-icon-button {
+        width: 2.4rem;
+        height: 2.4rem;
+      }
+    }
+  }
+
   input {
     color: $dark;
     font: 400 1.6rem/1.5 "Open Sans", sans-serif;

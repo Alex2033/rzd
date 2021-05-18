@@ -4,11 +4,12 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Observable, of, Subject, throwError } from 'rxjs';
-import { catchError, switchMap, takeUntil } from 'rxjs/operators';
+import { catchError, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { CreateSheetComponent } from '../../components/create-sheet/create-sheet.component';
 import { DeleteComponent } from '../../components/delete/delete.component';
 import { WarningDialogComponent } from '../../components/warning-dialog/warning-dialog.component';
 import { QuestionnairesService } from '../../services/questionnaires.service';
+import { QuestionnaireDetailInterface } from '../../types/questionnaire-detail.interface';
 import { QuestionnaireInterface } from '../../types/questionnaire.interface';
 
 @Component({
@@ -115,16 +116,44 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
         questionnaires: this.questionnaires,
       },
     });
-    bottomSheet.afterDismissed().subscribe((res: string) => {
-      if (res === 'child') {
-        this.router.navigate(['/cabinet', 'questionnaires', 'choose-adult']);
-      } else {
-        this.router.navigate(['/cabinet', 'questionnaires', 'adult-create'], {
-          queryParams: {
-            step: 1,
-          },
-        });
-      }
-    });
+
+    bottomSheet
+      .afterDismissed()
+      .pipe(
+        map((res) => {
+          if (res === 'child') {
+            this.router.navigate([
+              '/cabinet',
+              'questionnaires',
+              'choose-adult',
+            ]);
+            return null;
+          }
+          return res;
+        }),
+        switchMap((res) => this.createAdultQuestionnaire(res))
+      )
+      .subscribe((res) => {
+        this.router.navigate(
+          ['/cabinet', 'questionnaires', 'adult-create', res],
+          {
+            queryParams: {
+              step: 1,
+            },
+          }
+        );
+      });
+  }
+
+  createAdultQuestionnaire(res): Observable<void> {
+    if (res) {
+      const newQuestionnaire: QuestionnaireDetailInterface = {
+        id_parent: 0,
+        content: {},
+      };
+      return this.questionnairesService.create(newQuestionnaire);
+    }
+
+    return of();
   }
 }

@@ -1,21 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { of, ReplaySubject } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  switchMap,
+  takeUntil,
+} from 'rxjs/operators';
 import { CyrillicToLatinPipe } from 'src/app/shared/pipes/cyrilic-to-latin.pipe';
+import { QuestionnairesService } from '../../services/questionnaires.service';
+import { QuestionnaireDetailInterface } from '../../types/questionnaire-detail.interface';
+import { UpdatedFieldInterface } from '../../types/updated-field.interface';
 
 @Component({
   selector: 'app-adult-create',
   templateUrl: './adult-create.component.html',
   styleUrls: ['./adult-create.component.scss'],
 })
-export class AdultCreateComponent implements OnInit {
+export class AdultCreateComponent implements OnInit, OnDestroy {
   public createForm: FormGroup;
   public currentStep: number = 1;
+
+  private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   get currentGroup(): FormGroup {
     return this.getGroupAt(this.currentStep);
@@ -24,14 +36,22 @@ export class AdultCreateComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private cyrillicToLatin: CyrillicToLatinPipe
+    private cyrillicToLatin: CyrillicToLatinPipe,
+    private router: Router,
+    private questionnairesService: QuestionnairesService
   ) {}
 
   ngOnInit(): void {
     this.buildForm();
+    this.getQuestionnaire();
     this.getQueryParams();
     this.nameControlChanges();
     this.surnameControlChanges();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy.next(null);
+    this.destroy.complete();
   }
 
   buildForm(): void {
@@ -44,9 +64,66 @@ export class AdultCreateComponent implements OnInit {
         patronymic: new FormControl(''),
         birthday: new FormControl('', [Validators.required]), // проверить на правильность введенных данных
         email: new FormControl('', [Validators.required, Validators.email]),
-        phone: new FormControl('', [Validators.required]),
+        phone: new FormControl('', [
+          Validators.required,
+          Validators.minLength(11),
+        ]),
         sex: new FormControl('', [Validators.required]),
       }),
+    });
+  }
+
+  getQuestionnaire(): void {
+    this.route.params
+      .pipe(
+        switchMap((e) => this.questionnairesService.getQuestionnaire(+e.id))
+      )
+      .subscribe((res) => {
+        this.setControlsValues(this.createForm, res);
+        this.applyValues(this.createForm, res.id);
+      });
+  }
+
+  setControlsValues(group, questionnaire: QuestionnaireDetailInterface): void {
+    Object.keys(group.controls).forEach((key) => {
+      let formControl = group.controls[key];
+
+      if (formControl instanceof FormGroup) {
+        this.setControlsValues(formControl, questionnaire);
+        return;
+      }
+
+      if (questionnaire.content[key]) {
+        formControl.setValue(questionnaire.content[key]);
+      }
+    });
+  }
+
+  applyValues(group, id: number): void {
+    Object.keys(group.controls).forEach((key) => {
+      let formControl = group.controls[key];
+
+      if (formControl instanceof FormGroup) {
+        this.applyValues(formControl, id);
+      } else {
+        formControl.valueChanges
+          .pipe(
+            debounceTime(500),
+            distinctUntilChanged(),
+            switchMap((res: string) => {
+              if (key && res) {
+                const updatedField: UpdatedFieldInterface = {
+                  id_anketa: id,
+                  field: key,
+                  new_val: res,
+                };
+                return this.questionnairesService.updateField(updatedField);
+              }
+              return of();
+            })
+          )
+          .subscribe(() => {});
+      }
     });
   }
 
@@ -90,6 +167,15 @@ export class AdultCreateComponent implements OnInit {
 
     this.currentGroup.markAllAsTouched();
     this.currentGroup.updateValueAndValidity();
+  }
+
+  back(): void {
+    if (this.currentStep > 1) {
+      this.currentStep -= 1;
+      return;
+    }
+
+    this.router.navigate(['/cabinet', 'questionnaires']);
   }
 
   getGroupAt(index: number): FormGroup {

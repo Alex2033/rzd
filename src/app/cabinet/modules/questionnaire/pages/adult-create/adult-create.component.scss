@@ -1,3 +1,19 @@
+@import "theme";
+
+:host {
+  ::ng-deep {
+    .create-form-description {
+      margin-top: 0.4rem;
+      color: $gray;
+    }
+  }
+}
+
 .page-content {
-  margin-bottom: 9.6rem;
+  margin-bottom: 8rem;
+}
+
+.create-form-title {
+  font-size: 1.6rem;
+  margin-top: 1.6rem;
 }
