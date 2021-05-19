@@ -1,0 +1,268 @@
+<div class="create-form-description">Адрес регистрации</div>
+
+<div class="form-controls" [formGroup]="registerAddress">
+  <!-- country -->
+  <div class="form-control">
+    <mat-form-field appearance="outline">
+      <mat-label>Страна<span class="primary-color">*</span></mat-label>
+
+      <input
+        name="adress_reg_country"
+        type="text"
+        matInput
+        formControlName="adress_reg_country"
+      />
+
+      <button
+        *ngIf="registerAddress.get('adress_reg_country').value"
+        (click)="registerAddress.get('adress_reg_country').setValue(null)"
+        type="button"
+        class="icon-button"
+      >
+        <svg width="2rem" height="2rem">
+          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+        </svg>
+      </button>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="
+            registerAddress.get('adress_reg_country').touched &&
+            registerAddress.get('adress_reg_country').invalid
+          "
+          [errors]="registerAddress.get('adress_reg_country').errors"
+          [errorMessages]="{
+            required: 'Введите название страны'
+          }"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- region -->
+  <div class="form-control">
+    <mat-form-field appearance="outline">
+      <mat-label>Регион<span class="primary-color">*</span></mat-label>
+
+      <input
+        name="adress_reg_region"
+        type="text"
+        matInput
+        formControlName="adress_reg_region"
+      />
+
+      <button
+        *ngIf="registerAddress.get('adress_reg_region').value"
+        (click)="registerAddress.get('adress_reg_region').setValue(null)"
+        type="button"
+        class="icon-button"
+      >
+        <svg width="2rem" height="2rem">
+          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+        </svg>
+      </button>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="
+            registerAddress.get('adress_reg_region').touched &&
+            registerAddress.get('adress_reg_region').invalid
+          "
+          [errors]="registerAddress.get('adress_reg_region').errors"
+          [errorMessages]="{
+            required: 'Введите название региона'
+          }"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- area -->
+  <div class="form-control">
+    <mat-form-field appearance="outline">
+      <mat-label>Район<span class="primary-color">*</span></mat-label>
+
+      <input
+        name="adress_reg_area"
+        type="text"
+        matInput
+        formControlName="adress_reg_area"
+      />
+
+      <button
+        *ngIf="registerAddress.get('adress_reg_area').value"
+        (click)="registerAddress.get('adress_reg_area').setValue(null)"
+        type="button"
+        class="icon-button"
+      >
+        <svg width="2rem" height="2rem">
+          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+        </svg>
+      </button>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="
+            registerAddress.get('adress_reg_area').touched &&
+            registerAddress.get('adress_reg_area').invalid
+          "
+          [errors]="registerAddress.get('adress_reg_area').errors"
+          [errorMessages]="{
+            required: 'Введите название района'
+          }"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- area -->
+  <div class="form-control">
+    <mat-form-field appearance="outline">
+      <mat-label
+        >Город (нас. пункт)<span class="primary-color">*</span></mat-label
+      >
+
+      <input
+        name="adress_reg_city"
+        type="text"
+        matInput
+        formControlName="adress_reg_city"
+      />
+
+      <button
+        *ngIf="registerAddress.get('adress_reg_city').value"
+        (click)="registerAddress.get('adress_reg_city').setValue(null)"
+        type="button"
+        class="icon-button"
+      >
+        <svg width="2rem" height="2rem">
+          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+        </svg>
+      </button>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="
+            registerAddress.get('adress_reg_city').touched &&
+            registerAddress.get('adress_reg_city').invalid
+          "
+          [errors]="registerAddress.get('adress_reg_city').errors"
+          [errorMessages]="{
+            required: 'Введите название населенного пункта'
+          }"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- street -->
+  <div class="form-control">
+    <mat-form-field appearance="outline">
+      <mat-label>Улица<span class="primary-color">*</span></mat-label>
+
+      <input
+        name="adress_reg_street"
+        type="text"
+        matInput
+        formControlName="adress_reg_street"
+      />
+
+      <button
+        *ngIf="registerAddress.get('adress_reg_street').value"
+        (click)="registerAddress.get('adress_reg_street').setValue(null)"
+        type="button"
+        class="icon-button"
+      >
+        <svg width="2rem" height="2rem">
+          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+        </svg>
+      </button>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="
+            registerAddress.get('adress_reg_street').touched &&
+            registerAddress.get('adress_reg_street').invalid
+          "
+          [errors]="registerAddress.get('adress_reg_street').errors"
+          [errorMessages]="{
+            required: 'Введите название улицы'
+          }"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- building -->
+  <div class="form-control">
+    <mat-form-field appearance="outline">
+      <mat-label>Дом (корпус)<span class="primary-color">*</span></mat-label>
+
+      <input
+        name="adress_reg_building"
+        type="text"
+        matInput
+        formControlName="adress_reg_building"
+      />
+
+      <button
+        *ngIf="registerAddress.get('adress_reg_building').value"
+        (click)="registerAddress.get('adress_reg_building').setValue(null)"
+        type="button"
+        class="icon-button"
+      >
+        <svg width="2rem" height="2rem">
+          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+        </svg>
+      </button>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="
+            registerAddress.get('adress_reg_building').touched &&
+            registerAddress.get('adress_reg_building').invalid
+          "
+          [errors]="registerAddress.get('adress_reg_building').errors"
+          [errorMessages]="{
+            required: 'Введите номер дома(корпуса)'
+          }"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- flat -->
+  <div class="form-control">
+    <mat-form-field appearance="outline">
+      <mat-label>Квартира (№ в отеле)</mat-label>
+
+      <input
+        name="adress_reg_flat"
+        type="text"
+        matInput
+        formControlName="adress_reg_flat"
+      />
+
+      <button
+        *ngIf="registerAddress.get('adress_reg_flat').value"
+        (click)="registerAddress.get('adress_reg_flat').setValue(null)"
+        type="button"
+        class="icon-button"
+      >
+        <svg width="2rem" height="2rem">
+          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+        </svg>
+      </button>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="
+            registerAddress.get('adress_reg_flat').touched &&
+            registerAddress.get('adress_reg_flat').invalid
+          "
+          [errors]="registerAddress.get('adress_reg_flat').errors"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
+</div>

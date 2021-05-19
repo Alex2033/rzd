@@ -27,6 +27,7 @@ import { AdultCreateComponent } from './pages/adult-create/adult-create.componen
 import { CyrillicToLatinPipe } from 'src/app/shared/pipes/cyrilic-to-latin.pipe';
 import { BasicDataComponent } from './components/basic-data/basic-data.component';
 import { DocumentStepComponent } from './components/document-step/document-step.component';
+import { RegisterAddressComponent } from './components/register-address/register-address.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { DocumentStepComponent } from './components/document-step/document-step.
     AdultCreateComponent,
     BasicDataComponent,
     DocumentStepComponent,
+    RegisterAddressComponent,
   ],
   imports: [
     CommonModule,

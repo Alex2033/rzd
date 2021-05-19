@@ -92,7 +92,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
         adress_reg_city: new FormControl('', Validators.required),
         adress_reg_street: new FormControl('', Validators.required),
         adress_reg_building: new FormControl('', Validators.required),
-        adress_reg_flat: new FormControl('', Validators.required),
+        adress_reg_flat: new FormControl(''),
       }),
       actualResidence: new FormGroup({
         adress_fact_country: new FormControl('', Validators.required),
@@ -210,6 +210,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
   back(): void {
     if (this.currentStep > 1) {
       this.currentStep -= 1;
+      this.router.navigate([], { queryParams: { step: this.currentStep } });
       return;
     }
 
