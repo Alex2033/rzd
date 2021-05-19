@@ -1,38 +1,17 @@
 <div class="create-form-description">Документ</div>
 
 <div class="form-controls" [formGroup]="documentStep">
-  <!-- citizenship -->
-  <div class="form-control select-control">
-    <mat-form-field appearance="outline">
-      <mat-label>Гражданство<span class="primary-color">*</span></mat-label>
-      <mat-select formControlName="citizenship">
-        <mat-option
-          *ngFor="let citizenship of citizenships"
-          [value]="citizenship.value"
-          >{{ citizenship.label }}</mat-option
-        >
-      </mat-select>
-    </mat-form-field>
-  </div>
-
   <!-- passport number -->
   <div class="form-control">
     <mat-form-field appearance="outline">
-      <mat-label>Серия и номер<span class="primary-color">*</span></mat-label>
+      <mat-label
+        >Серия и номер паспорта<span class="primary-color">*</span></mat-label
+      >
 
       <input
         matInput
-        [placeholder]="
-          documentStep.get('citizenship').value === 'RESIDENT_PASSPORT'
-            ? '0000 000000'
-            : '00 0000000'
-        "
-        class="rofl"
-        [mask]="
-          documentStep.get('citizenship').value === 'RESIDENT_PASSPORT'
-            ? '0000 000000'
-            : '00 0000000'
-        "
+        placeholder="0000 000000"
+        [mask]="'0000 000000'"
         [validation]="true"
         type="text"
         formControlName="passport_number"

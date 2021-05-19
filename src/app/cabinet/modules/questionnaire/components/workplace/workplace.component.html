@@ -1,1 +1,64 @@
-<p>workplace works!</p>
+<div class="create-form-description">Место работы/учебы</div>
+
+<div class="form-controls" [formGroup]="workplace">
+  <!-- company -->
+  <div class="form-control">
+    <mat-form-field appearance="outline">
+      <mat-label
+        >Место работы/учебы<span class="primary-color">*</span></mat-label
+      >
+
+      <input name="company" type="text" matInput formControlName="company" />
+
+      <button
+        *ngIf="workplace.get('company').value"
+        (click)="workplace.get('company').setValue(null)"
+        type="button"
+        class="icon-button"
+      >
+        <svg width="2rem" height="2rem">
+          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+        </svg>
+      </button>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="
+            workplace.get('company').touched && workplace.get('company').invalid
+          "
+          [errors]="workplace.get('company').errors"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- position -->
+  <div class="form-control">
+    <mat-form-field appearance="outline">
+      <mat-label>Должность</mat-label>
+
+      <input name="position" type="text" matInput formControlName="position" />
+
+      <button
+        *ngIf="workplace.get('position').value"
+        (click)="workplace.get('position').setValue(null)"
+        type="button"
+        class="icon-button"
+      >
+        <svg width="2rem" height="2rem">
+          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+        </svg>
+      </button>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="
+            workplace.get('position').touched &&
+            workplace.get('position').invalid
+          "
+          [errors]="workplace.get('position').errors"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
+</div>

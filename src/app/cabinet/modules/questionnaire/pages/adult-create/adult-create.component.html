@@ -21,7 +21,6 @@
         *ngIf="currentStep === 1"
       ></app-basic-data>
       <app-document-step
-        [citizenships]="citizenships"
         [documentStep]="currentGroup"
         *ngIf="currentStep === 2"
       ></app-document-step>
@@ -36,6 +35,10 @@
         *ngIf="currentStep === 4"
         (changeSingle)="equalizeAddresses($event)"
       ></app-actual-residence>
+      <app-workplace
+        [workplace]="currentGroup"
+        *ngIf="currentStep === 5"
+      ></app-workplace>
     </form>
   </div>
 </div>

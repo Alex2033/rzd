@@ -8,7 +8,6 @@ import { FormGroup } from '@angular/forms';
 })
 export class DocumentStepComponent implements OnInit {
   @Input() documentStep: FormGroup;
-  @Input() citizenships: object[] = [];
 
   constructor() {}
 

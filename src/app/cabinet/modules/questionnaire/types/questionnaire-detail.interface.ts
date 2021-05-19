@@ -17,7 +17,6 @@ interface QuestionnaireContentInterface {
   email?: string;
   phone?: string;
   sex?: string;
-  citizenship?: string;
   passport_number?: string;
   passport_org?: string;
   passport_date?: string;

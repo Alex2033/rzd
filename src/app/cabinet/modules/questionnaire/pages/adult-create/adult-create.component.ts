@@ -27,16 +27,6 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
     'с. Кудиново, Калужская обл.',
     'с. Кудиново, Калужская обл.',
   ];
-  public citizenships: object[] = [
-    {
-      label: 'Гражданин РФ (паспорт РФ)',
-      value: 'RESIDENT_PASSPORT',
-    },
-    {
-      label: 'Нерезидент РФ (загран. паспорт)',
-      value: 'FOREIGN_PASSPORT',
-    },
-  ];
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -86,7 +76,6 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
         sex: new FormControl('', [Validators.required]),
       }),
       document: new FormGroup({
-        citizenship: new FormControl('', Validators.required),
         passport_number: new FormControl('', Validators.required),
         passport_org: new FormControl('', Validators.required),
         passport_date: new FormControl('', [Validators.required]),
@@ -111,7 +100,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
         adress_fact_flat: new FormControl('', Validators.required),
       }),
       workplace: new FormGroup({
-        company: new FormControl('', Validators.required),
+        company: new FormControl(''),
         position: new FormControl('', Validators.required),
       }),
     });
