@@ -49,7 +49,8 @@
     }
   }
 
-  input {
+  input,
+  textarea {
     color: $dark;
     font: 400 1.6rem/1.5 "Open Sans", sans-serif;
     margin-top: 0;

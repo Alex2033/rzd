@@ -21,6 +21,12 @@ import { UpdatedFieldInterface } from '../../types/updated-field.interface';
 export class AdultCreateComponent implements OnInit, OnDestroy {
   public createForm: FormGroup;
   public currentStep: number = 1;
+  public cities: string[] = [
+    'с. Кудиново, Калужская обл.',
+    'с. Кудиново, Калужская обл.',
+    'с. Кудиново, Калужская обл.',
+    'с. Кудиново, Калужская обл.',
+  ];
   public citizenships: object[] = [
     {
       label: 'Гражданин РФ (паспорт РФ)',
@@ -95,6 +101,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
         adress_reg_flat: new FormControl(''),
       }),
       actualResidence: new FormGroup({
+        adress_single: new FormControl(''),
         adress_fact_country: new FormControl('', Validators.required),
         adress_fact_region: new FormControl('', Validators.required),
         adress_fact_area: new FormControl('', Validators.required),
@@ -148,11 +155,12 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
             debounceTime(500),
             distinctUntilChanged(),
             switchMap((res: string) => {
+              res = res.toString();
               if (key && res) {
                 const updatedField: UpdatedFieldInterface = {
                   id_anketa: id,
                   field: key,
-                  new_val: res,
+                  new_val: res.toString(),
                 };
                 return this.questionnairesService.updateField(updatedField);
               }
@@ -199,6 +207,21 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
   next(): void {
     if (this.currentGroup.valid && this.currentStep !== this.formLength) {
       this.currentStep += 1;
+
+      if (
+        this.currentStep === 4 &&
+        (this.createForm.get('actualResidence') as FormGroup).controls[
+          'adress_single'
+        ].value
+      ) {
+        this.equalizeAddresses(true);
+      }
+
+      if (this.currentStep === this.formLength) {
+        this.router.navigate(['/cabinet', 'questionnaires']);
+        return;
+      }
+
       this.router.navigate([], { queryParams: { step: this.currentStep } });
       return;
     }
@@ -223,5 +246,23 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
     ) as FormGroup[];
 
     return groups[index - 1];
+  }
+
+  equalizeAddresses(val: boolean): void {
+    if (val) {
+      const controls = (this.createForm.get('registerAddress') as FormGroup)
+        .controls;
+
+      this.createForm.get('actualResidence').setValue({
+        adress_single: 'true',
+        adress_fact_country: controls['adress_reg_country'].value,
+        adress_fact_region: controls['adress_reg_region'].value,
+        adress_fact_area: controls['adress_reg_area'].value,
+        adress_fact_city: controls['adress_reg_city'].value,
+        adress_fact_street: controls['adress_reg_street'].value,
+        adress_fact_building: controls['adress_reg_building'].value,
+        adress_fact_flat: controls['adress_reg_flat'].value,
+      });
+    }
   }
 }

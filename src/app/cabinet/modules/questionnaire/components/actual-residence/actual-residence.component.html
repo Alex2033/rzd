@@ -1,21 +1,32 @@
-<div class="create-form-description">Адрес регистрации</div>
+<div class="create-form-description">
+  Адрес фактического проживания или нахождения в РФ
+</div>
 
-<div class="form-controls" [formGroup]="registerAddress">
+<div class="form-controls" [formGroup]="actualResidence">
+  <!-- single -->
+  <mat-checkbox
+    (change)="changeSingle.emit($event.checked)"
+    class="address-single"
+    color="primary"
+    formControlName="adress_single"
+    >Совпадает с местом регистрации</mat-checkbox
+  >
+
   <!-- country -->
   <div class="form-control">
     <mat-form-field appearance="outline">
       <mat-label>Страна<span class="primary-color">*</span></mat-label>
 
       <input
-        name="adress_reg_country"
+        name="adress_fact_country"
         type="text"
         matInput
-        formControlName="adress_reg_country"
+        formControlName="adress_fact_country"
       />
 
       <button
-        *ngIf="registerAddress.get('adress_reg_country').value"
-        (click)="registerAddress.get('adress_reg_country').setValue(null)"
+        *ngIf="actualResidence.get('adress_fact_country').value"
+        (click)="actualResidence.get('adress_fact_country').setValue(null)"
         type="button"
         class="icon-button"
       >
@@ -27,10 +38,10 @@
       <mat-error
         ><app-error-messages
           *ngIf="
-            registerAddress.get('adress_reg_country').touched &&
-            registerAddress.get('adress_reg_country').invalid
+            actualResidence.get('adress_fact_country').touched &&
+            actualResidence.get('adress_fact_country').invalid
           "
-          [errors]="registerAddress.get('adress_reg_country').errors"
+          [errors]="actualResidence.get('adress_fact_country').errors"
           [errorMessages]="{
             required: 'Введите название страны'
           }"
@@ -45,15 +56,15 @@
       <mat-label>Регион<span class="primary-color">*</span></mat-label>
 
       <input
-        name="adress_reg_region"
+        name="adress_fact_region"
         type="text"
         matInput
-        formControlName="adress_reg_region"
+        formControlName="adress_fact_region"
       />
 
       <button
-        *ngIf="registerAddress.get('adress_reg_region').value"
-        (click)="registerAddress.get('adress_reg_region').setValue(null)"
+        *ngIf="actualResidence.get('adress_fact_region').value"
+        (click)="actualResidence.get('adress_fact_region').setValue(null)"
         type="button"
         class="icon-button"
       >
@@ -65,10 +76,10 @@
       <mat-error
         ><app-error-messages
           *ngIf="
-            registerAddress.get('adress_reg_region').touched &&
-            registerAddress.get('adress_reg_region').invalid
+            actualResidence.get('adress_fact_region').touched &&
+            actualResidence.get('adress_fact_region').invalid
           "
-          [errors]="registerAddress.get('adress_reg_region').errors"
+          [errors]="actualResidence.get('adress_fact_region').errors"
           [errorMessages]="{
             required: 'Введите название региона'
           }"
@@ -83,15 +94,15 @@
       <mat-label>Район<span class="primary-color">*</span></mat-label>
 
       <input
-        name="adress_reg_area"
+        name="adress_fact_area"
         type="text"
         matInput
-        formControlName="adress_reg_area"
+        formControlName="adress_fact_area"
       />
 
       <button
-        *ngIf="registerAddress.get('adress_reg_area').value"
-        (click)="registerAddress.get('adress_reg_area').setValue(null)"
+        *ngIf="actualResidence.get('adress_fact_area').value"
+        (click)="actualResidence.get('adress_fact_area').setValue(null)"
         type="button"
         class="icon-button"
       >
@@ -103,10 +114,10 @@
       <mat-error
         ><app-error-messages
           *ngIf="
-            registerAddress.get('adress_reg_area').touched &&
-            registerAddress.get('adress_reg_area').invalid
+            actualResidence.get('adress_fact_area').touched &&
+            actualResidence.get('adress_fact_area').invalid
           "
-          [errors]="registerAddress.get('adress_reg_area').errors"
+          [errors]="actualResidence.get('adress_fact_area').errors"
           [errorMessages]="{
             required: 'Введите название района'
           }"
@@ -124,10 +135,10 @@
 
       <input
         type="text"
-        name="adress_reg_city"
+        name="adress_fact_city"
         type="text"
         matInput
-        formControlName="adress_reg_city"
+        formControlName="adress_fact_city"
         [matAutocomplete]="auto"
       />
       <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
@@ -137,8 +148,8 @@
       </mat-autocomplete>
 
       <button
-        *ngIf="registerAddress.get('adress_reg_city').value"
-        (click)="registerAddress.get('adress_reg_city').setValue(null)"
+        *ngIf="actualResidence.get('adress_fact_city').value"
+        (click)="actualResidence.get('adress_fact_city').setValue(null)"
         type="button"
         class="icon-button"
       >
@@ -150,10 +161,10 @@
       <mat-error
         ><app-error-messages
           *ngIf="
-            registerAddress.get('adress_reg_city').touched &&
-            registerAddress.get('adress_reg_city').invalid
+            actualResidence.get('adress_fact_city').touched &&
+            actualResidence.get('adress_fact_city').invalid
           "
-          [errors]="registerAddress.get('adress_reg_city').errors"
+          [errors]="actualResidence.get('adress_fact_city').errors"
           [errorMessages]="{
             required: 'Введите название населенного пункта'
           }"
@@ -168,15 +179,15 @@
       <mat-label>Улица<span class="primary-color">*</span></mat-label>
 
       <input
-        name="adress_reg_street"
+        name="adress_fact_street"
         type="text"
         matInput
-        formControlName="adress_reg_street"
+        formControlName="adress_fact_street"
       />
 
       <button
-        *ngIf="registerAddress.get('adress_reg_street').value"
-        (click)="registerAddress.get('adress_reg_street').setValue(null)"
+        *ngIf="actualResidence.get('adress_fact_street').value"
+        (click)="actualResidence.get('adress_fact_street').setValue(null)"
         type="button"
         class="icon-button"
       >
@@ -188,10 +199,10 @@
       <mat-error
         ><app-error-messages
           *ngIf="
-            registerAddress.get('adress_reg_street').touched &&
-            registerAddress.get('adress_reg_street').invalid
+            actualResidence.get('adress_fact_street').touched &&
+            actualResidence.get('adress_fact_street').invalid
           "
-          [errors]="registerAddress.get('adress_reg_street').errors"
+          [errors]="actualResidence.get('adress_fact_street').errors"
           [errorMessages]="{
             required: 'Введите название улицы'
           }"
@@ -206,15 +217,15 @@
       <mat-label>Дом (корпус)<span class="primary-color">*</span></mat-label>
 
       <input
-        name="adress_reg_building"
+        name="adress_fact_building"
         type="text"
         matInput
-        formControlName="adress_reg_building"
+        formControlName="adress_fact_building"
       />
 
       <button
-        *ngIf="registerAddress.get('adress_reg_building').value"
-        (click)="registerAddress.get('adress_reg_building').setValue(null)"
+        *ngIf="actualResidence.get('adress_fact_building').value"
+        (click)="actualResidence.get('adress_fact_building').setValue(null)"
         type="button"
         class="icon-button"
       >
@@ -226,10 +237,10 @@
       <mat-error
         ><app-error-messages
           *ngIf="
-            registerAddress.get('adress_reg_building').touched &&
-            registerAddress.get('adress_reg_building').invalid
+            actualResidence.get('adress_fact_building').touched &&
+            actualResidence.get('adress_fact_building').invalid
           "
-          [errors]="registerAddress.get('adress_reg_building').errors"
+          [errors]="actualResidence.get('adress_fact_building').errors"
           [errorMessages]="{
             required: 'Введите номер дома(корпуса)'
           }"
@@ -244,15 +255,15 @@
       <mat-label>Квартира (№ в отеле)</mat-label>
 
       <input
-        name="adress_reg_flat"
+        name="adress_fact_flat"
         type="text"
         matInput
-        formControlName="adress_reg_flat"
+        formControlName="adress_fact_flat"
       />
 
       <button
-        *ngIf="registerAddress.get('adress_reg_flat').value"
-        (click)="registerAddress.get('adress_reg_flat').setValue(null)"
+        *ngIf="actualResidence.get('adress_fact_flat').value"
+        (click)="actualResidence.get('adress_fact_flat').setValue(null)"
         type="button"
         class="icon-button"
       >
@@ -264,10 +275,10 @@
       <mat-error
         ><app-error-messages
           *ngIf="
-            registerAddress.get('adress_reg_flat').touched &&
-            registerAddress.get('adress_reg_flat').invalid
+            actualResidence.get('adress_fact_flat').touched &&
+            actualResidence.get('adress_fact_flat').invalid
           "
-          [errors]="registerAddress.get('adress_reg_flat').errors"
+          [errors]="actualResidence.get('adress_fact_flat').errors"
         ></app-error-messages
       ></mat-error>
     </mat-form-field>

@@ -69,12 +69,14 @@
     <mat-form-field appearance="outline">
       <mat-label>Кем выдан<span class="primary-color">*</span></mat-label>
 
-      <input
-        name="passport_org"
-        type="text"
+      <textarea
         matInput
+        name="passport_org"
         formControlName="passport_org"
-      />
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="1"
+      ></textarea>
 
       <button
         *ngIf="documentStep.get('passport_org').value"

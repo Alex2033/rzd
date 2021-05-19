@@ -15,6 +15,8 @@ import { ErrorMessagesModule } from 'src/app/shared/modules/error-messages/error
 import { MatNativeDateModule } from '@angular/material/core';
 import { NgxMaskModule } from 'ngx-mask';
 import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { TextFieldModule } from '@angular/cdk/text-field';
 
 import { QuestionnairesListComponent } from './pages/questionnaires-list/questionnaires-list.component';
 import { QuestionnairesService } from './services/questionnaires.service';
@@ -28,6 +30,7 @@ import { CyrillicToLatinPipe } from 'src/app/shared/pipes/cyrilic-to-latin.pipe'
 import { BasicDataComponent } from './components/basic-data/basic-data.component';
 import { DocumentStepComponent } from './components/document-step/document-step.component';
 import { RegisterAddressComponent } from './components/register-address/register-address.component';
+import { ActualResidenceComponent } from './components/actual-residence/actual-residence.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +44,7 @@ import { RegisterAddressComponent } from './components/register-address/register
     BasicDataComponent,
     DocumentStepComponent,
     RegisterAddressComponent,
+    ActualResidenceComponent,
   ],
   imports: [
     CommonModule,
@@ -60,6 +64,8 @@ import { RegisterAddressComponent } from './components/register-address/register
     MatNativeDateModule,
     NgxMaskModule.forRoot(),
     MatSelectModule,
+    MatAutocompleteModule,
+    TextFieldModule,
   ],
   providers: [QuestionnairesService, CyrillicToLatinPipe],
 })
