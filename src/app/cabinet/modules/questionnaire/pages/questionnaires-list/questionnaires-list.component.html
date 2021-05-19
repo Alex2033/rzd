@@ -36,12 +36,21 @@
             (ngModelChange)="detectChecked()"
             class="questionnaire-checkbox"
             color="primary"
+            [class.hidden]="questionnaire.draft"
           >
           </mat-checkbox>
           <div
             class="questionnaire-content"
-            (click)="
-              questionnaire.checked = !questionnaire.checked; detectChecked()
+            [queryParams]="{ step: 1 }"
+            [routerLink]="
+              questionnaire.draft
+                ? [
+                    '/cabinet',
+                    'questionnaires',
+                    'adult-create',
+                    questionnaire.id
+                  ]
+                : null
             "
           >
             <div class="questionnaire-info">
@@ -69,6 +78,7 @@
             <!-- actions -->
             <div class="actions" (click)="$event.stopPropagation()">
               <button
+                *ngIf="!questionnaire.draft"
                 class="icon-button big edit-questionnaire"
                 [routerLink]="[
                   '/cabinet',
@@ -76,7 +86,7 @@
                   'adult-create',
                   questionnaire.id
                 ]"
-                [queryParams]="{step: 1}"
+                [queryParams]="{ step: 1 }"
                 type="button"
               >
                 <svg width="1.5rem" height="1.5rem">
@@ -108,11 +118,17 @@
               (ngModelChange)="detectChecked()"
               class="questionnaire-checkbox"
               color="primary"
+              [class.hidden]="child.draft"
             >
             </mat-checkbox>
             <div
               class="questionnaire-content"
-              (click)="child.checked = !child.checked; detectChecked()"
+              [queryParams]="{ step: 1 }"
+              [routerLink]="
+                child.draft
+                  ? ['/cabinet', 'questionnaires', 'child-create', child.id]
+                  : null
+              "
             >
               <div class="questionnaire-info">
                 <div class="child-icon">
@@ -144,6 +160,7 @@
               <!-- actions -->
               <div class="actions" (click)="$event.stopPropagation()">
                 <button
+                  *ngIf="!child.draft"
                   class="icon-button big edit-questionnaire"
                   type="button"
                   [routerLink]="[

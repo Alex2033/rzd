@@ -7,12 +7,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of, ReplaySubject } from 'rxjs';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  switchMap,
-  takeUntil,
-} from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { CyrillicToLatinPipe } from 'src/app/shared/pipes/cyrilic-to-latin.pipe';
 import { QuestionnairesService } from '../../services/questionnaires.service';
 import { QuestionnaireDetailInterface } from '../../types/questionnaire-detail.interface';
@@ -26,6 +21,16 @@ import { UpdatedFieldInterface } from '../../types/updated-field.interface';
 export class AdultCreateComponent implements OnInit, OnDestroy {
   public createForm: FormGroup;
   public currentStep: number = 1;
+  public citizenships: object[] = [
+    {
+      label: 'Гражданин РФ (паспорт РФ)',
+      value: 'RESIDENT_PASSPORT',
+    },
+    {
+      label: 'Нерезидент РФ (загран. паспорт)',
+      value: 'FOREIGN_PASSPORT',
+    },
+  ];
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -54,9 +59,13 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
     this.destroy.complete();
   }
 
+  get formLength(): number {
+    return Object.keys(this.createForm.controls).length;
+  }
+
   buildForm(): void {
     this.createForm = this.formBuilder.group({
-      firstStep: new FormGroup({
+      basicData: new FormGroup({
         name: new FormControl('', Validators.required),
         name_lat: new FormControl('', [Validators.required]),
         surname: new FormControl('', Validators.required),
@@ -70,6 +79,12 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
         ]),
         sex: new FormControl('', [Validators.required]),
       }),
+      document: new FormGroup({
+        citizenship: new FormControl('', Validators.required),
+        passport_number: new FormControl('', Validators.required),
+        passport_org: new FormControl('', Validators.required),
+        passport_date: new FormControl('', [Validators.required]),
+      }),
     });
   }
 
@@ -80,7 +95,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
       )
       .subscribe((res) => {
         this.setControlsValues(this.createForm, res);
-        this.applyValues(this.createForm, res.id);
+        this.updateFields(this.createForm, res.id);
       });
   }
 
@@ -99,12 +114,12 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
     });
   }
 
-  applyValues(group, id: number): void {
+  updateFields(group, id: number): void {
     Object.keys(group.controls).forEach((key) => {
       let formControl = group.controls[key];
 
       if (formControl instanceof FormGroup) {
-        this.applyValues(formControl, id);
+        this.updateFields(formControl, id);
       } else {
         formControl.valueChanges
           .pipe(
@@ -122,7 +137,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
               return of();
             })
           )
-          .subscribe(() => {});
+          .subscribe();
       }
     });
   }
@@ -134,8 +149,8 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
   }
 
   nameControlChanges(): void {
-    const name = this.createForm.get('firstStep').get('name');
-    const name_lat = this.createForm.get('firstStep').get('name_lat');
+    const name = this.createForm.get('basicData').get('name');
+    const name_lat = this.createForm.get('basicData').get('name_lat');
 
     name.valueChanges.subscribe((res: string) => {
       if (!name_lat.touched) {
@@ -146,8 +161,8 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
   }
 
   surnameControlChanges(): void {
-    const surname = this.createForm.get('firstStep').get('surname');
-    const surname_lat = this.createForm.get('firstStep').get('surname_lat');
+    const surname = this.createForm.get('basicData').get('surname');
+    const surname_lat = this.createForm.get('basicData').get('surname_lat');
 
     surname.valueChanges.subscribe((res: string) => {
       if (!surname_lat.touched) {
@@ -160,8 +175,9 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
   submit(): void {}
 
   next(): void {
-    if (this.currentGroup.valid) {
+    if (this.currentGroup.valid && this.currentStep !== this.formLength) {
       this.currentStep += 1;
+      this.router.navigate([], { queryParams: { step: this.currentStep } });
       return;
     }
 

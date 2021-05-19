@@ -12,12 +12,19 @@
     </div>
 
     <form (submit)="submit()" [formGroup]="createForm" class="create-form">
-      <h2 class="create-form-title">Шаг {{ currentStep }} из 5</h2>
+      <h2 class="create-form-title">
+        Шаг {{ currentStep }} из {{ formLength }}
+      </h2>
 
       <app-basic-data
         [basicData]="currentGroup"
         *ngIf="currentStep === 1"
       ></app-basic-data>
+      <app-document-step
+        [citizenships]="citizenships"
+        [documentStep]="currentGroup"
+        *ngIf="currentStep === 2"
+      ></app-document-step>
     </form>
   </div>
 </div>

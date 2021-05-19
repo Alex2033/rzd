@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BasicDataComponent } from './basic-datacomponent';
+import { BasicDataComponent } from './basic-data.component';
 
 describe('BasicDataComponent', () => {
   let component: BasicDataComponent;

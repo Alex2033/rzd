@@ -132,6 +132,10 @@
   justify-content: space-between;
   align-items: flex-start;
   position: relative;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .draft {

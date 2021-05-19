@@ -9,7 +9,28 @@
 }
 
 .form-control {
+  &.select-control {
+    .mat-form-field-appearance-outline {
+      .mat-form-field-infix {
+        padding-top: 1.65rem;
+        padding-bottom: 1.65rem;
+      }
+
+      .mat-select-arrow-wrapper {
+        transform: translateY(0);
+      }
+    }
+  }
+
   &.date-form-control {
+    .mat-form-field {
+      .mat-focus {
+        svg {
+          fill: lighten($primary, 17.95%);
+        }
+      }
+    }
+
     .mat-button-focus-overlay {
       display: none;
     }

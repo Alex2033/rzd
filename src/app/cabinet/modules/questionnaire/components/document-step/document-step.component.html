@@ -1,0 +1,138 @@
+<div class="create-form-description">Документ</div>
+
+<div class="form-controls" [formGroup]="documentStep">
+  <!-- citizenship -->
+  <div class="form-control select-control">
+    <mat-form-field appearance="outline">
+      <mat-label>Гражданство<span class="primary-color">*</span></mat-label>
+      <mat-select formControlName="citizenship">
+        <mat-option
+          *ngFor="let citizenship of citizenships"
+          [value]="citizenship.value"
+          >{{ citizenship.label }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <!-- passport number -->
+  <div class="form-control">
+    <mat-form-field appearance="outline">
+      <mat-label>Серия и номер<span class="primary-color">*</span></mat-label>
+
+      <input
+        matInput
+        [placeholder]="
+          documentStep.get('citizenship').value === 'RESIDENT_PASSPORT'
+            ? '0000 000000'
+            : '00 0000000'
+        "
+        class="rofl"
+        [mask]="
+          documentStep.get('citizenship').value === 'RESIDENT_PASSPORT'
+            ? '0000 000000'
+            : '00 0000000'
+        "
+        [validation]="true"
+        type="text"
+        formControlName="passport_number"
+      />
+
+      <button
+        *ngIf="documentStep.get('passport_number').value"
+        (click)="documentStep.get('passport_number').setValue(null)"
+        type="button"
+        class="icon-button"
+      >
+        <svg width="2rem" height="2rem">
+          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+        </svg>
+      </button>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="
+            documentStep.get('passport_number').touched &&
+            documentStep.get('passport_number').invalid
+          "
+          [errors]="documentStep.get('passport_number').errors"
+          [errorMessages]="{
+            required: 'Введите серию и номер'
+          }"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- passport org -->
+  <div class="form-control">
+    <mat-form-field appearance="outline">
+      <mat-label>Кем выдан<span class="primary-color">*</span></mat-label>
+
+      <input
+        name="passport_org"
+        type="text"
+        matInput
+        formControlName="passport_org"
+      />
+
+      <button
+        *ngIf="documentStep.get('passport_org').value"
+        (click)="documentStep.get('passport_org').setValue(null)"
+        type="button"
+        class="icon-button"
+      >
+        <svg width="2rem" height="2rem">
+          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+        </svg>
+      </button>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="
+            documentStep.get('passport_org').touched &&
+            documentStep.get('passport_org').invalid
+          "
+          [errors]="documentStep.get('passport_org').errors"
+          [errorMessages]="{
+            required: 'Введите кем выдан документ'
+          }"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- passport date -->
+  <div class="form-control date-form-control">
+    <mat-form-field appearance="outline">
+      <mat-label>Дата выдачи<span class="primary-color">*</span></mat-label>
+
+      <input
+        matInput
+        placeholder="дд.мм.гггг"
+        name="passport_date"
+        formControlName="passport_date"
+        [matDatepicker]="picker"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker">
+        <svg matDatepickerToggleIcon width="2rem" height="2.2rem">
+          <use xlink:href="assets/sprites/icons.svg#calendar-today"></use>
+        </svg>
+      </mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="
+            documentStep.get('passport_date').touched &&
+            documentStep.get('passport_date').invalid
+          "
+          [errors]="documentStep.get('passport_date').errors"
+          [errorMessages]="{
+            required: 'Введите дату выдачи'
+          }"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
+</div>

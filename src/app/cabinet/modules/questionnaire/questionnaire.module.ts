@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ErrorMessagesModule } from 'src/app/shared/modules/error-messages/error-messages.module';
 import { MatNativeDateModule } from '@angular/material/core';
 import { NgxMaskModule } from 'ngx-mask';
+import { MatSelectModule } from '@angular/material/select';
 
 import { QuestionnairesListComponent } from './pages/questionnaires-list/questionnaires-list.component';
 import { QuestionnairesService } from './services/questionnaires.service';
@@ -24,7 +25,8 @@ import { CreateQuestionnaireComponent } from './pages/create-questionnaire/creat
 import { ChooseAdultComponent } from './pages/choose-adult/choose-adult.component';
 import { AdultCreateComponent } from './pages/adult-create/adult-create.component';
 import { CyrillicToLatinPipe } from 'src/app/shared/pipes/cyrilic-to-latin.pipe';
-import { BasicDataComponent } from './components/basic-data/basic-datacomponent';
+import { BasicDataComponent } from './components/basic-data/basic-data.component';
+import { DocumentStepComponent } from './components/document-step/document-step.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import { BasicDataComponent } from './components/basic-data/basic-datacomponent'
     ChooseAdultComponent,
     AdultCreateComponent,
     BasicDataComponent,
+    DocumentStepComponent,
   ],
   imports: [
     CommonModule,
@@ -54,6 +57,7 @@ import { BasicDataComponent } from './components/basic-data/basic-datacomponent'
     MatDatepickerModule,
     MatNativeDateModule,
     NgxMaskModule.forRoot(),
+    MatSelectModule,
   ],
   providers: [QuestionnairesService, CyrillicToLatinPipe],
 })

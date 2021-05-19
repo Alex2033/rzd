@@ -12,6 +12,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { PlugComponent } from './plug/plug.component';
 import { LanguagesResolver } from './shared/resolvers/language.resolver';
 import { AuthInterceptor } from './auth/interceptors/auth.interceptor';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { AuthInterceptor } from './auth/interceptors/auth.interceptor';
       multi: true,
       useClass: AuthInterceptor,
     },
+    { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },
   ],
   bootstrap: [AppComponent],
 })

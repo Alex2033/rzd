@@ -207,3 +207,8 @@ ul {
   color: lighten($primary, 17.95%);
   text-decoration: none;
 }
+
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
