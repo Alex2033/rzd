@@ -38,6 +38,10 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
     return this.getGroupAt(this.currentStep);
   }
 
+  get formLength(): number {
+    return Object.keys(this.createForm.controls).length;
+  }
+
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -57,10 +61,6 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy.next(null);
     this.destroy.complete();
-  }
-
-  get formLength(): number {
-    return Object.keys(this.createForm.controls).length;
   }
 
   buildForm(): void {
@@ -84,6 +84,28 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
         passport_number: new FormControl('', Validators.required),
         passport_org: new FormControl('', Validators.required),
         passport_date: new FormControl('', [Validators.required]),
+      }),
+      registerAddress: new FormGroup({
+        adress_reg_country: new FormControl('', Validators.required),
+        adress_reg_region: new FormControl('', Validators.required),
+        adress_reg_area: new FormControl('', Validators.required),
+        adress_reg_city: new FormControl('', Validators.required),
+        adress_reg_street: new FormControl('', Validators.required),
+        adress_reg_building: new FormControl('', Validators.required),
+        adress_reg_flat: new FormControl('', Validators.required),
+      }),
+      actualResidence: new FormGroup({
+        adress_fact_country: new FormControl('', Validators.required),
+        adress_fact_region: new FormControl('', Validators.required),
+        adress_fact_area: new FormControl('', Validators.required),
+        adress_fact_city: new FormControl('', Validators.required),
+        adress_fact_street: new FormControl('', Validators.required),
+        adress_fact_building: new FormControl('', Validators.required),
+        adress_fact_flat: new FormControl('', Validators.required),
+      }),
+      workplace: new FormGroup({
+        company: new FormControl('', Validators.required),
+        position: new FormControl('', Validators.required),
       }),
     });
   }
