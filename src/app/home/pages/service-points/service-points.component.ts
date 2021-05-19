@@ -7,7 +7,9 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { Observable, of, Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { ServicePointsService } from '../../services/service-points.service';
 import { ServicePointInterface } from '../../types/service-point.interface';
 
@@ -17,7 +19,8 @@ import { ServicePointInterface } from '../../types/service-point.interface';
   styleUrls: ['./service-points.component.scss'],
 })
 export class ServicePointsComponent
-  implements OnInit, AfterViewInit, OnDestroy {
+  implements OnInit, AfterViewInit, OnDestroy
+{
   @ViewChildren('cards') cards: QueryList<ElementRef>;
 
   public searchText: string = '';
@@ -25,10 +28,17 @@ export class ServicePointsComponent
 
   private cardsSub: Subscription;
 
-  constructor(private servicePoints: ServicePointsService) {}
+  constructor(
+    private servicePoints: ServicePointsService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.points$ = this.servicePoints.getServicePoints();
+    this.points$ = this.route.queryParams.pipe(
+      switchMap((params) =>
+        this.servicePoints.getServicePoints(+params.serviceId)
+      )
+    );
   }
 
   ngAfterViewInit(): void {

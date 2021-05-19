@@ -150,11 +150,14 @@
         <p class="caption">Местоположение:</p>
         <p>
           Доступно в
-          <a [routerLink]="['/service-points']" class="points-link"
-            >{{ (servicePoints$ | async)?.length }}
+          <a
+            [routerLink]="['/service-points']"
+            [queryParams]="{ serviceId: service.id }"
+            class="points-link"
+            >{{ service.numCenters }}
             <span
               appPluralRu
-              [value]="(servicePoints$ | async)?.length"
+              [value]="service.numCenters"
               [arVariants]="['мед. центре', 'мед. центрах', 'мед. центрах']"
             ></span
           ></a>

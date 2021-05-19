@@ -9,10 +9,7 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { publish, refCount } from 'rxjs/operators';
-import { ServicePointsService } from '../../services/service-points.service';
 import { ServicesService } from '../../services/services.service';
-import { ServicePointInterface } from '../../types/service-point.interface';
 import { ServiceInterface } from '../../types/service.interface';
 
 @Component({
@@ -24,20 +21,13 @@ export class ServicesComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChildren('services') services: QueryList<ElementRef>;
 
   public services$: Observable<ServiceInterface[]>;
-  public servicePoints$: Observable<ServicePointInterface[]>;
 
   private servicesSub: Subscription;
 
-  constructor(
-    private servicesService: ServicesService,
-    private servicePoints: ServicePointsService
-  ) {}
+  constructor(private servicesService: ServicesService) {}
 
   ngOnInit(): void {
     this.services$ = this.servicesService.getServices();
-    this.servicePoints$ = this.servicePoints
-      .getServicePoints()
-      .pipe(publish(), refCount());
   }
 
   ngAfterViewInit(): void {
