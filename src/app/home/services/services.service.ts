@@ -18,9 +18,7 @@ export class ServicesService {
   ): Observable<ServiceInterface[]> {
     return this.http.get<ServiceInterface[]>(
       environment.api +
-        `api/contents/services?lang=${langId}${
-          point ? '&service=' + point : ''
-        }`
+        `api/contents/services?lang=${langId}${point ? '&point=' + point : ''}`
     );
   }
 

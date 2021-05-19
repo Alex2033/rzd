@@ -20,7 +20,7 @@ export class ServicePointsService {
     return this.http.get<ServicePointInterface[]>(
       environment.api +
         `api/contents/points?lang=${langId}${
-          serviceId ? '&point=' + serviceId : ''
+          serviceId ? '&service=' + serviceId : ''
         }`
     );
   }

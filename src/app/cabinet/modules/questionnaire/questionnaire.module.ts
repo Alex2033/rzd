@@ -31,6 +31,7 @@ import { BasicDataComponent } from './components/basic-data/basic-data.component
 import { DocumentStepComponent } from './components/document-step/document-step.component';
 import { RegisterAddressComponent } from './components/register-address/register-address.component';
 import { ActualResidenceComponent } from './components/actual-residence/actual-residence.component';
+import { WorkplaceComponent } from './components/workplace/workplace.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { ActualResidenceComponent } from './components/actual-residence/actual-r
     DocumentStepComponent,
     RegisterAddressComponent,
     ActualResidenceComponent,
+    WorkplaceComponent,
   ],
   imports: [
     CommonModule,
