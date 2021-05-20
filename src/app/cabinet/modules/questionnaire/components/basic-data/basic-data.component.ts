@@ -8,6 +8,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class BasicDataComponent implements OnInit {
   @Input() basicData: FormGroup;
+  @Input() isChild: boolean = false;
 
   constructor() {}
 

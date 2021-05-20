@@ -22,7 +22,6 @@ import { QuestionnairesService } from './services/questionnaires.service';
 import { DeleteComponent } from './components/delete/delete.component';
 import { WarningDialogComponent } from './components/warning-dialog/warning-dialog.component';
 import { CreateSheetComponent } from './components/create-sheet/create-sheet.component';
-import { CreateQuestionnaireComponent } from './pages/create-questionnaire/create-questionnaire.component';
 import { ChooseAdultComponent } from './pages/choose-adult/choose-adult.component';
 import { AdultCreateComponent } from './pages/adult-create/adult-create.component';
 import { CyrillicToLatinPipe } from 'src/app/shared/pipes/cyrilic-to-latin.pipe';
@@ -38,7 +37,6 @@ import { WorkplaceComponent } from './components/workplace/workplace.component';
     DeleteComponent,
     WarningDialogComponent,
     CreateSheetComponent,
-    CreateQuestionnaireComponent,
     ChooseAdultComponent,
     AdultCreateComponent,
     BasicDataComponent,

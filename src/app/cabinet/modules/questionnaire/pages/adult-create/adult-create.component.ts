@@ -110,8 +110,8 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
       }),
       workplace: new FormGroup({
         company: new FormControl(''),
-        company_address: new FormControl('', Validators.required),
-        position: new FormControl('', Validators.required),
+        company_address: new FormControl(''),
+        position: new FormControl(''),
       }),
     });
   }
@@ -124,11 +124,17 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
       .subscribe((res) => {
         if (res.id_parent !== 0) {
           this.isChild = true;
-          this.createForm.removeControl('workplace');
+          this.removeControls();
         }
         this.setControlsValues(this.createForm, res);
         this.updateAllFields(this.createForm, res.id);
       });
+  }
+
+  removeControls(): void {
+    (this.createForm.get('basicData') as FormGroup).removeControl('email');
+    (this.createForm.get('basicData') as FormGroup).removeControl('phone');
+    this.createForm.removeControl('workplace');
   }
 
   setControlsValues(group, questionnaire: QuestionnaireDetailInterface): void {
@@ -141,7 +147,11 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
       }
 
       if (questionnaire.content[key]) {
-        formControl.setValue(questionnaire.content[key]);
+        if (questionnaire.content[key] === '0001-01-01T00:00:00') {
+          formControl.setValue('2000-01-01T00:00:00');
+        } else {
+          formControl.setValue(questionnaire.content[key]);
+        }
       }
     });
   }
