@@ -106,7 +106,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
         adress_fact_city: new FormControl('', Validators.required),
         adress_fact_street: new FormControl('', Validators.required),
         adress_fact_building: new FormControl('', Validators.required),
-        adress_fact_flat: new FormControl('', Validators.required),
+        adress_fact_flat: new FormControl(''),
       }),
       workplace: new FormGroup({
         company: new FormControl(''),

@@ -32,8 +32,6 @@
         >
           <mat-checkbox
             #checkbox
-            [(ngModel)]="questionnaire.checked"
-            (ngModelChange)="detectChecked()"
             class="questionnaire-checkbox"
             color="primary"
             [class.hidden]="questionnaire.draft"
@@ -41,7 +39,7 @@
           </mat-checkbox>
           <div
             class="questionnaire-content"
-            [queryParams]="{ step: 1 }"
+            [queryParams]="questionnaire.draft ? { step: 1 } : null"
             [routerLink]="
               questionnaire.draft
                 ? [
@@ -114,8 +112,6 @@
           >
             <mat-checkbox
               #checkbox
-              [(ngModel)]="child.checked"
-              (ngModelChange)="detectChecked()"
               class="questionnaire-checkbox"
               color="primary"
               [class.hidden]="child.draft"
@@ -123,7 +119,7 @@
             </mat-checkbox>
             <div
               class="questionnaire-content"
-              [queryParams]="{ step: 1 }"
+              [queryParams]="child.draft ? { step: 1 } : null"
               [routerLink]="
                 child.draft
                   ? ['/cabinet', 'questionnaires', 'questionnaire', child.id]

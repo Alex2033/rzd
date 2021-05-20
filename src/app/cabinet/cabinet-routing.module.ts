@@ -19,6 +19,13 @@ const routes: Routes = [
         (m) => m.QuestionnaireModule
       ),
   },
+  {
+    path: 'services-registration',
+    loadChildren: () =>
+      import(
+        './modules/services-registration/services-registration.module'
+      ).then((m) => m.ServicesRegistrationModule),
+  },
 ];
 
 @NgModule({

@@ -35,6 +35,7 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
       .getQuestionnaires()
       .pipe(takeUntil(this.destroy$))
       .subscribe((questionnaires: QuestionnaireInterface[]) => {
+        console.log('questionnaires:', questionnaires);
         this.questionnaires = questionnaires;
       });
   }
@@ -46,17 +47,6 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
 
   trackByFn(_, item: QuestionnaireInterface): number {
     return item.id;
-  }
-
-  detectChecked(): void {
-    // this.checkedQuestionnaires = this.questionnaires.filter(
-    //   (q: QuestionnaireInterface) => {
-    //     if (q.children && q.children.filter((kid) => kid.checked).length) {
-    //       return true;
-    //     }
-    //     return q.checked;
-    //   }
-    // );
   }
 
   openDeleteDialog(questionnaire: QuestionnaireInterface): void {
