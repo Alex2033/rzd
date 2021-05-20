@@ -14,7 +14,7 @@ const routes: Routes = [
     component: ChooseAdultComponent,
   },
   {
-    path: 'adult-create/:id',
+    path: 'questionnaire/:id',
     component: AdultCreateComponent,
   },
 ];

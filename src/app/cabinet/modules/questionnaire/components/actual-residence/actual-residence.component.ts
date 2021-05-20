@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -7,8 +7,6 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./actual-residence.component.scss'],
 })
 export class ActualResidenceComponent implements OnInit {
-  @Output() changeSingle: EventEmitter<boolean> = new EventEmitter<boolean>();
-
   @Input() actualResidence: FormGroup;
   @Input() cities: string[] = [];
 

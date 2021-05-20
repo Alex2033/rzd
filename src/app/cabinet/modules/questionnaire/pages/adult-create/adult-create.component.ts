@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -6,8 +7,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { of, ReplaySubject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Observable, ReplaySubject } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  retry,
+  switchMap,
+} from 'rxjs/operators';
 import { CyrillicToLatinPipe } from 'src/app/shared/pipes/cyrilic-to-latin.pipe';
 import { QuestionnairesService } from '../../services/questionnaires.service';
 import { QuestionnaireDetailInterface } from '../../types/questionnaire-detail.interface';
@@ -27,6 +33,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
     'с. Кудиново, Калужская обл.',
     'с. Кудиново, Калужская обл.',
   ];
+  public isChild: boolean = false;
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -43,7 +50,8 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private cyrillicToLatin: CyrillicToLatinPipe,
     private router: Router,
-    private questionnairesService: QuestionnairesService
+    private questionnairesService: QuestionnairesService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -52,6 +60,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
     this.getQueryParams();
     this.nameControlChanges();
     this.surnameControlChanges();
+    this.singleChanges();
   }
 
   ngOnDestroy(): void {
@@ -101,6 +110,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
       }),
       workplace: new FormGroup({
         company: new FormControl(''),
+        company_address: new FormControl('', Validators.required),
         position: new FormControl('', Validators.required),
       }),
     });
@@ -112,8 +122,12 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
         switchMap((e) => this.questionnairesService.getQuestionnaire(+e.id))
       )
       .subscribe((res) => {
+        if (res.id_parent !== 0) {
+          this.isChild = true;
+          this.createForm.removeControl('workplace');
+        }
         this.setControlsValues(this.createForm, res);
-        this.updateFields(this.createForm, res.id);
+        this.updateAllFields(this.createForm, res.id);
       });
   }
 
@@ -132,33 +146,35 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
     });
   }
 
-  updateFields(group, id: number): void {
+  updateAllFields(group, id: number): void {
     Object.keys(group.controls).forEach((key) => {
       let formControl = group.controls[key];
 
       if (formControl instanceof FormGroup) {
-        this.updateFields(formControl, id);
+        this.updateAllFields(formControl, id);
       } else {
         formControl.valueChanges
           .pipe(
-            debounceTime(500),
+            debounceTime(800),
             distinctUntilChanged(),
-            switchMap((res: string) => {
-              res = res.toString();
-              if (key && res) {
-                const updatedField: UpdatedFieldInterface = {
-                  id_anketa: id,
-                  field: key,
-                  new_val: res.toString(),
-                };
-                return this.questionnairesService.updateField(updatedField);
-              }
-              return of();
-            })
+            switchMap((res: string) => this.updateSingleField(res, key, id)),
+            retry()
           )
           .subscribe();
       }
     });
+  }
+
+  updateSingleField(res: string, key: string, id: number): Observable<void> {
+    if (key === 'birthday' || key === 'passport_date') {
+      res = this.datePipe.transform(res, 'YYYY-MM-dd T HH:mm:ss');
+    }
+    const updatedField: UpdatedFieldInterface = {
+      id_anketa: id,
+      field: key,
+      new_val: res?.toString(),
+    };
+    return this.questionnairesService.updateField(updatedField);
   }
 
   getQueryParams(): void {
@@ -191,23 +207,16 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
     });
   }
 
-  submit(): void {}
+  submit(): void {
+    this.router.navigate(['/cabinet', 'questionnaires']);
+  }
 
   next(): void {
-    if (this.currentGroup.valid && this.currentStep !== this.formLength) {
+    if (this.currentGroup.valid && this.currentStep <= this.formLength) {
       this.currentStep += 1;
 
-      if (
-        this.currentStep === 4 &&
-        (this.createForm.get('actualResidence') as FormGroup).controls[
-          'adress_single'
-        ].value
-      ) {
-        this.equalizeAddresses(true);
-      }
-
-      if (this.currentStep === this.formLength) {
-        this.router.navigate(['/cabinet', 'questionnaires']);
+      if (this.currentStep > this.formLength) {
+        this.submit();
         return;
       }
 
@@ -237,21 +246,37 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
     return groups[index - 1];
   }
 
-  equalizeAddresses(val: boolean): void {
-    if (val) {
-      const controls = (this.createForm.get('registerAddress') as FormGroup)
-        .controls;
+  singleChanges(): void {
+    const controls = (this.createForm.get('actualResidence') as FormGroup)
+      .controls;
 
-      this.createForm.get('actualResidence').setValue({
-        adress_single: 'true',
-        adress_fact_country: controls['adress_reg_country'].value,
-        adress_fact_region: controls['adress_reg_region'].value,
-        adress_fact_area: controls['adress_reg_area'].value,
-        adress_fact_city: controls['adress_reg_city'].value,
-        adress_fact_street: controls['adress_reg_street'].value,
-        adress_fact_building: controls['adress_reg_building'].value,
-        adress_fact_flat: controls['adress_reg_flat'].value,
+    controls['adress_single'].valueChanges
+      .pipe(distinctUntilChanged())
+      .subscribe((res) => {
+        if (res) {
+          this.createForm.get('actualResidence').disable();
+          this.createForm.get('actualResidence').get('adress_single').enable();
+          this.equalizeAddresses(res);
+        } else {
+          this.createForm.get('actualResidence').enable();
+        }
       });
-    }
+  }
+
+  equalizeAddresses(res): void {
+    const controls = (this.createForm.get('registerAddress') as FormGroup)
+      .controls;
+    const actualResidence = this.createForm.get('actualResidence');
+
+    actualResidence.setValue({
+      adress_single: res,
+      adress_fact_country: controls['adress_reg_country'].value,
+      adress_fact_region: controls['adress_reg_region'].value,
+      adress_fact_area: controls['adress_reg_area'].value,
+      adress_fact_city: controls['adress_reg_city'].value,
+      adress_fact_street: controls['adress_reg_street'].value,
+      adress_fact_building: controls['adress_reg_building'].value,
+      adress_fact_flat: controls['adress_reg_flat'].value,
+    });
   }
 }

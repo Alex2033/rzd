@@ -21,7 +21,7 @@
         *ngIf="documentStep.get('passport_number').value"
         (click)="documentStep.get('passport_number').setValue(null)"
         type="button"
-        class="icon-button"
+        class="icon-button clear-button"
       >
         <svg width="2rem" height="2rem">
           <use xlink:href="assets/sprites/icons.svg#close-round"></use>
@@ -61,7 +61,7 @@
         *ngIf="documentStep.get('passport_org').value"
         (click)="documentStep.get('passport_org').setValue(null)"
         type="button"
-        class="icon-button"
+        class="icon-button clear-button"
       >
         <svg width="2rem" height="2rem">
           <use xlink:href="assets/sprites/icons.svg#close-round"></use>
@@ -94,6 +94,8 @@
         name="passport_date"
         formControlName="passport_date"
         [matDatepicker]="picker"
+        readonly
+        (click)="picker.open()"
       />
       <mat-datepicker-toggle matSuffix [for]="picker">
         <svg matDatepickerToggleIcon width="2rem" height="2.2rem">

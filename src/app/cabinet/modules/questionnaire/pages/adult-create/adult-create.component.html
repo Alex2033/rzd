@@ -14,6 +14,9 @@
     <form (submit)="submit()" [formGroup]="createForm" class="create-form">
       <h2 class="create-form-title">
         Шаг {{ currentStep }} из {{ formLength }}
+        <svg class="child-icon" width="2.4rem" height="2.25rem" *ngIf="isChild">
+          <use xlink:href="assets/sprites/icons.svg#little-kid"></use>
+        </svg>
       </h2>
 
       <app-basic-data
@@ -33,7 +36,6 @@
         [cities]="cities"
         [actualResidence]="currentGroup"
         *ngIf="currentStep === 4"
-        (changeSingle)="equalizeAddresses($event)"
       ></app-actual-residence>
       <app-workplace
         [workplace]="currentGroup"

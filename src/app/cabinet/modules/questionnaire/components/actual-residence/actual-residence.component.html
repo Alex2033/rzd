@@ -5,7 +5,6 @@
 <div class="form-controls" [formGroup]="actualResidence">
   <!-- single -->
   <mat-checkbox
-    (change)="changeSingle.emit($event.checked)"
     class="address-single"
     color="primary"
     formControlName="adress_single"
@@ -28,7 +27,7 @@
         *ngIf="actualResidence.get('adress_fact_country').value"
         (click)="actualResidence.get('adress_fact_country').setValue(null)"
         type="button"
-        class="icon-button"
+        class="icon-button clear-button"
       >
         <svg width="2rem" height="2rem">
           <use xlink:href="assets/sprites/icons.svg#close-round"></use>
@@ -66,7 +65,7 @@
         *ngIf="actualResidence.get('adress_fact_region').value"
         (click)="actualResidence.get('adress_fact_region').setValue(null)"
         type="button"
-        class="icon-button"
+        class="icon-button clear-button"
       >
         <svg width="2rem" height="2rem">
           <use xlink:href="assets/sprites/icons.svg#close-round"></use>
@@ -104,7 +103,7 @@
         *ngIf="actualResidence.get('adress_fact_area').value"
         (click)="actualResidence.get('adress_fact_area').setValue(null)"
         type="button"
-        class="icon-button"
+        class="icon-button clear-button"
       >
         <svg width="2rem" height="2rem">
           <use xlink:href="assets/sprites/icons.svg#close-round"></use>
@@ -151,7 +150,7 @@
         *ngIf="actualResidence.get('adress_fact_city').value"
         (click)="actualResidence.get('adress_fact_city').setValue(null)"
         type="button"
-        class="icon-button"
+        class="icon-button clear-button"
       >
         <svg width="2rem" height="2rem">
           <use xlink:href="assets/sprites/icons.svg#close-round"></use>
@@ -189,7 +188,7 @@
         *ngIf="actualResidence.get('adress_fact_street').value"
         (click)="actualResidence.get('adress_fact_street').setValue(null)"
         type="button"
-        class="icon-button"
+        class="icon-button clear-button"
       >
         <svg width="2rem" height="2rem">
           <use xlink:href="assets/sprites/icons.svg#close-round"></use>
@@ -227,7 +226,7 @@
         *ngIf="actualResidence.get('adress_fact_building').value"
         (click)="actualResidence.get('adress_fact_building').setValue(null)"
         type="button"
-        class="icon-button"
+        class="icon-button clear-button"
       >
         <svg width="2rem" height="2rem">
           <use xlink:href="assets/sprites/icons.svg#close-round"></use>
@@ -265,7 +264,7 @@
         *ngIf="actualResidence.get('adress_fact_flat').value"
         (click)="actualResidence.get('adress_fact_flat').setValue(null)"
         type="button"
-        class="icon-button"
+        class="icon-button clear-button"
       >
         <svg width="2rem" height="2rem">
           <use xlink:href="assets/sprites/icons.svg#close-round"></use>

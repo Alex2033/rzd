@@ -47,7 +47,7 @@
                 ? [
                     '/cabinet',
                     'questionnaires',
-                    'adult-create',
+                    'questionnaire',
                     questionnaire.id
                   ]
                 : null
@@ -83,7 +83,7 @@
                 [routerLink]="[
                   '/cabinet',
                   'questionnaires',
-                  'adult-create',
+                  'questionnaire',
                   questionnaire.id
                 ]"
                 [queryParams]="{ step: 1 }"
@@ -126,7 +126,7 @@
               [queryParams]="{ step: 1 }"
               [routerLink]="
                 child.draft
-                  ? ['/cabinet', 'questionnaires', 'child-create', child.id]
+                  ? ['/cabinet', 'questionnaires', 'questionnaire', child.id]
                   : null
               "
             >
@@ -166,7 +166,7 @@
                   [routerLink]="[
                     '/cabinet',
                     'questionnaires',
-                    'child-create',
+                    'questionnaire',
                     child.id
                   ]"
                 >

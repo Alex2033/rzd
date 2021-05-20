@@ -4,9 +4,7 @@
   <!-- company -->
   <div class="form-control">
     <mat-form-field appearance="outline">
-      <mat-label
-        >Место работы/учебы<span class="primary-color">*</span></mat-label
-      >
+      <mat-label>Место работы/учебы</mat-label>
 
       <input name="company" type="text" matInput formControlName="company" />
 
@@ -14,7 +12,7 @@
         *ngIf="workplace.get('company').value"
         (click)="workplace.get('company').setValue(null)"
         type="button"
-        class="icon-button"
+        class="icon-button clear-button"
       >
         <svg width="2rem" height="2rem">
           <use xlink:href="assets/sprites/icons.svg#close-round"></use>
@@ -32,10 +30,47 @@
     </mat-form-field>
   </div>
 
+  <!-- company address -->
+  <div class="form-control">
+    <mat-form-field appearance="outline">
+      <mat-label
+        >Адрес места работы/учебы<span class="primary-color">*</span></mat-label
+      >
+
+      <input
+        name="company_address"
+        type="text"
+        matInput
+        formControlName="company_address"
+      />
+
+      <button
+        *ngIf="workplace.get('company_address').value"
+        (click)="workplace.get('company_address').setValue(null)"
+        type="button"
+        class="icon-button clear-button"
+      >
+        <svg width="2rem" height="2rem">
+          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+        </svg>
+      </button>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="
+            workplace.get('company_address').touched &&
+            workplace.get('company_address').invalid
+          "
+          [errors]="workplace.get('company_address').errors"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
   <!-- position -->
   <div class="form-control">
     <mat-form-field appearance="outline">
-      <mat-label>Должность</mat-label>
+      <mat-label>Должность<span class="primary-color">*</span></mat-label>
 
       <input name="position" type="text" matInput formControlName="position" />
 
@@ -43,7 +78,7 @@
         *ngIf="workplace.get('position').value"
         (click)="workplace.get('position').setValue(null)"
         type="button"
-        class="icon-button"
+        class="icon-button clear-button"
       >
         <svg width="2rem" height="2rem">
           <use xlink:href="assets/sprites/icons.svg#close-round"></use>

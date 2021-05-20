@@ -16,4 +16,11 @@
 .create-form-title {
   font-size: 1.6rem;
   margin-top: 1.6rem;
+  display: flex;
+  align-items: center;
+}
+
+.child-icon {
+  margin-left: 0.8rem;
+  fill: $primary;
 }

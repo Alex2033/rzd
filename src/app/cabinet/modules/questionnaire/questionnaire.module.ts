@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { QuestionnaireRoutingModule } from './questionnaire-routing.module';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
@@ -67,6 +67,6 @@ import { WorkplaceComponent } from './components/workplace/workplace.component';
     MatAutocompleteModule,
     TextFieldModule,
   ],
-  providers: [QuestionnairesService, CyrillicToLatinPipe],
+  providers: [QuestionnairesService, CyrillicToLatinPipe, DatePipe],
 })
 export class QuestionnaireModule {}

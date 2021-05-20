@@ -135,7 +135,7 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
       )
       .subscribe((res) => {
         this.router.navigate(
-          ['/cabinet', 'questionnaires', 'adult-create', res],
+          ['/cabinet', 'questionnaires', 'questionnaire', res],
           {
             queryParams: {
               step: 1,

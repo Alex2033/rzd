@@ -29,13 +29,15 @@ export class ChooseAdultComponent implements OnInit {
       content: {},
     };
 
-    this.questionnairesService.create(newChild).subscribe(
-      (res) => {
-        console.log('res:', res);
-      },
-      (err) => {
-        console.log('err:', err);
-      }
-    );
+    this.questionnairesService.create(newChild).subscribe((res) => {
+      this.router.navigate(
+        ['/cabinet', 'questionnaires', 'questionnaire', res],
+        {
+          queryParams: {
+            step: 1,
+          },
+        }
+      );
+    });
   }
 }
