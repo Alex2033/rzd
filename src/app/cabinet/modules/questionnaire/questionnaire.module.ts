@@ -18,7 +18,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { TextFieldModule } from '@angular/cdk/text-field';
 
 import { QuestionnairesListComponent } from './pages/questionnaires-list/questionnaires-list.component';
-import { QuestionnairesService } from './services/questionnaires.service';
 import { DeleteComponent } from './components/delete/delete.component';
 import { WarningDialogComponent } from './components/warning-dialog/warning-dialog.component';
 import { CreateSheetComponent } from './components/create-sheet/create-sheet.component';
@@ -65,6 +64,6 @@ import { WorkplaceComponent } from './components/workplace/workplace.component';
     MatAutocompleteModule,
     TextFieldModule,
   ],
-  providers: [QuestionnairesService, CyrillicToLatinPipe, DatePipe],
+  providers: [CyrillicToLatinPipe, DatePipe],
 })
 export class QuestionnaireModule {}

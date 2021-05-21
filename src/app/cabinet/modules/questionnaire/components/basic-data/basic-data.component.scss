@@ -10,6 +10,12 @@
       display: block;
       margin-top: 0.9rem;
 
+      &.ng-invalid.ng-touched {
+        .mat-radio-label-content {
+          color: $accent;
+        }
+      }
+
       > * {
         &:not(:first-child) {
           margin-left: 3.5rem;

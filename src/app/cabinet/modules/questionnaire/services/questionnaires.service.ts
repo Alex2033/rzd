@@ -6,7 +6,9 @@ import { QuestionnaireDetailInterface } from '../types/questionnaire-detail.inte
 import { QuestionnaireInterface } from '../types/questionnaire.interface';
 import { UpdatedFieldInterface } from '../types/updated-field.interface';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class QuestionnairesService {
   constructor(private http: HttpClient) {}
 
