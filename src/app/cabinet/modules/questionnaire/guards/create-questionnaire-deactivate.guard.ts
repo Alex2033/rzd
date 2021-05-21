@@ -5,7 +5,7 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 import { AdultCreateComponent } from '../pages/adult-create/adult-create.component';
 import { QuestionnairesService } from '../services/questionnaires.service';
 
@@ -26,15 +26,13 @@ export class CreateQuestionnaireDeactivateGuard
     | boolean
     | UrlTree {
     if (!component.createForm.get('basicData').get('name').value) {
-      this.questionnairesService
-        .delete(route.params.id)
-        .pipe(
-          finalize(() => {
-            return true;
-          })
-        )
-        .subscribe();
+      return this.questionnairesService.delete(route.params.id).pipe(
+        map(() => {
+          return true;
+        })
+      );
     }
+    console.log('ПРОВЕРКА');
     return true;
   }
 }
