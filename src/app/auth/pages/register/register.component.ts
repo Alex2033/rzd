@@ -130,7 +130,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         finalize(() => (this.registrationLoading = false))
       )
       .subscribe(
-        (res) => this.registerSuccess(res),
+        () => this.registerSuccess(),
         (err) => {
           if (err instanceof HttpErrorResponse) {
             this.setErrors(err);
@@ -139,15 +139,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
       );
   }
 
-  registerSuccess(res): void {
+  registerSuccess(): void {
     this.submitted = true;
     this.registerForm.get('code').reset();
     localStorage.setItem(
       'registerForm',
       JSON.stringify(this.registerForm.value)
     );
-    // todo: убрать
-    alert('Код: ' + res);
   }
 
   setErrors(err: HttpErrorResponse): void {

@@ -79,12 +79,9 @@ export class EditPhoneComponent implements OnInit, OnDestroy {
         finalize(() => (this.loading = false))
       )
       .subscribe(
-        (res) => {
+        () => {
           this.submitted = true;
           this.editForm.get('code').reset();
-
-          // todo: убрать
-          alert('Код: ' + res);
         },
         (err) => {
           if (err instanceof HttpErrorResponse) {

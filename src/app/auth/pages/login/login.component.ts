@@ -81,8 +81,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         finalize(() => (this.loginLoading = false))
       )
       .subscribe(
-        (res) => {
-          this.loginSuccess(res);
+        () => {
+          this.loginSuccess();
         },
         (err) => {
           if (err instanceof HttpErrorResponse) {
@@ -92,12 +92,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       );
   }
 
-  loginSuccess(res): void {
+  loginSuccess(): void {
     this.submitted = true;
     this.loginForm.get('code').reset();
     localStorage.setItem('loginForm', JSON.stringify(this.loginForm.value));
-    // todo: убрать
-    alert('Код: ' + res);
   }
 
   private setErrors(err: HttpErrorResponse): void {
