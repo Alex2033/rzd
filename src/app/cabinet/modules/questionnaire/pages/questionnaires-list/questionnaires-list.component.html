@@ -31,6 +31,7 @@
           [class.small-offset]="questionnaire.children?.length"
         >
           <mat-checkbox
+            (change)="toggleCheck($event.checked, questionnaire)"
             #checkbox
             class="questionnaire-checkbox"
             color="primary"
@@ -111,6 +112,7 @@
             *ngFor="let child of questionnaire.children; trackBy: trackByFn"
           >
             <mat-checkbox
+              (change)="toggleCheck($event.checked, child)"
               #checkbox
               class="questionnaire-checkbox"
               color="primary"
@@ -194,7 +196,11 @@
       </svg>
       <span>Добавить анкету</span>
     </button>
-    <button class="button" [disabled]="!checkedQuestionnaires.length">
+    <button
+      (click)="goToServicesRegistration()"
+      class="button"
+      [disabled]="!checkedQuestionnairesIds.length"
+    >
       <span>Выбор услуг</span>
       <svg width="1.6rem" height="1.6rem">
         <use xlink:href="assets/sprites/icons.svg#next"></use>

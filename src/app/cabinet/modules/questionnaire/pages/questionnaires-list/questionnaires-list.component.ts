@@ -5,10 +5,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Observable, of, Subject } from 'rxjs';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
+import { ServicesRegistrationService } from 'src/app/shared/services/services-registration.service';
 import { CreateSheetComponent } from '../../components/create-sheet/create-sheet.component';
 import { DeleteComponent } from '../../components/delete/delete.component';
 import { WarningDialogComponent } from '../../components/warning-dialog/warning-dialog.component';
 import { QuestionnairesService } from '../../services/questionnaires.service';
+import { AnketaIdInterface } from '../../types/anketa-id.interface';
 import { QuestionnaireDetailInterface } from '../../types/questionnaire-detail.interface';
 import { QuestionnaireInterface } from '../../types/questionnaire.interface';
 
@@ -19,7 +21,7 @@ import { QuestionnaireInterface } from '../../types/questionnaire.interface';
 })
 export class QuestionnairesListComponent implements OnInit, OnDestroy {
   public questionnaires: QuestionnaireInterface[] = [];
-  public checkedQuestionnaires: QuestionnaireInterface[] = [];
+  public checkedQuestionnairesIds: AnketaIdInterface[] = [];
 
   private destroy$ = new Subject<void>();
 
@@ -27,7 +29,8 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
     private questionnairesService: QuestionnairesService,
     private dialog: MatDialog,
     private _bottomSheet: MatBottomSheet,
-    private router: Router
+    private router: Router,
+    private servicesRegistration: ServicesRegistrationService
   ) {}
 
   ngOnInit(): void {
@@ -35,7 +38,6 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
       .getQuestionnaires()
       .pipe(takeUntil(this.destroy$))
       .subscribe((questionnaires: QuestionnaireInterface[]) => {
-        console.log('questionnaires:', questionnaires);
         this.questionnaires = questionnaires;
       });
   }
@@ -121,7 +123,8 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
           }
           return res;
         }),
-        switchMap((res) => this.createAdultQuestionnaire(res))
+        switchMap((res) => this.createAdultQuestionnaire(res)),
+        takeUntil(this.destroy$)
       )
       .subscribe((res) => {
         this.router.navigate(
@@ -145,5 +148,23 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
     }
 
     return of();
+  }
+
+  toggleCheck(checked: boolean, questionnaire: QuestionnaireInterface): void {
+    if (checked) {
+      this.checkedQuestionnairesIds.push({ id_anketa: questionnaire.id });
+    } else {
+      this.checkedQuestionnairesIds = this.checkedQuestionnairesIds.filter(
+        (el) => el.id_anketa !== questionnaire.id
+      );
+    }
+  }
+
+  goToServicesRegistration(): void {
+    const questionnaires: { items: AnketaIdInterface[] } = {
+      items: [...this.checkedQuestionnairesIds],
+    };
+    this.servicesRegistration.setOrder(questionnaires);
+    this.router.navigate(['/cabinet', 'services-registration']);
   }
 }
