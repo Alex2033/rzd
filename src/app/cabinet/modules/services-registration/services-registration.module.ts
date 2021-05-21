@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 
 import { ServicesRegistrationRoutingModule } from './services-registration-routing.module';
 import { QuestionsComponent } from './pages/questions/questions.component';
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [QuestionsComponent],
   imports: [
     CommonModule,
-    ServicesRegistrationRoutingModule
-  ]
+    ReactiveFormsModule,
+    ServicesRegistrationRoutingModule,
+  ],
 })
-export class ServicesRegistrationModule { }
+export class ServicesRegistrationModule {}

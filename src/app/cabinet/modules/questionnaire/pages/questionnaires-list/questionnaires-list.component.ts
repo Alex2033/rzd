@@ -165,6 +165,6 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
       items: [...this.checkedQuestionnairesIds],
     };
     this.servicesRegistration.setOrder(questionnaires);
-    this.router.navigate(['/cabinet', 'services-registration']);
+    this.router.navigate(['/cabinet', 'services-registration', 'questions', 0]);
   }
 }

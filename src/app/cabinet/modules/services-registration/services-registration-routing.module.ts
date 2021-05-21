@@ -4,11 +4,7 @@ import { QuestionsComponent } from './pages/questions/questions.component';
 
 const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'questions',
-  },
-  {
-    path: 'questions',
+    path: 'questions/:id',
     component: QuestionsComponent,
   },
 ];

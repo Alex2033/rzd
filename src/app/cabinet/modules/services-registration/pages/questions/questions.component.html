@@ -10,5 +10,35 @@
         </a>
       </div>
     </div>
+
+    <h2 class="page-title"></h2>
+
+    <form [formGroup]="form" class="questions-content">
+      <div class="question-item">
+        <p>Выезжали ли вы за пределы РФ?</p>
+      </div>
+      <div class="question-item">
+        <p>
+          У меня есть симптомы ОРВИ, кашель, затрудненное дыхание, температура
+          выше 37°С
+        </p>
+      </div>
+      <div class="question-item">
+        <p>
+          Я контактировал с людьми, находящимися на карантине или имеющими
+          подтвержденное заболеевание “Коронавирусная инфекция, вызванная
+          вирусом COVID-19”
+        </p>
+      </div>
+
+      <div class="buttons">
+        <button class="button" [disabled]="form.invalid">
+          <span>Далее</span>
+          <svg width="1.6rem" height="1.6rem">
+            <use xlink:href="assets/sprites/icons.svg#next"></use>
+          </svg>
+        </button>
+      </div>
+    </form>
   </div>
 </div>

@@ -26,13 +26,10 @@ export class CreateQuestionnaireDeactivateGuard
     | boolean
     | UrlTree {
     if (!component.createForm.get('basicData').get('name').value) {
-      return this.questionnairesService.delete(route.params.id).pipe(
-        map(() => {
-          return true;
-        })
-      );
+      return this.questionnairesService
+        .delete(route.params.id)
+        .pipe(map(() => true));
     }
-    console.log('ПРОВЕРКА');
     return true;
   }
 }

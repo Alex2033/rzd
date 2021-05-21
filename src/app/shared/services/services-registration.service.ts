@@ -7,21 +7,16 @@ import { OrderInterface } from '../types/order.interface';
   providedIn: 'root',
 })
 export class ServicesRegistrationService {
-  public order$: BehaviorSubject<OrderInterface> =
-    new BehaviorSubject<OrderInterface>({} as OrderInterface);
+  public order: OrderInterface = { id: 0 } as OrderInterface;
 
   constructor(private http: HttpClient) {
     if (sessionStorage.getItem('rzd-order')) {
-      this.order$ = JSON.parse(sessionStorage.getItem('rzd-order'));
+      this.order = JSON.parse(sessionStorage.getItem('rzd-order'));
     }
   }
 
-  getOrder(): Observable<OrderInterface> {
-    return this.order$.asObservable();
-  }
-
   setOrder(data): void {
-    this.order$.next({ ...data });
-    sessionStorage.setItem('rzd-order', JSON.stringify(this.order$));
+    this.order = { ...data };
+    sessionStorage.setItem('rzd-order', JSON.stringify(this.order));
   }
 }
