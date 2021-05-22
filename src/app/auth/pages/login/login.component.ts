@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public loginLoading: boolean = false;
   public resendCode: boolean = false;
   public submitted: boolean = false;
+  public smsInterval: number = 0;
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -106,6 +107,10 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.phone.setErrors({
           not_found: 'Пользователь с таким номером не найден',
         });
+        break;
+      case 'SMS_INTERVAL':
+        this.smsInterval = value;
+        this.submitted = true;
         break;
 
       default:

@@ -11,6 +11,7 @@
   transform: translateX(-100%);
   background-color: $light;
   transition: transform 0.2s;
+  overflow: scroll;
 }
 
 :host-context(.is-visible) {

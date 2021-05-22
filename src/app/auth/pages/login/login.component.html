@@ -17,6 +17,7 @@
               [validation]="true"
               prefix="+"
               type="text"
+              inputmode="tel"
               formControlName="phone"
             />
 
@@ -68,6 +69,7 @@
       [resendCode]="resendCode"
       (submitted)="changeSubmitted($event)"
       [phoneValue]="phoneControl.value"
+      [smsInterval]="smsInterval"
       (submit)="submit()"
     ></app-sms-confirm>
 

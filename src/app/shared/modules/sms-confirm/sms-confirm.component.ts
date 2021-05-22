@@ -33,6 +33,7 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
   @Input() codeForm: FormGroup;
   @Input() phoneValue: string;
   @Input() resendCode: boolean;
+  @Input() smsInterval: number;
 
   // todo: После того как сделать страницей, это убрать
   @Input() isLogin: boolean = false;
@@ -71,7 +72,7 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
     this.profileService
       .checkPhone(phoneData)
       .pipe(takeUntil(this.destroy))
-      .subscribe((res) => {
+      .subscribe(() => {
         this.newCodeSuccess();
       });
     this.setTimer();
@@ -81,7 +82,7 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
     this.auth
       .login(this.phoneValue)
       .pipe(takeUntil(this.destroy))
-      .subscribe((res) => {
+      .subscribe(() => {
         this.newCodeSuccess();
       });
     this.setTimer();
@@ -123,7 +124,11 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
   }
 
   resetSmsTimer(): void {
-    this.count = 60;
+    if (this.smsInterval) {
+      this.count = this.smsInterval;
+    } else {
+      this.count = 60;
+    }
     this.stopTimer.next();
     this.changeResendCode.emit(false);
   }

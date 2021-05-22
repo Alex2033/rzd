@@ -211,7 +211,13 @@
     <mat-form-field appearance="outline">
       <mat-label>E-mail<span class="primary-color">*</span></mat-label>
 
-      <input name="email" type="email" matInput formControlName="email" />
+      <input
+        inputmode="email"
+        name="email"
+        type="email"
+        matInput
+        formControlName="email"
+      />
 
       <button
         *ngIf="basicData.get('email').value"
@@ -249,6 +255,7 @@
         [validation]="true"
         prefix="+"
         type="text"
+        inputmode="tel"
         formControlName="phone"
       />
 

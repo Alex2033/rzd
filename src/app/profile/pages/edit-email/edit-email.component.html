@@ -13,7 +13,13 @@
         <mat-form-field appearance="outline">
           <mat-label>E-mail</mat-label>
 
-          <input matInput type="email" name="email" formControlName="email" />
+          <input
+            inputmode="email"
+            matInput
+            type="email"
+            name="email"
+            formControlName="email"
+          />
 
           <mat-error
             ><app-error-messages
