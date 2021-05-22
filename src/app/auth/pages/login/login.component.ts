@@ -39,8 +39,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.createForm();
-    this.phoneControl = this.phone;
     this.getFormLocalStorage();
+    this.phoneControl = this.phone;
   }
 
   ngOnDestroy() {
