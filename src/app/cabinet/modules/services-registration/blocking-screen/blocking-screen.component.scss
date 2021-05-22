@@ -1,0 +1,22 @@
+@import "theme";
+
+.page-content {
+  padding-top: 8.8rem;
+  padding-bottom: 8rem;
+}
+
+p {
+  &:not(:first-child) {
+    margin-top: 3rem;
+  }
+}
+
+strong {
+  font-weight: 600;
+}
+
+.phone-link {
+  color: lighten($primary, 17.95%);
+  text-decoration: none;
+  font-weight: 600;
+}
