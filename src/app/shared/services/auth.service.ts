@@ -73,7 +73,7 @@ export class AuthService {
 
   setToken(res: AuthResponseInterface | null): void {
     if (res) {
-      const expDate = new Date(new Date().getTime() + 3600 * 1000);
+      const expDate = new Date(new Date().getTime() + 7200 * 1000);
       localStorage.setItem('rzd-token', res.token);
       localStorage.setItem('rzd-token-exp', expDate.toString());
     } else {

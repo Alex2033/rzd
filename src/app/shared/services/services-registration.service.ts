@@ -7,7 +7,7 @@ import { OrderInterface } from '../types/order.interface';
   providedIn: 'root',
 })
 export class ServicesRegistrationService {
-  public order: OrderInterface = { id: 0 } as OrderInterface;
+  public order: OrderInterface = {} as OrderInterface;
 
   constructor(private http: HttpClient) {
     if (sessionStorage.getItem('rzd-order')) {

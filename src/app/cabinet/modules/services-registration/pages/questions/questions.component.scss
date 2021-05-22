@@ -1,0 +1,40 @@
+@import "theme";
+
+.page-content {
+  padding-bottom: 7.5rem;
+}
+
+.questions-content {
+  margin-top: 1.6rem;
+}
+
+.question-item {
+  &:not(:first-child) {
+    margin-top: 2.4rem;
+  }
+}
+
+.mat-radio-group {
+  margin-top: 1.2rem;
+  display: block;
+
+  > * {
+    &:not(:first-child) {
+      margin-left: 3.2rem;
+    }
+  }
+
+  ::ng-deep {
+    .mat-radio-outer-circle {
+      border-width: 0.1rem;
+    }
+
+    .mat-radio-button.mat-primary.mat-radio-checked .mat-radio-outer-circle {
+      border-color: lighten($primary, 17.95%);
+    }
+
+    .mat-radio-button.mat-primary .mat-radio-inner-circle {
+      background-color: lighten($primary, 17.95%);
+    }
+  }
+}

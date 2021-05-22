@@ -12,7 +12,7 @@
     </div>
 
     <form (submit)="submit()" [formGroup]="createForm" class="create-form">
-      <h2 class="create-form-title">
+      <h2 class="subtitle create-form-title">
         Шаг {{ currentStep }} из {{ formLength }}
         <svg class="child-icon" width="2.4rem" height="2.25rem" *ngIf="isChild">
           <use xlink:href="assets/sprites/icons.svg#little-kid"></use>

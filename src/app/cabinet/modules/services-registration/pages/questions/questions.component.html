@@ -7,19 +7,28 @@
         </svg>
         <span>Анкеты</span>
       </a>
+      <a class="close" [routerLink]="['/cabinet', 'questionnaires']">Закрыть</a>
     </div>
 
     <h2 class="page-title">Ответьте на вопросы</h2>
 
-    <form [formGroup]="form" class="questions-content">
+    <form [formGroup]="form" (submit)="submit()" class="questions-content">
       <div class="question-item">
         <p>Выезжали ли вы за пределы РФ?</p>
+        <mat-radio-group formControlName="been_abroad" color="primary">
+          <mat-radio-button [value]="true">Да</mat-radio-button>
+          <mat-radio-button [value]="false">Нет</mat-radio-button>
+        </mat-radio-group>
       </div>
       <div class="question-item">
         <p>
           У меня есть симптомы ОРВИ, кашель, затрудненное дыхание, температура
           выше 37°С
         </p>
+        <mat-radio-group formControlName="symptoms" color="primary">
+          <mat-radio-button [value]="true">Да</mat-radio-button>
+          <mat-radio-button [value]="false">Нет</mat-radio-button>
+        </mat-radio-group>
       </div>
       <div class="question-item">
         <p>
@@ -27,6 +36,10 @@
           подтвержденное заболеевание “Коронавирусная инфекция, вызванная
           вирусом COVID-19”
         </p>
+        <mat-radio-group formControlName="patientContact" color="primary">
+          <mat-radio-button [value]="true">Да</mat-radio-button>
+          <mat-radio-button [value]="false">Нет</mat-radio-button>
+        </mat-radio-group>
       </div>
 
       <div class="buttons">
