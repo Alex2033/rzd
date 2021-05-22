@@ -16,6 +16,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { NgxMaskModule } from 'ngx-mask';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { TextFieldModule } from '@angular/cdk/text-field';
+import { MatSelectModule } from '@angular/material/select';
 
 import { QuestionnairesListComponent } from './pages/questionnaires-list/questionnaires-list.component';
 import { DeleteComponent } from './components/delete/delete.component';
@@ -63,6 +64,7 @@ import { WorkplaceComponent } from './components/workplace/workplace.component';
     NgxMaskModule.forRoot(),
     MatAutocompleteModule,
     TextFieldModule,
+    MatSelectModule,
   ],
   providers: [CyrillicToLatinPipe, DatePipe],
 })

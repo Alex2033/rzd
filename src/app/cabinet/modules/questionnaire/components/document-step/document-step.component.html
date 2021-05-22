@@ -1,6 +1,18 @@
 <div class="create-form-description">Документ</div>
 
 <div class="form-controls" [formGroup]="documentStep">
+  <!-- citizenship -->
+  <div class="form-control select-control">
+    <mat-form-field appearance="outline">
+      <mat-label>Гражданство<span class="primary-color">*</span></mat-label>
+      <mat-select formControlName="citizenship">
+        <mat-option *ngFor="let item of citizenship" [value]="item.value">{{
+          item.label
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
   <!-- passport number -->
   <div class="form-control">
     <mat-form-field appearance="outline">
@@ -10,9 +22,7 @@
 
       <input
         matInput
-        placeholder="0000 000000"
-        [mask]="'0000 000000'"
-        [validation]="true"
+        [placeholder]="mask"
         type="text"
         formControlName="passport_number"
       />

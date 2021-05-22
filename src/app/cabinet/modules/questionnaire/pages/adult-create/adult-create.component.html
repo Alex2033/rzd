@@ -25,6 +25,7 @@
         [isChild]="isChild"
       ></app-basic-data>
       <app-document-step
+        [citizenship]="isChild ? childCitizenship : adultCitizenship"
         [documentStep]="currentGroup"
         *ngIf="currentStep === 2"
       ></app-document-step>

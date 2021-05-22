@@ -16,6 +16,7 @@ import {
 } from 'rxjs/operators';
 import { CyrillicToLatinPipe } from 'src/app/shared/pipes/cyrilic-to-latin.pipe';
 import { QuestionnairesService } from '../../services/questionnaires.service';
+import { CitizenshipInterface } from '../../types/citizenship.interface';
 import { QuestionnaireDetailInterface } from '../../types/questionnaire-detail.interface';
 import { UpdatedFieldInterface } from '../../types/updated-field.interface';
 
@@ -34,6 +35,27 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
     'с. Кудиново, Калужская обл.',
   ];
   public isChild: boolean = false;
+  public adultCitizenship: CitizenshipInterface[] = [
+    {
+      label: 'Гражданин РФ (паспорт РФ)',
+      value: 'RESIDENT_PASSPORT',
+    },
+    {
+      label: 'Нерезидент РФ (загран. паспорт)',
+      value: 'FOREIGN_PASSPORT',
+    },
+  ];
+
+  public childCitizenship: CitizenshipInterface[] = [
+    {
+      label: 'Гражданин РФ (свид. о рождении)',
+      value: 'BIRTH_CERTIFICATE',
+    },
+    {
+      label: 'Нерезидент РФ (загран. паспорт)',
+      value: 'FOREIGN_PASSPORT',
+    },
+  ];
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -85,6 +107,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
         sex: new FormControl('', [Validators.required]),
       }),
       document: new FormGroup({
+        citizenship: new FormControl('', Validators.required),
         passport_number: new FormControl('', Validators.required),
         passport_org: new FormControl('', Validators.required),
         passport_date: new FormControl('', [Validators.required]),
@@ -148,7 +171,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
 
       if (questionnaire.content[key]) {
         if (questionnaire.content[key] === '0001-01-01T00:00:00') {
-          formControl.setValue('2000-01-01T00:00:00');
+          formControl.setValue(null);
         } else {
           formControl.setValue(questionnaire.content[key]);
         }

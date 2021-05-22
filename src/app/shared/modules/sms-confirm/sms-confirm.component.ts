@@ -124,7 +124,7 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
   }
 
   resetSmsTimer(): void {
-    if (this.smsInterval) {
+    if (this.smsInterval > 0) {
       this.count = this.smsInterval;
     } else {
       this.count = 60;
