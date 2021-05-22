@@ -1,7 +1,8 @@
 @import "theme";
 
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
   width: 30.7rem;
   position: fixed;
   top: 0;
@@ -16,6 +17,10 @@
 .user-menu {
   display: flex;
   flex-direction: column;
+  min-height: 0rem;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
   padding-bottom: 2rem;
 }
 
