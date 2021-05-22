@@ -8,10 +8,10 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, of, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { ServicePointsService } from '../../services/service-points.service';
-import { ServicePointInterface } from '../../types/service-point.interface';
+import { ServicePointsService } from 'src/app/shared/services/service-points.service';
+import { ServicePointInterface } from '../../../shared/types/service-point.interface';
 
 @Component({
   selector: 'app-service-points',

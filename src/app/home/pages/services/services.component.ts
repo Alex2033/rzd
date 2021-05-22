@@ -9,7 +9,7 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { ServicesService } from '../../services/services.service';
+import { ServicesService } from '../../../shared/services/services.service';
 import { ServiceInterface } from '../../types/service.interface';
 
 @Component({

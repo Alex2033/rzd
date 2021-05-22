@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
-import { ServicePointsService } from 'src/app/home/services/service-points.service';
-import { ServicesService } from 'src/app/home/services/services.service';
+import { ServicesService } from 'src/app/shared/services/services.service';
 
 import { LanguageService } from '../services/language.service';
+import { ServicePointsService } from '../services/service-points.service';
 
 @Injectable()
 export class LanguagesResolver implements Resolve<any> {

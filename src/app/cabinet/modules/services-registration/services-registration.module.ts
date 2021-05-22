@@ -12,10 +12,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { BlockingScreenComponent } from './blocking-screen/blocking-screen.component';
-import { SelectPointComponent } from './select-point/select-point.component';
+import { SelectPointComponent } from './pages/select-point/select-point.component';
 
 @NgModule({
-  declarations: [QuestionsComponent, ReturnDateComponent, BlockingScreenComponent, SelectPointComponent],
+  declarations: [
+    QuestionsComponent,
+    ReturnDateComponent,
+    BlockingScreenComponent,
+    SelectPointComponent,
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,

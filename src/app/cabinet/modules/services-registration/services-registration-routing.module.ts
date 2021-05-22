@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BlockingScreenComponent } from './blocking-screen/blocking-screen.component';
 import { QuestionsComponent } from './pages/questions/questions.component';
 import { ReturnDateComponent } from './pages/return-date/return-date.component';
-import { SelectPointComponent } from './select-point/select-point.component';
+import { SelectPointComponent } from './pages/select-point/select-point.component';
 
 const routes: Routes = [
   {

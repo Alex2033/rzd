@@ -3,10 +3,10 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { ServicePointsService } from '../../services/service-points.service';
-import { ServicesService } from '../../services/services.service';
-import { ServicePointInterface } from '../../types/service-point.interface';
-import { ServiceInterface } from '../../types/service.interface';
+import { ServicePointsService } from 'src/app/shared/services/service-points.service';
+import { ServiceInterface } from 'src/app/shared/types/service.interface';
+import { ServicesService } from '../../../shared/services/services.service';
+import { ServicePointInterface } from '../../../shared/types/service-point.interface';
 
 @Component({
   selector: 'app-index',

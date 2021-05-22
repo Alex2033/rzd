@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { ServicePointsService } from '../../services/service-points.service';
-import { ServicesService } from '../../services/services.service';
-import { ServicePointInterface } from '../../types/service-point.interface';
-import { ServiceInterface } from '../../types/service.interface';
+import { ServicePointsService } from 'src/app/shared/services/service-points.service';
+import { ServiceInterface } from 'src/app/shared/types/service.interface';
+import { ServicesService } from '../../../shared/services/services.service';
+import { ServicePointInterface } from '../../../shared/types/service-point.interface';
 
 @Component({
   selector: 'app-service-point-detail',
