@@ -18,7 +18,7 @@ export class ReturnDateComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private servicesRegistration: ServicesRegistrationService,
+    public servicesRegistration: ServicesRegistrationService,
     private router: Router
   ) {}
 

@@ -57,6 +57,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
             '/cabinet',
             'services-registration',
             'return-date',
+            this.servicesRegistration.order.id,
           ]);
         }
       });
@@ -65,6 +66,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   submit(): void {
     const symptomsVal = this.form.get('symptoms').value;
     const contactVal = this.form.get('patientContact').value;
+    const been_abroad = this.form.get('been_abroad').value;
 
     if (symptomsVal || contactVal) {
       this.router.navigate([
@@ -73,10 +75,17 @@ export class QuestionsComponent implements OnInit, OnDestroy {
         'blocking-screen',
       ]);
     } else {
+      if (!been_abroad) {
+        this.servicesRegistration.setOrder({
+          abroad_return_date: new Date(null),
+        });
+      }
+      this.servicesRegistration.setOrder({ been_abroad });
       this.router.navigate([
         '/cabinet',
         'services-registration',
         'select-point',
+        this.servicesRegistration.order.id,
       ]);
     }
   }

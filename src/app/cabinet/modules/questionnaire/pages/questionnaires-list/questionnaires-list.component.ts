@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Observable, of, Subject } from 'rxjs';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
 import { ServicesRegistrationService } from 'src/app/shared/services/services-registration.service';
+import { OrderInterface } from 'src/app/shared/types/order.interface';
 import { CreateSheetComponent } from '../../components/create-sheet/create-sheet.component';
 import { DeleteComponent } from '../../components/delete/delete.component';
 import { WarningDialogComponent } from '../../components/warning-dialog/warning-dialog.component';
@@ -164,7 +165,13 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
     const questionnaires: { items: AnketaIdInterface[] } = {
       items: [...this.checkedQuestionnairesIds],
     };
+    this.servicesRegistration.order = {} as OrderInterface;
     this.servicesRegistration.setOrder({ id: 0, ...questionnaires });
-    this.router.navigate(['/cabinet', 'services-registration', 'questions', 0]);
+    this.router.navigate([
+      '/cabinet',
+      'services-registration',
+      'questions',
+      this.servicesRegistration.order.id,
+    ]);
   }
 }

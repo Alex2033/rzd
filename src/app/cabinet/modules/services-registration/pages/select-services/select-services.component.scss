@@ -1,11 +1,39 @@
-@import "vars";
 @import "theme";
+@import "vars";
 
 .page-content {
   padding-bottom: 8rem;
 }
 
-.select-points {
+.page-title {
+  margin-top: 0;
+}
+
+.page-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.change-selection-mode {
+  color: $primary;
+}
+
+.fios {
+  margin-top: 1.6rem;
+
+  > * {
+    &:not(:first-child) {
+      margin-top: 0.8rem;
+    }
+  }
+}
+
+.fio {
+  font-weight: 600;
+}
+
+.services {
   margin-top: 1.6rem;
 
   ::ng-deep {
@@ -38,10 +66,12 @@
     }
 
     .mat-radio-label-content {
-      padding: 0 3.2rem 1.6rem 0;
+      padding: 0 $container-gap 1.6rem 0;
       margin-left: 1.8rem;
       position: relative;
       flex-grow: 1;
+      display: flex;
+      align-items: flex-start;
 
       &::after {
         content: "";
@@ -56,11 +86,16 @@
   }
 }
 
-.point-name {
-  font-weight: 600;
+.service-price {
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1.4;
+  margin-left: 1.6rem;
 }
 
-.point-address {
-  color: $gray;
-  margin-top: 0.8rem;
+.total-sum {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2.2rem;
 }

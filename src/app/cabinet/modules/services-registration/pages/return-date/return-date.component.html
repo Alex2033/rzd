@@ -2,7 +2,12 @@
   <div class="page-container">
     <div class="page-top">
       <a
-        [routerLink]="['/cabinet', 'services-registartion', 'questions']"
+        [routerLink]="[
+          '/cabinet',
+          'services-registration',
+          'questions',
+          servicesRegistration.order.id
+        ]"
         class="back-link"
       >
         <svg width="1rem" height="1rem">
@@ -27,7 +32,6 @@
               name="abroad_return_date"
               formControlName="abroad_return_date"
               [matDatepicker]="picker"
-              (click)="picker.open()"
             />
             <mat-datepicker-toggle matSuffix [for]="picker">
               <svg matDatepickerToggleIcon width="2rem" height="2.2rem">

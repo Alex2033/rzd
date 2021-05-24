@@ -18,11 +18,6 @@ html {
   font-size: 62.5%; /* 10px */
 }
 
-html,
-body {
-  height: 100%;
-}
-
 body {
   margin: 0;
   font-family: "Open Sans", sans-serif;
@@ -85,14 +80,8 @@ ul {
 }
 
 .page-content {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  min-height: 0rem;
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: auto;
   overflow: scroll;
+  padding-top: 6.4rem;
 }
 
 .page-container {
@@ -169,15 +158,11 @@ ul {
 }
 
 .document-image {
-  min-height: 0rem;
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: auto;
+  margin-top: 10rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 8rem;
 }
 
 .points-link {

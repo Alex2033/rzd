@@ -1,0 +1,49 @@
+<div class="page-content" [hidden]="!html">
+  <header class="document-header" [class.fixed]="fixed" #stickyHeader>
+    <div class="page-top">
+      <a (click)="back()" class="back-link">
+        <svg width="1rem" height="1rem">
+          <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
+        </svg>
+        <span>Назад</span>
+      </a>
+      <a class="close" [routerLink]="['/cabinet', 'questionnaires']">Закрыть</a>
+    </div>
+
+    <div class="document-top" *ngIf="html">
+      <div class="fio">
+        {{ docs[questionnaireNum - 1].fio }},
+        <span class="age"
+          >{{ docs[questionnaireNum - 1].age }}
+          <span
+            appPluralRu
+            [value]="+docs[questionnaireNum - 1].age"
+            [arVariants]="['год', 'года', 'лет']"
+          ></span
+        ></span>
+      </div>
+      <button class="icon-button document-edit big">
+        <svg>
+          <use xlink:href="assets/sprites/icons.svg#pen"></use>
+        </svg>
+      </button>
+    </div>
+  </header>
+  <div class="page-container" [class.offset-top]="fixed" *ngIf="html">
+    <div [innerHTML]="html"></div>
+  </div>
+</div>
+
+<div class="buttons">
+  <button
+    [disabled]="loading || disableButton"
+    type="button"
+    (click)="next()"
+    class="button"
+  >
+    <span>Далее</span>
+    <svg width="1.6rem" height="1.6rem">
+      <use xlink:href="assets/sprites/icons.svg#next"></use>
+    </svg>
+  </button>
+</div>

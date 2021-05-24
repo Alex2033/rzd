@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { OrderInterface } from '../types/order.interface';
 
 @Injectable({
@@ -16,7 +15,7 @@ export class ServicesRegistrationService {
   }
 
   setOrder(data): void {
-    this.order = { ...data };
+    this.order = { ...this.order, ...data };
     sessionStorage.setItem('rzd-order', JSON.stringify(this.order));
   }
 }

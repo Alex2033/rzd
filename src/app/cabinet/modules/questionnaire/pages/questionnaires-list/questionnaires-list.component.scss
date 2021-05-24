@@ -5,17 +5,6 @@
   padding-bottom: 9rem;
 }
 
-.page-container {
-  &.full-height {
-    min-height: 0rem;
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: auto;
-    display: flex;
-    flex-direction: column;
-  }
-}
-
 .questionnaires-container {
   margin-top: 1.6rem;
 }

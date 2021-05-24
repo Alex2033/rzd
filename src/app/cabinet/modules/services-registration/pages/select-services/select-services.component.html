@@ -1,0 +1,71 @@
+<div class="page-content">
+  <div class="page-container">
+    <div class="page-top">
+      <a
+        [routerLink]="[
+          '/cabinet',
+          'services-registration',
+          'select-point',
+          order.id
+        ]"
+        class="back-link"
+      >
+        <svg width="1rem" height="1rem">
+          <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
+        </svg>
+        <span>Точки обслуживания</span>
+      </a>
+      <a class="close" [routerLink]="['/cabinet', 'questionnaires']">Закрыть</a>
+    </div>
+
+    <div class="page-heading">
+      <h1 class="page-title">Услуги</h1>
+      <div class="change-selection-mode" (click)="changeSelectionMode()">
+        {{ selectEach ? "Выбрать для всех" : "Выбрать для каждого" }}
+      </div>
+    </div>
+
+    <div class="fios">
+      <div class="fio" *ngFor="let fio of questionnaires$ | async">
+        {{ fio.surname }} {{ fio.name }} {{ fio.patronymic }}
+      </div>
+    </div>
+  </div>
+
+  <div class="services">
+    <mat-radio-group
+      [(ngModel)]="selectedService"
+      (ngModelChange)="selectionChange($event)"
+      color="primary"
+    >
+      <mat-radio-button
+        *ngFor="let service of services$ | async"
+        [value]="service"
+      >
+        <div class="service-name">{{ service.name }}</div>
+        <div class="service-price">{{ service.price }}&#8381;</div>
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="page-container">
+    <div class="total-sum">
+      <span>Итого:</span>
+      <span class="service-price"
+        >{{ selectedService?.price ? selectedService?.price : 0 }}&#8381;</span
+      >
+    </div>
+  </div>
+</div>
+
+<div class="buttons">
+  <button
+    class="button"
+    (click)="selectService()"
+    [disabled]="!selectedService"
+  >
+    <span>Далее</span>
+    <svg width="1.6rem" height="1.6rem">
+      <use xlink:href="assets/sprites/icons.svg#next"></use>
+    </svg>
+  </button>
+</div>

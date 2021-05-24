@@ -9,8 +9,8 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
+import { ServiceInterface } from 'src/app/shared/types/service.interface';
 import { ServicesService } from '../../../shared/services/services.service';
-import { ServiceInterface } from '../../types/service.interface';
 
 @Component({
   selector: 'app-services',

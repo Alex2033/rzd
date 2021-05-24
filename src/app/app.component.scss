@@ -6,29 +6,6 @@
   height: 100%;
 }
 
-.content {
-  padding-top: 6.4rem;
-  min-height: 0rem;
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: auto;
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-
-  ::ng-deep {
-    router-outlet + * {
-      min-height: 0rem;
-      height: 100%;
-      flex-grow: 1;
-      flex-shrink: 1;
-      flex-basis: auto;
-      display: flex;
-      flex-direction: column;
-    }
-  }
-}
-
 .menu-overlay {
   position: fixed;
   height: 100%;
