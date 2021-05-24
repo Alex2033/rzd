@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BlockingScreenComponent } from './blocking-screen/blocking-screen.component';
 import { ConfirmOrderComponent } from './pages/confirm-order/confirm-order.component';
 import { DocumentComponent } from './pages/document/document.component';
+import { PaymentMethodComponent } from './pages/payment-method/payment-method.component';
 import { QuestionsComponent } from './pages/questions/questions.component';
 import { ReturnDateComponent } from './pages/return-date/return-date.component';
 import { SelectPointComponent } from './pages/select-point/select-point.component';
@@ -41,6 +42,10 @@ const routes: Routes = [
   {
     path: 'confirm/:id',
     component: ConfirmOrderComponent,
+  },
+  {
+    path: 'payment-method/:id',
+    component: PaymentMethodComponent,
   },
 ];
 

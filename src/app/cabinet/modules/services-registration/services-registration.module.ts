@@ -19,6 +19,7 @@ import { PluralRuModule } from 'src/app/shared/directives/plural-ru/plural-ru.mo
 import { ConfirmOrderComponent } from './pages/confirm-order/confirm-order.component';
 import { SignatureComponent } from './pages/signature/signature.component';
 import { SignaturePadModule } from 'angular2-signaturepad';
+import { PaymentMethodComponent } from './pages/payment-method/payment-method.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { SignaturePadModule } from 'angular2-signaturepad';
     DocumentComponent,
     ConfirmOrderComponent,
     SignatureComponent,
+    PaymentMethodComponent,
   ],
   imports: [
     CommonModule,

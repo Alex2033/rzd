@@ -79,7 +79,7 @@ export class SignatureComponent implements OnInit {
         this.router.navigate([
           '/cabinet',
           'services-registration',
-          'confirm',
+          'payment-method',
           this.orderId,
         ]);
       } else {

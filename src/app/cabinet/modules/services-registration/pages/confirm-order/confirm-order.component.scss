@@ -1,0 +1,29 @@
+.order-point {
+  font-weight: 600;
+  font-size: 1.2rem;
+  line-height: 1.34;
+}
+
+.items {
+  margin-top: 2.5rem;
+
+  > * {
+    &:not(:first-child) {
+      margin-top: 2.4rem;
+    }
+  }
+}
+
+.service-price {
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1.4;
+  margin-left: 1.6rem;
+}
+
+.total-sum {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2.4rem;
+}

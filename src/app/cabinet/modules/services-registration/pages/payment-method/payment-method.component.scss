@@ -1,0 +1,60 @@
+@import "theme";
+@import "vars";
+
+.payment-selection {
+  margin-top: 1.6rem;
+
+  ::ng-deep {
+    .mat-radio-button {
+      width: 100%;
+      font-family: "Open Sans", sans-serif;
+    }
+
+    .mat-radio-label {
+      white-space: normal;
+      align-items: flex-start;
+      padding-top: 1.6rem;
+      padding-left: $container-gap;
+    }
+
+    .mat-radio-container {
+      top: 0.2rem;
+    }
+
+    .mat-radio-outer-circle {
+      border-width: 0.1rem;
+    }
+
+    .mat-radio-button.mat-primary.mat-radio-checked .mat-radio-outer-circle {
+      border-color: lighten($primary, 17.95%);
+    }
+
+    .mat-radio-button.mat-primary .mat-radio-inner-circle {
+      background-color: lighten($primary, 17.95%);
+    }
+
+    .mat-radio-label-content {
+      padding: 0 3.2rem 1.6rem 0;
+      margin-left: 1.8rem;
+      position: relative;
+      flex-grow: 1;
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 0.1rem;
+        background-color: rgba(33, 33, 33, 0.08);
+      }
+    }
+  }
+}
+
+.additional-info {
+  font-size: 1.2rem;
+  line-height: 1.34;
+  color: $gray;
+  margin-top: 0.8rem;
+}

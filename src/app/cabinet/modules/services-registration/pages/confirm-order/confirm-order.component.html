@@ -1,1 +1,30 @@
-<p>confirm-order works!</p>
+<div class="page-content" *ngIf="order">
+  <div class="page-container">
+    <div class="page-top">
+      <a class="back-link">
+        <svg width="1rem" height="1rem">
+          <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
+        </svg>
+        <span>Назад</span>
+      </a>
+      <a class="close" [routerLink]="['/cabinet', 'questionnaires']">Закрыть</a>
+    </div>
+    <div class="order-point">{{ (point$ | async)?.name }}</div>
+  </div>
+
+  <div class="items">
+    <div class="item" *ngFor="let item of order.items">
+      <div class="fio">{{ item.fio }}</div>
+      <div class="services">
+        <div class="service" *ngFor="let service of item.services"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-container">
+    <div class="total-sum">
+      <span>Итого:</span>
+      <span class="service-price">{{ order.sum }}&#8381;</span>
+    </div>
+  </div>
+</div>

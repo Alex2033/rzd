@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DocumentsOrderInterface } from '../types/documents-order.interface';
-import { OrderResponseInterface } from './order-response.interface';
+import { OrderResponseInterface } from '../types/order-response.interface';
 import { OrderInterface } from '../types/order.interface';
 import { SignInterface } from '../types/sign.interface';
 
@@ -20,6 +20,10 @@ export class OrdersService {
       environment.api + 'api/order',
       order
     );
+  }
+
+  getOrders(): Observable<OrderInterface[]> {
+    return this.http.get<OrderInterface[]>(environment.api + 'api/order');
   }
 
   getDocuments(
