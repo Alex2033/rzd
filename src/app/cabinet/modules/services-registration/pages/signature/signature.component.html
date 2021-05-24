@@ -1,1 +1,85 @@
-<p>signature works!</p>
+<div class="page-content" [hidden]="!doc">
+  <div class="page-container">
+    <div class="page-top">
+      <a (click)="back()" class="back-link">
+        <svg width="1rem" height="1rem">
+          <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
+        </svg>
+        <span>Назад</span>
+      </a>
+      <a class="close" [routerLink]="['/cabinet', 'questionnaires']">Закрыть</a>
+    </div>
+
+    <h1 class="page-title">Подписать документы</h1>
+
+    <div class="docs">
+      <div class="doc">
+        <svg width="1.6rem" height="1.22rem">
+          <use xlink:href="assets/sprites/icons.svg#done"></use>
+        </svg>
+        <span>Договор оферты</span>
+      </div>
+      <div class="doc">
+        <svg width="1.6rem" height="1.22rem">
+          <use xlink:href="assets/sprites/icons.svg#done"></use>
+        </svg>
+        <span>Заказ к договору оферты</span>
+      </div>
+      <div class="doc">
+        <svg width="1.6rem" height="1.22rem">
+          <use xlink:href="assets/sprites/icons.svg#done"></use>
+        </svg>
+        <span>Согласие на обработку персональных данных</span>
+      </div>
+      <div class="doc">
+        <svg width="1.6rem" height="1.22rem" [hidden]="doc.id_parent">
+          <use xlink:href="assets/sprites/icons.svg#done"></use>
+        </svg>
+        <span>Добровольное согласие на медицинское вмещательство</span>
+      </div>
+    </div>
+
+    <div class="confirm-text">
+      <ng-container *ngIf="!doc.id_parent">
+        Я, <strong>{{ doc.fio }},</strong> подписываясь в следующем поле,
+        выражаю информированное добровольное согласие с условиями вышеуказанных
+        документов.
+      </ng-container>
+      <ng-container *ngIf="doc.id_parent">
+        Я, <strong>{{ doc.parent_fio }},</strong> являюсь законным
+        представителем <strong>{{ doc.fio }}</strong>
+        подписываясь в следующем поле, выражаю информированное добровольное
+        согласие с условиями вышеуказанных документов.
+      </ng-container>
+    </div>
+
+    <div class="signature">
+      <button
+        (click)="clearSignature()"
+        class="icon-button clear-signature"
+      ></button>
+      <signature-pad (onEndEvent)="drawComplete()"></signature-pad>
+    </div>
+    <div class="signature-warning">
+      {{
+        doc.id_parent
+          ? "Внимание! Здесь должна стоять подпись законного представителя ребенка, указанного при оформлении."
+          : "Внимание! Здесь должны стоять собственная подпись взрослого пициента."
+      }}
+    </div>
+  </div>
+</div>
+
+<div class="buttons">
+  <button
+    type="button"
+    (click)="submit()"
+    class="button"
+    [disabled]="isEmpty || isLoading"
+  >
+    <span>Далее</span>
+    <svg width="1.6rem" height="1.6rem">
+      <use xlink:href="assets/sprites/icons.svg#next"></use>
+    </svg>
+  </button>
+</div>

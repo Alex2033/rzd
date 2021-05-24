@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { DocumentsOrderInterface } from '../types/documents-order.interface';
 import { OrderResponseInterface } from './order-response.interface';
 import { OrderInterface } from '../types/order.interface';
+import { SignInterface } from '../types/sign.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -41,5 +42,9 @@ export class OrdersService {
         `api/document/html?id_order=${orderId}&id_anketa=${anketaId}&id_document=${documentId}&id_lang=${langId}`,
       { responseType: 'text' }
     );
+  }
+
+  sign(data: SignInterface): Observable<void> {
+    return this.http.post<void>(environment.api + 'api/order/sign', data);
   }
 }

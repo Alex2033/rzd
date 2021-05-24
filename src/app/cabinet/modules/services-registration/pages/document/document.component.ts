@@ -95,10 +95,11 @@ export class DocumentComponent implements OnInit, OnDestroy {
                 '/cabinet',
                 'services-registration',
                 'signature',
-                item.documents[docIndex].id,
+                this.servicesRegistration.order.id,
               ],
               {
                 queryParams: {
+                  anketaId: item.id_anketa,
                   questionnaireNum: this.questionnaireNum,
                   docIndex: this.docIndex,
                 },
@@ -114,12 +115,22 @@ export class DocumentComponent implements OnInit, OnDestroy {
       }
 
       if (this.questionnaireNum > this.docs.length) {
-        this.router.navigate([
-          '/cabinet',
-          'services-registration',
-          'confirm',
-          this.servicesRegistration.order.id,
-        ]);
+        this.router.navigate(
+          [
+            '/cabinet',
+            'services-registration',
+            'signature',
+            this.servicesRegistration.order.id,
+          ],
+          {
+            queryParams: {
+              next: true,
+              anketaId: item.id_anketa,
+              questionnaireNum: this.questionnaireNum,
+              docIndex: this.docIndex,
+            },
+          }
+        );
       }
     });
   }
@@ -179,10 +190,10 @@ export class DocumentComponent implements OnInit, OnDestroy {
       this.disableButton = true;
     }
 
-    if (windowScroll >= this.headerHeight / 2) {
-      this.fixed = true;
-    } else {
-      this.fixed = false;
-    }
+    // if (windowScroll >= this.headerHeight / 2) {
+    //   this.fixed = true;
+    // } else {
+    //   this.fixed = false;
+    // }
   }
 }

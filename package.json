@@ -23,6 +23,7 @@
     "@angular/platform-browser": "~11.2.3",
     "@angular/platform-browser-dynamic": "~11.2.3",
     "@angular/router": "~11.2.3",
+    "angular2-signaturepad": "^3.0.4",
     "json-server": "^0.16.3",
     "ngx-mask": "^11.1.5",
     "ngx-owl-carousel-o": "^5.0.0",

@@ -18,6 +18,7 @@ import { DocumentComponent } from './pages/document/document.component';
 import { PluralRuModule } from 'src/app/shared/directives/plural-ru/plural-ru.module';
 import { ConfirmOrderComponent } from './pages/confirm-order/confirm-order.component';
 import { SignatureComponent } from './pages/signature/signature.component';
+import { SignaturePadModule } from 'angular2-signaturepad';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { SignatureComponent } from './pages/signature/signature.component';
     MatNativeDateModule,
     FormsModule,
     PluralRuModule,
+    SignaturePadModule,
   ],
   providers: [DatePipe],
 })
