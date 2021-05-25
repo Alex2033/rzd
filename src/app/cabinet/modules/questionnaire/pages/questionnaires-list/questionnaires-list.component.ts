@@ -12,7 +12,6 @@ import { CreateSheetComponent } from '../../components/create-sheet/create-sheet
 import { DeleteComponent } from '../../components/delete/delete.component';
 import { WarningDialogComponent } from '../../components/warning-dialog/warning-dialog.component';
 import { QuestionnairesService } from '../../services/questionnaires.service';
-import { AnketaIdInterface } from '../../types/anketa-id.interface';
 import { QuestionnaireDetailInterface } from '../../types/questionnaire-detail.interface';
 import { QuestionnaireInterface } from '../../types/questionnaire.interface';
 
@@ -113,30 +112,17 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
 
     bottomSheet
       .afterDismissed()
-      .pipe(
-        map((res) => {
-          if (res === 'child') {
-            this.router.navigate([
-              '/cabinet',
-              'questionnaires',
-              'choose-adult',
-            ]);
-            return null;
-          }
-          return res;
-        }),
-        switchMap((res) => this.createAdultQuestionnaire(res)),
-        takeUntil(this.destroy$)
-      )
+      .pipe(takeUntil(this.destroy$))
       .subscribe((res) => {
-        this.router.navigate(
-          ['/cabinet', 'questionnaires', 'questionnaire', res],
-          {
+        if (res === 'child') {
+          this.router.navigate(['/cabinet', 'questionnaires', 'info-message'], {
             queryParams: {
-              step: 1,
+              isChild: true,
             },
-          }
-        );
+          });
+        } else if (res === 'adult') {
+          this.router.navigate(['/cabinet', 'questionnaires', 'info-message']);
+        }
       });
   }
 
