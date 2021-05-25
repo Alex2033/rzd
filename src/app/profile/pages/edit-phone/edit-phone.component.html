@@ -23,6 +23,17 @@
               formControlName="phone"
             />
 
+            <button
+              *ngIf="editForm.get('phone').value"
+              (click)="editForm.get('phone').setValue(null)"
+              type="button"
+              class="icon-button clear-button"
+            >
+              <svg width="2rem" height="2rem">
+                <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+              </svg>
+            </button>
+
             <mat-error
               ><app-error-messages
                 *ngIf="
