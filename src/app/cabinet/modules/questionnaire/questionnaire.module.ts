@@ -30,6 +30,7 @@ import { DocumentStepComponent } from './components/document-step/document-step.
 import { RegisterAddressComponent } from './components/register-address/register-address.component';
 import { ActualResidenceComponent } from './components/actual-residence/actual-residence.component';
 import { WorkplaceComponent } from './components/workplace/workplace.component';
+import { InfoMessageComponent } from './pages/info-message/info-message.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { WorkplaceComponent } from './components/workplace/workplace.component';
     RegisterAddressComponent,
     ActualResidenceComponent,
     WorkplaceComponent,
+    InfoMessageComponent,
   ],
   imports: [
     CommonModule,

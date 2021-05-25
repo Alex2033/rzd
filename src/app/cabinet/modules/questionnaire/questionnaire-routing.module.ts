@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CreateQuestionnaireDeactivateGuard } from './guards/create-questionnaire-deactivate.guard';
 import { AdultCreateComponent } from './pages/adult-create/adult-create.component';
 import { ChooseAdultComponent } from './pages/choose-adult/choose-adult.component';
+import { InfoMessageComponent } from './pages/info-message/info-message.component';
 import { QuestionnairesListComponent } from './pages/questionnaires-list/questionnaires-list.component';
 
 const routes: Routes = [
@@ -18,6 +19,10 @@ const routes: Routes = [
     path: 'questionnaire/:id',
     component: AdultCreateComponent,
     canDeactivate: [CreateQuestionnaireDeactivateGuard],
+  },
+  {
+    path: 'info-message',
+    component: InfoMessageComponent,
   },
 ];
 
