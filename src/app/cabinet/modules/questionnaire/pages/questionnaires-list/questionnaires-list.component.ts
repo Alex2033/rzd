@@ -7,6 +7,7 @@ import { Observable, of, Subject } from 'rxjs';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
 import { ServicesRegistrationService } from 'src/app/shared/services/services-registration.service';
 import { OrderInterface } from 'src/app/shared/types/order.interface';
+import { QuestionnaireOrderInterface } from 'src/app/shared/types/questionnaire-order.interface';
 import { CreateSheetComponent } from '../../components/create-sheet/create-sheet.component';
 import { DeleteComponent } from '../../components/delete/delete.component';
 import { WarningDialogComponent } from '../../components/warning-dialog/warning-dialog.component';
@@ -22,7 +23,7 @@ import { QuestionnaireInterface } from '../../types/questionnaire.interface';
 })
 export class QuestionnairesListComponent implements OnInit, OnDestroy {
   public questionnaires: QuestionnaireInterface[] = [];
-  public checkedQuestionnairesIds: AnketaIdInterface[] = [];
+  public checkedQuestionnairesIds: QuestionnaireOrderInterface[] = [];
 
   private destroy$ = new Subject<void>();
 
@@ -153,7 +154,11 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
 
   toggleCheck(checked: boolean, questionnaire: QuestionnaireInterface): void {
     if (checked) {
-      this.checkedQuestionnairesIds.push({ id_anketa: questionnaire.id });
+      this.checkedQuestionnairesIds.push({
+        id_anketa: questionnaire.id,
+        services: [],
+        fio: `${questionnaire.surname} ${questionnaire.name} ${questionnaire.patronymic}`,
+      });
     } else {
       this.checkedQuestionnairesIds = this.checkedQuestionnairesIds.filter(
         (el) => el.id_anketa !== questionnaire.id
@@ -162,7 +167,7 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
   }
 
   goToServicesRegistration(): void {
-    const questionnaires: { items: AnketaIdInterface[] } = {
+    const questionnaires: { items: QuestionnaireOrderInterface[] } = {
       items: [...this.checkedQuestionnairesIds],
     };
     this.servicesRegistration.order = {} as OrderInterface;

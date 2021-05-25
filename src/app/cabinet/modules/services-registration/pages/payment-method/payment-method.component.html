@@ -1,4 +1,4 @@
-<div class="page-content">
+<div class="page-content" *ngIf="order">
   <div class="page-container">
     <div class="page-top">
       <a (click)="back()" class="back-link">
@@ -14,7 +14,11 @@
   </div>
 
   <div class="payment-selection">
-    <mat-radio-group [(ngModel)]="selectedPayment" color="primary">
+    <mat-radio-group
+      [(ngModel)]="selectedPayment"
+      (ngModelChange)="resend = false"
+      color="primary"
+    >
       <mat-radio-button [value]="'ONLINE'" disabled>
         Оплатить онлайн
       </mat-radio-button>
@@ -27,14 +31,15 @@
       </mat-radio-button>
     </mat-radio-group>
   </div>
-</div>
 
-<div class="buttons">
-  <button
-    type="button"
-    [disabled]="!selectedPayment || isLoading"
-    class="button"
-  >
-    <span>Оплатить</span>
-  </button>
+  <div class="buttons">
+    <button
+      type="button"
+      (click)="pay()"
+      [disabled]="!selectedPayment || isLoading"
+      class="button"
+    >
+      <span>Оплатить</span>
+    </button>
+  </div>
 </div>

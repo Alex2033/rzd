@@ -4,6 +4,7 @@ import { BlockingScreenComponent } from './blocking-screen/blocking-screen.compo
 import { ConfirmOrderComponent } from './pages/confirm-order/confirm-order.component';
 import { DocumentComponent } from './pages/document/document.component';
 import { PaymentMethodComponent } from './pages/payment-method/payment-method.component';
+import { PaymentResponseComponent } from './pages/payment-response/payment-response.component';
 import { QuestionsComponent } from './pages/questions/questions.component';
 import { ReturnDateComponent } from './pages/return-date/return-date.component';
 import { SelectPointComponent } from './pages/select-point/select-point.component';
@@ -46,6 +47,10 @@ const routes: Routes = [
   {
     path: 'payment-method/:id',
     component: PaymentMethodComponent,
+  },
+  {
+    path: 'payment-response',
+    component: PaymentResponseComponent,
   },
 ];
 

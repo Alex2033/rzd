@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { CheckPhoneDataInterface } from 'src/app/shared/types/phone-data.interface';
 import { environment } from 'src/environments/environment';
 import { AuthResponseInterface } from '../../auth/types/auth-response.interface';
 import { AuthDataInterface } from '../../auth/types/auth.interface';

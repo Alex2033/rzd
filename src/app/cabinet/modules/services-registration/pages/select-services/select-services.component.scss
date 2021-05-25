@@ -27,6 +27,24 @@
       margin-top: 0.8rem;
     }
   }
+
+  &.each-mode {
+    > * {
+      &:not(:first-child) {
+        margin-top: 1.2rem;
+      }
+    }
+  }
+
+  .services {
+    margin: 0.8rem #{-$container-gap} 0;
+  }
+
+  ::ng-deep {
+    .mat-radio-button {
+      font-weight: 400;
+    }
+  }
 }
 
 .fio {
@@ -37,6 +55,10 @@
   margin-top: 1.6rem;
 
   ::ng-deep {
+    .mat-radio-group {
+      display: block;
+    }
+
     .mat-radio-button {
       width: 100%;
       font-family: "Open Sans", sans-serif;

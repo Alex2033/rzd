@@ -20,6 +20,7 @@ import { ConfirmOrderComponent } from './pages/confirm-order/confirm-order.compo
 import { SignatureComponent } from './pages/signature/signature.component';
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { PaymentMethodComponent } from './pages/payment-method/payment-method.component';
+import { PaymentResponseComponent } from './pages/payment-response/payment-response.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { PaymentMethodComponent } from './pages/payment-method/payment-method.co
     ConfirmOrderComponent,
     SignatureComponent,
     PaymentMethodComponent,
+    PaymentResponseComponent,
   ],
   imports: [
     CommonModule,

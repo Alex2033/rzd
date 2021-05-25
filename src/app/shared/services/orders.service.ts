@@ -1,10 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { DocumentsOrderInterface } from '../types/documents-order.interface';
 import { OrderResponseInterface } from '../types/order-response.interface';
 import { OrderInterface } from '../types/order.interface';
+import { PaymentResponseInterface } from '../types/payment-response.interface';
+import { PaymentInterface } from '../types/payment.interface';
 import { SignInterface } from '../types/sign.interface';
 
 @Injectable({
@@ -50,5 +53,25 @@ export class OrdersService {
 
   sign(data: SignInterface): Observable<void> {
     return this.http.post<void>(environment.api + 'api/order/sign', data);
+  }
+
+  getOrder(id: number): Observable<OrderInterface> {
+    return this.getOrders().pipe(
+      map((orders) => orders.find((order) => order.id === id))
+    );
+  }
+
+  pay(data: PaymentInterface): Observable<PaymentResponseInterface> {
+    return this.http.post<PaymentResponseInterface>(
+      environment.api + 'api/order/pay',
+      data
+    );
+  }
+
+  rePay(id: number): Observable<PaymentResponseInterface> {
+    return this.http.post<PaymentResponseInterface>(
+      environment.api + 'api/order/send',
+      { id }
+    );
   }
 }

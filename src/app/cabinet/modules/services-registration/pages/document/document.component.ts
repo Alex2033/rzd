@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ReplaySubject } from 'rxjs';
+import { combineLatest, ReplaySubject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { OrdersService } from 'src/app/shared/services/orders.service';
 import { ServicesRegistrationService } from 'src/app/shared/services/services-registration.service';
@@ -60,54 +60,26 @@ export class DocumentComponent implements OnInit, OnDestroy {
   }
 
   getDocs(): void {
-    this.route.params
-      .pipe(
+    combineLatest([
+      this.route.params.pipe(
         switchMap((res) => {
           this.routeId = +res.id;
           return this.ordersService.getDocuments(+res.id);
-        }),
-        takeUntil(this.destroy)
-      )
-      .subscribe(
-        (res) => {
-          this.docs = res;
-          this.changeDocumentNumber();
-        },
-        () => alert('Ошибка')
-      );
+        })
+      ),
+      this.route.queryParams,
+    ]).subscribe((res) => {
+      this.docs = res[0];
+      this.changeDocumentNumber();
+    });
   }
 
   changeDocumentNumber(): void {
-    let abort: boolean = false;
+    this.disableButton = true;
 
     this.docs.forEach((item, itemIndex) => {
       if (this.questionnaireNum === itemIndex + 1) {
-        for (
-          let docIndex = 0;
-          docIndex < item.documents.length && !abort;
-          docIndex++
-        ) {
-          if (this.docIndex > item.documents.length) {
-            this.questionnaireNum += 1;
-            this.docIndex = 1;
-            this.router.navigate(
-              [
-                '/cabinet',
-                'services-registration',
-                'signature',
-                this.servicesRegistration.order.id,
-              ],
-              {
-                queryParams: {
-                  anketaId: item.id_anketa,
-                  questionnaireNum: this.questionnaireNum,
-                  docIndex: this.docIndex,
-                },
-              }
-            );
-            abort = true;
-          }
-
+        for (let docIndex = 0; docIndex < item.documents.length; docIndex++) {
           if (this.docIndex === docIndex + 1) {
             this.getHTML(item.id_anketa, item.documents[docIndex].id);
           }
@@ -115,22 +87,12 @@ export class DocumentComponent implements OnInit, OnDestroy {
       }
 
       if (this.questionnaireNum > this.docs.length) {
-        this.router.navigate(
-          [
-            '/cabinet',
-            'services-registration',
-            'signature',
-            this.servicesRegistration.order.id,
-          ],
-          {
-            queryParams: {
-              next: true,
-              anketaId: item.id_anketa,
-              questionnaireNum: this.questionnaireNum,
-              docIndex: this.docIndex,
-            },
-          }
-        );
+        this.router.navigate([
+          '/cabinet',
+          'services-registration',
+          'payment-method',
+          this.servicesRegistration.order.id,
+        ]);
       }
     });
   }
@@ -147,31 +109,61 @@ export class DocumentComponent implements OnInit, OnDestroy {
   }
 
   next(): void {
-    this.docIndex += 1;
-    this.router.navigate([], {
-      queryParams: {
-        questionnaireNum: this.questionnaireNum,
-        docIndex: this.docIndex,
-      },
+    let abort: boolean = false;
+
+    this.docs.forEach((item, itemIndex) => {
+      if (this.questionnaireNum === itemIndex + 1) {
+        for (let docIndex = 0; docIndex < item.documents.length; docIndex++) {
+          if (this.docIndex === item.documents.length) {
+            abort = true;
+            this.router.navigate(
+              [
+                '/cabinet',
+                'services-registration',
+                'signature',
+                this.servicesRegistration.order.id,
+              ],
+              {
+                queryParams: {
+                  anketaId: item.id_anketa,
+                  questionnaireNum: this.questionnaireNum,
+                  docIndex: this.docIndex + 1,
+                },
+              }
+            );
+          }
+        }
+      }
     });
 
-    this.changeDocumentNumber();
+    if (!abort) {
+      this.docIndex += 1;
+      this.router.navigate([], {
+        queryParams: {
+          questionnaireNum: this.questionnaireNum,
+          docIndex: this.docIndex,
+        },
+      });
+    }
   }
 
   back(): void {
-    if (this.questionnaireNum >= 1 && this.docIndex >= 1) {
-      this.location.back();
-      this.changeDocumentNumber();
-
+    if (this.docIndex === 1 && this.questionnaireNum === 1) {
+      this.router.navigate([
+        '/cabinet',
+        'services-registration',
+        'select-services',
+        this.routeId,
+      ]);
       return;
     }
 
-    this.router.navigate([
-      '/cabinet',
-      'services-registration',
-      'select-services',
-      this.servicesRegistration.order.id,
-    ]);
+    if (this.docIndex >= 1) {
+      this.docIndex -= 1;
+      this.location.back();
+
+      return;
+    }
   }
 
   @HostListener('window:scroll', ['$event']) checkScroll() {
@@ -186,8 +178,6 @@ export class DocumentComponent implements OnInit, OnDestroy {
 
     if (windowScroll > 0) {
       this.disableButton = false;
-    } else {
-      this.disableButton = true;
     }
 
     // if (windowScroll >= this.headerHeight / 2) {

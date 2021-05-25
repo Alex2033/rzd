@@ -22,7 +22,6 @@ export class SignatureComponent implements OnInit {
   public questionnaireNum: number;
   public orderId: number;
   public isLoading: boolean = false;
-  public next: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,7 +34,6 @@ export class SignatureComponent implements OnInit {
     this.route.queryParams
       .pipe(
         switchMap((res) => {
-          this.next = res.next;
           this.anketaId = +res.anketaId;
           this.docIndex = +res.docIndex;
           this.questionnaireNum = +res.questionnaireNum;
@@ -71,28 +69,21 @@ export class SignatureComponent implements OnInit {
       id_order: this.orderId,
       id_anketa: this.anketaId,
       signage: this.signaturePad.toDataURL(),
+      autoStatus: true,
     };
 
-    this.ordersService.sign(signData).subscribe((res) => {
+    this.ordersService.sign(signData).subscribe(() => {
       this.isLoading = false;
-      if (this.next) {
-        this.router.navigate([
-          '/cabinet',
-          'services-registration',
-          'payment-method',
-          this.orderId,
-        ]);
-      } else {
-        this.router.navigate(
-          ['/cabinet', 'services-registration', 'document', this.orderId],
-          {
-            queryParams: {
-              questionnaireNum: this.questionnaireNum,
-              docIndex: this.docIndex,
-            },
-          }
-        );
-      }
+
+      this.router.navigate(
+        ['/cabinet', 'services-registration', 'document', this.orderId],
+        {
+          queryParams: {
+            questionnaireNum: this.questionnaireNum + 1,
+            docIndex: 1,
+          },
+        }
+      );
     });
   }
 }

@@ -25,14 +25,32 @@
       </div>
     </div>
 
-    <div class="fios">
-      <div class="fio" *ngFor="let fio of questionnaires$ | async">
-        {{ fio.surname }} {{ fio.name }} {{ fio.patronymic }}
+    <div class="fios" [class.each-mode]="selectEach">
+      <div class="fio" *ngFor="let item of order.items; let i = index">
+        {{ item.fio }}
+
+        <div class="services" *ngIf="selectEach">
+          <mat-radio-group
+            [(ngModel)]="separateSelected[i]"
+            (ngModelChange)="selectionChange($event, order.items[i])"
+            color="primary"
+          >
+            <mat-radio-button
+              *ngFor="let service of services$ | async"
+              [value]="service.id"
+            >
+              <div class="service-name">{{ service.name }}</div>
+              <div class="service-price">
+                {{ service.price }}{{ service.priceType }}
+              </div>
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="services">
+  <div class="services" *ngIf="!selectEach">
     <mat-radio-group
       [(ngModel)]="selectedService"
       (ngModelChange)="selectionChange($event)"
@@ -40,19 +58,19 @@
     >
       <mat-radio-button
         *ngFor="let service of services$ | async"
-        [value]="service"
+        [value]="service.id"
       >
         <div class="service-name">{{ service.name }}</div>
-        <div class="service-price">{{ service.price }}&#8381;</div>
+        <div class="service-price">
+          {{ service.price }}{{ service.priceType }}
+        </div>
       </mat-radio-button>
     </mat-radio-group>
   </div>
   <div class="page-container">
     <div class="total-sum">
       <span>Итого:</span>
-      <span class="service-price"
-        >{{ selectedService?.price ? selectedService?.price : 0 }}&#8381;</span
-      >
+      <span class="service-price">{{ order.sum ? order.sum : 0 }}&#8381;</span>
     </div>
   </div>
 </div>
@@ -61,7 +79,7 @@
   <button
     class="button"
     (click)="selectService()"
-    [disabled]="!selectedService"
+    [disabled]="!selectedService && !separateSelected.length"
   >
     <span>Далее</span>
     <svg width="1.6rem" height="1.6rem">
