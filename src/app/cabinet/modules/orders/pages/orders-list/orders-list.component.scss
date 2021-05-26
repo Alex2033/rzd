@@ -13,7 +13,7 @@
   display: block;
   color: $text;
   text-decoration: none;
-  padding: 1.2rem $container-gap;
+  padding: 1.2rem $container-gap 1.6rem;
   position: relative;
 
   &::after {
@@ -60,16 +60,38 @@
   font-weight: 600;
 }
 
-.orders-users {
+.order-questionnaires {
   margin-top: 0.8rem;
 
   > * {
     &:not(:first-child) {
-      margin-top: 0.4rem;
+      margin-top: 1.2rem;
     }
   }
 }
 
-.order-user {
+.questionnaire-fio {
   font-weight: 600;
+}
+
+.order-questionnaire {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  > * {
+    &:not(:first-child) {
+      margin-left: 1.2rem;
+    }
+  }
+}
+
+.ext-id {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: $primary;
+  font-size: 1.2rem;
+  line-height: 1.34;
+  margin-top: 0.4rem;
 }

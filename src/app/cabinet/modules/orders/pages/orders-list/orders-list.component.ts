@@ -37,8 +37,9 @@ export class OrdersListComponent implements OnInit {
       this.points.getServicePoints(),
       this.ordersService.getOrders(),
     ]).subscribe(
-      ([points]) => {
+      ([points, orders]) => {
         console.log('points:', points);
+        console.log('orders:', orders);
         this.addAddressToOrder(points);
       },
       (err) => console.error(err)

@@ -53,9 +53,17 @@
               }}
             </div>
           </div>
-          <div class="orders-users">
-            <div class="order-user" *ngFor="let user of order.services">
-              {{ user.userName }}
+          <div class="order-questionnaires">
+            <div
+              class="order-questionnaire"
+              *ngFor="let questionnaire of order.items"
+            >
+              <div class="questionnaire-fio">
+                {{ questionnaire.fio }}
+              </div>
+              <div class="ext-id" *ngIf="questionnaire.ext_id">
+                № {{ questionnaire.ext_id }}
+              </div>
             </div>
           </div>
         </a>
