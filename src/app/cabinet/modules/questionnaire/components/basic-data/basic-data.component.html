@@ -50,7 +50,8 @@
           [errors]="basicData.get('name').errors"
           [errorMessages]="{
             required: 'Введите имя',
-            pattern: 'Некорректный ввод'
+            pattern: 'Некорректный ввод',
+            not_correct: 'Некорректный ввод'
           }"
         ></app-error-messages
       ></mat-error>
@@ -83,7 +84,8 @@
           [errors]="basicData.get('surname').errors"
           [errorMessages]="{
             required: 'Введите фамилию',
-            pattern: 'Некорректный ввод'
+            pattern: 'Некорректный ввод',
+            not_correct: 'Некорректный ввод'
           }"
         ></app-error-messages
       ></mat-error>

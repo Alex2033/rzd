@@ -38,6 +38,25 @@ export class OrdersService {
     );
   }
 
+  getDocument(
+    orderId: number,
+    questionnaireId: number,
+    documentId: number,
+    langId: number = this.langId
+  ) {
+    return this.http
+      .get(
+        environment.api +
+          `api/document/pdf?id_order=${orderId}&id_anketa=${questionnaireId}&id_document=${documentId}&id_lang=${langId}`,
+        { responseType: 'blob' }
+      )
+      .pipe(
+        map((res) => {
+          return new Blob([res], { type: 'application/pdf' });
+        })
+      );
+  }
+
   getHTML(
     orderId: number,
     anketaId: number,

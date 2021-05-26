@@ -1,4 +1,5 @@
 import { DatePipe } from '@angular/common';
+import { HttpResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -7,8 +8,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, ReplaySubject } from 'rxjs';
+import { Observable, of, ReplaySubject } from 'rxjs';
 import {
+  catchError,
   debounceTime,
   distinctUntilChanged,
   retry,
@@ -174,6 +176,19 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
             debounceTime(800),
             distinctUntilChanged(),
             switchMap((res: string) => this.updateSingleField(res, key, id)),
+            catchError((err) => {
+              if (err.error.error === 'FIO_LANG_MISMATCH') {
+                this.createForm.get('basicData').get('name').setErrors({
+                  not_correct: true,
+                });
+                this.createForm.get('basicData').get('name').markAsTouched();
+                this.createForm.get('basicData').get('surname').setErrors({
+                  not_correct: true,
+                });
+                this.createForm.get('basicData').get('surname').markAsTouched();
+              }
+              return of(err);
+            }),
             retry(),
             takeUntil(this.destroy)
           )
