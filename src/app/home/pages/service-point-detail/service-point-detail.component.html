@@ -38,7 +38,7 @@
         ></div>
       </div>
       <button
-        [routerLink]="['/auth', 'login']"
+        [routerLink]="['/cabinet', 'questionnaires']"
         class="button accent service-point-button"
       >
         Записаться
@@ -74,7 +74,9 @@
           </div>
 
           <div class="custom-expansion-buttons">
-            <a [routerLink]="['/auth', 'login']" class="button stroke"
+            <a
+              [routerLink]="['/cabinet', 'questionnaires']"
+              class="button stroke"
               >Записаться</a
             >
             <a [routerLink]="['/services', service.id]" class="button no-bg"

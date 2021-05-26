@@ -38,11 +38,7 @@
         class="introduce-button button"
         >Зарегистрироваться</a
       >
-      <a
-        class="login-link"
-        [routerLink]="
-          isAuth ? ['/cabinet', 'questionnaires'] : ['/auth', 'login']
-        "
+      <a class="login-link" [routerLink]="['/cabinet', 'questionnaires']"
         >Уже есть аккаунт? Войти</a
       >
     </div>
@@ -179,11 +175,7 @@
       </div>
 
       <div class="custom-expansion-buttons">
-        <a
-          [routerLink]="
-            isAuth ? ['/cabinet', 'questionnaires'] : ['/auth', 'login']
-          "
-          class="button"
+        <a [routerLink]="['/cabinet', 'questionnaires']" class="button"
           >Записаться</a
         >
         <a [routerLink]="['/services', service.id]" class="button no-bg accent"
@@ -238,11 +230,7 @@
       </div>
 
       <div class="custom-expansion-buttons">
-        <a
-          [routerLink]="
-            isAuth ? ['/cabinet', 'questionnaires'] : ['/auth', 'login']
-          "
-          class="button"
+        <a [routerLink]="['/cabinet', 'questionnaires']" class="button"
           >Записаться</a
         >
         <a

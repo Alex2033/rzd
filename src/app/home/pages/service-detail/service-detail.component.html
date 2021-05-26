@@ -58,7 +58,9 @@
         </div>
 
         <div class="custom-expansion-buttons">
-          <a [routerLink]="['/auth', 'login']" class="button">Записаться</a>
+          <a [routerLink]="['/cabinet', 'questionnaires']" class="button"
+            >Записаться</a
+          >
           <a
             [routerLink]="['/service-points', point.id]"
             class="button no-bg accent"
@@ -91,7 +93,10 @@
         <div class="active-tab" *ngIf="activeTab">
           {{ activeTab.text }}
           <br />
-          <a [routerLink]="['/cabinet']" class="detailed-link">
+          <a
+            [routerLink]="['/cabinet', 'questionnaires']"
+            class="detailed-link"
+          >
             <span>Записаться на исследование</span>
             <svg width="2.2rem" height="1rem">
               <use xlink:href="assets/sprites/icons.svg#arrow-right-long"></use>
