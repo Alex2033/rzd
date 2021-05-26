@@ -5,9 +5,16 @@ import { OrdersRoutingModule } from './orders-routing.module';
 import { OrdersListComponent } from './pages/orders-list/orders-list.component';
 import { OrderDetailComponent } from './pages/order-detail/order-detail.component';
 import { DocumentsComponent } from './pages/documents/documents.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [OrdersListComponent, OrderDetailComponent, DocumentsComponent],
-  imports: [CommonModule, OrdersRoutingModule],
+  imports: [
+    CommonModule,
+    OrdersRoutingModule,
+    MatSelectModule,
+    MatFormFieldModule,
+  ],
 })
 export class OrdersModule {}

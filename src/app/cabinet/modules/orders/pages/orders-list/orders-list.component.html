@@ -2,7 +2,18 @@
   <div class="page-container">
     <h1 class="page-title">Заказы</h1>
 
-    <ng-container *ngIf="!(orders$ | async)">
+    <!-- todo: доделать -->
+    <!-- <div class="form-control select-control">
+      <mat-form-field appearance="outline">
+        <mat-select>
+          <mat-option *ngFor="let type of types" [value]="type.value">{{
+            type.label
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div> -->
+
+    <ng-container *ngIf="!orders.length">
       <div class="subtitle-text">
         <p>У вас пока нет ни одного заказа.</p>
       </div>
@@ -17,13 +28,13 @@
   </div>
 
   <!-- orders -->
-  <div class="orders-container" *ngIf="orders$ | async as orders">
+  <div class="orders-container" *ngIf="orders.length">
     <ul class="orders-list">
       <li class="order-item" *ngFor="let order of orders">
         <a [routerLink]="['/cabinet', 'orders', order.id]" class="order">
           <div class="order-top">
             <div class="order-top-info">
-              <div class="order-date">{{ order.date }}</div>
+              <div class="order-date">{{ order.dt_creation | date }}</div>
               <div class="order-address">{{ order.shortAddress }}</div>
             </div>
             <div class="order-status">
