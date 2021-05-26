@@ -112,7 +112,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   submit(): void {
-    this.router.navigate(['/']);
+    this.router.navigate(['/cabinet', 'questionnaires']);
   }
 
   register(): void {
