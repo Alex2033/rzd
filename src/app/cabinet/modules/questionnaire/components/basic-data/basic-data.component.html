@@ -56,8 +56,12 @@
           [errors]="basicData.get('name').errors"
           [errorMessages]="{
             required: 'Введите имя',
-            pattern: 'Некорректный ввод',
-            not_correct: 'Некорректный ввод'
+            pattern: activeDoctype?.fioLat
+              ? 'Некорректный ввод. Введите на английском'
+              : 'Некорректный ввод. Введите на русском',
+            not_correct: activeDoctype?.fioLat
+              ? 'Некорректный ввод. Введите на английском'
+              : 'Некорректный ввод. Введите на русском'
           }"
         ></app-error-messages
       ></mat-error>
@@ -96,8 +100,12 @@
           [errors]="basicData.get('surname').errors"
           [errorMessages]="{
             required: 'Введите фамилию',
-            pattern: 'Некорректный ввод',
-            not_correct: 'Некорректный ввод'
+            pattern: activeDoctype?.fioLat
+              ? 'Некорректный ввод. Введите на английском'
+              : 'Некорректный ввод. Введите на русском',
+            not_correct: activeDoctype?.fioLat
+              ? 'Некорректный ввод. Введите на английском'
+              : 'Некорректный ввод. Введите на русском'
           }"
         ></app-error-messages
       ></mat-error>
