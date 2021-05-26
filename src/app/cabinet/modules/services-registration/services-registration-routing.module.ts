@@ -55,7 +55,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'payment-response',
+    path: 'payment-response/:id',
     component: PaymentResponseComponent,
   },
 ];

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { OrdersService } from 'src/app/shared/services/orders.service';
 import { ReplaySubject } from 'rxjs';
-import { ServicesRegistrationService } from 'src/app/shared/services/services-registration.service';
 import { PaymentInterface } from 'src/app/shared/types/payment.interface';
 import { OrderInterface } from 'src/app/shared/types/order.interface';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -25,7 +24,6 @@ export class PaymentMethodComponent implements OnInit {
   constructor(
     private location: Location,
     private ordersService: OrdersService,
-    private servicesRegistration: ServicesRegistrationService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -71,8 +69,9 @@ export class PaymentMethodComponent implements OnInit {
         )
         .subscribe(
           () => {},
-          () => {
+          (err) => {
             this.resend = false;
+            this.handleError(err);
           }
         );
     } else {
@@ -83,8 +82,8 @@ export class PaymentMethodComponent implements OnInit {
           takeUntil(this.destroy)
         )
         .subscribe(
-          (res) => {
-            console.log('res:', res);
+          () => {
+            this.successPayment();
           },
           (err) => {
             this.handleError(err);
@@ -93,18 +92,54 @@ export class PaymentMethodComponent implements OnInit {
     }
   }
 
-  successPayment(): void {}
+  successPayment(): void {
+    if (this.selectedPayment === 'TERMINAL') {
+      this.router.navigate(
+        [
+          '/cabinet',
+          'services-registration',
+          'payment-response',
+          this.order.id,
+        ],
+        {
+          queryParams: {
+            text: 'terminal',
+          },
+        }
+      );
+    } else if (this.selectedPayment === 'ADMIN') {
+      this.router.navigate(
+        [
+          '/cabinet',
+          'services-registration',
+          'payment-response',
+          this.order.id,
+        ],
+        {
+          queryParams: {
+            text: 'admin',
+          },
+        }
+      );
+    }
+  }
 
   handleError(err: HttpErrorResponse): void {
     if (err instanceof HttpErrorResponse) {
       if (err.error.error === 'MEDME_SEND_ERROR') {
         this.resend = true;
+        alert('Ошибка');
       } else {
         this.router.navigate(
-          ['/cabinet', 'services-registration', 'payment-response'],
+          [
+            '/cabinet',
+            'services-registration',
+            'payment-response',
+            this.order.id,
+          ],
           {
             queryParams: {
-              error: true,
+              text: 'error',
             },
           }
         );
