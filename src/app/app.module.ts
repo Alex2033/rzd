@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -13,6 +13,10 @@ import { PlugComponent } from './plug/plug.component';
 import { LanguagesResolver } from './shared/resolvers/language.resolver';
 import { AuthInterceptor } from './auth/interceptors/auth.interceptor';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { registerLocaleData } from '@angular/common';
+import localeRu from '@angular/common/locales/ru';
+
+registerLocaleData(localeRu, 'ru');
 
 @NgModule({
   declarations: [
@@ -37,6 +41,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
       useClass: AuthInterceptor,
     },
     { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },
+    { provide: LOCALE_ID, useValue: 'ru' },
   ],
   bootstrap: [AppComponent],
 })

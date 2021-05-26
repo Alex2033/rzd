@@ -34,17 +34,21 @@
         <a [routerLink]="['/cabinet', 'orders', order.id]" class="order">
           <div class="order-top">
             <div class="order-top-info">
-              <div class="order-date">{{ order.dt_creation | date }}</div>
+              <div class="order-date">
+                {{ order.dt_creation | date: "d MMM, y, h:mm" }}
+              </div>
               <div class="order-address">{{ order.shortAddress }}</div>
             </div>
             <div class="order-status">
               {{
-                order.status === "payment-awaiting"
+                order.status === "CREATED" || order.status === "SIGNED"
+                  ? "Черновик"
+                  : order.status === "UNPAID"
                   ? "Ожидает оплаты"
-                  : order.status === "research-awaiting"
-                  ? "Ожидает исследования"
-                  : order.status === "completed"
-                  ? "Выполнено"
+                  : order.status === "READY"
+                  ? "Оформлен"
+                  : order.status === "CONFIRMED"
+                  ? "Выполнен"
                   : null
               }}
             </div>
