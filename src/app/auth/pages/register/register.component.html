@@ -15,7 +15,14 @@
           <mat-form-field appearance="outline">
             <mat-label>Имя<span class="primary-color">*</span></mat-label>
 
-            <input name="name" type="text" matInput formControlName="name" />
+            <input
+              autocomplete="off"
+              name="name"
+              type="text"
+              autocomplete="off"
+              matInput
+              formControlName="name"
+            />
 
             <button
               *ngIf="nameControl.value"
@@ -60,6 +67,7 @@
               [validation]="true"
               prefix="+"
               type="text"
+              autocomplete="off"
               inputmode="tel"
               formControlName="phone"
             />

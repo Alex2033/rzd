@@ -135,7 +135,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   submit(): void {
-    this.router.navigate(['/']);
+    this.router.navigate(['/cabinet', 'questionnaires']);
   }
 
   changeSubmitted(val: boolean): void {

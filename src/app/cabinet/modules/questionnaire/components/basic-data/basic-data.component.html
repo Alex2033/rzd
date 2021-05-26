@@ -31,7 +31,13 @@
     <mat-form-field appearance="outline">
       <mat-label>Имя<span class="primary-color">*</span></mat-label>
 
-      <input name="name" type="text" matInput formControlName="name" />
+      <input
+        autocomplete="off"
+        name="name"
+        type="text"
+        matInput
+        formControlName="name"
+      />
 
       <button
         *ngIf="basicData.get('name').value"
@@ -63,7 +69,13 @@
     <mat-form-field appearance="outline">
       <mat-label>Фамилия<span class="primary-color">*</span></mat-label>
 
-      <input name="surname" type="text" matInput formControlName="surname" />
+      <input
+        autocomplete="off"
+        name="surname"
+        type="text"
+        matInput
+        formControlName="surname"
+      />
 
       <button
         *ngIf="basicData.get('surname').value"
@@ -101,6 +113,7 @@
         name="patronymic"
         type="text"
         matInput
+        autocomplete="off"
         formControlName="patronymic"
       />
 
@@ -146,7 +159,11 @@
           <use xlink:href="assets/sprites/icons.svg#calendar-today"></use>
         </svg>
       </mat-datepicker-toggle>
-      <mat-datepicker disabled="false" #picker></mat-datepicker>
+      <mat-datepicker
+        yPosition="above"
+        disabled="false"
+        #picker
+      ></mat-datepicker>
 
       <mat-error
         ><app-error-messages
@@ -212,6 +229,7 @@
         [validation]="true"
         prefix="+"
         type="text"
+        autocomplete="off"
         inputmode="tel"
         formControlName="phone"
       />
