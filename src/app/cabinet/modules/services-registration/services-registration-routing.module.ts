@@ -9,9 +9,14 @@ import { QuestionsComponent } from './pages/questions/questions.component';
 import { ReturnDateComponent } from './pages/return-date/return-date.component';
 import { SelectPointComponent } from './pages/select-point/select-point.component';
 import { SelectServicesComponent } from './pages/select-services/select-services.component';
+import { ServicesRegistrationInfoComponent } from './pages/services-registration-info/services-registration-info.component';
 import { SignatureComponent } from './pages/signature/signature.component';
 
 const routes: Routes = [
+  {
+    path: 'info',
+    component: ServicesRegistrationInfoComponent,
+  },
   {
     path: 'questions/:id',
     component: QuestionsComponent,
@@ -48,6 +53,7 @@ const routes: Routes = [
     path: 'payment-method/:id',
     component: PaymentMethodComponent,
   },
+
   {
     path: 'payment-response',
     component: PaymentResponseComponent,

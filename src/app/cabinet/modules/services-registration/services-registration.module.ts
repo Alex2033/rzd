@@ -21,6 +21,7 @@ import { SignatureComponent } from './pages/signature/signature.component';
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { PaymentMethodComponent } from './pages/payment-method/payment-method.component';
 import { PaymentResponseComponent } from './pages/payment-response/payment-response.component';
+import { ServicesRegistrationInfoComponent } from './pages/services-registration-info/services-registration-info.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { PaymentResponseComponent } from './pages/payment-response/payment-respo
     SignatureComponent,
     PaymentMethodComponent,
     PaymentResponseComponent,
+    ServicesRegistrationInfoComponent,
   ],
   imports: [
     CommonModule,

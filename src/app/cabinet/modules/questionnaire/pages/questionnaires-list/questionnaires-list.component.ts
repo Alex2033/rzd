@@ -158,11 +158,6 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
     };
     this.servicesRegistration.order = {} as OrderInterface;
     this.servicesRegistration.setOrder({ id: 0, ...questionnaires });
-    this.router.navigate([
-      '/cabinet',
-      'services-registration',
-      'questions',
-      this.servicesRegistration.order.id,
-    ]);
+    this.router.navigate(['/cabinet', 'services-registration', 'info']);
   }
 }

@@ -1,0 +1,37 @@
+<div class="page-content">
+  <div class="page-container">
+    <div class="page-top">
+      <a [routerLink]="['/cabinet', 'questionnaires']" class="back-link">
+        <svg width="1rem" height="1rem">
+          <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
+        </svg>
+        <span>Назад</span>
+      </a>
+
+      <a class="close" [routerLink]="['/cabinet', 'questionnaires']">Закрыть</a>
+    </div>
+
+    <div class="info-content">
+      <h6 class="info-title">
+        Проверьте правильность <br />
+        заполнения анкет!
+      </h6>
+      <p>
+        Если вы планируете использовать результаты теста для предоставления на
+        территории РФ (например, загрузки на портале Госуслуги), пожалуйста,
+        указывайте Паспорт гражданина РФ, а для детей Свидетельство о рождении.
+        В случае, если результаты теста вам требуются для международных поездок,
+        рекомендуем указывать данные заграничного паспорта.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="buttons">
+  <button type="button" (click)="goToCreation()" class="button">
+    <span>Далее</span>
+    <svg width="1.6rem" height="1.6rem">
+      <use xlink:href="assets/sprites/icons.svg#next"></use>
+    </svg>
+  </button>
+</div>
