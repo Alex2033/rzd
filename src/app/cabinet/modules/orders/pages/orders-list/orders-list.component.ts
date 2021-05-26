@@ -29,17 +29,12 @@ export class OrdersListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.ordersService.getOrders().subscribe((res) => {
-      this.orders = res;
-    });
-
     combineLatest([
       this.points.getServicePoints(),
       this.ordersService.getOrders(),
     ]).subscribe(
       ([points, orders]) => {
-        console.log('points:', points);
-        console.log('orders:', orders);
+        this.orders = orders;
         this.addAddressToOrder(points);
       },
       (err) => console.error(err)
@@ -52,6 +47,5 @@ export class OrdersListComponent implements OnInit {
         (point) => point.id === order.id_point
       )['name'];
     });
-    console.log('this.orders:', this.orders);
   }
 }

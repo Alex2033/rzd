@@ -151,7 +151,10 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
 
       if (questionnaire.content[key]) {
         if (questionnaire.content[key] === '0001-01-01T00:00:00') {
-          formControl.setValue('2000-01-01T00:00:00');
+          // todo решить этот костыль
+          setTimeout(() => {
+            formControl.setValue('2000-01-01T00:00:00');
+          });
         } else {
           formControl.setValue(questionnaire.content[key]);
         }

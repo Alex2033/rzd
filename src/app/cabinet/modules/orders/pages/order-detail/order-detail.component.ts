@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Observable } from 'rxjs';
+import { combineLatest } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { OrdersService } from '../../services/orders.service';
-import { OrderInterface } from '../../types/order.interface';
+import { OrdersService } from 'src/app/shared/services/orders.service';
+import { ServicePointsService } from 'src/app/shared/services/service-points.service';
+import { ServicesService } from 'src/app/shared/services/services.service';
+import { OrderInterface } from 'src/app/shared/types/order.interface';
+import { ServicePointInterface } from 'src/app/shared/types/service-point.interface';
+import { ServiceInterface } from 'src/app/shared/types/service.interface';
 
 @Component({
   selector: 'app-order-detail',
@@ -12,25 +16,48 @@ import { OrderInterface } from '../../types/order.interface';
 })
 export class OrderDetailComponent implements OnInit {
   public order: OrderInterface = {} as OrderInterface;
-  public totalPrice: number = 0;
 
   constructor(
     private ordersService: OrdersService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private services: ServicesService,
+    private points: ServicePointsService
   ) {}
 
   ngOnInit(): void {
-    this.route.params
-      .pipe(
+    combineLatest([
+      this.services.getServices(),
+      this.points.getServicePoints(),
+      this.route.params.pipe(
         switchMap((params: Params) => this.ordersService.getOrder(+params.id))
-      )
-      .subscribe((order) => {
+      ),
+    ]).subscribe(
+      ([services, points, order]) => {
         this.order = order;
-        this.totalPrice = this.calcTotalPrice();
-      });
+        console.log('this.order:', this.order);
+        this.addAddressToOrder(points);
+        this.addServicesToOrder(services);
+      },
+      (err) => console.error(err)
+    );
   }
 
-  calcTotalPrice(): number {
-    return this.order.services.reduce((prev, cur) => prev + cur['price'], 0);
+  addAddressToOrder(points: ServicePointInterface[]): void {
+    this.order['address'] = points.find(
+      (point) => point.id === this.order.id_point
+    )['address'];
+  }
+
+  addServicesToOrder(services: ServiceInterface[]): void {
+    this.order.items.forEach((questionnaire) => {
+      questionnaire['services'].forEach((service: any) => {
+        service['name'] = services.find((serv) => {
+          return serv.id === service.id_service;
+        })['name'];
+        service['priceType'] = services.find((serv) => {
+          return serv.id === service.id_service;
+        })['priceType'];
+      });
+    });
   }
 }

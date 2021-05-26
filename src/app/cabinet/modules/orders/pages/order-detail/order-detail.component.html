@@ -7,38 +7,39 @@
       <span>Заказы</span>
     </a>
 
-    <div
-      class="order-status"
-      [ngClass]="{
-        'payment-awaiting': order.status === 'payment-awaiting',
-        'research-awaiting': order.status === 'research-awaiting',
-        completed: order.status === 'completed'
-      }"
-    >
+    <div class="order-status">
       {{
-        order.status === "payment-awaiting"
+        order.status === "CREATED" || order.status === "SIGNED"
+          ? "Черновик"
+          : order.status === "UNPAID"
           ? "Ожидает оплаты"
-          : order.status === "research-awaiting"
-          ? "Ожидает исследования"
-          : order.status === "completed"
-          ? "Выполнено"
+          : order.status === "READY"
+          ? "Оформлен"
+          : order.status === "CONFIRMED"
+          ? "Подтвержден"
           : null
       }}
     </div>
 
     <div class="order-info">
-      <div class="order-number">№{{ order.id }}</div>
-      <div class="order-date">{{ order.date }}</div>
+      <div class="order-date">
+        {{ order.dt_creation | date: "d MMM, y, h:mm" }}
+      </div>
     </div>
     <div class="order-address">{{ order.address }}</div>
   </div>
 
-  <!-- services -->
-  <ul class="services">
-    <li class="service" *ngFor="let service of order.services">
-      <div class="client-name">{{ service.userName }}</div>
-      <div class="service-body">
-        <div class="service-title">{{ service.title }}</div>
+  <!-- questionnaires -->
+  <ul class="questionnaires">
+    <li class="questionnaire" *ngFor="let questionnaire of order.items">
+      <div class="questionnaire-top">
+        <div class="questionnaire-fio">{{ questionnaire.fio }}</div>
+        <div class="ext-id" *ngIf="questionnaire.ext_id">
+          № {{ questionnaire.ext_id }}
+        </div>
+      </div>
+      <div class="service-body" *ngFor="let service of questionnaire.services">
+        <div class="service-name">{{ service.name }}</div>
         <div class="service-price">
           {{ service.price }}{{ service.priceType }}
         </div>
@@ -49,11 +50,11 @@
   <div class="page-container">
     <div class="total-block">
       <div class="total-block-text">Итого:</div>
-      <div class="total-price">{{ totalPrice }}₽</div>
+      <div class="total-price">{{ order.sum }}₽</div>
     </div>
 
-    <a [routerLink]="['documents']" class="documents-link"
-      >Документы по заказу</a
+    <a [routerLink]="['/cabinet', 'orders', 'results']" class="get-results"
+      >Как получить результаты?</a
     >
   </div>
 </div>

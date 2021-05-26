@@ -2,7 +2,7 @@
 @import "vars";
 
 .page-content {
-  padding-bottom: 5.6rem;
+  padding-bottom: 3rem;
 }
 
 .order-status {
@@ -11,25 +11,14 @@
   display: inline-block;
   font-size: 1.2rem;
   line-height: 1.34;
-
-  &.payment-awaiting {
-    background-color: lighten($primary, 17.95%);
-  }
-
-  &.research-awaiting {
-    background-color: $primary;
-  }
-
-  &.completed {
-    background-color: $gray;
-  }
+  background-color: $primary;
 }
 
 .order-info {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 1.2rem;
+  margin-top: 1.7rem;
 
   > * {
     &:not(:first-child) {
@@ -56,7 +45,7 @@
   max-width: 80%;
 }
 
-.services {
+.questionnaires {
   margin-top: 2.5rem;
 
   > * {
@@ -66,7 +55,7 @@
   }
 }
 
-.service {
+.questionnaire {
   padding: 0 $container-gap;
   position: relative;
 
@@ -81,13 +70,14 @@
   }
 }
 
-.client-name {
+.questionnaire-fio {
   font-weight: 600;
 }
 
 .service-body {
   padding: 1.6rem 0;
   display: flex;
+  margin-top: 0.4rem;
   align-items: flex-start;
   justify-content: space-between;
 
@@ -98,7 +88,7 @@
   }
 }
 
-.service-title {
+.service-name {
   max-width: 61.5%;
   color: $dark;
 }
@@ -128,10 +118,32 @@
   font-weight: 700;
 }
 
-.documents-link {
+.get-results {
   display: block;
-  margin-top: 3.3rem;
+  margin-top: 2.8rem;
   color: $primary;
   font-weight: 600;
   text-decoration: none;
+}
+
+.ext-id {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: $primary;
+  font-size: 1.2rem;
+  line-height: 1.34;
+  margin-top: 0.4rem;
+}
+
+.questionnaire-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  > * {
+    &:not(:first-child) {
+      margin-left: 1.2rem;
+    }
+  }
 }

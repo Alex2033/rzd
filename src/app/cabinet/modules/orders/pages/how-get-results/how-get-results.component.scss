@@ -1,0 +1,23 @@
+@import "theme";
+
+.page-title {
+  margin-top: 1.6rem;
+}
+
+.results-text {
+  margin-top: 1.6rem;
+  line-height: 1.375;
+  color: $dark;
+
+  > * {
+    &:not(:first-child) {
+      margin-top: 2.8rem;
+    }
+  }
+}
+
+.results-link {
+  color: $primary;
+  font-weight: 600;
+  text-decoration: none;
+}
