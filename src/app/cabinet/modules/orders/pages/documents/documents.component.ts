@@ -52,7 +52,6 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     this.document = this.documents.find(
       (doc) => doc.id_anketa === this.questionnaireId
     );
-    console.log('this.document:', this.document);
   }
 
   back(): void {

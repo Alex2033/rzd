@@ -13,7 +13,6 @@ export class DocumentStepComponent implements OnInit {
   @Input() today: Date;
 
   get mask(): string {
-    console.log('this.activeDoctype?.val:', this.activeDoctype?.val);
     switch (this.activeDoctype?.val) {
       case 'Загранпаспорт гражданина РФ':
       case 'Паспорт иностранного гражданина':
