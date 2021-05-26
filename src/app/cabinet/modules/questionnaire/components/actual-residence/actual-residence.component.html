@@ -52,7 +52,7 @@
   <!-- region -->
   <div class="form-control">
     <mat-form-field appearance="outline">
-      <mat-label>Регион<span class="primary-color">*</span></mat-label>
+      <mat-label>Регион</mat-label>
 
       <input
         name="adress_fact_region"
@@ -71,19 +71,6 @@
           <use xlink:href="assets/sprites/icons.svg#close-round"></use>
         </svg>
       </button>
-
-      <mat-error
-        ><app-error-messages
-          *ngIf="
-            actualResidence.get('adress_fact_region').touched &&
-            actualResidence.get('adress_fact_region').invalid
-          "
-          [errors]="actualResidence.get('adress_fact_region').errors"
-          [errorMessages]="{
-            required: 'Введите название региона'
-          }"
-        ></app-error-messages
-      ></mat-error>
     </mat-form-field>
   </div>
 

@@ -32,10 +32,4 @@ export class IndexComponent implements OnInit {
       .pipe(shareReplay());
     this.isAuth = this.auth.isAuth();
   }
-
-  goToProfile(): void {
-    this.isAuth
-      ? this.router.navigate(['/profile'])
-      : this.router.navigate(['/auth', 'login']);
-  }
 }

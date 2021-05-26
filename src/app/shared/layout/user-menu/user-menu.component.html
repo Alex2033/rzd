@@ -33,14 +33,14 @@
         <span class="user-nav-text">заказы</span>
       </a>
     </li>
-    <li class="user-nav-item">
+    <li class="user-nav-item" *ngIf="false">
       <a [routerLink]="['/cabinet', 'queue']" (click)="closeMenu()">
         <span class="user-nav-text">моя очередь</span>
       </a>
     </li>
   </ul>
 
-  <div class="qr-code-block">
+  <div class="qr-code-block" *ngIf="false">
     <img
       class="qr-code-image"
       src="assets/home/qr-code.png"

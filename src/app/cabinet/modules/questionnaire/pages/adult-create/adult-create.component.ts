@@ -62,7 +62,6 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.buildForm();
     this.getQuestionnaire();
-    this.getDocTypes();
     this.getQueryParams();
     this.singleChanges();
   }
@@ -94,7 +93,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
       }),
       registerAddress: new FormGroup({
         adress_reg_country: new FormControl(null, Validators.required),
-        adress_reg_region: new FormControl(null, Validators.required),
+        adress_reg_region: new FormControl(null),
         adress_reg_area: new FormControl(null),
         adress_reg_city: new FormControl(null, Validators.required),
         adress_reg_street: new FormControl(null, Validators.required),
@@ -104,7 +103,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
       actualResidence: new FormGroup({
         adress_single: new FormControl(null),
         adress_fact_country: new FormControl(null, Validators.required),
-        adress_fact_region: new FormControl(null, Validators.required),
+        adress_fact_region: new FormControl(null),
         adress_fact_area: new FormControl(null),
         adress_fact_city: new FormControl(null, Validators.required),
         adress_fact_street: new FormControl(null, Validators.required),
@@ -129,8 +128,9 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
         if (res.id_parent !== 0) {
           this.isChild = true;
           this.removeControls();
-          this.getDocTypes();
         }
+        this.getDocTypes();
+
         this.setControlsValues(this.createForm, res);
         this.updateAllFields(this.createForm, res.id);
       });

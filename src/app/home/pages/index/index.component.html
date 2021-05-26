@@ -31,10 +31,20 @@
           экономии времени
         </p>
       </div>
-      <a [routerLink]="['/auth', 'register']" class="introduce-button button"
+      <a
+        [routerLink]="
+          isAuth ? ['/cabinet', 'questionnaires'] : ['/auth', 'register']
+        "
+        class="introduce-button button"
         >Зарегистрироваться</a
       >
-      <a class="login-link" (click)="goToProfile()">Уже есть аккаунт? Войти</a>
+      <a
+        class="login-link"
+        [routerLink]="
+          isAuth ? ['/cabinet', 'questionnaires'] : ['/auth', 'login']
+        "
+        >Уже есть аккаунт? Войти</a
+      >
     </div>
   </div>
 </section>
@@ -169,7 +179,13 @@
       </div>
 
       <div class="custom-expansion-buttons">
-        <a [routerLink]="['/auth', 'login']" class="button">Записаться</a>
+        <a
+          [routerLink]="
+            isAuth ? ['/cabinet', 'questionnaires'] : ['/auth', 'login']
+          "
+          class="button"
+          >Записаться</a
+        >
         <a [routerLink]="['/services', service.id]" class="button no-bg accent"
           >Подробнее</a
         >
@@ -222,7 +238,13 @@
       </div>
 
       <div class="custom-expansion-buttons">
-        <a [routerLink]="['/auth', 'login']" class="button">Записаться</a>
+        <a
+          [routerLink]="
+            isAuth ? ['/cabinet', 'questionnaires'] : ['/auth', 'login']
+          "
+          class="button"
+          >Записаться</a
+        >
         <a
           [routerLink]="['/service-points', point.id]"
           class="button no-bg accent"

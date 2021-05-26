@@ -16,10 +16,10 @@
             <mat-label>Имя<span class="primary-color">*</span></mat-label>
 
             <input
-              autocomplete="off"
+              autocomplete="nope"
               name="name"
               type="text"
-              autocomplete="off"
+              autocomplete="nope"
               matInput
               formControlName="name"
             />
@@ -67,7 +67,7 @@
               [validation]="true"
               prefix="+"
               type="text"
-              autocomplete="off"
+              autocomplete="nope"
               inputmode="tel"
               formControlName="phone"
             />
@@ -167,7 +167,7 @@
             <input
               matInput
               (paste)="$event.preventDefault()"
-              autocomplete="off"
+              autocomplete="nope"
               type="email"
               name="emailConfirm"
               formControlName="emailConfirm"
