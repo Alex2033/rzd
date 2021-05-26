@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { combineLatest } from 'rxjs';
 import { OrdersService } from 'src/app/shared/services/orders.service';
+import { ServicePointsService } from 'src/app/shared/services/service-points.service';
 import { OrderInterface } from 'src/app/shared/types/order.interface';
+import { ServicePointInterface } from 'src/app/shared/types/service-point.interface';
 
 @Component({
   selector: 'app-orders-list',
@@ -20,12 +23,34 @@ export class OrdersListComponent implements OnInit {
     },
   ];
 
-  constructor(private ordersService: OrdersService) {}
+  constructor(
+    private ordersService: OrdersService,
+    private points: ServicePointsService
+  ) {}
 
   ngOnInit(): void {
     this.ordersService.getOrders().subscribe((res) => {
-      console.log('res:', res);
       this.orders = res;
     });
+
+    combineLatest([
+      this.points.getServicePoints(),
+      this.ordersService.getOrders(),
+    ]).subscribe(
+      ([points]) => {
+        console.log('points:', points);
+        this.addAddressToOrder(points);
+      },
+      (err) => console.error(err)
+    );
+  }
+
+  addAddressToOrder(points: ServicePointInterface[]): void {
+    this.orders.forEach((order) => {
+      order['shortAddress'] = points.find(
+        (point) => point.id === order.id_point
+      )['name'];
+    });
+    console.log('this.orders:', this.orders);
   }
 }
