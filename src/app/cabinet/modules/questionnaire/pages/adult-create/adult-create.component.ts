@@ -93,7 +93,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
       registerAddress: new FormGroup({
         adress_reg_country: new FormControl(null, Validators.required),
         adress_reg_region: new FormControl(null, Validators.required),
-        adress_reg_area: new FormControl(null, Validators.required),
+        adress_reg_area: new FormControl(null),
         adress_reg_city: new FormControl(null, Validators.required),
         adress_reg_street: new FormControl(null, Validators.required),
         adress_reg_building: new FormControl(null, Validators.required),
@@ -103,7 +103,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
         adress_single: new FormControl(null),
         adress_fact_country: new FormControl(null, Validators.required),
         adress_fact_region: new FormControl(null, Validators.required),
-        adress_fact_area: new FormControl(null, Validators.required),
+        adress_fact_area: new FormControl(null),
         adress_fact_city: new FormControl(null, Validators.required),
         adress_fact_street: new FormControl(null, Validators.required),
         adress_fact_building: new FormControl(null, Validators.required),

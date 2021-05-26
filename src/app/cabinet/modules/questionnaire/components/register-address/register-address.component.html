@@ -80,7 +80,7 @@
   <!-- area -->
   <div class="form-control">
     <mat-form-field appearance="outline">
-      <mat-label>Район<span class="primary-color">*</span></mat-label>
+      <mat-label>Район</mat-label>
 
       <input
         name="adress_reg_area"
@@ -99,19 +99,6 @@
           <use xlink:href="assets/sprites/icons.svg#close-round"></use>
         </svg>
       </button>
-
-      <mat-error
-        ><app-error-messages
-          *ngIf="
-            registerAddress.get('adress_reg_area').touched &&
-            registerAddress.get('adress_reg_area').invalid
-          "
-          [errors]="registerAddress.get('adress_reg_area').errors"
-          [errorMessages]="{
-            required: 'Введите название района'
-          }"
-        ></app-error-messages
-      ></mat-error>
     </mat-form-field>
   </div>
 
