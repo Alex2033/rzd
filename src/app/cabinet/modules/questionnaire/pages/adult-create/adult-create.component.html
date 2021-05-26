@@ -21,12 +21,16 @@
 
       <app-basic-data
         [basicData]="currentGroup"
+        [doctypes]="doctypes"
         *ngIf="currentStep === 1"
         [isChild]="isChild"
+        [today]="today"
+        [activeDoctype]="activeDoctype"
       ></app-basic-data>
       <app-document-step
-        [citizenship]="isChild ? childCitizenship : adultCitizenship"
+        [today]="today"
         [documentStep]="currentGroup"
+        [activeDoctype]="activeDoctype"
         *ngIf="currentStep === 2"
       ></app-document-step>
       <app-register-address

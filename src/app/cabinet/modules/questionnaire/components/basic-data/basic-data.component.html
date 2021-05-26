@@ -1,6 +1,31 @@
 <div class="create-form-description">Основные данные</div>
 
 <div class="form-controls" [formGroup]="basicData">
+  <!-- doc_type -->
+  <div class="form-control select-control">
+    <mat-form-field appearance="outline">
+      <mat-label>Тип документа<span class="primary-color">*</span></mat-label>
+      <mat-select formControlName="doc_type">
+        <mat-option *ngFor="let item of doctypes" [value]="item.val">{{
+          item.name
+        }}</mat-option>
+      </mat-select>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="
+            basicData.get('doc_type').touched &&
+            basicData.get('doc_type').invalid
+          "
+          [errors]="basicData.get('doc_type').errors"
+          [errorMessages]="{
+            required: 'Выберите тип документа'
+          }"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
   <!-- name -->
   <div class="form-control">
     <mat-form-field appearance="outline">
@@ -24,40 +49,8 @@
           *ngIf="basicData.get('name').touched && basicData.get('name').invalid"
           [errors]="basicData.get('name').errors"
           [errorMessages]="{
-            required: 'Введите имя'
-          }"
-        ></app-error-messages
-      ></mat-error>
-    </mat-form-field>
-  </div>
-
-  <!-- latin name -->
-  <div class="form-control">
-    <mat-form-field appearance="outline">
-      <mat-label>Имя латиницей<span class="primary-color">*</span></mat-label>
-
-      <input name="name_lat" type="text" matInput formControlName="name_lat" />
-
-      <button
-        *ngIf="basicData.get('name_lat').value"
-        (click)="basicData.get('name_lat').setValue(null)"
-        type="button"
-        class="icon-button clear-button"
-      >
-        <svg width="2rem" height="2rem">
-          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
-        </svg>
-      </button>
-
-      <mat-error
-        ><app-error-messages
-          *ngIf="
-            basicData.get('name_lat').touched &&
-            basicData.get('name_lat').invalid
-          "
-          [errors]="basicData.get('name_lat').errors"
-          [errorMessages]="{
-            required: 'Введите имя'
+            required: 'Введите имя',
+            pattern: 'Некорректный ввод'
           }"
         ></app-error-messages
       ></mat-error>
@@ -89,47 +82,8 @@
           "
           [errors]="basicData.get('surname').errors"
           [errorMessages]="{
-            required: 'Введите фамилию'
-          }"
-        ></app-error-messages
-      ></mat-error>
-    </mat-form-field>
-  </div>
-
-  <!-- latin surname -->
-  <div class="form-control">
-    <mat-form-field appearance="outline">
-      <mat-label
-        >Фамилия латиницей<span class="primary-color">*</span></mat-label
-      >
-
-      <input
-        name="surname_lat"
-        type="text"
-        matInput
-        formControlName="surname_lat"
-      />
-
-      <button
-        *ngIf="basicData.get('surname_lat').value"
-        (click)="basicData.get('surname_lat').setValue(null)"
-        type="button"
-        class="icon-button clear-button"
-      >
-        <svg width="2rem" height="2rem">
-          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
-        </svg>
-      </button>
-
-      <mat-error
-        ><app-error-messages
-          *ngIf="
-            basicData.get('surname_lat').touched &&
-            basicData.get('surname_lat').invalid
-          "
-          [errors]="basicData.get('surname_lat').errors"
-          [errorMessages]="{
-            required: 'Введите фамилию'
+            required: 'Введите фамилию',
+            pattern: 'Некорректный ввод'
           }"
         ></app-error-messages
       ></mat-error>
@@ -137,7 +91,7 @@
   </div>
 
   <!-- patronymic -->
-  <div class="form-control">
+  <div class="form-control" *ngIf="!activeDoctype?.fioLat">
     <mat-form-field appearance="outline">
       <mat-label>Отчество (если есть)</mat-label>
 
@@ -182,6 +136,7 @@
         formControlName="birthday"
         [matDatepicker]="picker"
         readonly
+        [max]="today"
         (click)="picker.open()"
       />
       <mat-datepicker-toggle matSuffix [for]="picker">

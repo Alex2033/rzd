@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { CitizenshipInterface } from '../../types/citizenship.interface';
+import { DoctypeInterface } from '../../types/doctype.interface';
 
 @Component({
   selector: 'app-document-step',
@@ -9,33 +9,25 @@ import { CitizenshipInterface } from '../../types/citizenship.interface';
 })
 export class DocumentStepComponent implements OnInit {
   @Input() documentStep: FormGroup;
-  @Input() citizenship: CitizenshipInterface[] = [];
+  @Input() activeDoctype: DoctypeInterface;
+  @Input() today: Date;
 
-  public mask: string;
+  get mask(): string {
+    console.log('this.activeDoctype?.val:', this.activeDoctype?.val);
+    switch (this.activeDoctype?.val) {
+      case 'Загранпаспорт гражданина РФ':
+      case 'Паспорт иностранного гражданина':
+        return '00 0000000';
+
+      case 'Свидетельство о рождении':
+        return 'II-AA 000000 или IIV-AA 000000';
+
+      default:
+        return '0000 000000';
+    }
+  }
 
   constructor() {}
 
-  ngOnInit(): void {
-    this.documentStep
-      .get('citizenship')
-      .valueChanges.subscribe((res: string) => {
-        this.getMask(res);
-      });
-  }
-
-  getMask(value: string): void {
-    switch (value) {
-      case 'FOREIGN_PASSPORT':
-        this.mask = '00 0000000';
-        break;
-
-      case 'BIRTH_CERTIFICATE':
-        this.mask = 'II-AA 000000 или IIV-AA 000000';
-        break;
-
-      default:
-        this.mask = '0000 000000';
-        break;
-    }
-  }
+  ngOnInit(): void {}
 }

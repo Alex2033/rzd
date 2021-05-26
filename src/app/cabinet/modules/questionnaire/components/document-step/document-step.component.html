@@ -1,24 +1,10 @@
 <div class="create-form-description">Документ</div>
 
 <div class="form-controls" [formGroup]="documentStep">
-  <!-- citizenship -->
-  <div class="form-control select-control">
-    <mat-form-field appearance="outline">
-      <mat-label>Гражданство<span class="primary-color">*</span></mat-label>
-      <mat-select formControlName="citizenship">
-        <mat-option *ngFor="let item of citizenship" [value]="item.value">{{
-          item.label
-        }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-
   <!-- passport number -->
   <div class="form-control">
     <mat-form-field appearance="outline">
-      <mat-label
-        >Серия и номер паспорта<span class="primary-color">*</span></mat-label
-      >
+      <mat-label>Серия и номер<span class="primary-color">*</span></mat-label>
 
       <input
         matInput
@@ -105,6 +91,7 @@
         formControlName="passport_date"
         [matDatepicker]="picker"
         readonly
+        [max]="today"
         (click)="picker.open()"
       />
       <mat-datepicker-toggle matSuffix [for]="picker">

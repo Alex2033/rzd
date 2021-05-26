@@ -22,6 +22,7 @@ interface QuestionnaireContentInterface {
   passport_date?: string;
   company?: string;
   position?: string;
+  doc_type?: string;
   adress_single?: string;
   adress_reg_country?: string;
   adress_reg_region?: string;

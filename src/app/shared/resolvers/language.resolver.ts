@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { QuestionnairesService } from 'src/app/cabinet/modules/questionnaire/services/questionnaires.service';
 import { ServicesService } from 'src/app/shared/services/services.service';
 
 import { LanguageService } from '../services/language.service';
@@ -12,7 +13,8 @@ export class LanguagesResolver implements Resolve<any> {
     private language: LanguageService,
     private services: ServicesService,
     private points: ServicePointsService,
-    private orders: OrdersService
+    private orders: OrdersService,
+    private questionnaires: QuestionnairesService
   ) {}
 
   resolve(snapshot: ActivatedRouteSnapshot): any {
@@ -20,6 +22,7 @@ export class LanguagesResolver implements Resolve<any> {
       this.services.langId = res;
       this.points.langId = res;
       this.orders.langId = res;
+      this.questionnaires.langId = res;
     });
   }
 }

@@ -13,10 +13,10 @@ import {
   distinctUntilChanged,
   retry,
   switchMap,
+  takeUntil,
 } from 'rxjs/operators';
-import { CyrillicToLatinPipe } from 'src/app/shared/pipes/cyrilic-to-latin.pipe';
 import { QuestionnairesService } from '../../services/questionnaires.service';
-import { CitizenshipInterface } from '../../types/citizenship.interface';
+import { DoctypeInterface } from '../../types/doctype.interface';
 import { QuestionnaireDetailInterface } from '../../types/questionnaire-detail.interface';
 import { UpdatedFieldInterface } from '../../types/updated-field.interface';
 
@@ -35,27 +35,9 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
     'с. Кудиново, Калужская обл.',
   ];
   public isChild: boolean = false;
-  public adultCitizenship: CitizenshipInterface[] = [
-    {
-      label: 'Гражданин РФ (паспорт РФ)',
-      value: 'RESIDENT_PASSPORT',
-    },
-    {
-      label: 'Нерезидент РФ (загран. паспорт)',
-      value: 'FOREIGN_PASSPORT',
-    },
-  ];
-
-  public childCitizenship: CitizenshipInterface[] = [
-    {
-      label: 'Гражданин РФ (свид. о рождении)',
-      value: 'BIRTH_CERTIFICATE',
-    },
-    {
-      label: 'Нерезидент РФ (загран. паспорт)',
-      value: 'FOREIGN_PASSPORT',
-    },
-  ];
+  public doctypes: DoctypeInterface[] = [];
+  public activeDoctype: DoctypeInterface;
+  public today: Date = new Date();
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -70,7 +52,6 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private cyrillicToLatin: CyrillicToLatinPipe,
     private router: Router,
     private questionnairesService: QuestionnairesService,
     private datePipe: DatePipe
@@ -79,9 +60,8 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.buildForm();
     this.getQuestionnaire();
+    this.getDocTypes();
     this.getQueryParams();
-    this.nameControlChanges();
-    this.surnameControlChanges();
     this.singleChanges();
   }
 
@@ -93,48 +73,46 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
   buildForm(): void {
     this.createForm = this.formBuilder.group({
       basicData: new FormGroup({
-        name: new FormControl('', Validators.required),
-        name_lat: new FormControl('', [Validators.required]),
-        surname: new FormControl('', Validators.required),
-        surname_lat: new FormControl('', [Validators.required]),
-        patronymic: new FormControl(''),
-        birthday: new FormControl('', [Validators.required]), // проверить на правильность введенных данных
-        email: new FormControl('', [Validators.required, Validators.email]),
-        phone: new FormControl('', [
+        doc_type: new FormControl(null, Validators.required),
+        name: new FormControl(null, Validators.required),
+        surname: new FormControl(null, Validators.required),
+        patronymic: new FormControl(null),
+        birthday: new FormControl(null, [Validators.required]),
+        email: new FormControl(null, [Validators.required, Validators.email]),
+        phone: new FormControl(null, [
           Validators.required,
           Validators.minLength(11),
         ]),
-        sex: new FormControl('', [Validators.required]),
+        sex: new FormControl(null, [Validators.required]),
       }),
       document: new FormGroup({
-        citizenship: new FormControl('', Validators.required),
-        passport_number: new FormControl('', Validators.required),
-        passport_org: new FormControl('', Validators.required),
-        passport_date: new FormControl('', [Validators.required]),
+        passport_number: new FormControl(null, Validators.required),
+        passport_org: new FormControl(null, Validators.required),
+        passport_date: new FormControl(null, [Validators.required]),
       }),
       registerAddress: new FormGroup({
-        adress_reg_country: new FormControl('', Validators.required),
-        adress_reg_region: new FormControl('', Validators.required),
-        adress_reg_area: new FormControl('', Validators.required),
-        adress_reg_city: new FormControl('', Validators.required),
-        adress_reg_street: new FormControl('', Validators.required),
-        adress_reg_building: new FormControl('', Validators.required),
-        adress_reg_flat: new FormControl(''),
+        adress_reg_country: new FormControl(null, Validators.required),
+        adress_reg_region: new FormControl(null, Validators.required),
+        adress_reg_area: new FormControl(null, Validators.required),
+        adress_reg_city: new FormControl(null, Validators.required),
+        adress_reg_street: new FormControl(null, Validators.required),
+        adress_reg_building: new FormControl(null, Validators.required),
+        adress_reg_flat: new FormControl(null),
       }),
       actualResidence: new FormGroup({
-        adress_single: new FormControl(''),
-        adress_fact_country: new FormControl('', Validators.required),
-        adress_fact_region: new FormControl('', Validators.required),
-        adress_fact_area: new FormControl('', Validators.required),
-        adress_fact_city: new FormControl('', Validators.required),
-        adress_fact_street: new FormControl('', Validators.required),
-        adress_fact_building: new FormControl('', Validators.required),
-        adress_fact_flat: new FormControl(''),
+        adress_single: new FormControl(null),
+        adress_fact_country: new FormControl(null, Validators.required),
+        adress_fact_region: new FormControl(null, Validators.required),
+        adress_fact_area: new FormControl(null, Validators.required),
+        adress_fact_city: new FormControl(null, Validators.required),
+        adress_fact_street: new FormControl(null, Validators.required),
+        adress_fact_building: new FormControl(null, Validators.required),
+        adress_fact_flat: new FormControl(null),
       }),
       workplace: new FormGroup({
-        company: new FormControl(''),
-        company_address: new FormControl(''),
-        position: new FormControl(''),
+        company: new FormControl(null),
+        company_address: new FormControl(null),
+        position: new FormControl(null),
       }),
     });
   }
@@ -142,12 +120,14 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
   getQuestionnaire(): void {
     this.route.params
       .pipe(
-        switchMap((e) => this.questionnairesService.getQuestionnaire(+e.id))
+        switchMap((e) => this.questionnairesService.getQuestionnaire(+e.id)),
+        takeUntil(this.destroy)
       )
       .subscribe((res) => {
         if (res.id_parent !== 0) {
           this.isChild = true;
           this.removeControls();
+          this.getDocTypes();
         }
         this.setControlsValues(this.createForm, res);
         this.updateAllFields(this.createForm, res.id);
@@ -171,7 +151,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
 
       if (questionnaire.content[key]) {
         if (questionnaire.content[key] === '0001-01-01T00:00:00') {
-          formControl.setValue(null);
+          formControl.setValue('2000-01-01T00:00:00');
         } else {
           formControl.setValue(questionnaire.content[key]);
         }
@@ -191,7 +171,8 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
             debounceTime(800),
             distinctUntilChanged(),
             switchMap((res: string) => this.updateSingleField(res, key, id)),
-            retry()
+            retry(),
+            takeUntil(this.destroy)
           )
           .subscribe();
       }
@@ -211,32 +192,8 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
   }
 
   getQueryParams(): void {
-    this.route.queryParams.subscribe((e) => {
+    this.route.queryParams.pipe(takeUntil(this.destroy)).subscribe((e) => {
       this.currentStep = +e.step;
-    });
-  }
-
-  nameControlChanges(): void {
-    const name = this.createForm.get('basicData').get('name');
-    const name_lat = this.createForm.get('basicData').get('name_lat');
-
-    name.valueChanges.subscribe((res: string) => {
-      if (!name_lat.touched) {
-        name_lat.markAsTouched();
-      }
-      name_lat.setValue(this.cyrillicToLatin.transform(res));
-    });
-  }
-
-  surnameControlChanges(): void {
-    const surname = this.createForm.get('basicData').get('surname');
-    const surname_lat = this.createForm.get('basicData').get('surname_lat');
-
-    surname.valueChanges.subscribe((res: string) => {
-      if (!surname_lat.touched) {
-        surname_lat.markAsTouched();
-      }
-      surname_lat.setValue(this.cyrillicToLatin.transform(res));
     });
   }
 
@@ -294,6 +251,59 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
           this.createForm.get('actualResidence').enable();
         }
       });
+  }
+
+  getDocTypes(): void {
+    this.questionnairesService
+      .getDocumentTypes(this.isChild)
+      .pipe(takeUntil(this.destroy))
+      .subscribe((res) => {
+        this.doctypes = res;
+        this.docTypeChanges();
+      });
+  }
+
+  docTypeChanges(): void {
+    const basicData = this.createForm.get('basicData');
+
+    basicData.get('doc_type').valueChanges.subscribe((val: string) => {
+      this.activeDoctype = this.doctypes.find((doc) => doc.val === val);
+      this.setLanguageValidator();
+      basicData.get('name').updateValueAndValidity();
+      basicData.get('surname').updateValueAndValidity();
+    });
+  }
+
+  setLanguageValidator(): void {
+    const basicData = this.createForm.get('basicData');
+
+    if (this.activeDoctype.fioLat) {
+      basicData
+        .get('name')
+        .setValidators([
+          Validators.required,
+          Validators.pattern('^[a-zA-Z ]*$'),
+        ]);
+      basicData
+        .get('surname')
+        .setValidators([
+          Validators.required,
+          Validators.pattern('^[a-zA-Z ]*$'),
+        ]);
+    } else {
+      basicData
+        .get('name')
+        .setValidators([
+          Validators.required,
+          Validators.pattern('^[а-яА-Я ]*$'),
+        ]);
+      basicData
+        .get('surname')
+        .setValidators([
+          Validators.required,
+          Validators.pattern('^[а-яА-Я ]*$'),
+        ]);
+    }
   }
 
   equalizeAddresses(res): void {

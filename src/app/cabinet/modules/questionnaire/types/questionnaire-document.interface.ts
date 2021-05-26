@@ -1,5 +1,5 @@
 export interface QuestionnaireDocumentInterface {
-  citizenship: string;
+  doc_type: string;
   docNumber: string;
   issued: string;
   issueDate: string;

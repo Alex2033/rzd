@@ -125,16 +125,9 @@
       <input
         type="text"
         name="adress_reg_city"
-        type="text"
         matInput
         formControlName="adress_reg_city"
-        [matAutocomplete]="auto"
       />
-      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-        <mat-option *ngFor="let city of cities" [value]="city">
-          {{ city }}
-        </mat-option>
-      </mat-autocomplete>
 
       <button
         *ngIf="registerAddress.get('adress_reg_city').value"
