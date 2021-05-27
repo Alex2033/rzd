@@ -176,25 +176,29 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
             debounceTime(800),
             distinctUntilChanged(),
             switchMap((res: string) => this.updateSingleField(res, key, id)),
-            retry(),
             catchError((err) => {
               if (err.error.error === 'FIO_LANG_MISMATCH') {
                 const name = this.createForm.get('basicData').get('name');
                 const surname = this.createForm.get('basicData').get('surname');
 
+                this.createForm.get('document').reset();
+
+                name.setValue(null);
+                surname.setValue(null);
+
+                surname.markAsTouched();
+                name.markAsTouched();
+
                 name.setErrors({
                   not_correct: true,
                 });
-                name.markAsTouched();
-                name.setValue(null);
                 surname.setErrors({
                   not_correct: true,
                 });
-                surname.markAsTouched();
-                surname.setValue(null);
               }
               return of(err);
             }),
+            retry(),
             takeUntil(this.destroy)
           )
           .subscribe();
@@ -205,6 +209,9 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
   updateSingleField(res: string, key: string, id: number): Observable<void> {
     if (key === 'birthday' || key === 'passport_date') {
       res = this.datePipe.transform(res, 'YYYY-MM-dd T HH:mm:ss');
+    }
+    if ((key === 'name' || key === 'surname') && !res) {
+      return of();
     }
     const updatedField: UpdatedFieldInterface = {
       id_anketa: id,

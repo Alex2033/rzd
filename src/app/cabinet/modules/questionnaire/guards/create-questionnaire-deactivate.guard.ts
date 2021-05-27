@@ -25,11 +25,11 @@ export class CreateQuestionnaireDeactivateGuard
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (!component.createForm.get('basicData').get('name').value) {
-      return this.questionnairesService
-        .delete(route.params.id)
-        .pipe(map(() => true));
-    }
+    // if (!component.createForm.get('basicData').get('name').value) {
+    //   return this.questionnairesService
+    //     .delete(route.params.id)
+    //     .pipe(map(() => true));
+    // }
     return true;
   }
 }
