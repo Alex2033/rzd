@@ -39,57 +39,7 @@
     </mat-form-field>
   </div>
 
-  <!-- region -->
-  <div class="form-control">
-    <mat-form-field appearance="outline">
-      <mat-label>Регион</mat-label>
-
-      <input
-        name="adress_reg_region"
-        type="text"
-        matInput
-        formControlName="adress_reg_region"
-      />
-
-      <button
-        *ngIf="registerAddress.get('adress_reg_region').value"
-        (click)="registerAddress.get('adress_reg_region').setValue(null)"
-        type="button"
-        class="icon-button clear-button"
-      >
-        <svg width="2rem" height="2rem">
-          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
-        </svg>
-      </button>
-    </mat-form-field>
-  </div>
-
-  <!-- area -->
-  <div class="form-control">
-    <mat-form-field appearance="outline">
-      <mat-label>Район</mat-label>
-
-      <input
-        name="adress_reg_area"
-        type="text"
-        matInput
-        formControlName="adress_reg_area"
-      />
-
-      <button
-        *ngIf="registerAddress.get('adress_reg_area').value"
-        (click)="registerAddress.get('adress_reg_area').setValue(null)"
-        type="button"
-        class="icon-button clear-button"
-      >
-        <svg width="2rem" height="2rem">
-          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
-        </svg>
-      </button>
-    </mat-form-field>
-  </div>
-
-  <!-- area -->
+  <!-- city -->
   <div class="form-control">
     <mat-form-field appearance="outline">
       <mat-label

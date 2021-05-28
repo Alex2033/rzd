@@ -95,8 +95,6 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
       }),
       registerAddress: new FormGroup({
         adress_reg_country: new FormControl(null, Validators.required),
-        adress_reg_region: new FormControl(null),
-        adress_reg_area: new FormControl(null),
         adress_reg_city: new FormControl(null, Validators.required),
         adress_reg_street: new FormControl(null, Validators.required),
         adress_reg_building: new FormControl(null, Validators.required),
@@ -105,8 +103,6 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
       actualResidence: new FormGroup({
         adress_single: new FormControl(null),
         adress_fact_country: new FormControl(null, Validators.required),
-        adress_fact_region: new FormControl(null),
-        adress_fact_area: new FormControl(null),
         adress_fact_city: new FormControl(null, Validators.required),
         adress_fact_street: new FormControl(null, Validators.required),
         adress_fact_building: new FormControl(null, Validators.required),
@@ -210,8 +206,6 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
     if (this.createForm.get('actualResidence').get('adress_single').value) {
       if (
         key === 'adress_fact_country' ||
-        key === 'adress_fact_region' ||
-        key === 'adress_fact_area' ||
         key === 'adress_fact_city' ||
         key === 'adress_fact_street' ||
         key === 'adress_fact_building' ||
@@ -260,10 +254,15 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
         (doc) =>
           doc.val === this.createForm.get('basicData').get('doc_type').value
       );
-      this.setLanguageValidator();
-      this.createForm.get('basicData').get('name').updateValueAndValidity();
-      this.createForm.get('basicData').get('surname').updateValueAndValidity();
-      this.isLoading = false;
+      if (this.activeDoctype) {
+        this.setLanguageValidator();
+        this.createForm.get('basicData').get('name').updateValueAndValidity();
+        this.createForm
+          .get('basicData')
+          .get('surname')
+          .updateValueAndValidity();
+        this.isLoading = false;
+      }
     }
 
     if (this.currentGroup.valid && this.currentStep <= this.formLength) {
@@ -378,8 +377,6 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
     actualResidence.setValue({
       adress_single: res,
       adress_fact_country: controls['adress_reg_country'].value,
-      adress_fact_region: controls['adress_reg_region'].value,
-      adress_fact_area: controls['adress_reg_area'].value,
       adress_fact_city: controls['adress_reg_city'].value,
       adress_fact_street: controls['adress_reg_street'].value,
       adress_fact_building: controls['adress_reg_building'].value,
