@@ -8,7 +8,6 @@ import { FormGroup } from '@angular/forms';
 })
 export class ActualResidenceComponent implements OnInit {
   @Input() actualResidence: FormGroup;
-  @Input() cities: string[] = [];
 
   constructor() {}
 

@@ -31,12 +31,6 @@ import { UpdatedFieldInterface } from '../../types/updated-field.interface';
 export class AdultCreateComponent implements OnInit, OnDestroy {
   public createForm: FormGroup;
   public currentStep: number = 1;
-  public cities: string[] = [
-    'с. Кудиново, Калужская обл.',
-    'с. Кудиново, Калужская обл.',
-    'с. Кудиново, Калужская обл.',
-    'с. Кудиново, Калужская обл.',
-  ];
   public isChild: boolean = false;
   public doctypes: DoctypeInterface[] = [];
   public activeDoctype: DoctypeInterface;

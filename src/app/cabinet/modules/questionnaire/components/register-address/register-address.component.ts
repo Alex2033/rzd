@@ -8,7 +8,6 @@ import { FormGroup } from '@angular/forms';
 })
 export class RegisterAddressComponent implements OnInit {
   @Input() registerAddress: FormGroup;
-  @Input() cities: string[] = [];
 
   constructor() {}
 
