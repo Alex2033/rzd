@@ -14,7 +14,7 @@
 
     <form [formGroup]="form" (submit)="submit()" class="questions-content">
       <div class="question-item">
-        <p>Выезжали ли вы за пределы РФ?</p>
+        <p>Выезжали ли вы за пределы РФ за последние 14 дней?</p>
         <mat-radio-group formControlName="been_abroad" color="primary">
           <mat-radio-button [value]="true">Да</mat-radio-button>
           <mat-radio-button [value]="false">Нет</mat-radio-button>
@@ -34,7 +34,7 @@
         <p>
           Я контактировал с людьми, находящимися на карантине или имеющими
           подтвержденное заболеевание “Коронавирусная инфекция, вызванная
-          вирусом COVID-19”
+          вирусом COVID-19 за последние 14 дней”
         </p>
         <mat-radio-group formControlName="patientContact" color="primary">
           <mat-radio-button [value]="true">Да</mat-radio-button>
