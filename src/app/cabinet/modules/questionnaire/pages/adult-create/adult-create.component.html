@@ -1,65 +1,77 @@
-<div class="page-content">
-  <div class="page-container">
-    <div class="page-top">
-      <a (click)="back()" class="back-link">
-        <svg width="1rem" height="1rem">
-          <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
-        </svg>
-        <span>Назад</span>
-      </a>
+<ng-container *ngIf="pageLoaded">
+  <div class="page-content">
+    <div class="page-container">
+      <div class="page-top">
+        <a (click)="back()" class="back-link">
+          <svg width="1rem" height="1rem">
+            <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
+          </svg>
+          <span>Назад</span>
+        </a>
 
-      <a class="close" [routerLink]="['/cabinet', 'questionnaires']">Закрыть</a>
+        <a class="close" [routerLink]="['/cabinet', 'questionnaires']"
+          >Закрыть</a
+        >
+      </div>
+
+      <form (submit)="submit()" [formGroup]="createForm" class="create-form">
+        <h2 class="subtitle create-form-title">
+          Шаг {{ currentStep }} из {{ formLength }}
+          <svg
+            class="child-icon"
+            width="2.4rem"
+            height="2.25rem"
+            *ngIf="isChild"
+          >
+            <use xlink:href="assets/sprites/icons.svg#little-kid"></use>
+          </svg>
+        </h2>
+
+        <!-- todo попробовать сделать так, чтобы пользователь не мог вообще вводить слова в зависимости от языка -->
+        <!-- <input type="text" (keypress)="keyPressAlphaNumeric($event)" /> -->
+
+        <app-basic-data
+          [basicData]="currentGroup"
+          [doctypes]="doctypes"
+          *ngIf="currentStep === 1"
+          [isChild]="isChild"
+          [today]="today"
+          [activeDoctype]="activeDoctype"
+        ></app-basic-data>
+        <app-document-step
+          [today]="today"
+          [documentStep]="currentGroup"
+          [activeDoctype]="activeDoctype"
+          *ngIf="currentStep === 2"
+        ></app-document-step>
+        <app-register-address
+          [registerAddress]="currentGroup"
+          *ngIf="currentStep === 3"
+        ></app-register-address>
+        <app-actual-residence
+          [actualResidence]="currentGroup"
+          *ngIf="currentStep === 4"
+        ></app-actual-residence>
+        <app-workplace
+          [workplace]="currentGroup"
+          *ngIf="currentStep === 5"
+        ></app-workplace>
+      </form>
     </div>
-
-    <form (submit)="submit()" [formGroup]="createForm" class="create-form">
-      <h2 class="subtitle create-form-title">
-        Шаг {{ currentStep }} из {{ formLength }}
-        <svg class="child-icon" width="2.4rem" height="2.25rem" *ngIf="isChild">
-          <use xlink:href="assets/sprites/icons.svg#little-kid"></use>
-        </svg>
-      </h2>
-
-      <app-basic-data
-        [basicData]="currentGroup"
-        [doctypes]="doctypes"
-        *ngIf="currentStep === 1"
-        [isChild]="isChild"
-        [today]="today"
-        [activeDoctype]="activeDoctype"
-      ></app-basic-data>
-      <app-document-step
-        [today]="today"
-        [documentStep]="currentGroup"
-        [activeDoctype]="activeDoctype"
-        *ngIf="currentStep === 2"
-      ></app-document-step>
-      <app-register-address
-        [registerAddress]="currentGroup"
-        *ngIf="currentStep === 3"
-      ></app-register-address>
-      <app-actual-residence
-        [actualResidence]="currentGroup"
-        *ngIf="currentStep === 4"
-      ></app-actual-residence>
-      <app-workplace
-        [workplace]="currentGroup"
-        *ngIf="currentStep === 5"
-      ></app-workplace>
-    </form>
   </div>
-</div>
 
-<div class="buttons">
-  <button
-    [class.is-loading]="isLoading"
-    [disabled]="isLoading"
-    type="button"
-    (click)="next()"
-    class="button next-button"
-  >
-    <span>Далее</span>
-    <svg class="arrow-next" width="1.6rem" height="1.6rem">
-      <use xlink:href="assets/sprites/icons.svg#next"></use>
-    </svg>
-  </button>
-</div>
+  <div class="buttons">
+    <button
+      [class.is-loading]="isLoading"
+      [disabled]="isLoading"
+      type="button"
+      (click)="next()"
+      class="button next-button"
+    >
+      <span>Далее</span>
+      <svg class="arrow-next" width="1.6rem" height="1.6rem">
+        <use xlink:href="assets/sprites/icons.svg#next"></use>
+      </svg>
+    </button>
+  </div>
+</ng-container>

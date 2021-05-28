@@ -36,6 +36,9 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
   public activeDoctype: DoctypeInterface;
   public today: Date = new Date();
   public isLoading: boolean = false;
+  public questionnaire: QuestionnaireDetailInterface =
+    {} as QuestionnaireDetailInterface;
+  public pageLoaded: boolean = false;
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -61,6 +64,18 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
     this.getQueryParams();
     this.singleChanges();
   }
+
+  // todo попробовать сделать так, чтобы пользователь не мог вообще вводить слова в зависимости от языка
+  // keyPressAlphaNumeric(event: KeyboardEvent) {
+  //   let inp = String.fromCharCode(event.keyCode);
+
+  //   if (/^[a-zA-Z ]*$/.test(inp)) {
+  //     return true;
+  //   } else {
+  //     event.preventDefault();
+  //     return false;
+  //   }
+  // }
 
   ngOnDestroy(): void {
     this.destroy.next(null);
@@ -114,24 +129,37 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
     this.route.params
       .pipe(
         switchMap((e) => this.questionnairesService.getQuestionnaire(+e.id)),
+        switchMap((res) => {
+          this.questionnaire = res;
+          if (res.id_parent !== 0) {
+            this.isChild = true;
+            this.createForm.removeControl('workplace');
+            return this.questionnairesService.getQuestionnaire(res.id_parent);
+          }
+          return of(null);
+        }),
+        switchMap((res) => {
+          if (res) {
+            this.setEmailPhone(res);
+          }
+          return this.questionnairesService.getDocumentTypes(this.isChild);
+        }),
         takeUntil(this.destroy)
       )
       .subscribe((res) => {
-        if (res.id_parent !== 0) {
-          this.isChild = true;
-          this.removeControls();
-        }
-        this.getDocTypes();
-
-        this.setControlsValues(this.createForm, res);
-        this.updateAllFields(this.createForm, res.id);
+        this.doctypes = res;
+        this.docTypeChanges();
+        this.setControlsValues(this.createForm, this.questionnaire);
+        this.updateAllFields(this.createForm, this.questionnaire.id);
+        this.pageLoaded = true;
       });
   }
 
-  removeControls(): void {
-    (this.createForm.get('basicData') as FormGroup).removeControl('email');
-    (this.createForm.get('basicData') as FormGroup).removeControl('phone');
-    this.createForm.removeControl('workplace');
+  setEmailPhone(parent: QuestionnaireDetailInterface): void {
+    const group = this.createForm.get('basicData');
+
+    group.get('email').setValue(parent.content.email);
+    group.get('phone').setValue(parent.content.phone);
   }
 
   setControlsValues(group, questionnaire: QuestionnaireDetailInterface): void {
@@ -163,35 +191,21 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
         formControl.valueChanges
           .pipe(
             tap(() => (this.isLoading = true)),
+
             debounceTime(800),
-            distinctUntilChanged(),
             switchMap((res: string) => this.updateSingleField(res, key, id)),
             catchError((err) => {
               if (err.error.error === 'FIO_LANG_MISMATCH') {
-                const name = this.createForm.get('basicData').get('name');
-                const surname = this.createForm.get('basicData').get('surname');
-
-                this.createForm.get('document').reset();
-
-                name.setValue(null);
-                surname.setValue(null);
-
-                surname.markAsTouched();
-                name.markAsTouched();
-
-                name.setErrors({
-                  not_correct: true,
-                });
-                surname.setErrors({
-                  not_correct: true,
-                });
+                this.fioMismatch();
               }
-              return of(err);
+              return of();
             }),
             retry(),
             takeUntil(this.destroy)
           )
-          .subscribe();
+          .subscribe(() => {
+            this.isLoading = false;
+          });
       }
     });
   }
@@ -205,7 +219,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
         key === 'adress_fact_building' ||
         key === 'adress_fact_flat'
       ) {
-        this.isLoading = false;
+        // this.isLoading = false;
         return of(null);
       }
     }
@@ -215,7 +229,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
     }
 
     if (!res && key !== 'adress_single') {
-      this.isLoading = false;
+      // this.isLoading = false;
       return of(null);
     }
 
@@ -225,9 +239,27 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
       new_val: res?.toString(),
     };
 
-    return this.questionnairesService
-      .updateField(updatedField)
-      .pipe(finalize(() => (this.isLoading = false)));
+    return this.questionnairesService.updateField(updatedField);
+  }
+
+  fioMismatch(): void {
+    const name = this.createForm.get('basicData').get('name');
+    const surname = this.createForm.get('basicData').get('surname');
+
+    this.createForm.get('document').reset();
+
+    name.setValue(null);
+    surname.setValue(null);
+
+    surname.markAsTouched();
+    name.markAsTouched();
+
+    name.setErrors({
+      not_correct: true,
+    });
+    surname.setErrors({
+      not_correct: true,
+    });
   }
 
   getQueryParams(): void {
@@ -310,16 +342,6 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
       });
   }
 
-  getDocTypes(): void {
-    this.questionnairesService
-      .getDocumentTypes(this.isChild)
-      .pipe(takeUntil(this.destroy))
-      .subscribe((res) => {
-        this.doctypes = res;
-        this.docTypeChanges();
-      });
-  }
-
   docTypeChanges(): void {
     const basicData = this.createForm.get('basicData');
 
@@ -339,26 +361,26 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
         .get('name')
         .setValidators([
           Validators.required,
-          Validators.pattern('^[a-zA-Z ]*$'),
+          Validators.pattern('^[a-zA-Z]*$'),
         ]);
       basicData
         .get('surname')
         .setValidators([
           Validators.required,
-          Validators.pattern('^[a-zA-Z ]*$'),
+          Validators.pattern('^[a-zA-Z]*$'),
         ]);
     } else {
       basicData
         .get('name')
         .setValidators([
           Validators.required,
-          Validators.pattern('^[а-яА-Я ]*$'),
+          Validators.pattern('^[а-яА-Я]*$'),
         ]);
       basicData
         .get('surname')
         .setValidators([
           Validators.required,
-          Validators.pattern('^[а-яА-Я ]*$'),
+          Validators.pattern('^[а-яА-Я]*$'),
         ]);
     }
   }
