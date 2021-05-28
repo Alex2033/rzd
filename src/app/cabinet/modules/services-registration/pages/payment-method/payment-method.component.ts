@@ -128,7 +128,7 @@ export class PaymentMethodComponent implements OnInit {
     if (err instanceof HttpErrorResponse) {
       if (err.error.error === 'MEDME_SEND_ERROR') {
         this.resend = true;
-        alert('Ошибка');
+        alert(`Ошибка: ${err.error.error}`);
       } else {
         this.router.navigate(
           [

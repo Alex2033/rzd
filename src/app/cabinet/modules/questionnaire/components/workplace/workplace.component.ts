@@ -12,7 +12,6 @@ export class WorkplaceComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.toggleWorkplaceValidators();
     this.companyControlChanges();
   }
 

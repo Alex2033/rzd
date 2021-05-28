@@ -55,10 +55,19 @@
             <div class="questionnaire-info">
               <div class="questionnaire-personal-info">
                 <div class="questionnaire-fio">
-                  <div class="questionnare-surname">
-                    {{ questionnaire.surname }}
-                  </div>
-                  {{ questionnaire.name }} {{ questionnaire.patronymic }}
+                  <ng-container
+                    *ngIf="questionnaire.surname || questionnaire.name"
+                  >
+                    <div class="questionnare-surname">
+                      {{ questionnaire.surname }}
+                    </div>
+                    {{ questionnaire.name }} {{ questionnaire.patronymic }}
+                  </ng-container>
+                  <ng-container
+                    *ngIf="!questionnaire.surname && !questionnaire.name"
+                  >
+                    (не заполнено)
+                  </ng-container>
                 </div>
                 <div class="questionnaire-age">
                   {{ questionnaire.age }}
@@ -136,10 +145,15 @@
                 </div>
                 <div class="questionnaire-personal-info">
                   <div class="questionnaire-fio">
-                    <div class="questionnare-surname">
-                      {{ child.surname }}
-                    </div>
-                    {{ child.name }} {{ child.patronymic }}
+                    <ng-container *ngIf="child.surname || child.name">
+                      <div class="questionnare-surname">
+                        {{ child.surname }}
+                      </div>
+                      {{ child.name }} {{ child.patronymic }}
+                    </ng-container>
+                    <ng-container *ngIf="!child.surname && !child.name">
+                      (не заполнено)
+                    </ng-container>
                   </div>
                   <div class="questionnaire-age">
                     {{ child.age }}

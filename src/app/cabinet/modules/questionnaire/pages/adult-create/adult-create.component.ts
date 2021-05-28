@@ -1,5 +1,4 @@
 import { DatePipe } from '@angular/common';
-import { HttpResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -13,9 +12,11 @@ import {
   catchError,
   debounceTime,
   distinctUntilChanged,
+  finalize,
   retry,
   switchMap,
   takeUntil,
+  tap,
 } from 'rxjs/operators';
 import { QuestionnairesService } from '../../services/questionnaires.service';
 import { DoctypeInterface } from '../../types/doctype.interface';
@@ -40,6 +41,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
   public doctypes: DoctypeInterface[] = [];
   public activeDoctype: DoctypeInterface;
   public today: Date = new Date();
+  public isLoading: boolean = false;
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -153,10 +155,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
 
       if (questionnaire.content[key]) {
         if (questionnaire.content[key] === '0001-01-01T00:00:00') {
-          // todo решить этот костыль
-          setTimeout(() => {
-            formControl.setValue('2000-01-01T00:00:00');
-          });
+          return;
         } else {
           formControl.setValue(questionnaire.content[key]);
         }
@@ -173,6 +172,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
       } else {
         formControl.valueChanges
           .pipe(
+            tap(() => (this.isLoading = true)),
             debounceTime(800),
             distinctUntilChanged(),
             switchMap((res: string) => this.updateSingleField(res, key, id)),
@@ -207,18 +207,39 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
   }
 
   updateSingleField(res: string, key: string, id: number): Observable<void> {
+    if (this.createForm.get('actualResidence').get('adress_single').value) {
+      if (
+        key === 'adress_fact_country' ||
+        key === 'adress_fact_region' ||
+        key === 'adress_fact_area' ||
+        key === 'adress_fact_city' ||
+        key === 'adress_fact_street' ||
+        key === 'adress_fact_building' ||
+        key === 'adress_fact_flat'
+      ) {
+        this.isLoading = false;
+        return of(null);
+      }
+    }
+
     if (key === 'birthday' || key === 'passport_date') {
       res = this.datePipe.transform(res, 'YYYY-MM-dd T HH:mm:ss');
     }
-    if ((key === 'name' || key === 'surname') && !res) {
-      return of();
+
+    if (!res && key !== 'adress_single') {
+      this.isLoading = false;
+      return of(null);
     }
+
     const updatedField: UpdatedFieldInterface = {
       id_anketa: id,
       field: key,
       new_val: res?.toString(),
     };
-    return this.questionnairesService.updateField(updatedField);
+
+    return this.questionnairesService
+      .updateField(updatedField)
+      .pipe(finalize(() => (this.isLoading = false)));
   }
 
   getQueryParams(): void {
@@ -228,10 +249,23 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
   }
 
   submit(): void {
-    this.router.navigate(['/cabinet', 'questionnaires']);
+    if (!this.isLoading) {
+      this.router.navigate(['/cabinet', 'questionnaires']);
+    }
   }
 
   next(): void {
+    if (this.currentStep === 1) {
+      this.activeDoctype = this.doctypes.find(
+        (doc) =>
+          doc.val === this.createForm.get('basicData').get('doc_type').value
+      );
+      this.setLanguageValidator();
+      this.createForm.get('basicData').get('name').updateValueAndValidity();
+      this.createForm.get('basicData').get('surname').updateValueAndValidity();
+      this.isLoading = false;
+    }
+
     if (this.currentGroup.valid && this.currentStep <= this.formLength) {
       this.currentStep += 1;
 

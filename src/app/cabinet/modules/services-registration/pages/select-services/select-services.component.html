@@ -36,7 +36,7 @@
             color="primary"
           >
             <mat-radio-button
-              *ngFor="let service of services$ | async"
+              *ngFor="let service of services"
               [value]="service.id"
             >
               <div class="service-name">{{ service.name }}</div>
@@ -56,10 +56,7 @@
       (ngModelChange)="selectionChange($event)"
       color="primary"
     >
-      <mat-radio-button
-        *ngFor="let service of services$ | async"
-        [value]="service.id"
-      >
+      <mat-radio-button *ngFor="let service of services" [value]="service.id">
         <div class="service-name">{{ service.name }}</div>
         <div class="service-price">
           {{ service.price }}{{ service.priceType }}
@@ -70,7 +67,7 @@
   <div class="page-container">
     <div class="total-sum">
       <span>Итого:</span>
-      <span class="service-price">{{ order.sum ? order.sum : 0 }}&#8381;</span>
+      <span class="service-price">{{ order.sum }}&#8381;</span>
     </div>
   </div>
 </div>

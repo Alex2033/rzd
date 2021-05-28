@@ -29,6 +29,13 @@ export class OrdersService {
     return this.http.get<OrderInterface[]>(environment.api + 'api/order');
   }
 
+  updateOrder(order: OrderInterface): Observable<void> {
+    return this.http.put<void>(
+      environment.api + `api/order/${order.id}`,
+      order
+    );
+  }
+
   getDocuments(
     id: number,
     langId: number = this.langId

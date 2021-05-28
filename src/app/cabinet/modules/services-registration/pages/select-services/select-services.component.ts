@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, ReplaySubject } from 'rxjs';
-import { shareReplay, switchMap } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { OrdersService } from 'src/app/shared/services/orders.service';
 import { ServicesRegistrationService } from 'src/app/shared/services/services-registration.service';
 import { ServicesService } from 'src/app/shared/services/services.service';
@@ -18,7 +18,7 @@ import { QuestionnaireInterface } from '../../../questionnaire/types/questionnai
 })
 export class SelectServicesComponent implements OnInit, OnDestroy {
   public questionnaires$: Observable<QuestionnaireInterface[]>;
-  public services$: Observable<ServiceInterface[]>;
+  public services: ServiceInterface[] = [];
   public selectedService: ServiceInterface;
   public separateSelected: ServiceInterface[] = [];
   public selectEach: boolean = false;
@@ -30,7 +30,7 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
   constructor(
     public servicesRegistration: ServicesRegistrationService,
     public questionnairesService: QuestionnairesService,
-    private services: ServicesService,
+    private servicesService: ServicesService,
     private router: Router,
     private ordersService: OrdersService,
     private route: ActivatedRoute
@@ -61,6 +61,14 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
               this.separateSelected.push(service.id_service);
             });
           });
+          const servicesEqual = this.separateSelected.every(
+            (v) => v === this.separateSelected[0]
+          );
+          if (!servicesEqual) {
+            this.selectEach = true;
+          } else {
+            this.selectedService = this.separateSelected[0];
+          }
           this.servicesRegistration.setOrder(res);
         }
       });
@@ -69,21 +77,32 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
   initializeValues(): void {
     this.order = this.servicesRegistration.order;
     this.questionnaires$ = this.questionnairesService.getQuestionnaires();
-    this.services$ = this.services.getServices().pipe(shareReplay());
+    this.servicesService
+      .getServices(this.order.id_point)
+      .pipe(takeUntil(this.destroy))
+      .subscribe((res) => {
+        this.services = res;
+      });
   }
 
   selectService(): void {
     this.servicesRegistration.setOrder(this.order);
     if (this.orderId) {
-      this.router.navigate(
-        ['/cabinet', 'services-registration', 'document', this.orderId],
-        {
-          queryParams: {
-            questionnaireNum: 1,
-            docIndex: 1,
-          },
-        }
-      );
+      this.ordersService
+        .updateOrder(this.order)
+        .pipe(takeUntil(this.destroy))
+        .subscribe(() => {
+          this.router.navigate(
+            ['/cabinet', 'services-registration', 'document', this.orderId],
+            {
+              queryParams: {
+                questionnaireNum: 1,
+                docIndex: 1,
+              },
+            }
+          );
+        });
+
       return;
     }
 
@@ -100,7 +119,7 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
           }
         );
       },
-      () => alert('Ошибка')
+      (err) => alert(`Ошибка: ${err.error.error}`)
     );
   }
 

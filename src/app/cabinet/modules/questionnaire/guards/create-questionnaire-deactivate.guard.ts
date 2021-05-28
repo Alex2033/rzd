@@ -25,11 +25,17 @@ export class CreateQuestionnaireDeactivateGuard
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    // if (!component.createForm.get('basicData').get('name').value) {
-    //   return this.questionnairesService
-    //     .delete(route.params.id)
-    //     .pipe(map(() => true));
-    // }
+    if (this.isFormEmpty(component.createForm.value)) {
+      return this.questionnairesService
+        .delete(route.params.id)
+        .pipe(map(() => true));
+    }
     return true;
+  }
+
+  isFormEmpty(object) {
+    return Object.values(object).every((v) =>
+      v && typeof v === 'object' ? this.isFormEmpty(v) : v === 0 || v === null
+    );
   }
 }
