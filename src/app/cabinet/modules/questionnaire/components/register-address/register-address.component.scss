@@ -1,0 +1,37 @@
+@import "theme";
+
+.address-checkboxes {
+  > * {
+    &:not(:first-child) {
+      margin-top: 1rem;
+    }
+  }
+
+  + * {
+    margin-top: 3rem;
+  }
+}
+
+.address-checkbox {
+  .mat-checkbox-label {
+    font-family: "Open Sans", sans-serif;
+  }
+
+  ::ng-deep {
+    .mat-checkbox-layout {
+      white-space: normal;
+    }
+
+    .mat-checkbox-inner-container {
+      margin-top: 0.4rem;
+    }
+  }
+
+  &.mat-checkbox-checked.mat-primary {
+    ::ng-deep {
+      .mat-checkbox-background {
+        background-color: lighten($primary, 17.95%);
+      }
+    }
+  }
+}

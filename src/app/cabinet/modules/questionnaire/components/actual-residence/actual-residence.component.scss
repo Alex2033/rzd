@@ -3,21 +3,3 @@
 .form-controls {
   margin-top: 1.1rem;
 }
-
-.address-single {
-  .mat-checkbox-label {
-    font-family: "Open Sans", sans-serif;
-  }
-
-  &.mat-checkbox-checked.mat-primary {
-    ::ng-deep {
-      .mat-checkbox-background {
-        background-color: lighten($primary, 17.95%);
-      }
-    }
-  }
-
-  + * {
-    margin-top: 3rem;
-  }
-}

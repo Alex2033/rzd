@@ -12,7 +12,6 @@ import {
   catchError,
   debounceTime,
   distinctUntilChanged,
-  finalize,
   retry,
   startWith,
   switchMap,
@@ -104,20 +103,21 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
         passport_org: new FormControl(null, Validators.required),
         passport_date: new FormControl(null, [Validators.required]),
       }),
-      registerAddress: new FormGroup({
-        adress_reg_country: new FormControl(null, Validators.required),
-        adress_reg_city: new FormControl(null, Validators.required),
-        adress_reg_street: new FormControl(null, Validators.required),
-        adress_reg_building: new FormControl(null, Validators.required),
-        adress_reg_flat: new FormControl(null),
-      }),
       actualResidence: new FormGroup({
-        adress_single: new FormControl(null),
         adress_fact_country: new FormControl(null, Validators.required),
         adress_fact_city: new FormControl(null, Validators.required),
         adress_fact_street: new FormControl(null, Validators.required),
         adress_fact_building: new FormControl(null, Validators.required),
         adress_fact_flat: new FormControl(null),
+      }),
+      registerAddress: new FormGroup({
+        missing_address: new FormControl(null),
+        adress_single: new FormControl(null),
+        adress_reg_country: new FormControl(null, Validators.required),
+        adress_reg_city: new FormControl(null, Validators.required),
+        adress_reg_street: new FormControl(null, Validators.required),
+        adress_reg_building: new FormControl(null, Validators.required),
+        adress_reg_flat: new FormControl(null),
       }),
       workplace: new FormGroup({
         company: new FormControl(null),
@@ -154,6 +154,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
         this.doctypes = res;
         this.docTypeChanges();
         this.addressSingleChanges();
+        this.missingAddressChanges();
         this.pageLoaded = true;
       });
   }
@@ -172,16 +173,6 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
         keys: ['email', 'phone'],
       },
       {
-        form: reg,
-        keys: [
-          'adress_reg_country',
-          'adress_reg_city',
-          'adress_reg_street',
-          'adress_reg_building',
-          'adress_reg_flat',
-        ],
-      },
-      {
         form: fact,
         keys: [
           'adress_single',
@@ -190,6 +181,16 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
           'adress_fact_street',
           'adress_fact_building',
           'adress_fact_flat',
+        ],
+      },
+      {
+        form: reg,
+        keys: [
+          'adress_reg_country',
+          'adress_reg_city',
+          'adress_reg_street',
+          'adress_reg_building',
+          'adress_reg_flat',
         ],
       },
     ];
@@ -207,8 +208,6 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
         }
       });
     });
-
-    fact.get('adress_single').setValue(parent.content.adress_single);
   }
 
   setControlsValues(group, questionnaire: QuestionnaireDetailInterface): void {
@@ -370,23 +369,66 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
   }
 
   addressSingleChanges(): void {
-    const controls = (this.createForm.get('actualResidence') as FormGroup)
-      .controls;
+    const reg = this.createForm.get('registerAddress');
 
-    controls['adress_single'].valueChanges
-      .pipe(startWith(controls['adress_single'].value), distinctUntilChanged())
+    reg
+      .get('adress_single')
+      .valueChanges.pipe(
+        startWith(reg.get('adress_single').value),
+        distinctUntilChanged()
+      )
       .subscribe((res) => {
         if (res) {
-          this.createForm.get('actualResidence').disable({ emitEvent: false });
-          this.createForm
-            .get('actualResidence')
-            .get('adress_single')
-            .enable({ emitEvent: false });
+          console.log('adress_single');
+          reg.disable({ emitEvent: false });
+          reg.get('adress_single').enable({ emitEvent: false });
           this.equalizeAddresses();
         } else {
-          this.createForm.get('actualResidence').enable({ emitEvent: false });
+          reg.reset();
+          reg.enable({ emitEvent: false });
         }
       });
+  }
+
+  missingAddressChanges(): void {
+    const reg = this.createForm.get('registerAddress');
+
+    reg
+      .get('missing_address')
+      .valueChanges.pipe(
+        startWith(reg.get('missing_address').value),
+        distinctUntilChanged()
+      )
+      .subscribe((res) => {
+        if (res) {
+          console.log('missing_address');
+          reg.reset({
+            missing_address: reg.get('missing_address').value,
+            adress_single: false,
+          });
+
+          reg.disable({ emitEvent: false });
+          reg.get('missing_address').enable({ emitEvent: false });
+        } else {
+          reg.enable({ emitEvent: false });
+        }
+      });
+  }
+
+  resetRegisterAddress(): void {
+    const reg = this.createForm.get('registerAddress');
+
+    reg.patchValue(
+      {
+        adress_single: false,
+        adress_reg_country: null,
+        adress_reg_city: null,
+        adress_reg_street: null,
+        adress_reg_building: null,
+        adress_reg_flat: null,
+      },
+      { emitEvent: false }
+    );
   }
 
   docTypeChanges(): void {
@@ -433,17 +475,18 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
   }
 
   equalizeAddresses(): void {
-    const controls = (this.createForm.get('registerAddress') as FormGroup)
+    const controls = (this.createForm.get('actualResidence') as FormGroup)
       .controls;
-    const actualResidence = this.createForm.get('actualResidence');
+    const reg = this.createForm.get('registerAddress');
 
-    actualResidence.patchValue(
+    console.log('controls:', controls);
+    reg.patchValue(
       {
-        adress_fact_country: controls['adress_reg_country'].value,
-        adress_fact_city: controls['adress_reg_city'].value,
-        adress_fact_street: controls['adress_reg_street'].value,
-        adress_fact_building: controls['adress_reg_building'].value,
-        adress_fact_flat: controls['adress_reg_flat'].value,
+        adress_reg_country: controls['adress_fact_country'].value,
+        adress_reg_city: controls['adress_fact_city'].value,
+        adress_reg_street: controls['adress_fact_street'].value,
+        adress_reg_building: controls['adress_fact_building'].value,
+        adress_reg_flat: controls['adress_fact_flat'].value,
       },
       { emitEvent: false }
     );

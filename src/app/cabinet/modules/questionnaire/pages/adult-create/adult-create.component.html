@@ -44,14 +44,14 @@
           [activeDoctype]="activeDoctype"
           *ngIf="currentStep === 2"
         ></app-document-step>
-        <app-register-address
-          [registerAddress]="currentGroup"
-          *ngIf="currentStep === 3"
-        ></app-register-address>
         <app-actual-residence
           [actualResidence]="currentGroup"
-          *ngIf="currentStep === 4"
+          *ngIf="currentStep === 3"
         ></app-actual-residence>
+        <app-register-address
+          [registerAddress]="currentGroup"
+          *ngIf="currentStep === 4"
+        ></app-register-address>
         <app-workplace
           [workplace]="currentGroup"
           *ngIf="currentStep === 5"

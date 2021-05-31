@@ -1,6 +1,25 @@
 <div class="create-form-description">Адрес регистрации</div>
 
 <div class="form-controls" [formGroup]="registerAddress">
+  <div class="address-checkboxes">
+    <!-- missing address -->
+    <mat-checkbox
+      class="address-checkbox"
+      color="primary"
+      formControlName="missing_address"
+      >Не применимо / отсутствует</mat-checkbox
+    >
+
+    <!-- single -->
+    <mat-checkbox
+      class="address-checkbox"
+      color="primary"
+      formControlName="adress_single"
+      >Совпадает с адресом фактического проживания или нахождения в
+      РФ</mat-checkbox
+    >
+  </div>
+
   <!-- country -->
   <div class="form-control">
     <mat-form-field appearance="outline">
