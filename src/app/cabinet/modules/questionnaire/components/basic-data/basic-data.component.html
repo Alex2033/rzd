@@ -155,12 +155,11 @@
 
       <input
         matInput
+        placeholder="дд.мм.гггг"
         name="birthday"
         formControlName="birthday"
         [matDatepicker]="picker"
-        readonly
         [max]="today"
-        (click)="picker.open()"
       />
       <mat-datepicker-toggle matSuffix [for]="picker">
         <svg matDatepickerToggleIcon width="2rem" height="2.2rem">

@@ -14,6 +14,7 @@ import {
   distinctUntilChanged,
   finalize,
   retry,
+  startWith,
   switchMap,
   takeUntil,
   tap,
@@ -37,6 +38,8 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
   public today: Date = new Date();
   public isLoading: boolean = false;
   public questionnaire: QuestionnaireDetailInterface =
+    {} as QuestionnaireDetailInterface;
+  public parentQuestionnaire: QuestionnaireDetailInterface =
     {} as QuestionnaireDetailInterface;
   public pageLoaded: boolean = false;
 
@@ -62,7 +65,6 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
     this.buildForm();
     this.getQuestionnaire();
     this.getQueryParams();
-    this.singleChanges();
   }
 
   // todo попробовать сделать так, чтобы пользователь не мог вообще вводить слова в зависимости от языка
@@ -130,7 +132,9 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap((e) => this.questionnairesService.getQuestionnaire(+e.id)),
         switchMap((res) => {
-          this.questionnaire = res;
+          this.setControlsValues(this.createForm, res);
+          this.updateAllFields(this.createForm, res.id);
+
           if (res.id_parent !== 0) {
             this.isChild = true;
             this.createForm.removeControl('workplace');
@@ -140,7 +144,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
         }),
         switchMap((res) => {
           if (res) {
-            this.setEmailPhone(res);
+            this.setChildFromParent(res);
           }
           return this.questionnairesService.getDocumentTypes(this.isChild);
         }),
@@ -149,17 +153,62 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
       .subscribe((res) => {
         this.doctypes = res;
         this.docTypeChanges();
-        this.setControlsValues(this.createForm, this.questionnaire);
-        this.updateAllFields(this.createForm, this.questionnaire.id);
+        this.addressSingleChanges();
         this.pageLoaded = true;
       });
   }
 
-  setEmailPhone(parent: QuestionnaireDetailInterface): void {
-    const group = this.createForm.get('basicData');
+  setChildFromParent(parent: QuestionnaireDetailInterface): void {
+    if (Object.keys(parent).length === 0) {
+      return;
+    }
+    const basicData = this.createForm.get('basicData');
+    const reg = this.createForm.get('registerAddress');
+    const fact = this.createForm.get('actualResidence');
 
-    group.get('email').setValue(parent.content.email);
-    group.get('phone').setValue(parent.content.phone);
+    const controls = [
+      {
+        form: basicData,
+        keys: ['email', 'phone'],
+      },
+      {
+        form: reg,
+        keys: [
+          'adress_reg_country',
+          'adress_reg_city',
+          'adress_reg_street',
+          'adress_reg_building',
+          'adress_reg_flat',
+        ],
+      },
+      {
+        form: fact,
+        keys: [
+          'adress_single',
+          'adress_fact_country',
+          'adress_fact_city',
+          'adress_fact_street',
+          'adress_fact_building',
+          'adress_fact_flat',
+        ],
+      },
+    ];
+
+    controls.forEach((control) => {
+      control.keys.forEach((key) => {
+        if (!control.form.get(key).value) {
+          if (key === 'adress_single') {
+            control.form
+              .get(key)
+              .setValue(parent.content[key], { emitEvent: false });
+          } else {
+            control.form.get(key).setValue(parent.content[key]);
+          }
+        }
+      });
+    });
+
+    fact.get('adress_single').setValue(parent.content.adress_single);
   }
 
   setControlsValues(group, questionnaire: QuestionnaireDetailInterface): void {
@@ -175,7 +224,9 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
         if (questionnaire.content[key] === '0001-01-01T00:00:00') {
           return;
         } else {
-          formControl.setValue(questionnaire.content[key]);
+          formControl.setValue(questionnaire.content[key], {
+            emitEvent: false,
+          });
         }
       }
     });
@@ -191,14 +242,13 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
         formControl.valueChanges
           .pipe(
             tap(() => (this.isLoading = true)),
-
             debounceTime(800),
             switchMap((res: string) => this.updateSingleField(res, key, id)),
             catchError((err) => {
               if (err.error.error === 'FIO_LANG_MISMATCH') {
                 this.fioMismatch();
               }
-              return of();
+              return of(err);
             }),
             retry(),
             takeUntil(this.destroy)
@@ -211,26 +261,19 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
   }
 
   updateSingleField(res: string, key: string, id: number): Observable<void> {
-    if (this.createForm.get('actualResidence').get('adress_single').value) {
-      if (
-        key === 'adress_fact_country' ||
-        key === 'adress_fact_city' ||
-        key === 'adress_fact_street' ||
-        key === 'adress_fact_building' ||
-        key === 'adress_fact_flat'
-      ) {
-        // this.isLoading = false;
-        return of(null);
-      }
-    }
-
+    // преобразование даты для сервера
     if (key === 'birthday' || key === 'passport_date') {
       res = this.datePipe.transform(res, 'YYYY-MM-dd T HH:mm:ss');
     }
 
+    // пустое поле не отправлять в запрос
     if (!res && key !== 'adress_single') {
-      // this.isLoading = false;
       return of(null);
+    }
+
+    // изменение типа документа обнуляет данные документа
+    if (key === 'doc_type') {
+      this.createForm.get('document').reset();
     }
 
     const updatedField: UpdatedFieldInterface = {
@@ -245,8 +288,6 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
   fioMismatch(): void {
     const name = this.createForm.get('basicData').get('name');
     const surname = this.createForm.get('basicData').get('surname');
-
-    this.createForm.get('document').reset();
 
     name.setValue(null);
     surname.setValue(null);
@@ -282,11 +323,14 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
       );
       if (this.activeDoctype) {
         this.setLanguageValidator();
-        this.createForm.get('basicData').get('name').updateValueAndValidity();
+        this.createForm
+          .get('basicData')
+          .get('name')
+          .updateValueAndValidity({ emitEvent: false });
         this.createForm
           .get('basicData')
           .get('surname')
-          .updateValueAndValidity();
+          .updateValueAndValidity({ emitEvent: false });
         this.isLoading = false;
       }
     }
@@ -325,19 +369,22 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
     return groups[index - 1];
   }
 
-  singleChanges(): void {
+  addressSingleChanges(): void {
     const controls = (this.createForm.get('actualResidence') as FormGroup)
       .controls;
 
     controls['adress_single'].valueChanges
-      .pipe(distinctUntilChanged())
+      .pipe(startWith(controls['adress_single'].value), distinctUntilChanged())
       .subscribe((res) => {
         if (res) {
-          this.createForm.get('actualResidence').disable();
-          this.createForm.get('actualResidence').get('adress_single').enable();
-          this.equalizeAddresses(res);
+          this.createForm.get('actualResidence').disable({ emitEvent: false });
+          this.createForm
+            .get('actualResidence')
+            .get('adress_single')
+            .enable({ emitEvent: false });
+          this.equalizeAddresses();
         } else {
-          this.createForm.get('actualResidence').enable();
+          this.createForm.get('actualResidence').enable({ emitEvent: false });
         }
       });
   }
@@ -348,8 +395,8 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
     basicData.get('doc_type').valueChanges.subscribe((val: string) => {
       this.activeDoctype = this.doctypes.find((doc) => doc.val === val);
       this.setLanguageValidator();
-      basicData.get('name').updateValueAndValidity();
-      basicData.get('surname').updateValueAndValidity();
+      basicData.get('name').updateValueAndValidity({ emitEvent: false });
+      basicData.get('surname').updateValueAndValidity({ emitEvent: false });
     });
   }
 
@@ -385,18 +432,20 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  equalizeAddresses(res): void {
+  equalizeAddresses(): void {
     const controls = (this.createForm.get('registerAddress') as FormGroup)
       .controls;
     const actualResidence = this.createForm.get('actualResidence');
 
-    actualResidence.setValue({
-      adress_single: res,
-      adress_fact_country: controls['adress_reg_country'].value,
-      adress_fact_city: controls['adress_reg_city'].value,
-      adress_fact_street: controls['adress_reg_street'].value,
-      adress_fact_building: controls['adress_reg_building'].value,
-      adress_fact_flat: controls['adress_reg_flat'].value,
-    });
+    actualResidence.patchValue(
+      {
+        adress_fact_country: controls['adress_reg_country'].value,
+        adress_fact_city: controls['adress_reg_city'].value,
+        adress_fact_street: controls['adress_reg_street'].value,
+        adress_fact_building: controls['adress_reg_building'].value,
+        adress_fact_flat: controls['adress_reg_flat'].value,
+      },
+      { emitEvent: false }
+    );
   }
 }
