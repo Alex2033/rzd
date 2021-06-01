@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable, ReplaySubject, Subject, timer } from 'rxjs';
-import { takeUntil, take, map, finalize } from 'rxjs/operators';
+import { takeUntil, take, map, finalize, tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { SmsConfirmInterface } from 'src/app/auth/types/sms-confirm.interface';
 import { CheckPhoneDataInterface } from '../../types/phone-data.interface';
@@ -26,19 +26,17 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
   @ViewChild('otc') otc: ElementRef;
 
   @Output() submit: EventEmitter<{}> = new EventEmitter<{}>();
-  @Output() changeResendCode: EventEmitter<boolean> =
-    new EventEmitter<boolean>();
   @Output() submitted: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Input() codeForm: FormGroup;
   @Input() phoneValue: string;
-  @Input() resendCode: boolean;
   @Input() smsInterval: number;
 
   // todo: После того как сделать страницей, это убрать
   @Input() isLogin: boolean = false;
   @Input() isEditPhone: boolean = false;
 
+  public resendCode: boolean = false;
   public confirmError: string;
   public counter$: Observable<number>;
   public isLoading: boolean = false;
@@ -110,10 +108,12 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
     this.counter$ = timer(0, 1000).pipe(
       take(this.count),
       map(() => --this.count),
-      takeUntil(this.stopTimer),
-      finalize(() => {
-        this.changeResendCode.emit(true);
-      })
+      tap((value) => {
+        if (value === 0) {
+          this.resendCode = true;
+        }
+      }),
+      takeUntil(this.stopTimer)
     );
   }
 
@@ -129,8 +129,9 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
     } else {
       this.count = 60;
     }
+    this.smsInterval = 0;
     this.stopTimer.next();
-    this.changeResendCode.emit(false);
+    this.resendCode = false;
   }
 
   inputKeyup(inputNum: HTMLInputElement, e: any): void {

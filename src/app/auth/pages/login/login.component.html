@@ -66,8 +66,6 @@
       [codeForm]="loginForm.get('code')"
       *ngIf="submitted"
       [isLogin]="true"
-      (changeResendCode)="resendCode = $event"
-      [resendCode]="resendCode"
       (submitted)="changeSubmitted($event)"
       [phoneValue]="phoneControl.value"
       [smsInterval]="smsInterval"

@@ -204,10 +204,9 @@
     <app-sms-confirm
       [codeForm]="registerForm.get('code')"
       *ngIf="submitted"
-      (changeResendCode)="resendCode = $event"
-      [resendCode]="resendCode"
       (submitted)="changeSubmitted($event)"
       [phoneValue]="phoneControl.value"
+      [smsInterval]="smsInterval"
       (submit)="submit()"
     ></app-sms-confirm>
 

@@ -24,7 +24,6 @@ export class EditPhoneComponent implements OnInit, OnDestroy {
   public user: AuthResponseInterface = {} as AuthResponseInterface;
   public loading: boolean = false;
   public submitted: boolean = false;
-  public resendCode: boolean = false;
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 

@@ -21,7 +21,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   public loginForm: FormGroup;
   public phoneControl: AbstractControl;
   public loginLoading: boolean = false;
-  public resendCode: boolean = false;
   public submitted: boolean = false;
   public smsInterval: number = 0;
 

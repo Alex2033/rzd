@@ -57,8 +57,6 @@
       [codeForm]="editForm.get('code')"
       *ngIf="submitted"
       [isEditPhone]="true"
-      (changeResendCode)="resendCode = $event"
-      [resendCode]="resendCode"
       (submitted)="changeSubmitted($event)"
       [phoneValue]="editForm.get('phone').value"
       (submit)="submit()"

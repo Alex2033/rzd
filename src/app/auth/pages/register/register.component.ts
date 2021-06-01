@@ -25,8 +25,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
   public emailControl: AbstractControl;
   public emailConfirmControl: AbstractControl;
   public submitted: boolean = false;
-  public resendCode: boolean = false;
   public registrationLoading: boolean = false;
+  public smsInterval: number = 0;
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -171,6 +171,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.email.setErrors({
           incorrect_email_length: `Не более ${value} символов`,
         });
+        break;
+      case 'SMS_INTERVAL':
+        this.smsInterval = value;
+        this.submitted = true;
         break;
       default:
         break;
