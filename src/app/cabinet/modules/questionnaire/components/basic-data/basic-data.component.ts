@@ -18,7 +18,8 @@ export class BasicDataComponent implements OnInit {
   @Input() isChild: boolean = false;
   @Input() doctypes: DoctypeInterface[] = [];
   @Input() activeDoctype: DoctypeInterface;
-  @Input() today: Date;
+  @Input() min: Date;
+  @Input() max: Date;
 
   constructor() {}
 

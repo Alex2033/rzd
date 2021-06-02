@@ -16,7 +16,8 @@ import { DoctypeInterface } from '../../types/doctype.interface';
 export class DocumentStepComponent implements OnInit {
   @Input() documentStep: FormGroup;
   @Input() activeDoctype: DoctypeInterface;
-  @Input() today: Date;
+  @Input() min: Date;
+  @Input() max: Date;
 
   get mask(): string {
     switch (this.activeDoctype?.val) {

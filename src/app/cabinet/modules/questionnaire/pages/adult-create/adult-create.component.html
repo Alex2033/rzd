@@ -35,11 +35,13 @@
           [doctypes]="doctypes"
           *ngIf="currentStep === 1"
           [isChild]="isChild"
-          [today]="today"
+          [min]="isChild ? minChildDate : minAdultDate"
+          [max]="isChild ? today : maxAdultDate"
           [activeDoctype]="activeDoctype"
         ></app-basic-data>
         <app-document-step
-          [today]="today"
+          [min]="isChild ? minChildDate : minAdultDate"
+          [max]="today"
           [documentStep]="currentGroup"
           [activeDoctype]="activeDoctype"
           *ngIf="currentStep === 2"

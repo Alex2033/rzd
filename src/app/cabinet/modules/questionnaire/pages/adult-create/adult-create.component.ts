@@ -35,6 +35,13 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
   public doctypes: DoctypeInterface[] = [];
   public activeDoctype: DoctypeInterface;
   public today: Date = new Date();
+  public minAdultDate: Date = new Date(1900, 0, 1);
+  public minDate: Date = new Date(
+    new Date(Date.now()).setFullYear(this.today.getFullYear() - 18)
+  );
+
+  public maxAdultDate: Date = new Date(this.minDate.getTime() - 1 * 86400000);
+  public minChildDate: Date = new Date(this.minDate.getTime() + 1 * 86400000);
   public isLoading: boolean = false;
   public questionnaire: QuestionnaireDetailInterface =
     {} as QuestionnaireDetailInterface;
@@ -64,6 +71,43 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
     this.buildForm();
     this.getQuestionnaire();
     this.getQueryParams();
+
+    // todo превратить в функции и повторяющиеся куски тоже
+    if (this.createForm.get('registerAddress').get('adress_single')) {
+      this.createForm.get('registerAddress').disable({ emitEvent: false });
+      this.createForm
+        .get('registerAddress')
+        .get('adress_single')
+        .enable({ emitEvent: false });
+      this.equalizeAddresses();
+    } else {
+      this.createForm.get('registerAddress').patchValue({
+        adress_reg_country: null,
+        adress_reg_city: null,
+        adress_reg_street: null,
+        adress_reg_building: null,
+        adress_reg_flat: null,
+      });
+      this.createForm.get('registerAddress').enable({ emitEvent: false });
+    }
+
+    if (this.createForm.get('registerAddress').get('no_reg_address')) {
+      this.createForm.get('registerAddress').disable({ emitEvent: false });
+      this.createForm
+        .get('registerAddress')
+        .get('no_reg_address')
+        .enable({ emitEvent: false });
+      this.equalizeAddresses();
+    } else {
+      this.createForm.get('registerAddress').patchValue({
+        adress_reg_country: null,
+        adress_reg_city: null,
+        adress_reg_street: null,
+        adress_reg_building: null,
+        adress_reg_flat: null,
+      });
+      this.createForm.get('registerAddress').enable({ emitEvent: false });
+    }
   }
 
   // todo попробовать сделать так, чтобы пользователь не мог вообще вводить слова в зависимости от языка
@@ -111,7 +155,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
         adress_fact_flat: new FormControl(null),
       }),
       registerAddress: new FormGroup({
-        missing_address: new FormControl(null),
+        no_reg_address: new FormControl(null),
         adress_single: new FormControl(null),
         adress_reg_country: new FormControl(null, Validators.required),
         adress_reg_city: new FormControl(null, Validators.required),
@@ -154,7 +198,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
         this.doctypes = res;
         this.docTypeChanges();
         this.addressSingleChanges();
-        this.missingAddressChanges();
+        this.noRegAddressChanges();
         this.pageLoaded = true;
       });
   }
@@ -175,7 +219,6 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
       {
         form: fact,
         keys: [
-          'adress_single',
           'adress_fact_country',
           'adress_fact_city',
           'adress_fact_street',
@@ -186,6 +229,8 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
       {
         form: reg,
         keys: [
+          'no_reg_address',
+          'adress_single',
           'adress_reg_country',
           'adress_reg_city',
           'adress_reg_street',
@@ -198,7 +243,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
     controls.forEach((control) => {
       control.keys.forEach((key) => {
         if (!control.form.get(key).value) {
-          if (key === 'adress_single') {
+          if (key === 'adress_single' || key === 'no_reg_address') {
             control.form
               .get(key)
               .setValue(parent.content[key], { emitEvent: false });
@@ -266,7 +311,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
     }
 
     // пустое поле не отправлять в запрос
-    if (!res && key !== 'adress_single') {
+    if (!res && key !== 'adress_single' && key !== 'no_reg_address') {
       return of(null);
     }
 
@@ -373,42 +418,45 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
 
     reg
       .get('adress_single')
-      .valueChanges.pipe(
-        startWith(reg.get('adress_single').value),
-        distinctUntilChanged()
-      )
+      .valueChanges.pipe(distinctUntilChanged())
       .subscribe((res) => {
+        reg.get('no_reg_address').setValue(false, { emitEvent: false });
         if (res) {
-          console.log('adress_single');
           reg.disable({ emitEvent: false });
           reg.get('adress_single').enable({ emitEvent: false });
           this.equalizeAddresses();
         } else {
-          reg.reset();
+          reg.patchValue({
+            adress_reg_country: null,
+            adress_reg_city: null,
+            adress_reg_street: null,
+            adress_reg_building: null,
+            adress_reg_flat: null,
+          });
           reg.enable({ emitEvent: false });
         }
       });
   }
 
-  missingAddressChanges(): void {
+  noRegAddressChanges(): void {
     const reg = this.createForm.get('registerAddress');
 
     reg
-      .get('missing_address')
-      .valueChanges.pipe(
-        startWith(reg.get('missing_address').value),
-        distinctUntilChanged()
-      )
+      .get('no_reg_address')
+      .valueChanges.pipe(distinctUntilChanged())
       .subscribe((res) => {
+        reg.get('adress_single').setValue(false, { emitEvent: false });
         if (res) {
-          console.log('missing_address');
-          reg.reset({
-            missing_address: reg.get('missing_address').value,
-            adress_single: false,
+          reg.patchValue({
+            adress_reg_country: null,
+            adress_reg_city: null,
+            adress_reg_street: null,
+            adress_reg_building: null,
+            adress_reg_flat: null,
           });
 
           reg.disable({ emitEvent: false });
-          reg.get('missing_address').enable({ emitEvent: false });
+          reg.get('no_reg_address').enable({ emitEvent: false });
         } else {
           reg.enable({ emitEvent: false });
         }
@@ -479,7 +527,6 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
       .controls;
     const reg = this.createForm.get('registerAddress');
 
-    console.log('controls:', controls);
     reg.patchValue(
       {
         adress_reg_country: controls['adress_fact_country'].value,
