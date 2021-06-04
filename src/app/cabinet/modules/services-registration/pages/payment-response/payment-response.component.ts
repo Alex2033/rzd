@@ -11,7 +11,6 @@ import { OrderInterface } from 'src/app/shared/types/order.interface';
   styleUrls: ['./payment-response.component.scss'],
 })
 export class PaymentResponseComponent implements OnInit {
-  public isError: boolean = false;
   public text: string;
   public order: OrderInterface;
 
@@ -44,11 +43,6 @@ export class PaymentResponseComponent implements OnInit {
 
   setContent(text: string): void {
     switch (text) {
-      case 'error':
-        this.isError = true;
-        this.text =
-          'Не удалось оплатить заказ. Попробуйте еще раз или выберите другой способ оплаты.';
-        break;
       case 'terminal':
         this.text = `Ваш заказ №${this.order.id} оформлен. Вы можете оплатить его в инфоиоске.`;
         break;
@@ -57,19 +51,6 @@ export class PaymentResponseComponent implements OnInit {
         break;
       default:
         break;
-    }
-  }
-
-  navigate(): void {
-    if (this.isError) {
-      this.router.navigate([
-        '/cabinet',
-        'services-registration',
-        'payment-method',
-        this.order.id,
-      ]);
-    } else {
-      this.router.navigate(['/cabinet', 'orders']);
     }
   }
 }

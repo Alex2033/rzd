@@ -1,19 +1,10 @@
 <div class="page-content" *ngIf="order">
   <div class="page-container">
-    <div class="page-top" *ngIf="isError">
-      <div class="spacer"></div>
-      <a class="close" [routerLink]="['/cabinet', 'questionnaires']">Закрыть</a>
-    </div>
-
-    <div class="response-content" [class.error]="isError">
+    <div class="response-content">
       <img
         class="response-image"
-        [src]="
-          isError
-            ? 'assets/cabinet/error-response.svg'
-            : 'assets/cabinet/success-response.svg'
-        "
-        [alt]="isError ? 'Ошибка соединения' : 'Успешно'"
+        src="assets/cabinet/success-response.svg"
+        alt="Успешно"
       />
       <div class="response-text">
         <p>{{ text }}</p>
@@ -22,11 +13,8 @@
   </div>
 
   <div class="buttons">
-    <button type="button" (click)="navigate()" class="button">
-      <span>{{ isError ? "Далее" : "К заказам" }}</span>
-      <svg width="1.6rem" height="1.6rem" *ngIf="isError">
-        <use xlink:href="assets/sprites/icons.svg#next"></use>
-      </svg>
+    <button type="button" [routerLink]="['/cabinet', 'orders']" class="button">
+      <span>К заказам</span>
     </button>
   </div>
 </div>
