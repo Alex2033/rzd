@@ -10,13 +10,10 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of, ReplaySubject } from 'rxjs';
 import {
-  catchError,
   debounceTime,
   distinctUntilChanged,
   finalize,
-  retry,
   retryWhen,
-  startWith,
   switchMap,
   takeUntil,
   tap,
@@ -257,7 +254,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
       } else {
         formControl.valueChanges
           .pipe(
-            tap((res) => (this.isLoading = true)),
+            tap(() => (this.isLoading = true)),
             debounceTime(800),
             distinctUntilChanged((prev, cur) => {
               if (prev === cur) {
@@ -407,51 +404,45 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
   addressSingleChanges(): void {
     const reg = this.createForm.get('registerAddress');
 
-    reg
-      .get('adress_single')
-      .valueChanges.pipe(distinctUntilChanged())
-      .subscribe((res) => {
-        reg.get('no_reg_address').setValue(false, { emitEvent: false });
-        if (res) {
-          reg.disable({ emitEvent: false });
-          reg.get('adress_single').enable({ emitEvent: false });
-          this.equalizeAddresses();
-        } else {
-          reg.patchValue({
-            adress_reg_country: null,
-            adress_reg_city: null,
-            adress_reg_street: null,
-            adress_reg_building: null,
-            adress_reg_flat: null,
-          });
-          reg.enable({ emitEvent: false });
-        }
-      });
+    reg.get('adress_single').valueChanges.subscribe((res) => {
+      reg.get('no_reg_address').setValue(false, { emitEvent: false });
+      if (res) {
+        reg.disable({ emitEvent: false });
+        reg.get('adress_single').enable({ emitEvent: false });
+        this.equalizeAddresses();
+      } else {
+        reg.patchValue({
+          adress_reg_country: null,
+          adress_reg_city: null,
+          adress_reg_street: null,
+          adress_reg_building: null,
+          adress_reg_flat: null,
+        });
+        reg.enable({ emitEvent: false });
+      }
+    });
   }
 
   noRegAddressChanges(): void {
     const reg = this.createForm.get('registerAddress');
 
-    reg
-      .get('no_reg_address')
-      .valueChanges.pipe(distinctUntilChanged())
-      .subscribe((res) => {
-        reg.get('adress_single').setValue(false, { emitEvent: false });
-        if (res) {
-          reg.patchValue({
-            adress_reg_country: null,
-            adress_reg_city: null,
-            adress_reg_street: null,
-            adress_reg_building: null,
-            adress_reg_flat: null,
-          });
+    reg.get('no_reg_address').valueChanges.subscribe((res) => {
+      reg.get('adress_single').setValue(false, { emitEvent: false });
+      if (res) {
+        reg.patchValue({
+          adress_reg_country: null,
+          adress_reg_city: null,
+          adress_reg_street: null,
+          adress_reg_building: null,
+          adress_reg_flat: null,
+        });
 
-          reg.disable({ emitEvent: false });
-          reg.get('no_reg_address').enable({ emitEvent: false });
-        } else {
-          reg.enable({ emitEvent: false });
-        }
-      });
+        reg.disable({ emitEvent: false });
+        reg.get('no_reg_address').enable({ emitEvent: false });
+      } else {
+        reg.enable({ emitEvent: false });
+      }
+    });
   }
 
   resetRegisterAddress(): void {
