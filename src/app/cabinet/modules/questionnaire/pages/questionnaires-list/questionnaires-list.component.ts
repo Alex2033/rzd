@@ -163,15 +163,4 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
     this.servicesRegistration.setOrder({ id: 0, ...questionnaires });
     this.router.navigate(['/cabinet', 'services-registration', 'info']);
   }
-
-  orderRegistration(): void {
-    this.http
-      .post(
-        'https://3dsec.sberbank.ru/payment/rest/register.do?token=7grue0rvn5jkach1fepdiv734c&amount=5000&returnUrl=https://www.youtube.com&orderNumber=2017',
-        {}
-      )
-      .subscribe((res) => {
-        console.log('res:', res);
-      });
-  }
 }

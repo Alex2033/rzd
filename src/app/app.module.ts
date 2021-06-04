@@ -14,6 +14,7 @@ import { LanguagesResolver } from './shared/resolvers/language.resolver';
 import { AuthInterceptor } from './auth/interceptors/auth.interceptor';
 import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
+import { SberbankPaymentComponent } from './sberbank-payment/sberbank-payment.component';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -24,6 +25,7 @@ registerLocaleData(localeRu, 'ru');
     NavigationMenuComponent,
     UserMenuComponent,
     PlugComponent,
+    SberbankPaymentComponent,
   ],
   imports: [
     BrowserModule,
