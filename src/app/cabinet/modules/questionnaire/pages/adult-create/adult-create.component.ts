@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -12,7 +13,9 @@ import {
   catchError,
   debounceTime,
   distinctUntilChanged,
+  finalize,
   retry,
+  retryWhen,
   startWith,
   switchMap,
   takeUntil,
@@ -71,56 +74,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
     this.buildForm();
     this.getQuestionnaire();
     this.getQueryParams();
-
-    // todo превратить в функции и повторяющиеся куски тоже
-    if (this.createForm.get('registerAddress').get('adress_single')) {
-      this.createForm.get('registerAddress').disable({ emitEvent: false });
-      this.createForm
-        .get('registerAddress')
-        .get('adress_single')
-        .enable({ emitEvent: false });
-      this.equalizeAddresses();
-    } else {
-      this.createForm.get('registerAddress').patchValue({
-        adress_reg_country: null,
-        adress_reg_city: null,
-        adress_reg_street: null,
-        adress_reg_building: null,
-        adress_reg_flat: null,
-      });
-      this.createForm.get('registerAddress').enable({ emitEvent: false });
-    }
-
-    if (this.createForm.get('registerAddress').get('no_reg_address')) {
-      this.createForm.get('registerAddress').disable({ emitEvent: false });
-      this.createForm
-        .get('registerAddress')
-        .get('no_reg_address')
-        .enable({ emitEvent: false });
-      this.equalizeAddresses();
-    } else {
-      this.createForm.get('registerAddress').patchValue({
-        adress_reg_country: null,
-        adress_reg_city: null,
-        adress_reg_street: null,
-        adress_reg_building: null,
-        adress_reg_flat: null,
-      });
-      this.createForm.get('registerAddress').enable({ emitEvent: false });
-    }
   }
-
-  // todo попробовать сделать так, чтобы пользователь не мог вообще вводить слова в зависимости от языка
-  // keyPressAlphaNumeric(event: KeyboardEvent) {
-  //   let inp = String.fromCharCode(event.keyCode);
-
-  //   if (/^[a-zA-Z ]*$/.test(inp)) {
-  //     return true;
-  //   } else {
-  //     event.preventDefault();
-  //     return false;
-  //   }
-  // }
 
   ngOnDestroy(): void {
     this.destroy.next(null);
@@ -190,6 +144,22 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
           if (res) {
             this.setChildFromParent(res);
           }
+
+          const reg = this.createForm.get('registerAddress');
+
+          // todo превратить в функции и повторяющиеся куски тоже
+          if (reg.get('adress_single').value) {
+            reg.get('no_reg_address').setValue(false);
+            reg.disable({ emitEvent: false });
+            reg.get('adress_single').enable({ emitEvent: false });
+            this.equalizeAddresses();
+          } else if (reg.get('no_reg_address').value) {
+            reg.disable({ emitEvent: false });
+            reg.get('no_reg_address').enable({ emitEvent: false });
+          } else {
+            reg.enable({ emitEvent: false });
+          }
+
           return this.questionnairesService.getDocumentTypes(this.isChild);
         }),
         takeUntil(this.destroy)
@@ -243,7 +213,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
     controls.forEach((control) => {
       control.keys.forEach((key) => {
         if (!control.form.get(key).value) {
-          if (key === 'adress_single' || key === 'no_reg_address') {
+          if (key === 'adress_single') {
             control.form
               .get(key)
               .setValue(parent.content[key], { emitEvent: false });
@@ -276,6 +246,8 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
     });
   }
 
+  // todo эту строчку this.isLoading = false зарефакторить
+
   updateAllFields(group, id: number): void {
     Object.keys(group.controls).forEach((key) => {
       let formControl = group.controls[key];
@@ -285,21 +257,27 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
       } else {
         formControl.valueChanges
           .pipe(
-            tap(() => (this.isLoading = true)),
+            tap((res) => (this.isLoading = true)),
             debounceTime(800),
-            switchMap((res: string) => this.updateSingleField(res, key, id)),
-            catchError((err) => {
-              if (err.error.error === 'FIO_LANG_MISMATCH') {
-                this.fioMismatch();
+            distinctUntilChanged((prev, cur) => {
+              if (prev === cur) {
+                this.isLoading = false;
               }
-              return of(err);
+              return prev === cur;
             }),
-            retry(),
+            switchMap((res: string) => this.updateSingleField(res, key, id)),
+            retryWhen((errors) =>
+              errors.pipe(
+                tap((err) => {
+                  if (err.error.error === 'FIO_LANG_MISMATCH') {
+                    this.fioMismatch(formControl);
+                  }
+                })
+              )
+            ),
             takeUntil(this.destroy)
           )
-          .subscribe(() => {
-            this.isLoading = false;
-          });
+          .subscribe();
       }
     });
   }
@@ -312,6 +290,7 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
 
     // пустое поле не отправлять в запрос
     if (!res && key !== 'adress_single' && key !== 'no_reg_address') {
+      this.isLoading = false;
       return of(null);
     }
 
@@ -326,25 +305,37 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
       new_val: res?.toString(),
     };
 
-    return this.questionnairesService.updateField(updatedField);
+    return this.questionnairesService.updateField(updatedField).pipe(
+      finalize(() => {
+        this.isLoading = false;
+      })
+    );
   }
 
-  fioMismatch(): void {
+  fioMismatch(formControl: AbstractControl): void {
     const name = this.createForm.get('basicData').get('name');
     const surname = this.createForm.get('basicData').get('surname');
+    const doc_type = this.createForm.get('basicData').get('doc_type');
 
-    name.setValue(null);
-    surname.setValue(null);
+    if (formControl === doc_type) {
+      name.setValue(null, { emitEvent: false });
+      surname.setValue(null, { emitEvent: false });
 
-    surname.markAsTouched();
-    name.markAsTouched();
+      surname.markAsTouched();
+      name.markAsTouched();
 
-    name.setErrors({
-      not_correct: true,
-    });
-    surname.setErrors({
-      not_correct: true,
-    });
+      name.setErrors({
+        not_correct: true,
+      });
+      surname.setErrors({
+        not_correct: true,
+      });
+    } else {
+      formControl.markAsTouched();
+      formControl.setErrors({
+        not_correct: true,
+      });
+    }
   }
 
   getQueryParams(): void {

@@ -168,14 +168,14 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
 
   codeIsValidated(): void {
     if (this.codeForm.valid) {
+      this.isLoading = true;
+
       const values: string = Object.values(this.codeForm.value).join('');
 
       const confirmCode: SmsConfirmInterface = {
         phone: this.phoneValue,
         code: values,
       };
-
-      this.isLoading = true;
 
       if (this.isLogin) {
         this.confirmLogin(confirmCode);
@@ -190,15 +190,11 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
   confirmEditedPhone(confirmCode: SmsConfirmInterface): void {
     this.profileService
       .confirmPhone(confirmCode)
-      .pipe(
-        finalize(() => {
-          this.isLoading = false;
-        }),
-        takeUntil(this.destroy)
-      )
+      .pipe(takeUntil(this.destroy))
       .subscribe(
         () => {
           this.submit.emit();
+          this.isLoading = false;
         },
         (err) => {
           if (err instanceof HttpErrorResponse) {
@@ -211,15 +207,11 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
   confirmLogin(confirmCode: SmsConfirmInterface): void {
     this.auth
       .confirmLogin(confirmCode)
-      .pipe(
-        finalize(() => {
-          this.isLoading = false;
-        }),
-        takeUntil(this.destroy)
-      )
+      .pipe(takeUntil(this.destroy))
       .subscribe(
         () => {
           this.submit.emit();
+          this.isLoading = false;
         },
         (err) => {
           if (err instanceof HttpErrorResponse) {
@@ -232,15 +224,11 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
   confirmRegistration(confirmCode: SmsConfirmInterface): void {
     this.auth
       .confirmInvite(confirmCode)
-      .pipe(
-        finalize(() => {
-          this.isLoading = false;
-        }),
-        takeUntil(this.destroy)
-      )
+      .pipe(takeUntil(this.destroy))
       .subscribe(
         () => {
           this.submit.emit();
+          this.isLoading = false;
         },
         (err) => {
           if (err instanceof HttpErrorResponse) {
