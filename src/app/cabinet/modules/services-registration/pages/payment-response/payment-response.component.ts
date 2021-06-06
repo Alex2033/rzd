@@ -44,7 +44,7 @@ export class PaymentResponseComponent implements OnInit {
   setContent(text: string): void {
     switch (text) {
       case 'terminal':
-        this.text = `Ваш заказ №${this.order.id} оформлен. Вы можете оплатить его в инфоиоске.`;
+        this.text = `Ваш заказ №${this.order.id} оформлен. Вы можете оплатить его в инфокиоске.`;
         break;
       case 'admin':
         this.text = `Ваш заказ №${this.order.id} оформлен. Вы можете оплатить его у администратора.`;
