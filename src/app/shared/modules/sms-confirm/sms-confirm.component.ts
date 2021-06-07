@@ -194,11 +194,11 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
       .subscribe(
         () => {
           this.submit.emit();
-          this.isLoading = false;
         },
         (err) => {
           if (err instanceof HttpErrorResponse) {
             this.handleError(err.error.error);
+            this.isLoading = false;
           }
         }
       );
@@ -211,11 +211,11 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
       .subscribe(
         () => {
           this.submit.emit();
-          this.isLoading = false;
         },
         (err) => {
           if (err instanceof HttpErrorResponse) {
             this.handleError(err.error.error);
+            this.isLoading = false;
           }
         }
       );
@@ -228,11 +228,11 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
       .subscribe(
         () => {
           this.submit.emit();
-          this.isLoading = false;
         },
         (err) => {
           if (err instanceof HttpErrorResponse) {
             this.handleError(err.error.error);
+            this.isLoading = false;
           }
         }
       );

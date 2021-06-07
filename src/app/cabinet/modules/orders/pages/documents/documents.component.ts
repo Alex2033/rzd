@@ -54,10 +54,6 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     );
   }
 
-  back(): void {
-    this.location.back();
-  }
-
   goToDoc(docId: number): void {
     let tab = window.open();
     this.ordersService

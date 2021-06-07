@@ -106,21 +106,18 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.ordersService.createOrder(this.order).subscribe(
-      (res) => {
-        this.servicesRegistration.setOrder(res);
-        this.router.navigate(
-          ['/cabinet', 'services-registration', 'document', res.id],
-          {
-            queryParams: {
-              questionnaireNum: 1,
-              docIndex: 1,
-            },
-          }
-        );
-      },
-      (err) => alert(`Ошибка: ${err.error.error}`)
-    );
+    this.ordersService.createOrder(this.order).subscribe((res) => {
+      this.servicesRegistration.setOrder(res);
+      this.router.navigate(
+        ['/cabinet', 'services-registration', 'document', res.id],
+        {
+          queryParams: {
+            questionnaireNum: 1,
+            docIndex: 1,
+          },
+        }
+      );
+    });
   }
 
   selectionChange(event: number, item: QuestionnaireOrderInterface): void {

@@ -1,6 +1,6 @@
 <div class="page-content">
   <div class="page-container">
-    <a (click)="back()" class="back-link">
+    <a [routerLink]="['/cabinet', 'orders', orderId]" class="back-link">
       <svg width="1rem" height="1rem">
         <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
       </svg>
@@ -12,8 +12,8 @@
 
   <ul class="order-documents">
     <li class="order-document">
-      <div class="order-client">{{ document.fio }}</div>
-      <div class="document-body" *ngFor="let doc of document.documents">
+      <div class="order-client">{{ document?.fio }}</div>
+      <div class="document-body" *ngFor="let doc of document?.documents">
         <div class="document-title">{{ doc.name }}</div>
         <button (click)="goToDoc(doc.id)" class="icon-button">
           <svg width="2.1rem" height="2.4rem">
