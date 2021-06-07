@@ -7,7 +7,7 @@
 
 // introduce
 .introduce-section {
-  padding-bottom: 3.2rem;
+  padding-bottom: 0.8rem;
   padding-top: 6.4rem;
 }
 
@@ -47,6 +47,12 @@
   color: $gray;
   margin-top: 1.6rem;
   display: block;
+}
+
+.coupon-info {
+  font-weight: 600;
+  color: $dark;
+  margin-top: 2rem;
 }
 
 // how works
