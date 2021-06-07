@@ -27,7 +27,10 @@
       </mat-radio-button>
       <mat-radio-button [value]="'ADMIN'">
         Оплатить у администратора
-        <div class="additional-info">Возможно длительное ожидание</div>
+        <div class="additional-info" *ngIf="false">
+          Возможно длительное ожидание
+        </div>
+        <!-- временно не отображается -->
       </mat-radio-button>
     </mat-radio-group>
   </div>
