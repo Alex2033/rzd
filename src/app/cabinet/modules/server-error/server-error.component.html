@@ -1,0 +1,24 @@
+<div class="page-content">
+  <div class="page-container">
+    <div class="page-top">
+      <div class="spacer"></div>
+      <a class="close" [routerLink]="['']">Закрыть</a>
+    </div>
+    <div class="error-content">
+      <img
+        class="response-image"
+        src="assets/cabinet/error-response.svg"
+        alt="Ошибка"
+      />
+      <div class="error-text">
+        <p>{{ text }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button type="button" [routerLink]="['']" class="button">
+      <span>Попробовать снова</span>
+    </button>
+  </div>
+</div>
