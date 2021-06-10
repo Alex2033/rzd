@@ -14,6 +14,7 @@ import {
   distinctUntilChanged,
   finalize,
   retryWhen,
+  startWith,
   switchMap,
   takeUntil,
   tap,
@@ -445,12 +446,22 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
   docTypeChanges(): void {
     const basicData = this.createForm.get('basicData');
 
+    if (basicData.get('doc_type').value) {
+      this.setActiveDoctype(basicData.get('doc_type').value);
+    }
+
     basicData.get('doc_type').valueChanges.subscribe((val: string) => {
-      this.activeDoctype = this.doctypes.find((doc) => doc.val === val);
-      this.setLanguageValidator();
-      basicData.get('name').updateValueAndValidity({ emitEvent: false });
-      basicData.get('surname').updateValueAndValidity({ emitEvent: false });
+      this.setActiveDoctype(val);
     });
+  }
+
+  setActiveDoctype(val: string): void {
+    const basicData = this.createForm.get('basicData');
+
+    this.activeDoctype = this.doctypes.find((doc) => doc.val === val);
+    this.setLanguageValidator();
+    basicData.get('name').updateValueAndValidity({ emitEvent: false });
+    basicData.get('surname').updateValueAndValidity({ emitEvent: false });
   }
 
   setLanguageValidator(): void {
