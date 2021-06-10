@@ -9,20 +9,20 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
-import { AuthService } from '../../shared/services/auth.service';
+import { AccountService } from '../../shared/services/account.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(private account: AccountService, private router: Router) {}
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (this.auth.isAuth) {
+    if (this.account.isAuth) {
       req = req.clone({
         setHeaders: {
-          Authorization: `Bearer ${this.auth.token}`,
+          Authorization: `Bearer ${this.account.token}`,
         },
       });
     }
@@ -30,7 +30,7 @@ export class AuthInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         console.log('[Interceptor error]: ', error);
         if (error.status === 401) {
-          this.auth.logout();
+          this.account.logout();
           this.router.navigate(['/auth', 'login'], {
             queryParams: {
               authFailed: true,

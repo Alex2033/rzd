@@ -10,7 +10,7 @@ import {
 import { Router } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
 import { takeUntil, finalize } from 'rxjs/operators';
-import { AuthService } from '../../../shared/services/auth.service';
+import { AccountService } from '../../../shared/services/account.service';
 
 @Component({
   selector: 'app-login',
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private auth: AuthService
+    private account: AccountService
   ) {}
 
   ngOnInit(): void {
@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   login(): void {
     this.loginLoading = true;
 
-    this.auth
+    this.account
       .login(this.phone.value)
       .pipe(
         takeUntil(this.destroy),

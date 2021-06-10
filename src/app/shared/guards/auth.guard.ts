@@ -7,22 +7,22 @@ import {
   Router,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { AccountService } from 'src/app/shared/services/account.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private router: Router, private auth: AuthService) {}
+  constructor(private router: Router, private account: AccountService) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    if (this.auth.isAuth()) {
+    if (this.account.isAuth()) {
       return true;
     } else {
-      this.auth.logout();
+      this.account.logout();
       this.router.navigate(['/auth', 'login']);
       return false;
     }

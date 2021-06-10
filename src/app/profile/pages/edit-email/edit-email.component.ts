@@ -10,7 +10,7 @@ import {
 import { Router } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
 import { takeUntil, finalize } from 'rxjs/operators';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { AccountService } from 'src/app/shared/services/account.service';
 import { AuthResponseInterface } from 'src/app/auth/types/auth-response.interface';
 
 @Component({
@@ -43,7 +43,7 @@ export class EditEmailComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private auth: AuthService,
+    private account: AccountService,
     private formBuilder: FormBuilder,
     private router: Router
   ) {}
@@ -78,7 +78,7 @@ export class EditEmailComponent implements OnInit, OnDestroy {
   }
 
   getUser(): void {
-    this.auth.getUser().subscribe((user) => (this.user = user));
+    this.account.getUser().subscribe((user) => (this.user = user));
   }
 
   createForm(): void {
@@ -97,7 +97,7 @@ export class EditEmailComponent implements OnInit, OnDestroy {
       ...this.user,
       email: this.email.value,
     };
-    this.auth
+    this.account
       .updateUser(updatedUser)
       .pipe(
         takeUntil(this.destroy),

@@ -12,7 +12,7 @@ import {
 import { FormGroup } from '@angular/forms';
 import { Observable, ReplaySubject, Subject, timer } from 'rxjs';
 import { takeUntil, take, map, finalize, tap } from 'rxjs/operators';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { AccountService } from 'src/app/shared/services/account.service';
 import { SmsConfirmInterface } from 'src/app/auth/types/sms-confirm.interface';
 import { CheckPhoneDataInterface } from '../../types/phone-data.interface';
 import { ProfileService } from 'src/app/profile/services/profile.service';
@@ -47,7 +47,7 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   constructor(
-    private auth: AuthService,
+    private account: AccountService,
     private profileService: ProfileService
   ) {}
 
@@ -77,7 +77,7 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
   }
 
   getNewLoginCode(): void {
-    this.auth
+    this.account
       .login(this.phoneValue)
       .pipe(takeUntil(this.destroy))
       .subscribe(() => {
@@ -87,7 +87,7 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
   }
 
   getNewRegisterCode(): void {
-    this.auth
+    this.account
       .reInvite(this.phoneValue)
       .pipe(takeUntil(this.destroy))
       .subscribe(() => {
@@ -188,7 +188,7 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
   }
 
   confirm(type: string, confirmCode: SmsConfirmInterface): void {
-    this.auth
+    this.account
       .confirm(type, confirmCode)
       .pipe(takeUntil(this.destroy))
       .subscribe(

@@ -10,7 +10,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
-import { AuthService } from '../../../shared/services/auth.service';
+import { AccountService } from '../../../shared/services/account.service';
 import { AuthDataInterface } from '../../types/auth.interface';
 
 @Component({
@@ -49,8 +49,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private auth: AuthService,
-    private route: ActivatedRoute
+    private account: AccountService
   ) {}
 
   ngOnInit(): void {
@@ -123,7 +122,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       phone: this.phone.value,
     };
 
-    this.auth
+    this.account
       .register(newUser)
       .pipe(
         takeUntil(this.destroy),

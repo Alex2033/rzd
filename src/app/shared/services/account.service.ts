@@ -10,7 +10,7 @@ import { SmsConfirmInterface } from '../../auth/types/sms-confirm.interface';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
+export class AccountService {
   public user$: BehaviorSubject<AuthResponseInterface> =
     new BehaviorSubject<AuthResponseInterface>({} as AuthResponseInterface);
 

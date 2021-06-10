@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { AccountService } from 'src/app/shared/services/account.service';
 import { LanguageService } from '../../services/language.service';
 import { MenuService } from '../../services/menu.service';
 import { LanguageInterface } from '../../types/language.interface';
@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     private menuService: MenuService,
     private language: LanguageService,
-    public auth: AuthService
+    public account: AccountService
   ) {}
 
   ngOnInit(): void {
@@ -45,7 +45,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         );
       }
     });
-    this.isAuth = this.auth.isAuth();
+    this.isAuth = this.account.isAuth();
   }
 
   ngOnDestroy(): void {

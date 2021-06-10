@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { AccountService } from 'src/app/shared/services/account.service';
 import { AuthResponseInterface } from 'src/app/auth/types/auth-response.interface';
 
 @Component({
@@ -11,9 +11,9 @@ import { AuthResponseInterface } from 'src/app/auth/types/auth-response.interfac
 export class ProfileComponent implements OnInit {
   public user$: Observable<AuthResponseInterface>;
 
-  constructor(private auth: AuthService) {}
+  constructor(private account: AccountService) {}
 
   ngOnInit(): void {
-    this.user$ = this.auth.getUser();
+    this.user$ = this.account.getUser();
   }
 }

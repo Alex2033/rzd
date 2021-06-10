@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { AccountService } from 'src/app/shared/services/account.service';
 import { ServicePointsService } from 'src/app/shared/services/service-points.service';
 import { ServiceInterface } from 'src/app/shared/types/service.interface';
 import { ServicesService } from '../../../shared/services/services.service';
@@ -21,8 +20,7 @@ export class IndexComponent implements OnInit {
   constructor(
     private services: ServicesService,
     private servicePoints: ServicePointsService,
-    private router: Router,
-    private auth: AuthService
+    private account: AccountService
   ) {}
 
   ngOnInit(): void {
@@ -30,6 +28,6 @@ export class IndexComponent implements OnInit {
     this.servicePoints$ = this.servicePoints
       .getServicePoints()
       .pipe(shareReplay());
-    this.isAuth = this.auth.isAuth();
+    this.isAuth = this.account.isAuth();
   }
 }

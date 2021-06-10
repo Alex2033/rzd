@@ -9,7 +9,7 @@ import {
 import { Router } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { AccountService } from 'src/app/shared/services/account.service';
 import { AuthResponseInterface } from 'src/app/auth/types/auth-response.interface';
 import { CheckPhoneDataInterface } from 'src/app/shared/types/phone-data.interface';
 import { ProfileService } from '../../services/profile.service';
@@ -28,7 +28,7 @@ export class EditPhoneComponent implements OnInit, OnDestroy {
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   constructor(
-    private auth: AuthService,
+    private account: AccountService,
     private formBuilder: FormBuilder,
     private router: Router,
     private profileService: ProfileService
@@ -45,7 +45,7 @@ export class EditPhoneComponent implements OnInit, OnDestroy {
   }
 
   getUser(): void {
-    this.auth.getUser().subscribe((user) => (this.user = user));
+    this.account.getUser().subscribe((user) => (this.user = user));
   }
 
   createForm(): void {
@@ -97,7 +97,7 @@ export class EditPhoneComponent implements OnInit, OnDestroy {
       ...this.user,
       phone: this.editForm.get('phone').value,
     };
-    this.auth
+    this.account
       .updateUser(updatedUser)
       .pipe(
         takeUntil(this.destroy),

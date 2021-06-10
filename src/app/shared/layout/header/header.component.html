@@ -40,7 +40,7 @@
     </div>
 
     <button
-      *ngIf="!this.auth.isAuth()"
+      *ngIf="!this.account.isAuth()"
       [routerLink]="['/auth', 'login']"
       class="header-button login-button"
     >
@@ -50,7 +50,7 @@
     </button>
 
     <button
-      *ngIf="this.auth.isAuth()"
+      *ngIf="this.account.isAuth()"
       class="header-button user-button"
       (click)="setUserMenu(true)"
     >
