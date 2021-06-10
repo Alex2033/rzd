@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PlugComponent } from './plug/plug.component';
-import { SberbankPaymentComponent } from './sberbank-payment/sberbank-payment.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { LanguagesResolver } from './shared/resolvers/language.resolver';
 
@@ -33,10 +32,6 @@ const routes: Routes = [
   {
     path: 'plug',
     component: PlugComponent,
-  },
-  {
-    path: 'sberbank-payment',
-    component: SberbankPaymentComponent,
   },
   {
     path: 'server-error/:key',
