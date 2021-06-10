@@ -76,9 +76,10 @@
       <button
         *ngIf="!submitted"
         type="button"
+        [class.is-loading]="isLoading"
         (click)="login()"
         class="button register-button"
-        [disabled]="phoneControl.invalid || loginLoading"
+        [disabled]="phoneControl.invalid || isLoading"
       >
         <span>Далее</span>
         <svg width="1.6rem" height="1.6rem">

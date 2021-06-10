@@ -16,6 +16,7 @@ import { AccountService } from 'src/app/shared/services/account.service';
 import { SmsConfirmInterface } from 'src/app/auth/types/sms-confirm.interface';
 import { CheckPhoneDataInterface } from '../../types/phone-data.interface';
 import { ProfileService } from 'src/app/profile/services/profile.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sms-confirm',
@@ -48,7 +49,8 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
 
   constructor(
     private account: AccountService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -70,9 +72,17 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
     this.profileService
       .checkPhone(phoneData)
       .pipe(takeUntil(this.destroy))
-      .subscribe(() => {
-        this.newCodeSuccess();
-      });
+      .subscribe(
+        () => {
+          this.newCodeSuccess();
+        },
+        (err) => {
+          if (err instanceof HttpErrorResponse) {
+            this.handleError(err.error.error);
+            this.isLoading = false;
+          }
+        }
+      );
     this.setTimer();
   }
 
@@ -80,9 +90,17 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
     this.account
       .login(this.phoneValue)
       .pipe(takeUntil(this.destroy))
-      .subscribe(() => {
-        this.newCodeSuccess();
-      });
+      .subscribe(
+        () => {
+          this.newCodeSuccess();
+        },
+        (err) => {
+          if (err instanceof HttpErrorResponse) {
+            this.handleError(err.error.error);
+            this.isLoading = false;
+          }
+        }
+      );
     this.setTimer();
   }
 
@@ -90,9 +108,17 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
     this.account
       .reInvite(this.phoneValue)
       .pipe(takeUntil(this.destroy))
-      .subscribe(() => {
-        this.newCodeSuccess();
-      });
+      .subscribe(
+        () => {
+          this.newCodeSuccess();
+        },
+        (err) => {
+          if (err instanceof HttpErrorResponse) {
+            this.handleError(err.error.error);
+            this.isLoading = false;
+          }
+        }
+      );
     this.setTimer();
   }
 
@@ -210,7 +236,7 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
         this.timeExpired = true;
         break;
       case 'SMS_ERROR':
-        this.confirmError = 'Ошибка отправки кода';
+        this.router.navigate(['/server-error', err]);
         break;
       default:
         this.confirmError = 'Введен неверный код';

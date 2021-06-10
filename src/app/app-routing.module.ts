@@ -38,6 +38,13 @@ const routes: Routes = [
     path: 'sberbank-payment',
     component: SberbankPaymentComponent,
   },
+  {
+    path: 'server-error/:key',
+    loadChildren: () =>
+      import('./server-error/server-error.module').then(
+        (m) => m.ServerErrorModule
+      ),
+  },
 ];
 
 @NgModule({

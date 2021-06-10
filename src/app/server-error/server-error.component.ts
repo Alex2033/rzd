@@ -12,6 +12,7 @@ import { takeUntil } from 'rxjs/operators';
 export class ServerErrorComponent implements OnInit, OnDestroy {
   public text: string;
   public link: string;
+  public closeLink: string;
   public buttonText: string;
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
@@ -46,28 +47,28 @@ export class ServerErrorComponent implements OnInit, OnDestroy {
         this.text =
           'Не удалось оплатить заказ. Попробуйте еще раз или выберите другой способ оплаты.';
         this.buttonText = 'Попробовать снова';
-        this.link = `services-registration/payment-method/${orderId}`;
+        this.link = `/cabinet/services-registration/payment-method/${orderId}`;
         break;
 
       case 'POINT_NOT_FOUND':
         this.text =
           'Выбранная точка обслуживания недоступна. Пожалуйста, выберите другую точку обслуживания.';
         this.buttonText = 'Выбрать точку обслуживания';
-        this.link = 'select-point/0';
+        this.link = '/cabinet/select-point/0';
         break;
 
       case 'INVALID_RETURN_DATE':
         this.text =
           'Неверный формат даты возвращения в РФ. Пожалуйста укажите верную дату.';
         this.buttonText = 'Указать дату';
-        this.link = 'questions/0';
+        this.link = '/cabinet/questions/0';
         break;
 
       case 'ANKETA_NOT_FOUND':
         this.text =
           'Выбранная вами анкета не найдена. Пожалуйста выберите другую анкету или попробуйте еще раз.';
         this.buttonText = 'Выбрать анкету';
-        this.link = 'questionnaires';
+        this.link = '/cabinet/questionnaires';
         break;
 
       case 'ANKETA_PARSE_ERROR':
@@ -142,16 +143,30 @@ export class ServerErrorComponent implements OnInit, OnDestroy {
         this.buttonText = 'Перейти к анкете';
         break;
 
+      case 'SMS_ERROR':
+        this.closeLink = '/';
+        this.text = 'Ошибка соединения с сервером...';
+        this.buttonText = 'Попробовать снова';
+        break;
+
       default:
-        this.text = 'Ошибка соеденения с сервером...';
+        this.text = 'Ошибка соединения с сервером...';
         this.buttonText = 'Попробовать снова';
         break;
     }
   }
 
+  close(): void {
+    if (this.closeLink) {
+      this.router.navigate([this.closeLink]);
+    } else {
+      this.location.back();
+    }
+  }
+
   navigate(): void {
     if (this.link) {
-      this.router.navigate(['/cabinet', this.link]);
+      this.router.navigate([this.link]);
     } else {
       this.location.back();
     }

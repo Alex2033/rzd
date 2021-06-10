@@ -207,3 +207,29 @@ ul {
   opacity: 0;
   visibility: hidden;
 }
+
+.is-loading {
+  svg {
+    display: none;
+  }
+
+  &::after {
+    content: "";
+    min-width: 1.4rem;
+    min-height: 1.4rem;
+    border: 0.3rem solid rgba(255, 255, 255, 0.1);
+    border-right: 0.3rem solid $light;
+    border-radius: 50%;
+    animation: spinner 0.8s linear infinite;
+    margin-left: 1rem;
+  }
+}
+
+@keyframes spinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

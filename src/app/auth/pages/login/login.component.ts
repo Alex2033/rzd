@@ -20,7 +20,7 @@ import { AccountService } from '../../../shared/services/account.service';
 export class LoginComponent implements OnInit, OnDestroy {
   public loginForm: FormGroup;
   public phoneControl: AbstractControl;
-  public loginLoading: boolean = false;
+  public isLoading: boolean = false;
   public submitted: boolean = false;
   public smsInterval: number = 0;
 
@@ -72,13 +72,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login(): void {
-    this.loginLoading = true;
+    this.isLoading = true;
 
     this.account
       .login(this.phone.value)
       .pipe(
-        takeUntil(this.destroy),
-        finalize(() => (this.loginLoading = false))
+        finalize(() => (this.isLoading = false)),
+        takeUntil(this.destroy)
       )
       .subscribe(
         () => {
@@ -107,9 +107,14 @@ export class LoginComponent implements OnInit, OnDestroy {
           not_found: 'Пользователь с таким номером не найден',
         });
         break;
+
       case 'SMS_INTERVAL':
         this.smsInterval = value;
         this.submitted = true;
+        break;
+
+      case 'SMS_ERROR':
+        this.router.navigate(['/server-error', error]);
         break;
 
       default:

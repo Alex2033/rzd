@@ -26,13 +26,6 @@ const routes: Routes = [
         './modules/services-registration/services-registration.module'
       ).then((m) => m.ServicesRegistrationModule),
   },
-  {
-    path: 'server-error/:key',
-    loadChildren: () =>
-      import('./modules/server-error/server-error.module').then(
-        (m) => m.ServerErrorModule
-      ),
-  },
 ];
 
 @NgModule({

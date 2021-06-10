@@ -136,7 +136,7 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
         },
         (err) => {
           if (err instanceof HttpErrorResponse) {
-            this.router.navigate(['/cabinet', 'server-error', err.error.error]);
+            this.router.navigate(['/server-error', err.error.error]);
           }
         }
       );
