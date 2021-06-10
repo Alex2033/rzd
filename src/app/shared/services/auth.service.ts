@@ -34,13 +34,22 @@ export class AuthService {
     return this.http.post<{}>(environment.api + 'api/account/register', data);
   }
 
-  confirmInvite(data: SmsConfirmInterface): Observable<AuthResponseInterface> {
+  confirm(
+    type: string,
+    data: SmsConfirmInterface
+  ): Observable<AuthResponseInterface> {
     return this.http
       .post<AuthResponseInterface>(
-        environment.api + 'api/account/confirm_invite',
+        environment.api + `api/account/${type}`,
         data
       )
-      .pipe(tap((res) => this.setUserSettings(res)));
+      .pipe(
+        tap((res) => {
+          if (type !== 'confirm_check_phone') {
+            this.setUserSettings(res);
+          }
+        })
+      );
   }
 
   reInvite(phone: string): Observable<void> {
@@ -53,15 +62,6 @@ export class AuthService {
     return this.http.post<void>(environment.api + 'api/account/login', {
       phone,
     });
-  }
-
-  confirmLogin(data: SmsConfirmInterface): Observable<AuthResponseInterface> {
-    return this.http
-      .post<AuthResponseInterface>(
-        environment.api + 'api/account/confirm_login',
-        data
-      )
-      .pipe(tap((res) => this.setUserSettings(res)));
   }
 
   setUserSettings(res: AuthResponseInterface): void {

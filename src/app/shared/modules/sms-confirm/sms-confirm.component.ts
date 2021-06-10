@@ -177,53 +177,19 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
         code: values,
       };
 
-      if (this.isLogin) {
-        this.confirmLogin(confirmCode);
-      } else if (this.isEditPhone) {
-        this.confirmEditedPhone(confirmCode);
-      } else {
-        this.confirmRegistration(confirmCode);
-      }
+      let type: string = 'confirm_invite';
+
+      if (this.isLogin) type = 'confirm_login';
+
+      if (this.isEditPhone) type = 'confirm_check_phone';
+
+      this.confirm(type, confirmCode);
     }
   }
 
-  confirmEditedPhone(confirmCode: SmsConfirmInterface): void {
-    this.profileService
-      .confirmPhone(confirmCode)
-      .pipe(takeUntil(this.destroy))
-      .subscribe(
-        () => {
-          this.submit.emit();
-        },
-        (err) => {
-          if (err instanceof HttpErrorResponse) {
-            this.handleError(err.error.error);
-            this.isLoading = false;
-          }
-        }
-      );
-  }
-
-  confirmLogin(confirmCode: SmsConfirmInterface): void {
+  confirm(type: string, confirmCode: SmsConfirmInterface): void {
     this.auth
-      .confirmLogin(confirmCode)
-      .pipe(takeUntil(this.destroy))
-      .subscribe(
-        () => {
-          this.submit.emit();
-        },
-        (err) => {
-          if (err instanceof HttpErrorResponse) {
-            this.handleError(err.error.error);
-            this.isLoading = false;
-          }
-        }
-      );
-  }
-
-  confirmRegistration(confirmCode: SmsConfirmInterface): void {
-    this.auth
-      .confirmInvite(confirmCode)
+      .confirm(type, confirmCode)
       .pipe(takeUntil(this.destroy))
       .subscribe(
         () => {
