@@ -348,25 +348,6 @@ export class AdultCreateComponent implements OnInit, OnDestroy {
   }
 
   next(): void {
-    if (this.currentStep === 1) {
-      this.activeDoctype = this.doctypes.find(
-        (doc) =>
-          doc.val === this.createForm.get('basicData').get('doc_type').value
-      );
-      if (this.activeDoctype) {
-        this.setLanguageValidator();
-        this.createForm
-          .get('basicData')
-          .get('name')
-          .updateValueAndValidity({ emitEvent: false });
-        this.createForm
-          .get('basicData')
-          .get('surname')
-          .updateValueAndValidity({ emitEvent: false });
-        this.isLoading = false;
-      }
-    }
-
     if (this.currentGroup.valid && this.currentStep <= this.formLength) {
       this.currentStep += 1;
 
