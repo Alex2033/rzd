@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { OrdersService } from 'src/app/shared/services/orders.service';
 import { OrderInterface } from 'src/app/shared/types/order.interface';
 
@@ -18,12 +18,10 @@ export class PaymentResponseComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private ordersService: OrdersService,
-    private router: Router
+    private ordersService: OrdersService
   ) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {});
     this.getOrder();
   }
 
@@ -36,6 +34,7 @@ export class PaymentResponseComponent implements OnInit {
           return this.route.queryParams;
         })
       )
+      .pipe(takeUntil(this.destroy))
       .subscribe((params) => {
         this.setContent(params.text);
       });
@@ -43,6 +42,9 @@ export class PaymentResponseComponent implements OnInit {
 
   setContent(text: string): void {
     switch (text) {
+      case 'online':
+        this.text = `Ваш заказ №${this.order.id} успешно оплачен.`;
+        break;
       case 'terminal':
         this.text = `Ваш заказ №${this.order.id} оформлен. Вы можете оплатить его в инфокиоске.`;
         break;

@@ -54,11 +54,38 @@ export class PaymentMethodComponent implements OnInit {
 
   pay(): void {
     this.isLoading = true;
+
     const payment: PaymentInterface = {
       id_order: this.order.id,
       payment: this.selectedPayment,
       autoStatus: true,
     };
+
+    if (this.selectedPayment === 'ONLINE') {
+      this.ordersService
+        .pay(payment)
+        .pipe(
+          switchMap(() => this.ordersService.sberpay(this.order.id)),
+          finalize(() => (this.isLoading = false)),
+          takeUntil(this.destroy)
+        )
+        .subscribe(
+          (res) => {
+            window.location.href = res.url;
+          },
+          (err) => {
+            if (err instanceof HttpErrorResponse) {
+              this.router.navigate([
+                '/cabinet',
+                'server-error',
+                err.error.error,
+              ]);
+            }
+          }
+        );
+
+      return;
+    }
 
     if (this.resend) {
       this.ordersService
@@ -68,7 +95,9 @@ export class PaymentMethodComponent implements OnInit {
           takeUntil(this.destroy)
         )
         .subscribe(
-          () => {},
+          () => {
+            this.successPayment();
+          },
           (err) => {
             this.resend = false;
             this.handleError(err);

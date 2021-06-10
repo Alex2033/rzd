@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, ReplaySubject } from 'rxjs';
@@ -91,9 +92,40 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
       this.ordersService
         .updateOrder(this.order)
         .pipe(takeUntil(this.destroy))
-        .subscribe(() => {
+        .subscribe(
+          () => {
+            this.router.navigate(
+              ['/cabinet', 'services-registration', 'document', this.orderId],
+              {
+                queryParams: {
+                  questionnaireNum: 1,
+                  docIndex: 1,
+                },
+              }
+            );
+          },
+          (err) => {
+            if (err instanceof HttpErrorResponse) {
+              this.router.navigate([
+                '/cabinet',
+                'server-error',
+                err.error.error,
+              ]);
+            }
+          }
+        );
+
+      return;
+    }
+
+    this.ordersService
+      .createOrder({ ...this.order })
+      .pipe(takeUntil(this.destroy))
+      .subscribe(
+        (res) => {
+          this.servicesRegistration.setOrder(res);
           this.router.navigate(
-            ['/cabinet', 'services-registration', 'document', this.orderId],
+            ['/cabinet', 'services-registration', 'document', res.id],
             {
               queryParams: {
                 questionnaireNum: 1,
@@ -101,23 +133,13 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
               },
             }
           );
-        });
-
-      return;
-    }
-
-    this.ordersService.createOrder(this.order).subscribe((res) => {
-      this.servicesRegistration.setOrder(res);
-      this.router.navigate(
-        ['/cabinet', 'services-registration', 'document', res.id],
-        {
-          queryParams: {
-            questionnaireNum: 1,
-            docIndex: 1,
-          },
+        },
+        (err) => {
+          if (err instanceof HttpErrorResponse) {
+            this.router.navigate(['/cabinet', 'server-error', err.error.error]);
+          }
         }
       );
-    });
   }
 
   selectionChange(event: number, item: QuestionnaireOrderInterface): void {

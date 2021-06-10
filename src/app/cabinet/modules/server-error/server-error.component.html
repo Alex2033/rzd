@@ -17,8 +17,8 @@
   </div>
 
   <div class="buttons">
-    <button type="button" [routerLink]="['']" class="button">
-      <span>Попробовать снова</span>
+    <button type="button" (click)="navigate()" class="button">
+      <span>{{ buttonText }}</span>
     </button>
   </div>
 </div>

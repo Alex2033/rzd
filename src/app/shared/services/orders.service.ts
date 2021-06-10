@@ -100,4 +100,13 @@ export class OrdersService {
       { id }
     );
   }
+
+  sberpay(id_order: number): Observable<{ url: string }> {
+    return this.http.post<{ url: string }>(
+      environment.api + 'api/order/sberpay',
+      {
+        id_order,
+      }
+    );
+  }
 }
