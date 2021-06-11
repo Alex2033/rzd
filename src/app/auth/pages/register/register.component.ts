@@ -25,7 +25,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   public emailControl: AbstractControl;
   public emailConfirmControl: AbstractControl;
   public submitted: boolean = false;
-  public registrationLoading: boolean = false;
+  public isLoading: boolean = false;
   public smsInterval: number = 0;
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
@@ -115,7 +115,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   register(): void {
-    this.registrationLoading = true;
+    this.isLoading = true;
     const newUser: AuthDataInterface = {
       email: this.email.value,
       name: this.name.value,
@@ -126,7 +126,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       .register(newUser)
       .pipe(
         takeUntil(this.destroy),
-        finalize(() => (this.registrationLoading = false))
+        finalize(() => (this.isLoading = false))
       )
       .subscribe(
         () => this.registerSuccess(),
@@ -159,6 +159,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
       case 'PHONE_ALREADY_EXISTS':
         this.phone.setErrors({
           not_unique_phone: 'Номер телефона уже зарегистрирован',
+        });
+        break;
+      case 'EMAIL_BAD_FORMAT':
+        this.email.setErrors({
+          email_bad_format: 'Неверный формат email',
         });
         break;
       case 'NAME_LENGTH':

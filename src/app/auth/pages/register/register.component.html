@@ -16,10 +16,8 @@
             <mat-label>Имя<span class="primary-color">*</span></mat-label>
 
             <input
-              autocomplete="nope"
-              name="name"
+              name="custom_name_field"
               type="text"
-              autocomplete="nope"
               matInput
               formControlName="name"
             />
@@ -138,6 +136,7 @@
                 [errors]="emailControl.errors"
                 [errorMessages]="{
                   required: 'Введите email',
+                  email_bad_format: emailControl.errors?.email_bad_format,
                   not_unique_email: emailControl.errors?.not_unique_email,
                   incorrect_email_length:
                     emailControl.errors?.incorrect_email_length
@@ -212,6 +211,7 @@
 
     <div class="buttons">
       <button
+        [class.is-loading]="isLoading"
         *ngIf="!submitted"
         type="button"
         (click)="register()"
@@ -221,7 +221,7 @@
           phoneControl.invalid ||
           emailControl.invalid ||
           emailConfirm.invalid ||
-          registrationLoading
+          isLoading
         "
       >
         <span>Далее</span>
