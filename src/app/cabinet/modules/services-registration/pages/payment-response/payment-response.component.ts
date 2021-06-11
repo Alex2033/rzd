@@ -45,10 +45,10 @@ export class PaymentResponseComponent implements OnInit {
       case 'online':
         this.text = `Ваш заказ №${this.order.id} успешно оплачен.`;
         break;
-      case 'terminal':
+      case 'TERMINAL':
         this.text = `Ваш заказ №${this.order.id} оформлен. Вы можете оплатить его в инфокиоске.`;
         break;
-      case 'admin':
+      case 'ADMIN':
         this.text = `Ваш заказ №${this.order.id} оформлен. Вы можете оплатить его у администратора.`;
         break;
       default:

@@ -5,8 +5,9 @@ import { ReplaySubject } from 'rxjs';
 import { PaymentInterface } from 'src/app/shared/types/payment.interface';
 import { OrderInterface } from 'src/app/shared/types/order.interface';
 import { ActivatedRoute, Router } from '@angular/router';
-import { finalize, switchMap, takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
+import { LanguageService } from 'src/app/shared/services/language.service';
 
 @Component({
   selector: 'app-payment-method',
@@ -17,7 +18,6 @@ export class PaymentMethodComponent implements OnInit {
   public selectedPayment: string;
   public isLoading: boolean = false;
   public order: OrderInterface;
-  public resend: boolean = false;
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -25,7 +25,8 @@ export class PaymentMethodComponent implements OnInit {
     private location: Location,
     private ordersService: OrdersService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private language: LanguageService
   ) {}
 
   ngOnInit(): void {
@@ -59,119 +60,36 @@ export class PaymentMethodComponent implements OnInit {
       id_order: this.order.id,
       payment: this.selectedPayment,
       autoStatus: true,
+      id_lang: this.language.langId.value,
     };
 
-    if (this.selectedPayment === 'ONLINE') {
-      this.ordersService
-        .pay(payment)
-        .pipe(
-          switchMap(() => this.ordersService.sberpay(this.order.id)),
-          finalize(() => (this.isLoading = false)),
-          takeUntil(this.destroy)
-        )
-        .subscribe(
-          (res) => {
-            window.location.href = res.url;
-          },
-          (err) => {
-            if (err instanceof HttpErrorResponse) {
-              this.router.navigate([
-                '/cabinet',
-                'server-error',
-                err.error.error,
-              ]);
-            }
-          }
-        );
-
-      return;
-    }
-
-    if (this.resend) {
-      this.ordersService
-        .rePay(this.order.id)
-        .pipe(
-          finalize(() => (this.isLoading = false)),
-          takeUntil(this.destroy)
-        )
-        .subscribe(
-          () => {
+    this.ordersService
+      .pay(payment)
+      .pipe(takeUntil(this.destroy))
+      .subscribe(
+        (res) => {
+          if (res.payment_page) {
+            window.location.href = res.payment_page;
+          } else {
             this.successPayment();
-          },
-          (err) => {
-            this.resend = false;
-            this.handleError(err);
           }
-        );
-    } else {
-      this.ordersService
-        .pay(payment)
-        .pipe(
-          finalize(() => (this.isLoading = false)),
-          takeUntil(this.destroy)
-        )
-        .subscribe(
-          () => {
-            this.successPayment();
-          },
-          (err) => {
-            this.handleError(err);
+        },
+        (err) => {
+          if (err instanceof HttpErrorResponse) {
+            this.router.navigate(['/server-error', err.error.error]);
           }
-        );
-    }
+        }
+      );
   }
 
   successPayment(): void {
-    if (this.selectedPayment === 'TERMINAL') {
-      this.router.navigate(
-        [
-          '/cabinet',
-          'services-registration',
-          'payment-response',
-          this.order.id,
-        ],
-        {
-          queryParams: {
-            text: 'terminal',
-          },
-        }
-      );
-    } else if (this.selectedPayment === 'ADMIN') {
-      this.router.navigate(
-        [
-          '/cabinet',
-          'services-registration',
-          'payment-response',
-          this.order.id,
-        ],
-        {
-          queryParams: {
-            text: 'admin',
-          },
-        }
-      );
-    }
-  }
-
-  handleError(err: HttpErrorResponse): void {
-    if (err instanceof HttpErrorResponse) {
-      if (err.error.error === 'MEDME_SEND_ERROR') {
-        this.resend = true;
-      } else {
-        this.router.navigate(
-          [
-            '/cabinet',
-            'services-registration',
-            'payment-response',
-            this.order.id,
-          ],
-          {
-            queryParams: {
-              text: 'error',
-            },
-          }
-        );
+    this.router.navigate(
+      ['/cabinet', 'services-registration', 'payment-response', this.order.id],
+      {
+        queryParams: {
+          text: this.selectedPayment,
+        },
       }
-    }
+    );
   }
 }
