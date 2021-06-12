@@ -25,11 +25,11 @@ import { QuestionnaireDetailInterface } from '../../types/questionnaire-detail.i
 import { UpdatedFieldInterface } from '../../types/updated-field.interface';
 
 @Component({
-  selector: 'app-adult-create',
-  templateUrl: './adult-create.component.html',
-  styleUrls: ['./adult-create.component.scss'],
+  selector: 'app-create-questionnaire',
+  templateUrl: './create-questionnaire.component.html',
+  styleUrls: ['./create-questionnaire.component.scss'],
 })
-export class AdultCreateComponent implements OnInit, OnDestroy {
+export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
   public createForm: FormGroup;
   public currentStep: number = 1;
   public isChild: boolean = false;

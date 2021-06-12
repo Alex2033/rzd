@@ -22,7 +22,7 @@ import { DeleteComponent } from './components/delete/delete.component';
 import { WarningDialogComponent } from './components/warning-dialog/warning-dialog.component';
 import { CreateSheetComponent } from './components/create-sheet/create-sheet.component';
 import { ChooseAdultComponent } from './pages/choose-adult/choose-adult.component';
-import { AdultCreateComponent } from './pages/adult-create/adult-create.component';
+import { CreateQuestionnaireComponent } from './pages/create-questionnaire/create-questionnaire.component';
 import { BasicDataComponent } from './components/basic-data/basic-data.component';
 import { DocumentStepComponent } from './components/document-step/document-step.component';
 import { RegisterAddressComponent } from './components/register-address/register-address.component';
@@ -37,7 +37,7 @@ import { InfoMessageComponent } from './pages/info-message/info-message.componen
     WarningDialogComponent,
     CreateSheetComponent,
     ChooseAdultComponent,
-    AdultCreateComponent,
+    CreateQuestionnaireComponent,
     BasicDataComponent,
     DocumentStepComponent,
     RegisterAddressComponent,

@@ -5,8 +5,8 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
-import { AdultCreateComponent } from '../pages/adult-create/adult-create.component';
+import { map } from 'rxjs/operators';
+import { CreateQuestionnaireComponent } from '../pages/create-questionnaire/create-questionnaire.component';
 import { QuestionnairesService } from '../services/questionnaires.service';
 
 @Injectable({
@@ -18,7 +18,7 @@ export class CreateQuestionnaireDeactivateGuard
   constructor(private questionnairesService: QuestionnairesService) {}
 
   canDeactivate(
-    component: AdultCreateComponent,
+    component: CreateQuestionnaireComponent,
     route: ActivatedRouteSnapshot
   ):
     | Observable<boolean | UrlTree>
