@@ -119,7 +119,7 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
     }
 
     this.ordersService
-      .createOrder({ ...this.order })
+      .createOrder(this.order)
       .pipe(takeUntil(this.destroy))
       .subscribe(
         (res) => {
