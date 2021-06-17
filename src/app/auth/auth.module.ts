@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthRoutingModule } from './auth-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgxMaskModule } from 'ngx-mask';
 import { ErrorMessagesModule } from '../shared/modules/error-messages/error-messages.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -19,7 +18,6 @@ import { RegisterComponent } from './pages/register/register.component';
     AuthRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxMaskModule.forRoot(),
     MatFormFieldModule,
     MatInputModule,
     ErrorMessagesModule,

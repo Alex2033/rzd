@@ -5,7 +5,6 @@ import { ProfileRoutingModule } from './profile-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ErrorMessagesModule } from '../shared/modules/error-messages/error-messages.module';
-import { NgxMaskModule } from 'ngx-mask';
 import { MatInputModule } from '@angular/material/input';
 
 import { ProfileComponent } from './pages/profile/profile.component';
@@ -27,7 +26,6 @@ import { EditPhoneComponent } from './pages/edit-phone/edit-phone.component';
     MatFormFieldModule,
     MatInputModule,
     ErrorMessagesModule,
-    NgxMaskModule.forRoot(),
     SmsConfirmModule,
   ],
 })

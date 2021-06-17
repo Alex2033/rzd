@@ -13,7 +13,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ErrorMessagesModule } from 'src/app/shared/modules/error-messages/error-messages.module';
 import { MatNativeDateModule } from '@angular/material/core';
-import { NgxMaskModule } from 'ngx-mask';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { MatSelectModule } from '@angular/material/select';
 
@@ -61,7 +60,6 @@ import { InfoMessageComponent } from './pages/info-message/info-message.componen
     ErrorMessagesModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    NgxMaskModule.forRoot(),
     TextFieldModule,
     MatSelectModule,
   ],
