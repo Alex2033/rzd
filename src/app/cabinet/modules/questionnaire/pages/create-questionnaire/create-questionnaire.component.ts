@@ -1,4 +1,5 @@
 import { DatePipe } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   AbstractControl,
@@ -91,6 +92,7 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
         phone: new FormControl(null, [
           Validators.required,
           Validators.minLength(11),
+          Validators.pattern('^[+]*[]{0,1}[0-9]{1,4}[]{0,1}[\\s0-9]*$'),
         ]),
         sex: new FormControl(null, [Validators.required]),
       }),
@@ -267,6 +269,10 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
             retryWhen((errors) =>
               errors.pipe(
                 tap((err) => {
+                  if (err instanceof HttpErrorResponse) {
+                    this.setError(err, formControl);
+                  }
+
                   if (err.error.error === 'FIO_LANG_MISMATCH') {
                     this.fioMismatch(formControl);
                   }
@@ -278,6 +284,27 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
           .subscribe();
       }
     });
+  }
+
+  setError(err: HttpErrorResponse, formControl: AbstractControl): void {
+    const { error } = err.error;
+
+    switch (error) {
+      case 'FIELD_BAD_VALUE':
+        formControl.setErrors({
+          bad_value: 'Некорректное значение поля',
+        });
+        break;
+
+      case 'FIELD_BAD_FORMAT':
+        formControl.setErrors({
+          bad_format: 'Неверный формат поля анкеты',
+        });
+        break;
+
+      default:
+        break;
+    }
   }
 
   updateSingleField(res: string, key: string, id: number): Observable<void> {

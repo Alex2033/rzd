@@ -62,9 +62,6 @@
 
             <input
               matInput
-              mask="0 (000) 000 00 00"
-              [validation]="true"
-              prefix="+"
               type="text"
               autocomplete="nope"
               inputmode="tel"
@@ -92,7 +89,9 @@
                     phoneControl.errors.minlength?.requiredLength +
                     ' символов',
                   required: 'Введите номер телефона',
-                  not_unique_phone: phoneControl.errors?.not_unique_phone
+                  not_unique_phone: phoneControl.errors?.not_unique_phone,
+                  pattern: 'Неверный формат телефона',
+                  phone_bad_format: 'Неверный формат телефона'
                 }"
               ></app-error-messages
             ></mat-error>
@@ -140,7 +139,8 @@
                   email_bad_format: emailControl.errors?.email_bad_format,
                   not_unique_email: emailControl.errors?.not_unique_email,
                   incorrect_email_length:
-                    emailControl.errors?.incorrect_email_length
+                    emailControl.errors?.incorrect_email_length,
+                  pattern: 'Неверный формат телефона'
                 }"
               ></app-error-messages
             ></mat-error>

@@ -27,6 +27,10 @@
             workplace.get('company').touched && workplace.get('company').invalid
           "
           [errors]="workplace.get('company').errors"
+          [errorMessages]="{
+            bad_format: basicData.get('company').errors?.bad_format,
+            bad_value: basicData.get('company').errors?.bad_value
+          }"
         ></app-error-messages
       ></mat-error>
     </mat-form-field>
@@ -62,6 +66,10 @@
             workplace.get('company_address').invalid
           "
           [errors]="workplace.get('company_address').errors"
+          [errorMessages]="{
+            bad_format: basicData.get('company_address').errors?.bad_format,
+            bad_value: basicData.get('company_address').errors?.bad_value
+          }"
         ></app-error-messages
       ></mat-error>
     </mat-form-field>
@@ -92,6 +100,10 @@
             workplace.get('position').invalid
           "
           [errors]="workplace.get('position').errors"
+          [errorMessages]="{
+            bad_format: basicData.get('position').errors?.bad_format,
+            bad_value: basicData.get('position').errors?.bad_value
+          }"
         ></app-error-messages
       ></mat-error>
     </mat-form-field>

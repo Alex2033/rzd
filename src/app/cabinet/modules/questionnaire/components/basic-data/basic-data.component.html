@@ -19,6 +19,8 @@
           "
           [errors]="basicData.get('doc_type').errors"
           [errorMessages]="{
+            bad_format: basicData.get('doc_type').errors?.bad_format,
+            bad_value: basicData.get('doc_type').errors?.bad_value,
             required: 'Выберите тип документа'
           }"
         ></app-error-messages
@@ -55,6 +57,8 @@
           *ngIf="basicData.get('name').touched && basicData.get('name').invalid"
           [errors]="basicData.get('name').errors"
           [errorMessages]="{
+            bad_format: basicData.get('name').errors?.bad_format,
+            bad_value: basicData.get('name').errors?.bad_value,
             required: 'Введите имя',
             pattern: activeDoctype?.fioLat
               ? 'Некорректный ввод. Введите на английском'
@@ -99,6 +103,8 @@
           "
           [errors]="basicData.get('surname').errors"
           [errorMessages]="{
+            bad_format: basicData.get('surname').errors?.bad_format,
+            bad_value: basicData.get('surname').errors?.bad_value,
             required: 'Введите фамилию',
             pattern: activeDoctype?.fioLat
               ? 'Некорректный ввод. Введите на английском'
@@ -181,6 +187,8 @@
           "
           [errors]="basicData.get('birthday').errors"
           [errorMessages]="{
+            bad_format: basicData.get('birthday').errors?.bad_format,
+            bad_value: basicData.get('birthday').errors?.bad_value,
             required: 'Введите дату рождения'
           }"
         ></app-error-messages
@@ -219,6 +227,8 @@
           "
           [errors]="basicData.get('email').errors"
           [errorMessages]="{
+            bad_format: basicData.get('email').errors?.bad_format,
+            bad_value: basicData.get('email').errors?.bad_value,
             required: 'Введите email'
           }"
         ></app-error-messages
@@ -233,9 +243,6 @@
 
       <input
         matInput
-        mask="0 (000) 000 00 00"
-        [validation]="true"
-        prefix="+"
         type="text"
         autocomplete="nope"
         inputmode="tel"
@@ -260,12 +267,16 @@
           "
           [errors]="basicData.get('phone').errors"
           [errorMessages]="{
+            bad_format: basicData.get('phone').errors?.bad_format,
+            bad_value: basicData.get('phone').errors?.bad_value,
             minlength:
               'Минимальная длина ' +
               basicData.get('phone').errors.minlength?.requiredLength +
               ' символов',
             required: 'Введите номер телефона',
-            not_unique_phone: basicData.get('phone').errors?.not_unique_phone
+            not_unique_phone: basicData.get('phone').errors?.not_unique_phone,
+            pattern: 'Неверный формат телефона',
+            phone_bad_format: 'Неверный формат телефона'
           }"
         ></app-error-messages
       ></mat-error>
@@ -285,6 +296,8 @@
         *ngIf="basicData.get('sex').touched && basicData.get('sex').invalid"
         [errors]="basicData.get('sex').errors"
         [errorMessages]="{
+          bad_format: basicData.get('sex').errors?.bad_format,
+          bad_value: basicData.get('sex').errors?.bad_value,
           required: 'Выберите пол'
         }"
       ></app-error-messages>

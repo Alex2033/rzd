@@ -13,9 +13,6 @@
 
             <input
               matInput
-              mask="0 (000) 000 00 00"
-              [validation]="true"
-              prefix="+"
               type="text"
               autocomplete="nope"
               inputmode="tel"
@@ -46,7 +43,9 @@
                   not_found: phoneControl.errors?.not_found,
                   exists_without_confirm:
                     phoneControl.errors?.exists_without_confirm,
-                  blocked: phoneControl.errors?.blocked
+                  blocked: phoneControl.errors?.blocked,
+                  pattern: 'Неверный формат телефона',
+                  phone_bad_format: 'Неверный формат телефона'
                 }"
               ></app-error-messages
             ></mat-error>

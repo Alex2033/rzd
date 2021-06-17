@@ -15,9 +15,6 @@
 
             <input
               matInput
-              mask="0 (000) 000 00 00"
-              [validation]="true"
-              prefix="+"
               type="text"
               inputmode="tel"
               autocomplete="nope"
@@ -44,7 +41,9 @@
                 [errorMessages]="{
                   required: 'Введите телефон',
                   not_unique_phone:
-                    editForm.get('phone').errors?.not_unique_phone
+                    editForm.get('phone').errors?.not_unique_phone,
+                  pattern: 'Неверный формат телефона',
+                  phone_bad_format: 'Неверный формат телефона'
                 }"
               ></app-error-messages
             ></mat-error>
@@ -57,6 +56,7 @@
       [codeForm]="editForm.get('code')"
       *ngIf="submitted"
       [isEditPhone]="true"
+      [smsInterval]="smsInterval"
       (submitted)="changeSubmitted($event)"
       [phoneValue]="editForm.get('phone').value"
       (submit)="submit()"
@@ -67,9 +67,10 @@
 <div class="buttons">
   <button
     *ngIf="!submitted"
+    [class.is-loading]="isLoading"
     type="button"
     (click)="checkPhone()"
-    [disabled]="loading || editForm.get('phone').invalid"
+    [disabled]="isLoading || editForm.get('phone').invalid"
     class="button"
   >
     <span>Подтвердить телефон</span>

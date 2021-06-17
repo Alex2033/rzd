@@ -22,8 +22,9 @@ import { ProfileService } from '../../services/profile.service';
 export class EditPhoneComponent implements OnInit, OnDestroy {
   public editForm: FormGroup;
   public user: AuthResponseInterface = {} as AuthResponseInterface;
-  public loading: boolean = false;
+  public isLoading: boolean = false;
   public submitted: boolean = false;
+  public smsInterval: number = 0;
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -53,6 +54,7 @@ export class EditPhoneComponent implements OnInit, OnDestroy {
       phone: new FormControl(this.user.phone, [
         Validators.required,
         Validators.minLength(11),
+        Validators.pattern('^[+]*[]{0,1}[0-9]{1,4}[]{0,1}[\\s0-9]*$'),
       ]),
       code: new FormGroup({
         control1: new FormControl(null, [Validators.required]),
@@ -64,7 +66,7 @@ export class EditPhoneComponent implements OnInit, OnDestroy {
   }
 
   checkPhone(): void {
-    this.loading = true;
+    this.isLoading = true;
 
     const phoneData: CheckPhoneDataInterface = {
       phone: this.editForm.get('phone').value,
@@ -75,7 +77,7 @@ export class EditPhoneComponent implements OnInit, OnDestroy {
       .checkPhone(phoneData)
       .pipe(
         takeUntil(this.destroy),
-        finalize(() => (this.loading = false))
+        finalize(() => (this.isLoading = false))
       )
       .subscribe(
         () => {
@@ -91,7 +93,7 @@ export class EditPhoneComponent implements OnInit, OnDestroy {
   }
 
   submit(): void {
-    this.loading = true;
+    this.isLoading = true;
 
     const updatedUser: AuthResponseInterface = {
       ...this.user,
@@ -101,7 +103,7 @@ export class EditPhoneComponent implements OnInit, OnDestroy {
       .updateUser(updatedUser)
       .pipe(
         takeUntil(this.destroy),
-        finalize(() => (this.loading = false))
+        finalize(() => (this.isLoading = false))
       )
       .subscribe(
         () => {
@@ -116,13 +118,24 @@ export class EditPhoneComponent implements OnInit, OnDestroy {
   }
 
   private setErrors(err: HttpErrorResponse): void {
-    const { error } = err.error;
+    const { error, value } = err.error;
 
     switch (error) {
       case 'PHONE_ALREADY_EXISTS':
         this.editForm.get('phone').setErrors({
           not_unique_phone: 'Номер телефона уже занят',
         });
+        break;
+
+      case 'PHONE_BAD_FORMAT':
+        this.editForm.get('phone').setErrors({
+          phone_bad_format: 'Неверный формат телефона',
+        });
+        break;
+
+      case 'SMS_INTERVAL':
+        this.smsInterval = value;
+        this.submitted = true;
         break;
 
       default:

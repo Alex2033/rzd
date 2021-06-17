@@ -61,6 +61,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       phone: new FormControl(null, [
         Validators.required,
         Validators.minLength(11),
+        Validators.pattern('^[+]*[]{0,1}[0-9]{1,4}[]{0,1}[\\s0-9]*$'),
       ]),
       code: new FormGroup({
         control1: new FormControl(null, [Validators.required]),
@@ -111,6 +112,12 @@ export class LoginComponent implements OnInit, OnDestroy {
       case 'SMS_INTERVAL':
         this.smsInterval = value;
         this.submitted = true;
+        break;
+
+      case 'PHONE_BAD_FORMAT':
+        this.phone.setErrors({
+          phone_bad_format: 'Неверный формат телефона',
+        });
         break;
 
       case 'SMS_ERROR':

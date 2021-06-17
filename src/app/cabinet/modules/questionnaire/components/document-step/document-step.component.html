@@ -32,6 +32,8 @@
           "
           [errors]="documentStep.get('passport_number').errors"
           [errorMessages]="{
+            bad_format: basicData.get('passport_number').errors?.bad_format,
+            bad_value: basicData.get('passport_number').errors?.bad_value,
             required: 'Введите серию и номер'
           }"
         ></app-error-messages
@@ -72,6 +74,8 @@
           "
           [errors]="documentStep.get('passport_org').errors"
           [errorMessages]="{
+            bad_format: basicData.get('passport_org').errors?.bad_format,
+            bad_value: basicData.get('passport_org').errors?.bad_value,
             required: 'Введите кем выдан документ'
           }"
         ></app-error-messages
@@ -108,6 +112,8 @@
           "
           [errors]="documentStep.get('passport_date').errors"
           [errorMessages]="{
+            bad_format: basicData.get('passport_date').errors?.bad_format,
+            bad_value: basicData.get('passport_date').errors?.bad_value,
             required: 'Введите дату выдачи'
           }"
         ></app-error-messages

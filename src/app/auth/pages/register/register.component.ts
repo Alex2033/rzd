@@ -98,6 +98,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       phone: new FormControl(null, [
         Validators.required,
         Validators.minLength(11),
+        Validators.pattern('^[+]*[]{0,1}[0-9]{1,4}[]{0,1}[\\s0-9]*$'),
       ]),
       email: new FormControl(null, [Validators.required, Validators.email]),
       emailConfirm: new FormControl(null),
@@ -164,6 +165,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
       case 'EMAIL_BAD_FORMAT':
         this.email.setErrors({
           email_bad_format: 'Неверный формат email',
+        });
+        break;
+      case 'PHONE_BAD_FORMAT':
+        this.phone.setErrors({
+          phone_bad_format: 'Неверный формат телефона',
         });
         break;
       case 'NAME_LENGTH':
