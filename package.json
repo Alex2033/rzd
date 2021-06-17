@@ -24,7 +24,6 @@
     "@angular/platform-browser-dynamic": "~11.2.3",
     "@angular/router": "~11.2.3",
     "angular2-signaturepad": "^3.0.4",
-    "json-server": "^0.16.3",
     "ngx-barcode": "^0.3.0",
     "ngx-owl-carousel-o": "^5.0.0",
     "rxjs": "~6.6.0",
