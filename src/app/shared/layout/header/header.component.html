@@ -8,8 +8,8 @@
     <div class="spacer"></div>
 
     <!-- language -->
-    <div class="language-select">
-      <div class="flag">
+    <div class="language-select" (clickOutside)="showDropdown = false">
+      <div class="flag" (click)="showDropdown = !showDropdown">
         <img [src]="activeLanguage.flag" alt="country flag" />
       </div>
       <div class="language" (click)="showDropdown = !showDropdown">

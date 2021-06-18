@@ -1,18 +1,18 @@
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HeaderComponent } from './shared/layout/header/header.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MatExpansionModule } from '@angular/material/expansion';
+
+import { AppComponent } from './app.component';
+import { HeaderComponent } from './shared/layout/header/header.component';
 import { NavigationMenuComponent } from './shared/layout/navigation-menu/navigation-menu.component';
 import { UserMenuComponent } from './shared/layout/user-menu/user-menu.component';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { PlugComponent } from './plug/plug.component';
 import { LanguagesResolver } from './shared/resolvers/language.resolver';
 import { AuthInterceptor } from './auth/interceptors/auth.interceptor';
 import { registerLocaleData } from '@angular/common';
+import { ClickOutsideDirective } from './shared/directives/click-outside/click-outside.directive';
 import localeRu from '@angular/common/locales/ru';
 
 registerLocaleData(localeRu, 'ru');
@@ -23,7 +23,7 @@ registerLocaleData(localeRu, 'ru');
     HeaderComponent,
     NavigationMenuComponent,
     UserMenuComponent,
-    PlugComponent,
+    ClickOutsideDirective,
   ],
   imports: [
     BrowserModule,

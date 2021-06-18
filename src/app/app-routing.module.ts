@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PlugComponent } from './plug/plug.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { LanguagesResolver } from './shared/resolvers/language.resolver';
 
@@ -28,10 +27,6 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () =>
       import('./profile/profile.module').then((m) => m.ProfileModule),
-  },
-  {
-    path: 'plug',
-    component: PlugComponent,
   },
   {
     path: 'server-error/:key',
