@@ -149,6 +149,15 @@ export class ServerErrorComponent implements OnInit, OnDestroy {
         this.buttonText = 'Попробовать снова';
         break;
 
+      case 'PAYMENT_ERROR':
+        this.closeLink = '/cabinet/orders';
+        this.text = 'Ошибка оплаты...';
+        this.buttonText = 'Попробовать снова';
+        this.link = orderId
+          ? `/cabinet/services-registration/payment-method/${orderId}`
+          : '/cabinet/orders';
+        break;
+
       default:
         this.text = 'Ошибка соединения с сервером...';
         this.buttonText = 'Попробовать снова';
