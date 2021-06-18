@@ -38,7 +38,7 @@ export class OrdersListComponent implements OnInit {
     },
   ];
 
-  public selectedFilter: string = this.types[0].value;
+  public selectedFilter: string;
 
   constructor(
     private ordersService: OrdersService,
@@ -54,6 +54,9 @@ export class OrdersListComponent implements OnInit {
         this.orders = orders;
         this.filteredOrders = this.orders;
         this.addAddressToOrder(points);
+        this.selectedFilter =
+          sessionStorage.getItem('rzd-orders-sort') || this.types[0].value;
+        this.sortOrder(this.selectedFilter);
       },
       (err) => console.error(err)
     );
@@ -68,12 +71,15 @@ export class OrdersListComponent implements OnInit {
   }
 
   filterChange(event: MatSelectChange): void {
-    if (event.value === 'ALL') {
+    sessionStorage.setItem('rzd-orders-sort', event.value);
+    this.sortOrder(event.value);
+  }
+
+  sortOrder(value: string): void {
+    if (value === 'ALL') {
       this.filteredOrders = this.orders;
       return;
     }
-    this.filteredOrders = this.orders.filter(
-      (order) => order.status === event.value
-    );
+    this.filteredOrders = this.orders.filter((order) => order.status === value);
   }
 }
