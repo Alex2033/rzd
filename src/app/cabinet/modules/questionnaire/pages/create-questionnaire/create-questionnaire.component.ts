@@ -149,7 +149,7 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
 
           // todo превратить в функции и повторяющиеся куски тоже
           if (reg.get('adress_single').value) {
-            reg.get('no_reg_address').setValue(false);
+            reg.get('no_reg_address').setValue(false, { emitEvent: false });
             reg.disable({ emitEvent: false });
             reg.get('adress_single').enable({ emitEvent: false });
             this.equalizeAddresses();
@@ -413,6 +413,10 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
   addressSingleChanges(): void {
     const reg = this.createForm.get('registerAddress');
 
+    if (!reg.get('adress_single').value) {
+      this.resetRegisterAddress();
+    }
+
     reg.get('adress_single').valueChanges.subscribe((res) => {
       reg.get('no_reg_address').setValue(false, { emitEvent: false });
       if (res) {
@@ -420,13 +424,7 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
         reg.get('adress_single').enable({ emitEvent: false });
         this.equalizeAddresses();
       } else {
-        reg.patchValue({
-          adress_reg_country: null,
-          adress_reg_city: null,
-          adress_reg_street: null,
-          adress_reg_building: null,
-          adress_reg_flat: null,
-        });
+        this.resetRegisterAddress();
         reg.enable({ emitEvent: false });
       }
     });
@@ -459,7 +457,6 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
 
     reg.patchValue(
       {
-        adress_single: false,
         adress_reg_country: null,
         adress_reg_city: null,
         adress_reg_street: null,

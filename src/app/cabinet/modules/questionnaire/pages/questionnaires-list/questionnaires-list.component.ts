@@ -1,10 +1,11 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { MatCheckbox } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Observable, of, Subject } from 'rxjs';
-import { map, switchMap, takeUntil } from 'rxjs/operators';
+import { finalize, switchMap, takeUntil } from 'rxjs/operators';
 import { ServicesRegistrationService } from 'src/app/shared/services/services-registration.service';
 import { OrderInterface } from 'src/app/shared/types/order.interface';
 import { QuestionnaireOrderInterface } from 'src/app/shared/types/questionnaire-order.interface';
@@ -23,6 +24,7 @@ import { QuestionnaireInterface } from '../../types/questionnaire.interface';
 export class QuestionnairesListComponent implements OnInit, OnDestroy {
   public questionnaires: QuestionnaireInterface[] = [];
   public checkedQuestionnairesIds: QuestionnaireOrderInterface[] = [];
+  public isLoading: boolean = false;
 
   private destroy$ = new Subject<void>();
 
@@ -31,14 +33,17 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private _bottomSheet: MatBottomSheet,
     private router: Router,
-    private servicesRegistration: ServicesRegistrationService,
-    private http: HttpClient
+    private servicesRegistration: ServicesRegistrationService
   ) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.questionnairesService
       .getQuestionnaires()
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        finalize(() => (this.isLoading = false)),
+        takeUntil(this.destroy$)
+      )
       .subscribe((questionnaires: QuestionnaireInterface[]) => {
         this.questionnaires = questionnaires;
       });
@@ -137,6 +142,26 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
     }
 
     return of();
+  }
+
+  selectQuestionnaire(
+    checkbox: MatCheckbox,
+    questionnaire: QuestionnaireInterface
+  ): void {
+    if (questionnaire.draft) {
+      this.router.navigate(
+        ['/cabinet', 'questionnaires', 'questionnaire', questionnaire.id],
+        {
+          queryParams: {
+            step: 1,
+          },
+        }
+      );
+      return;
+    }
+
+    checkbox.checked = !checkbox.checked;
+    this.toggleCheck(checkbox.checked, questionnaire);
   }
 
   toggleCheck(checked: boolean, questionnaire: QuestionnaireInterface): void {

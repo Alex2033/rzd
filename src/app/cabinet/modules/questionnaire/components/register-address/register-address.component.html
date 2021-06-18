@@ -51,8 +51,10 @@
           "
           [errors]="registerAddress.get('adress_reg_country').errors"
           [errorMessages]="{
-            bad_format: basicData.get('adress_reg_country').errors?.bad_format,
-            bad_value: basicData.get('adress_reg_country').errors?.bad_value,
+            bad_format:
+              registerAddress.get('adress_reg_country').errors?.bad_format,
+            bad_value:
+              registerAddress.get('adress_reg_country').errors?.bad_value,
             required: 'Введите название страны'
           }"
         ></app-error-messages
@@ -93,8 +95,9 @@
           "
           [errors]="registerAddress.get('adress_reg_city').errors"
           [errorMessages]="{
-            bad_format: basicData.get('adress_reg_city').errors?.bad_format,
-            bad_value: basicData.get('adress_reg_city').errors?.bad_value,
+            bad_format:
+              registerAddress.get('adress_reg_city').errors?.bad_format,
+            bad_value: registerAddress.get('adress_reg_city').errors?.bad_value,
             required: 'Введите название населенного пункта'
           }"
         ></app-error-messages
@@ -133,8 +136,10 @@
           "
           [errors]="registerAddress.get('adress_reg_street').errors"
           [errorMessages]="{
-            bad_format: basicData.get('adress_reg_street').errors?.bad_format,
-            bad_value: basicData.get('adress_reg_street').errors?.bad_value,
+            bad_format:
+              registerAddress.get('adress_reg_street').errors?.bad_format,
+            bad_value:
+              registerAddress.get('adress_reg_street').errors?.bad_value,
             required: 'Введите название улицы'
           }"
         ></app-error-messages
@@ -173,8 +178,10 @@
           "
           [errors]="registerAddress.get('adress_reg_building').errors"
           [errorMessages]="{
-            bad_format: basicData.get('adress_reg_building').errors?.bad_format,
-            bad_value: basicData.get('adress_reg_building').errors?.bad_value,
+            bad_format: registerAddress.get('adress_reg_building').errors
+              ?.bad_format,
+            bad_value: registerAddress.get('adress_reg_building').errors
+              ?.bad_value,
             required: 'Введите номер дома(корпуса)'
           }"
         ></app-error-messages

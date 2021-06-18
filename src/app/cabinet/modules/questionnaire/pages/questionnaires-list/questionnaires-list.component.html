@@ -1,5 +1,5 @@
 <div class="page-content">
-  <div class="page-container">
+  <div class="page-container" [hidden]="isLoading">
     <h1 class="page-title">Анкеты</h1>
     <div class="subtitle-text">
       <p>
@@ -18,8 +18,16 @@
     </div>
   </div>
 
-  <!-- todo проверить запросы -->
-  <!-- <button (click)="orderRegistration()">Зарегистрировать заказ</button> -->
+  <!-- loader -->
+  <div class="loader-container" [hidden]="!isLoading">
+    <div class="loader">
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+    </div>
+  </div>
 
   <!-- questionnaires -->
   <div class="questionnaires-container" *ngIf="questionnaires.length">
@@ -43,17 +51,7 @@
           </mat-checkbox>
           <div
             class="questionnaire-content"
-            [queryParams]="questionnaire.draft ? { step: 1 } : null"
-            [routerLink]="
-              questionnaire.draft
-                ? [
-                    '/cabinet',
-                    'questionnaires',
-                    'questionnaire',
-                    questionnaire.id
-                  ]
-                : null
-            "
+            (click)="selectQuestionnaire(checkbox, questionnaire)"
           >
             <div class="questionnaire-info">
               <div class="questionnaire-personal-info">
@@ -133,12 +131,7 @@
             </mat-checkbox>
             <div
               class="questionnaire-content"
-              [queryParams]="child.draft ? { step: 1 } : null"
-              [routerLink]="
-                child.draft
-                  ? ['/cabinet', 'questionnaires', 'questionnaire', child.id]
-                  : null
-              "
+              (click)="selectQuestionnaire(checkbox, child)"
             >
               <div class="questionnaire-info">
                 <div class="child-icon">
