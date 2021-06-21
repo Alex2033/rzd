@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { AuthResponseInterface } from '../../auth/types/auth-response.interface';
 import { AuthDataInterface } from '../../auth/types/auth.interface';
 import { SmsConfirmInterface } from '../../auth/types/sms-confirm.interface';
+import { CheckPhoneDataInterface } from '../types/phone-data.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -52,10 +53,27 @@ export class AccountService {
       );
   }
 
-  reInvite(phone: string): Observable<void> {
-    return this.http.post<void>(environment.api + 'api/account/reinvite', {
-      phone,
-    });
+  getNewCode(
+    type: string,
+    phone: string | CheckPhoneDataInterface
+  ): Observable<void> {
+    let data: CheckPhoneDataInterface;
+
+    if (type === 'check_phone') {
+      data = { ...(phone as CheckPhoneDataInterface) };
+    }
+
+    return this.http.post<void>(
+      environment.api + `api/account/${type}`,
+      data ? data : { phone }
+    );
+  }
+
+  checkPhone(data: CheckPhoneDataInterface): Observable<void> {
+    return this.http.post<void>(
+      environment.api + 'api/account/check_phone',
+      data
+    );
   }
 
   login(phone: string): Observable<void> {

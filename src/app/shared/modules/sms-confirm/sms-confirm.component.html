@@ -59,13 +59,7 @@
 
 <div class="buttons">
   <button
-    (click)="
-      isLogin
-        ? getNewLoginCode()
-        : isEditPhone
-        ? getNewEditPhoneCode()
-        : getNewRegisterCode()
-    "
+    (click)="getNewCode()"
     *ngIf="resendCode"
     type="button"
     class="button"

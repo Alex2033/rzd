@@ -15,7 +15,6 @@ import { takeUntil, take, map, finalize, tap } from 'rxjs/operators';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { SmsConfirmInterface } from 'src/app/auth/types/sms-confirm.interface';
 import { CheckPhoneDataInterface } from '../../types/phone-data.interface';
-import { ProfileService } from 'src/app/profile/services/profile.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -44,14 +43,10 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
   public timeExpired: boolean = false;
 
   private count: number = 60;
-  private readonly stopTimer = new Subject<void>();
+  private readonly stopTimer: Subject<void> = new Subject<void>();
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
-  constructor(
-    private account: AccountService,
-    private profileService: ProfileService,
-    private router: Router
-  ) {}
+  constructor(private account: AccountService, private router: Router) {}
 
   ngOnInit(): void {
     this.setTimer();
@@ -63,50 +58,20 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
     this.stopTimer.next();
   }
 
-  getNewEditPhoneCode(): void {
+  getNewCode(): void {
     const phoneData: CheckPhoneDataInterface = {
       phone: this.phoneValue,
       isProfilePhone: true,
     };
 
-    this.profileService
-      .checkPhone(phoneData)
-      .pipe(takeUntil(this.destroy))
-      .subscribe(
-        () => {
-          this.newCodeSuccess();
-        },
-        (err) => {
-          if (err instanceof HttpErrorResponse) {
-            this.handleError(err.error.error);
-            this.isLoading = false;
-          }
-        }
-      );
-    this.setTimer();
-  }
+    let type: string = 'reinvite';
+    if (this.isLogin) type = 'login';
+    if (this.isEditPhone) type = 'check_phone';
 
-  getNewLoginCode(): void {
-    this.account
-      .login(this.phoneValue)
-      .pipe(takeUntil(this.destroy))
-      .subscribe(
-        () => {
-          this.newCodeSuccess();
-        },
-        (err) => {
-          if (err instanceof HttpErrorResponse) {
-            this.handleError(err.error.error);
-            this.isLoading = false;
-          }
-        }
-      );
-    this.setTimer();
-  }
+    const value = type === 'check_phone' ? phoneData : this.phoneValue;
 
-  getNewRegisterCode(): void {
     this.account
-      .reInvite(this.phoneValue)
+      .getNewCode(type, value)
       .pipe(takeUntil(this.destroy))
       .subscribe(
         () => {

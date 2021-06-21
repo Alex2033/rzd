@@ -12,7 +12,6 @@ import { finalize, takeUntil } from 'rxjs/operators';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { AuthResponseInterface } from 'src/app/auth/types/auth-response.interface';
 import { CheckPhoneDataInterface } from 'src/app/shared/types/phone-data.interface';
-import { ProfileService } from '../../services/profile.service';
 
 @Component({
   selector: 'app-edit-phone',
@@ -31,8 +30,7 @@ export class EditPhoneComponent implements OnInit, OnDestroy {
   constructor(
     private account: AccountService,
     private formBuilder: FormBuilder,
-    private router: Router,
-    private profileService: ProfileService
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -73,7 +71,7 @@ export class EditPhoneComponent implements OnInit, OnDestroy {
       isProfilePhone: true,
     };
 
-    this.profileService
+    this.account
       .checkPhone(phoneData)
       .pipe(
         takeUntil(this.destroy),
