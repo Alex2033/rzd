@@ -76,7 +76,11 @@ export class PaymentMethodComponent implements OnInit {
         },
         (err) => {
           if (err instanceof HttpErrorResponse) {
-            this.router.navigate(['/server-error', err.error.error]);
+            this.router.navigate(['/server-error', err.error.error], {
+              queryParams: {
+                orderId: this.order.id,
+              },
+            });
           }
         }
       );

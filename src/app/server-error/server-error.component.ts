@@ -50,6 +50,13 @@ export class ServerErrorComponent implements OnInit, OnDestroy {
         this.link = `/cabinet/services-registration/payment-method/${orderId}`;
         break;
 
+      case 'ORDER_NOT_FOUND':
+        this.closeLink = '/cabinet/orders';
+        this.text = 'Заказ не найден';
+        this.buttonText = 'К заказам';
+        this.link = '/cabinet/orders';
+        break;
+
       case 'POINT_NOT_FOUND':
         this.text =
           'Выбранная точка обслуживания недоступна. Пожалуйста, выберите другую точку обслуживания.';
