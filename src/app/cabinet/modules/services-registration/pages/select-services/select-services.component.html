@@ -67,7 +67,9 @@
   <div class="page-container">
     <div class="total-sum">
       <span>Итого:</span>
-      <span class="service-price">{{ order.sum }}&#8381;</span>
+      <span class="service-price"
+        >{{ order.sum ? order.sum : sum ? sum : 0 }}&#8381;</span
+      >
     </div>
   </div>
 </div>
@@ -75,8 +77,9 @@
 <div class="buttons">
   <button
     class="button"
+    [class.is-loading]="isLoading"
     (click)="selectService()"
-    [disabled]="!selectedService && !separateSelected.length"
+    [disabled]="(!selectedService && !separateSelected.length) || isLoading"
   >
     <span>Далее</span>
     <svg width="1.6rem" height="1.6rem">

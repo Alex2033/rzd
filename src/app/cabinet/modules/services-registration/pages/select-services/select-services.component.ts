@@ -20,10 +20,13 @@ import { QuestionnaireInterface } from '../../../questionnaire/types/questionnai
 export class SelectServicesComponent implements OnInit, OnDestroy {
   public questionnaires$: Observable<QuestionnaireInterface[]>;
   public services: ServiceInterface[] = [];
-  public selectedService: ServiceInterface;
-  public separateSelected: ServiceInterface[] = [];
+  public selectedService: number;
+  public separateSelected: number[] = [];
   public selectEach: boolean = false;
   public order: OrderInterface = {} as OrderInterface;
+  public sum: number = 0;
+  public selectedServices: number[] = [];
+  public isLoading: boolean = false;
 
   private orderId: number;
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
@@ -38,7 +41,6 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.initializeValues();
     this.getOrder();
   }
 
@@ -57,26 +59,17 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
       )
       .subscribe((res) => {
         if (res) {
-          res.items.forEach((item) => {
-            item.services.forEach((service: any) => {
-              this.separateSelected.push(service.id_service);
-            });
-          });
-          const servicesEqual = this.separateSelected.every(
-            (v) => v === this.separateSelected[0]
-          );
-          if (!servicesEqual) {
-            this.selectEach = true;
-          } else {
-            this.selectedService = this.separateSelected[0];
-          }
-          this.servicesRegistration.setOrder(res);
+          this.order = res;
+          this.setOrderValues();
+        } else {
+          this.order = this.servicesRegistration.order;
+          this.setOrderValues();
         }
+        this.initializeValues();
       });
   }
 
   initializeValues(): void {
-    this.order = this.servicesRegistration.order;
     this.questionnaires$ = this.questionnairesService.getQuestionnaires();
     this.servicesService
       .getServices(this.order.id_point)
@@ -86,38 +79,63 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
       });
   }
 
+  setOrderValues(): void {
+    this.order.items.forEach((item) => {
+      item.services.forEach((service: any) => {
+        this.separateSelected.push(service.id_service);
+      });
+    });
+    this.checkEqualSelections();
+    this.servicesRegistration.setOrder(this.order);
+  }
+
+  checkEqualSelections(): void {
+    const servicesEqual = this.separateSelected.every(
+      (v) => v === this.separateSelected[0]
+    );
+    if (!servicesEqual) {
+      this.selectEach = true;
+    } else {
+      this.selectedService = this.separateSelected[0];
+    }
+  }
+
   selectService(): void {
+    this.isLoading = true;
     this.servicesRegistration.setOrder(this.order);
     if (this.orderId) {
-      this.ordersService
-        .updateOrder(this.order)
-        .pipe(takeUntil(this.destroy))
-        .subscribe(
-          () => {
-            this.router.navigate(
-              ['/cabinet', 'services-registration', 'document', this.orderId],
-              {
-                queryParams: {
-                  questionnaireNum: 1,
-                  docIndex: 1,
-                },
-              }
-            );
-          },
-          (err) => {
-            if (err instanceof HttpErrorResponse) {
-              this.router.navigate([
-                '/cabinet',
-                'server-error',
-                err.error.error,
-              ]);
-            }
-          }
-        );
-
+      this.updateOrder();
       return;
     }
 
+    this.createOrder();
+  }
+
+  updateOrder(): void {
+    this.ordersService
+      .updateOrder(this.order)
+      .pipe(takeUntil(this.destroy))
+      .subscribe(
+        () => {
+          this.router.navigate(
+            ['/cabinet', 'services-registration', 'document', this.orderId],
+            {
+              queryParams: {
+                questionnaireNum: 1,
+                docIndex: 1,
+              },
+            }
+          );
+        },
+        (err) => {
+          if (err instanceof HttpErrorResponse) {
+            this.router.navigate(['/cabinet', 'server-error', err.error.error]);
+          }
+        }
+      );
+  }
+
+  createOrder(): void {
     this.ordersService
       .createOrder(this.order)
       .pipe(takeUntil(this.destroy))
@@ -143,6 +161,9 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
   }
 
   selectionChange(event: number, item: QuestionnaireOrderInterface): void {
+    this.sum = 0;
+    this.selectedServices = [];
+
     if (this.selectEach) {
       item.services = [event];
     } else {
@@ -151,10 +172,31 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
       });
     }
 
+    this.order.items.forEach((item) => {
+      item.services.forEach((s: any) => {
+        const service: ServiceInterface = this.services.find(
+          (service) => service.id === (typeof s === 'number' ? s : s.id_service)
+        );
+        this.sum += service.price;
+        this.selectedServices.push(s);
+      });
+    });
+
+    if (!this.selectEach) {
+      this.separateSelected = [...this.selectedServices];
+    }
+    this.checkEqualSelections();
+    this.order.sum = this.sum;
     this.servicesRegistration.setOrder(this.order);
   }
 
   changeSelectionMode(): void {
     this.selectEach = !this.selectEach;
+    const servicesEqual = this.separateSelected.every(
+      (v) => v === this.separateSelected[0]
+    );
+    if (!servicesEqual) {
+      this.selectedService = null;
+    }
   }
 }
