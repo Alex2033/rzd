@@ -233,3 +233,24 @@ ul {
     transform: rotate(360deg);
   }
 }
+
+.clear-button {
+  opacity: 0;
+  overflow: hidden;
+
+  &:focus {
+    opacity: 1;
+    overflow: visible;
+  }
+}
+
+.form-control {
+  .mat-form-field-appearance-outline {
+    &.mat-focused {
+      .clear-button {
+        opacity: 1;
+        overflow: visible;
+      }
+    }
+  }
+}
