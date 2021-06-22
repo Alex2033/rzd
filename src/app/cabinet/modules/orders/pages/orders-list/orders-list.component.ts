@@ -1,5 +1,7 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
+import { Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { OrdersService } from 'src/app/shared/services/orders.service';
 import { ServicePointsService } from 'src/app/shared/services/service-points.service';
@@ -39,13 +41,16 @@ export class OrdersListComponent implements OnInit {
   ];
 
   public selectedFilter: string;
+  public isLoading: boolean = false;
 
   constructor(
     private ordersService: OrdersService,
-    private points: ServicePointsService
+    private points: ServicePointsService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
     combineLatest([
       this.points.getServicePoints(),
       this.ordersService.getOrders(),
@@ -57,8 +62,13 @@ export class OrdersListComponent implements OnInit {
         this.selectedFilter =
           sessionStorage.getItem('rzd-orders-sort') || this.types[0].value;
         this.sortOrder(this.selectedFilter);
+        this.isLoading = false;
       },
-      (err) => console.error(err)
+      (err) => {
+        if (err instanceof HttpErrorResponse) {
+          this.router.navigate(['/server-error', err.error.error]);
+        }
+      }
     );
   }
 

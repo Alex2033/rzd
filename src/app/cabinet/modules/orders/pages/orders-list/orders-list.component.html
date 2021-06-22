@@ -1,4 +1,4 @@
-<div class="page-content">
+<div class="page-content" [hidden]="isLoading">
   <div class="page-container">
     <h1 class="page-title">Заказы</h1>
 
@@ -80,5 +80,16 @@
       </svg>
       <span>Новый заказ</span>
     </button>
+  </div>
+</div>
+
+<!-- loader -->
+<div class="loader-container" [hidden]="!isLoading">
+  <div class="loader">
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
   </div>
 </div>
