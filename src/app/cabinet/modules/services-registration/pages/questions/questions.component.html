@@ -19,6 +19,47 @@
           <mat-radio-button [value]="true">Да</mat-radio-button>
           <mat-radio-button [value]="false">Нет</mat-radio-button>
         </mat-radio-group>
+
+        <ng-container *ngIf="showReturnDate">
+          <h4 class="return-date-title">Укажите дату возвращения в РФ</h4>
+
+          <!-- date picker -->
+          <div class="form-control date-form-control">
+            <mat-form-field appearance="outline">
+              <mat-label>Дата</mat-label>
+
+              <input
+                matInput
+                name="abroad_return_date"
+                formControlName="abroad_return_date"
+                [matDatepicker]="picker"
+                [min]="minDate"
+              />
+              <mat-datepicker-toggle matSuffix [for]="picker">
+                <svg matDatepickerToggleIcon width="2rem" height="2.2rem">
+                  <use
+                    xlink:href="assets/sprites/icons.svg#calendar-today"
+                  ></use>
+                </svg>
+              </mat-datepicker-toggle>
+              <mat-datepicker disabled="false" #picker></mat-datepicker>
+
+              <mat-error
+                ><app-error-messages
+                  *ngIf="
+                    form.get('abroad_return_date').touched &&
+                    form.get('abroad_return_date').invalid
+                  "
+                  [errors]="form.get('abroad_return_date').errors"
+                  [errorMessages]="{
+                    required: 'Введите дату возвращения',
+                    matDatepickerMin: 'Укажите дату не ранее двух недель назад'
+                  }"
+                ></app-error-messages
+              ></mat-error>
+            </mat-form-field>
+          </div>
+        </ng-container>
       </div>
       <div class="question-item">
         <p>

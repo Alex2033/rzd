@@ -17,6 +17,8 @@ import { ServicesRegistrationService } from 'src/app/shared/services/services-re
 })
 export class QuestionsComponent implements OnInit, OnDestroy {
   public form: FormGroup;
+  public showReturnDate: boolean = false;
+  public minDate: Date = new Date();
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -27,8 +29,12 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.minDate.setDate(this.minDate.getDate() - 15);
     this.createForm();
     this.abroadStatusChanges();
+    if (this.form.get('been_abroad').value) {
+      this.showReturnDate = true;
+    }
   }
 
   ngOnDestroy() {
@@ -44,22 +50,33 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       ),
       symptoms: new FormControl(false, [Validators.required]),
       patientContact: new FormControl(false, [Validators.required]),
+      abroad_return_date: new FormControl(
+        Date.parse(this.servicesRegistration.order.abroad_return_date)
+          ? this.servicesRegistration.order.abroad_return_date
+          : ''
+      ),
     });
   }
 
   abroadStatusChanges(): void {
+    const returnDate = this.form.get('abroad_return_date');
+
     this.form
       .get('been_abroad')
       .valueChanges.pipe(takeUntil(this.destroy))
       .subscribe((res: boolean) => {
         if (res) {
-          this.router.navigate([
-            '/cabinet',
-            'services-registration',
-            'return-date',
-            this.servicesRegistration.order.id,
-          ]);
+          this.showReturnDate = true;
+          this.form
+            .get('abroad_return_date')
+            .setValidators([Validators.required]);
+        } else {
+          this.showReturnDate = false;
+          returnDate.setValue(null);
+          returnDate.markAsUntouched();
+          returnDate.clearValidators();
         }
+        returnDate.updateValueAndValidity();
       });
   }
 
@@ -67,6 +84,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     const symptomsVal = this.form.get('symptoms').value;
     const contactVal = this.form.get('patientContact').value;
     const been_abroad = this.form.get('been_abroad').value;
+    const abroad_return_date = this.form.get('abroad_return_date').value;
 
     if (symptomsVal || contactVal) {
       this.router.navigate([
@@ -75,12 +93,12 @@ export class QuestionsComponent implements OnInit, OnDestroy {
         'blocking-screen',
       ]);
     } else {
-      if (!been_abroad) {
-        this.servicesRegistration.setOrder({
-          abroad_return_date: new Date(null),
-        });
-      }
-      this.servicesRegistration.setOrder({ been_abroad });
+      this.servicesRegistration.setOrder({
+        abroad_return_date: abroad_return_date
+          ? abroad_return_date
+          : new Date(null),
+        been_abroad,
+      });
       this.router.navigate([
         '/cabinet',
         'services-registration',

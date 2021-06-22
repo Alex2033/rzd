@@ -15,7 +15,6 @@ import {
   distinctUntilChanged,
   finalize,
   retryWhen,
-  startWith,
   switchMap,
   takeUntil,
   tap,
