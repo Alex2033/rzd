@@ -1,4 +1,6 @@
+import { BarcodeModalComponent } from './../../components/barcode-modal/barcode-modal.component';
 import { Component, OnInit } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActivatedRoute, Params } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -21,7 +23,8 @@ export class OrderDetailComponent implements OnInit {
     private ordersService: OrdersService,
     private route: ActivatedRoute,
     private services: ServicesService,
-    private points: ServicePointsService
+    private points: ServicePointsService,
+    private _bottomSheet: MatBottomSheet
   ) {}
 
   ngOnInit(): void {
@@ -58,6 +61,15 @@ export class OrderDetailComponent implements OnInit {
           return serv.id === service.id_service;
         })['priceType'];
       });
+    });
+  }
+
+  openBottomSheet(extId: string): void {
+    const bottomSheet = this._bottomSheet.open(BarcodeModalComponent, {
+      panelClass: 'custom-bottom-sheet',
+      data: {
+        extId,
+      },
     });
   }
 }

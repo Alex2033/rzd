@@ -1,0 +1,20 @@
+<div class="bc-container">
+  <div class="bc-top">
+    <div class="spacer"></div>
+    <a class="close" (click)="close()">Закрыть</a>
+  </div>
+
+  <ngx-barcode
+    class="custom-barcode"
+    bc-width="4"
+    bc-height="200"
+    bc-font-size="35"
+    [bc-value]="data.extId"
+    [bc-display-value]="true"
+    bc-text-margin="0"
+    bc-margin-top="-1"
+    bc-margin-bottom="-1"
+    [bc-font]="'Open Sans'"
+    bc-font-options="bold"
+  ></ngx-barcode>
+</div>
