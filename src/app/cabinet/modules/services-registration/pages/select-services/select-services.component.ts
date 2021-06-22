@@ -60,6 +60,12 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
       .subscribe((res) => {
         if (res) {
           this.order = res;
+          // преобразование услуг из объекта в число
+          res.items.forEach((item, itemIndex) => {
+            item.services.forEach((service: any) => {
+              this.order.items[itemIndex].services = [service.id_service];
+            });
+          });
           this.setOrderValues();
         } else {
           this.order = this.servicesRegistration.order;
@@ -82,7 +88,7 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
   setOrderValues(): void {
     this.order.items.forEach((item) => {
       item.services.forEach((service: any) => {
-        this.separateSelected.push(service.id_service);
+        this.separateSelected.push(service);
       });
     });
     this.checkEqualSelections();
