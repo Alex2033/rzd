@@ -1,10 +1,6 @@
 @import "theme";
 @import "vars";
 
-.page-content {
-  padding-bottom: 8rem;
-}
-
 .page-title {
   margin-top: 0;
 }
@@ -115,9 +111,18 @@
   margin-left: 1.6rem;
 }
 
+.total-sum-container {
+  position: sticky;
+  background-color: $light;
+  bottom: 0;
+  left: 0;
+  padding-top: 2.2rem;
+  padding-bottom: 8rem;
+}
+
 .total-sum {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 2.2rem;
 }
