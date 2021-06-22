@@ -153,4 +153,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.submitted = val;
     this.loginForm.markAllAsTouched();
   }
+
+  handleKeypress(event: KeyboardEvent): void {
+    if (event.which === 40 || event.which === 41 || event.which === 45) {
+      event.preventDefault();
+    }
+  }
 }

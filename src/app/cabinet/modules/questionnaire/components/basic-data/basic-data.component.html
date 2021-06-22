@@ -248,6 +248,7 @@
         autocomplete="off"
         inputmode="tel"
         formControlName="phone"
+        (keypress)="handleKeypress($event)"
       />
 
       <button

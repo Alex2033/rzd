@@ -24,4 +24,10 @@ export class BasicDataComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  handleKeypress(event: KeyboardEvent): void {
+    if (event.which === 40 || event.which === 41 || event.which === 45) {
+      event.preventDefault();
+    }
+  }
 }

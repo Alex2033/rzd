@@ -145,4 +145,10 @@ export class EditPhoneComponent implements OnInit, OnDestroy {
     this.submitted = val;
     this.editForm.markAllAsTouched();
   }
+
+  handleKeypress(event: KeyboardEvent): void {
+    if (event.which === 40 || event.which === 41 || event.which === 45) {
+      event.preventDefault();
+    }
+  }
 }
