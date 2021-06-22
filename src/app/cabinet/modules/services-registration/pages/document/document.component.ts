@@ -180,10 +180,10 @@ export class DocumentComponent implements OnInit, OnDestroy {
       this.disableButton = false;
     }
 
-    // if (windowScroll >= this.headerHeight / 2) {
-    //   this.fixed = true;
-    // } else {
-    //   this.fixed = false;
-    // }
+    if (windowScroll > this.headerHeight / 1.5) {
+      this.fixed = true;
+    } else {
+      this.fixed = false;
+    }
   }
 }

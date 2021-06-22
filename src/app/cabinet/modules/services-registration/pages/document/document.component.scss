@@ -8,10 +8,6 @@
 
 .page-container {
   overflow-x: hidden;
-
-  &.offset-top {
-    padding-top: 17.4rem;
-  }
 }
 
 .fio {
@@ -31,12 +27,12 @@
   padding: 1.6rem $container-gap 0.8rem;
   width: 100%;
   background-color: $light;
+  position: sticky;
+  top: 6.4rem;
+  left: 0;
 
   &.fixed {
-    box-shadow: 0 4px 8px rgb(147, 147, 147, 0.14);
-    position: fixed;
-    left: 0;
-    top: 6.4rem;
+    box-shadow: 0 5px 8px rgb(147, 147, 147, 0.14);
     width: 100%;
     z-index: 101;
   }
