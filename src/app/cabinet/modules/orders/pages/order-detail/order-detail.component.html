@@ -62,6 +62,26 @@
         </svg>
         <span>Документы по заказу</span>
       </a>
+
+      <div class="barcode" *ngIf="questionnaire.ext_id">
+        <div class="barcode-content">
+          <ngx-barcode
+            bc-font-size="23"
+            [bc-value]="questionnaire.ext_id"
+            [bc-display-value]="true"
+            bc-text-margin="0"
+            bc-margin-top="-1"
+            bc-margin-bottom="-1"
+            [bc-font]="'Open Sans'"
+            bc-font-options="bold"
+          ></ngx-barcode>
+          <button class="icon-button expand-button">
+            <svg width="2.4rem" height="2.4rem">
+              <use xlink:href="assets/sprites/icons.svg#expand"></use>
+            </svg>
+          </button>
+        </div>
+      </div>
     </li>
   </ul>
 
@@ -74,10 +94,5 @@
     <a [routerLink]="['/cabinet', 'orders', 'results']" class="get-results"
       >Как получить результаты?</a
     >
-
-    <!-- <ngx-barcode
-      [bc-value]="'wd123123qwd'"
-      [bc-display-value]="true"
-    ></ngx-barcode> -->
   </div>
 </div>

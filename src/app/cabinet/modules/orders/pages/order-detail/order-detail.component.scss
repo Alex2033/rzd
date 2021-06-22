@@ -175,3 +175,27 @@
     fill: $primary;
   }
 }
+
+.barcode {
+  margin-top: 2.7rem;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.barcode-content {
+  position: relative;
+}
+
+.expand-button {
+  width: 3.2rem;
+  height: 3.2rem;
+  position: absolute;
+  bottom: 1.2rem;
+  transform: translateX(100%);
+  right: 0;
+
+  svg {
+    fill: $primary;
+  }
+}

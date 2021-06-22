@@ -34,6 +34,7 @@ export class OrderDetailComponent implements OnInit {
     ]).subscribe(
       ([services, points, order]) => {
         this.order = order;
+        console.log('this.order:', this.order);
         this.addAddressToOrder(points);
         this.addServicesToOrder(services);
       },
