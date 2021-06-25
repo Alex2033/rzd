@@ -73,6 +73,7 @@ export class PaymentMethodComponent implements OnInit {
           } else {
             this.successPayment();
           }
+          this.isLoading = false;
         },
         (err) => {
           if (err instanceof HttpErrorResponse) {

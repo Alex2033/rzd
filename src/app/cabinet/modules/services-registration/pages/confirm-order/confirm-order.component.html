@@ -9,7 +9,7 @@
       </a>
       <a class="close" [routerLink]="['/cabinet', 'questionnaires']">Закрыть</a>
     </div>
-    <div class="order-point">{{ (point$ | async)?.name }}</div>
+    <div class="order-point">{{ point?.name }}</div>
   </div>
 
   <div class="items">
@@ -26,5 +26,14 @@
       <span>Итого:</span>
       <span class="service-price">{{ order.sum }}&#8381;</span>
     </div>
+  </div>
+
+  <div class="buttons">
+    <button type="button" class="button">
+      <span>Далее</span>
+      <svg width="1.6rem" height="1.6rem">
+        <use xlink:href="assets/sprites/icons.svg#next"></use>
+      </svg>
+    </button>
   </div>
 </div>

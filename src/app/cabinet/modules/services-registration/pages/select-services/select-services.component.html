@@ -20,7 +20,11 @@
 
     <div class="page-heading">
       <h1 class="page-title">Услуги</h1>
-      <div class="change-selection-mode" (click)="changeSelectionMode()">
+      <div
+        class="change-selection-mode"
+        *ngIf="order.items?.length > 1"
+        (click)="changeSelectionMode()"
+      >
         {{ selectEach ? "Выбрать для всех" : "Выбрать для каждого" }}
       </div>
     </div>
@@ -39,9 +43,23 @@
               *ngFor="let service of services"
               [value]="service.id"
             >
-              <div class="service-name">{{ service.name }}</div>
-              <div class="service-price">
-                {{ service.price }}{{ service.priceType }}
+              <div class="radio-text">
+                <div class="service-name">
+                  <div>{{ service.name }} {{ service.duration }}</div>
+                </div>
+
+                <div class="service-price">
+                  {{ service.price }}{{ service.priceType }}
+                </div>
+              </div>
+              <div
+                *ngIf="
+                  service.shortName ===
+                  'В случае необходимости дополнительного контроля результата и высокой загрузки лаборатории срок исполнения экспресс-теста может быть увеличен'
+                "
+                class="service-short-name"
+              >
+                {{ service.shortName }}
               </div>
             </mat-radio-button>
           </mat-radio-group>
@@ -57,9 +75,23 @@
       color="primary"
     >
       <mat-radio-button *ngFor="let service of services" [value]="service.id">
-        <div class="service-name">{{ service.name }}</div>
-        <div class="service-price">
-          {{ service.price }}{{ service.priceType }}
+        <div class="radio-text">
+          <div class="service-name">
+            <div>{{ service.name }} {{ service.duration }}</div>
+          </div>
+
+          <div class="service-price">
+            {{ service.price }}{{ service.priceType }}
+          </div>
+        </div>
+        <div
+          *ngIf="
+            service.shortName ===
+            'В случае необходимости дополнительного контроля результата и высокой загрузки лаборатории срок исполнения экспресс-теста может быть увеличен'
+          "
+          class="service-short-name"
+        >
+          {{ service.shortName }}
         </div>
       </mat-radio-button>
     </mat-radio-group>

@@ -1,7 +1,10 @@
+@import "theme";
+
 .order-point {
   font-weight: 600;
   font-size: 1.2rem;
   line-height: 1.34;
+  color: $dark;
 }
 
 .items {
@@ -26,4 +29,8 @@
   align-items: center;
   justify-content: space-between;
   margin-top: 2.4rem;
+
+  .service-price {
+    font-size: 2.4rem;
+  }
 }

@@ -71,7 +71,6 @@
             [bc-display-value]="true"
             bc-text-margin="0"
             bc-margin-top="-1"
-            bc-margin-bottom="-1"
             [bc-font]="'Open Sans'"
             bc-font-options="bold"
           ></ngx-barcode>
@@ -79,9 +78,7 @@
             (click)="openBottomSheet(questionnaire.ext_id)"
             class="icon-button expand-button"
           >
-            <svg width="2.4rem" height="2.4rem">
-              <use xlink:href="assets/sprites/icons.svg#expand"></use>
-            </svg>
+            <img src="assets/expand.svg" alt="expand" />
           </button>
         </div>
       </div>

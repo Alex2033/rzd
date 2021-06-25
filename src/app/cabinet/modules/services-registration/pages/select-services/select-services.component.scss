@@ -88,8 +88,7 @@
       margin-left: 1.8rem;
       position: relative;
       flex-grow: 1;
-      display: flex;
-      align-items: flex-start;
+      display: block;
 
       &::after {
         content: "";
@@ -102,6 +101,11 @@
       }
     }
   }
+}
+
+.radio-text {
+  display: flex;
+  align-items: flex-start;
 }
 
 .service-price {
@@ -125,4 +129,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.service-short-name {
+  color: $gray;
+  font-size: 1.2rem;
+  margin-top: 0.8rem;
 }
