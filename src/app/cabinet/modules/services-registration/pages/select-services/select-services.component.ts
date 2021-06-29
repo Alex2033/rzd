@@ -1,5 +1,7 @@
+import { ConfirmRemoveSelectionsComponent } from './../../components/confirm-remove-selections/confirm-remove-selections.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, ReplaySubject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
@@ -37,7 +39,8 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
     private servicesService: ServicesService,
     private router: Router,
     private ordersService: OrdersService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -66,11 +69,10 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
               this.order.items[itemIndex].services = [service.id_service];
             });
           });
-          this.setOrderValues();
         } else {
           this.order = this.servicesRegistration.order;
-          this.setOrderValues();
         }
+        this.setOrderValues();
         this.initializeValues();
       });
   }
@@ -188,21 +190,28 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
       });
     });
 
-    if (!this.selectEach) {
-      this.separateSelected = [...this.selectedServices];
-    }
-    this.checkEqualSelections();
     this.order.sum = this.sum;
     this.servicesRegistration.setOrder(this.order);
   }
 
   changeSelectionMode(): void {
-    this.selectEach = !this.selectEach;
-    const servicesEqual = this.separateSelected.every(
-      (v) => v === this.separateSelected[0]
-    );
-    if (!servicesEqual) {
-      this.selectedService = null;
-    }
+    const dialogRef = this.dialog.open(ConfirmRemoveSelectionsComponent, {
+      panelClass: 'custom-dialog',
+      backdropClass: 'custom-dialog-overlay',
+      width: '28rem',
+      autoFocus: false,
+    });
+
+    dialogRef.afterClosed().subscribe((res: boolean) => {
+      if (res) {
+        this.selectEach = !this.selectEach;
+
+        if (!this.selectEach && this.selectedService) {
+          this.selectedService = null;
+        } else if (this.selectEach && this.separateSelected.length) {
+          this.separateSelected = [];
+        }
+      }
+    });
   }
 }

@@ -11,7 +11,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
-import { BlockingScreenComponent } from './blocking-screen/blocking-screen.component';
+import { BlockingScreenComponent } from './pages/blocking-screen/blocking-screen.component';
 import { SelectPointComponent } from './pages/select-point/select-point.component';
 import { SelectServicesComponent } from './pages/select-services/select-services.component';
 import { DocumentComponent } from './pages/document/document.component';
@@ -22,6 +22,9 @@ import { SignaturePadModule } from 'angular2-signaturepad';
 import { PaymentMethodComponent } from './pages/payment-method/payment-method.component';
 import { PaymentResponseComponent } from './pages/payment-response/payment-response.component';
 import { ServicesRegistrationInfoComponent } from './pages/services-registration-info/services-registration-info.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ConfirmRemoveSelectionsComponent } from './components/confirm-remove-selections/confirm-remove-selections.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -36,6 +39,7 @@ import { ServicesRegistrationInfoComponent } from './pages/services-registration
     PaymentMethodComponent,
     PaymentResponseComponent,
     ServicesRegistrationInfoComponent,
+    ConfirmRemoveSelectionsComponent,
   ],
   imports: [
     CommonModule,
@@ -50,6 +54,8 @@ import { ServicesRegistrationInfoComponent } from './pages/services-registration
     FormsModule,
     PluralRuModule,
     SignaturePadModule,
+    MatDialogModule,
+    MatButtonModule,
   ],
   providers: [DatePipe],
 })

@@ -1,0 +1,14 @@
+<mat-dialog-content>
+  <div class="custom-dialog-text">
+    <p>
+      При переключении режима выбора услуг, внесенные изменения будут утеряны.
+      Вы действительно хотите продолжить?
+    </p>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close color="accent">Отмена</button>
+  <button mat-button color="primary" [mat-dialog-close]="true">
+    ПРОДОЛЖИТЬ
+  </button>
+</mat-dialog-actions>

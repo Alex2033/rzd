@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BlockingScreenComponent } from './blocking-screen/blocking-screen.component';
+import { BlockingScreenComponent } from './pages/blocking-screen/blocking-screen.component';
 import { ConfirmOrderComponent } from './pages/confirm-order/confirm-order.component';
 import { DocumentComponent } from './pages/document/document.component';
 import { PaymentMethodComponent } from './pages/payment-method/payment-method.component';
