@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { CarouselComponent, OwlOptions } from 'ngx-owl-carousel-o';
-import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 import { ServicePointsService } from 'src/app/shared/services/service-points.service';
 import { ServiceInterface } from 'src/app/shared/types/service.interface';
 import { ServicesService } from '../../../shared/services/services.service';
@@ -21,6 +21,11 @@ export class ServiceDetailComponent implements OnInit {
   public activeLabel: string;
   public service: ServiceInterface = {} as ServiceInterface;
   public points$: Observable<ServicePointInterface[]>;
+  public addressMode: string = 'map';
+  public options: object = {
+    iconImageHref: 'assets/gps.svg',
+    iconLayout: 'default#image',
+  };
 
   public customOptions: OwlOptions = {
     loop: true,
@@ -69,7 +74,11 @@ export class ServiceDetailComponent implements OnInit {
     this.route.params
       .pipe(
         switchMap((params: Params) => {
-          this.points$ = this.points.getServicePoints(+params.id);
+          this.points$ = this.points.getServicePoints(+params.id).pipe(
+            tap((res) => {
+              console.log('res:', res);
+            })
+          );
           return this.services.getService(+params.id);
         })
       )

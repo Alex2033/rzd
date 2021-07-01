@@ -30,7 +30,33 @@
         <div class="caption">Адрес:</div>
       </div>
 
-      <button class="button primary service-detail-button">Списком</button>
+      <div class="address-buttons">
+        <button
+          (click)="addressMode = 'map'"
+          [class.stroke]="addressMode === 'map'"
+          class="button primary service-detail-button"
+        >
+          На карте
+        </button>
+        <button
+          (click)="addressMode = 'list'"
+          [class.stroke]="addressMode === 'list'"
+          class="button primary service-detail-button"
+        >
+          Списком
+        </button>
+      </div>
+    </div>
+
+    <!-- map -->
+    <div class="map-container">
+      <ya-map [center]="[55.751952, 37.600739]" [zoom]="9">
+        <ya-placemark
+          *ngFor="let point of points$ | async"
+          [geometry]="[point.latitude, point.longtitude]"
+          [options]="options"
+        ></ya-placemark>
+      </ya-map>
     </div>
 
     <!-- points -->

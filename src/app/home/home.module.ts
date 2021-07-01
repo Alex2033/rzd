@@ -5,6 +5,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { PluralRuModule } from '../shared/directives/plural-ru/plural-ru.module';
 import { FormsModule } from '@angular/forms';
+import { AngularYandexMapsModule } from 'angular8-yandex-maps';
 
 import { IndexComponent } from './pages/index/index.component';
 import { FooterComponent } from '../shared/layout/footer/footer.component';
@@ -33,6 +34,7 @@ import { ParagraphsPipe } from '../shared/pipes/paragraphs.pipe';
     FormsModule,
     CarouselModule,
     PluralRuModule,
+    AngularYandexMapsModule,
   ],
 })
 export class HomeModule {}
