@@ -3,6 +3,13 @@
 
 .page-content {
   padding-bottom: 8rem;
+
+  &.map-content {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0;
+  }
 }
 
 .select-points {
@@ -63,4 +70,82 @@
 .point-address {
   color: $gray;
   margin-top: 0.8rem;
+}
+
+.show-map {
+  color: $primary;
+  margin-top: 2.4rem;
+}
+
+.map-container {
+  margin-top: 1.6rem;
+  min-height: 0;
+  height: initial;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.point-card-button {
+  padding-top: 1.3rem;
+  padding-bottom: 1.3rem;
+  width: 100%;
+  margin-top: 2.6rem;
+}
+
+.point-card-worktime {
+  color: $primary;
+}
+
+.info-panel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: $light;
+  padding: 1.6rem 2rem;
+  min-height: 11.7rem;
+  line-height: 1.394;
+}
+
+.info-panel-title {
+  font-weight: 600;
+  font-size: 1.6rem;
+}
+
+.info-panel-text {
+  margin-top: 0.8rem;
+  color: $gray;
+  font-size: 1.2rem;
+}
+
+.point-card {
+  padding: 2rem 1.4rem 1.6rem;
+}
+
+.point-card-infocard {
+  margin-top: 2rem;
+}
+
+.point-card-address {
+  color: $gray;
+  line-height: 1.5;
+}
+
+.point-card-name {
+  text-decoration: none;
+}
+
+.point-card-close {
+  width: 1.143rem;
+  height: 1.143rem;
+  position: absolute;
+  top: 1.5rem;
+  stroke-width: 0.3rem;
+  right: 1.657rem;
+  stroke: $gray;
+}
+
+.point-card-footer {
+  padding: 0 0.6rem;
 }

@@ -25,6 +25,7 @@ import { ServicesRegistrationInfoComponent } from './pages/services-registration
 import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmRemoveSelectionsComponent } from './components/confirm-remove-selections/confirm-remove-selections.component';
 import { MatButtonModule } from '@angular/material/button';
+import { AngularYandexMapsModule } from 'angular8-yandex-maps';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { MatButtonModule } from '@angular/material/button';
     SignaturePadModule,
     MatDialogModule,
     MatButtonModule,
+    AngularYandexMapsModule,
   ],
   providers: [DatePipe],
 })

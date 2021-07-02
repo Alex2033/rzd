@@ -1,7 +1,12 @@
-<div class="page-content" *ngIf="points$ | async as points">
+<div
+  class="page-content"
+  [class.map-content]="addressMode === 'map'"
+  *ngIf="points.length"
+>
   <div class="page-container">
     <div class="page-top">
       <a
+        *ngIf="addressMode === 'list'"
         [routerLink]="[
           '/cabinet',
           'services-registration',
@@ -15,22 +20,115 @@
         </svg>
         <span>Вопросы</span>
       </a>
+      <a
+        *ngIf="addressMode === 'map'"
+        (click)="addressMode = 'list'"
+        class="back-link"
+      >
+        <svg width="1rem" height="1rem">
+          <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
+        </svg>
+        <span>Вернуться к списку</span>
+      </a>
       <a class="close" [routerLink]="['/cabinet', 'questionnaires']">Закрыть</a>
     </div>
 
-    <h1 class="page-title">Выберите точку обслуживания</h1>
+    <h1 class="page-title" *ngIf="addressMode === 'list'">
+      Выберите точку обслуживания
+    </h1>
   </div>
 
-  <div class="select-points">
-    <mat-radio-group [(ngModel)]="selectedId" color="primary">
-      <mat-radio-button *ngFor="let point of points" [value]="point.id">
+  <!-- map -->
+  <div class="map-container" *ngIf="addressMode === 'map'">
+    <ya-map
+      [center]="[55.751952, 37.600739]"
+      [zoom]="9"
+      [state]="{ controls: [] }"
+    >
+      <ya-placemark
+        *ngFor="let point of points"
+        [geometry]="[point.latitude, point.longtitude]"
+        [options]="options"
+        (yaclick)="selectedPoint = point"
+      ></ya-placemark>
+    </ya-map>
+
+    <!-- info panel -->
+    <div class="info-panel" *ngIf="!selectedPoint" [@slideUp]>
+      <h5 class="info-panel-title">Где вы планируйте пройти исследование?</h5>
+      <div class="info-panel-text">
+        <p>Выберите точку на карте</p>
+      </div>
+    </div>
+
+    <!-- point card -->
+    <div class="point-card" [@slideUp] *ngIf="selectedPoint">
+      <div class="point-card-top">
+        <div class="point-card-name">
+          {{ selectedPoint.name }}
+        </div>
+        <svg (click)="selectedPoint = null" class="point-card-close">
+          <use xlink:href="assets/sprites/icons.svg#close"></use>
+        </svg>
+      </div>
+      <div class="point-card-content">
+        <div class="point-card-infocards">
+          <div class="point-card-infocard">
+            <div class="point-card-infocard-icon">
+              <svg width="1.8rem" height="1.8rem">
+                <use xlink:href="assets/sprites/icons.svg#gps"></use>
+              </svg>
+            </div>
+            <span class="point-card-address">{{ selectedPoint.address }}</span>
+          </div>
+          <div class="point-card-infocard">
+            <div class="point-card-infocard-icon">
+              <svg width="1.5rem" height="1.5rem">
+                <use xlink:href="assets/sprites/icons.svg#clock"></use>
+              </svg>
+            </div>
+            <span class="point-card-worktime">{{
+              selectedPoint.worktime
+            }}</span>
+          </div>
+        </div>
+        <footer class="point-card-footer">
+          <button
+            (click)="selectPoint()"
+            class="point-card-button button accent"
+          >
+            Выбрать точку
+          </button>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <!-- points -->
+  <div class="select-points" *ngIf="addressMode === 'list'">
+    <mat-radio-group [(ngModel)]="selectedPoint" color="primary">
+      <mat-radio-button *ngFor="let point of points" [value]="point">
         <div class="point-name">{{ point.name }}</div>
         <div class="point-address">{{ point.address }}</div>
       </mat-radio-button>
     </mat-radio-group>
 
-    <div class="buttons">
-      <button class="button" (click)="selectPoint()" [disabled]="!selectedId">
+    <div class="page-container">
+      <div
+        class="show-map"
+        *ngIf="addressMode === 'list'"
+        (click)="addressMode = 'map'"
+      >
+        Посмотреть на карте
+      </div>
+    </div>
+
+    <div class="buttons" *ngIf="addressMode === 'list'">
+      <button
+        class="button"
+        (click)="selectPoint()"
+        [disabled]="!selectedPoint"
+      >
         <span>Далее</span>
         <svg width="1.6rem" height="1.6rem">
           <use xlink:href="assets/sprites/icons.svg#next"></use>
