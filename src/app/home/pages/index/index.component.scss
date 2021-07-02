@@ -140,7 +140,7 @@
 
 // test location
 .test-location {
-  padding: 4rem 0 2.6rem;
+  padding-top: 4rem;
 
   .custom-expansions {
     margin-top: 2.4rem;
@@ -172,4 +172,8 @@
       padding: 1.2rem 2rem 1.2rem;
     }
   }
+}
+
+.more-detailed-link {
+  margin-bottom: 2.6rem;
 }

@@ -70,35 +70,3 @@
   font-size: 1.8rem;
   line-height: 1.397;
 }
-
-.card-info {
-  margin-top: 2rem;
-  display: flex;
-  align-items: flex-start;
-  line-height: 1.394;
-  color: $dark;
-
-  > * {
-    &:not(:first-child) {
-      margin-left: 1.4rem;
-    }
-  }
-
-  a {
-    color: $dark;
-  }
-}
-
-.card-icon {
-  margin-top: 0.2rem;
-  width: 1.8rem;
-  height: 1.8rem;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  svg {
-    fill: $primary;
-  }
-}

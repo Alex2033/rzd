@@ -49,18 +49,60 @@
     </div>
 
     <!-- map -->
-    <div class="map-container">
-      <ya-map [center]="[55.751952, 37.600739]" [zoom]="9">
+    <div class="map-container" [hidden]="addressMode !== 'map'">
+      <ya-map
+        [center]="[55.751952, 37.600739]"
+        [zoom]="9"
+        [state]="{ controls: [] }"
+      >
         <ya-placemark
           *ngFor="let point of points$ | async"
           [geometry]="[point.latitude, point.longtitude]"
           [options]="options"
+          (yaclick)="selectedPoint = point"
         ></ya-placemark>
       </ya-map>
+
+      <!-- point card -->
+      <div class="point-card" [@slideUp] *ngIf="selectedPoint">
+        <div class="point-card-top">
+          <div class="point-card-name">
+            {{ selectedPoint.name }}
+          </div>
+          <svg (click)="selectedPoint = null" class="point-card-close">
+            <use xlink:href="assets/sprites/icons.svg#close"></use>
+          </svg>
+        </div>
+        <div class="point-card-content">
+          <div class="point-card-infocards">
+            <div class="point-card-infocard">
+              <div class="point-card-infocard-icon">
+                <svg width="1.8rem" height="1.8rem">
+                  <use xlink:href="assets/sprites/icons.svg#gps"></use>
+                </svg>
+              </div>
+              <span>{{ selectedPoint.address }}</span>
+            </div>
+            <div class="point-card-infocard">
+              <div class="point-card-infocard-icon">
+                <svg width="1.5rem" height="1.5rem">
+                  <use xlink:href="assets/sprites/icons.svg#clock"></use>
+                </svg>
+              </div>
+              <span>{{ selectedPoint.worktime }}</span>
+            </div>
+          </div>
+          <a
+            [routerLink]="['/cabinet', 'questionnaires']"
+            class="point-card-button button no-bg accent"
+            >Записаться</a
+          >
+        </div>
+      </div>
     </div>
 
     <!-- points -->
-    <div class="custom-expansions">
+    <div class="custom-expansions" [hidden]="addressMode !== 'list'">
       <mat-expansion-panel
         hideToggle
         class="custom-expansion"

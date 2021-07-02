@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
+import { slideUpAnimation } from 'src/app/shared/animations/slide-up.animation';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { ServicePointsService } from 'src/app/shared/services/service-points.service';
 import { ServiceInterface } from 'src/app/shared/types/service.interface';
@@ -11,11 +12,18 @@ import { ServicePointInterface } from '../../../shared/types/service-point.inter
   selector: 'app-index',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.scss'],
+  animations: [slideUpAnimation()],
 })
 export class IndexComponent implements OnInit {
   public services$: Observable<ServiceInterface[]>;
   public servicePoints$: Observable<ServicePointInterface[]>;
   public isAuth: boolean;
+  public addressMode: string = 'map';
+  public options: object = {
+    iconImageHref: 'assets/gps.svg',
+    iconLayout: 'default#image',
+  };
+  public selectedPoint: ServicePointInterface;
 
   constructor(
     private services: ServicesService,

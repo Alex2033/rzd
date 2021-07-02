@@ -10,6 +10,7 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { slideUpAnimation } from 'src/app/shared/animations/slide-up.animation';
 import { ServicePointsService } from 'src/app/shared/services/service-points.service';
 import { ServicePointInterface } from '../../../shared/types/service-point.interface';
 
@@ -17,6 +18,7 @@ import { ServicePointInterface } from '../../../shared/types/service-point.inter
   selector: 'app-service-points',
   templateUrl: './service-points.component.html',
   styleUrls: ['./service-points.component.scss'],
+  animations: [slideUpAnimation()],
 })
 export class ServicePointsComponent
   implements OnInit, AfterViewInit, OnDestroy
@@ -25,6 +27,12 @@ export class ServicePointsComponent
 
   public searchText: string = '';
   public points$: Observable<ServicePointInterface[]>;
+  public addressMode: string = 'map';
+  public selectedPoint: ServicePointInterface;
+  public options: object = {
+    iconImageHref: 'assets/gps.svg',
+    iconLayout: 'default#image',
+  };
 
   private cardsSub: Subscription;
 
