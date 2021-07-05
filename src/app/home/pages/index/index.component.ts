@@ -20,7 +20,7 @@ export class IndexComponent implements OnInit {
   public isAuth: boolean;
   public addressMode: string = 'map';
   public options: object = {
-    iconImageHref: 'assets/gps.svg',
+    iconImageHref: 'assets/gps-red.svg',
     iconLayout: 'default#image',
   };
   public selectedPoint: ServicePointInterface;

@@ -18,7 +18,7 @@ export class SelectPointComponent implements OnInit, OnDestroy {
   public points: ServicePointInterface[] = [];
   public addressMode: string = 'list';
   public options: object = {
-    iconImageHref: 'assets/gps.svg',
+    iconImageHref: 'assets/gps-red.svg',
     iconLayout: 'default#image',
   };
   public selectedPoint: ServicePointInterface;
@@ -61,5 +61,12 @@ export class SelectPointComponent implements OnInit, OnDestroy {
       'select-services',
       this.servicesRegistration.order.id,
     ]);
+  }
+
+  selectMapPoint(event, point: ServicePointInterface): void {
+    // console.log('event:', event);
+    // console.log('event.target.options:', event.target.options);
+    // event.target.options.set('iconImageHref', 'assets/gps-blue.svg');
+    this.selectedPoint = point;
   }
 }

@@ -49,7 +49,7 @@
         *ngFor="let point of points"
         [geometry]="[point.latitude, point.longtitude]"
         [options]="options"
-        (yaclick)="selectedPoint = point"
+        (yaclick)="selectMapPoint($event, point)"
       ></ya-placemark>
     </ya-map>
 

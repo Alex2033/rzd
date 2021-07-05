@@ -72,6 +72,7 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
         } else {
           this.order = this.servicesRegistration.order;
         }
+        this.sum = this.order.sum;
         this.setOrderValues();
         this.initializeValues();
       });
@@ -195,23 +196,24 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
   }
 
   changeSelectionMode(): void {
-    const dialogRef = this.dialog.open(ConfirmRemoveSelectionsComponent, {
-      panelClass: 'custom-dialog',
-      backdropClass: 'custom-dialog-overlay',
-      width: '28rem',
-      autoFocus: false,
-    });
+    if (this.selectedService || this.separateSelected.length) {
+      const dialogRef = this.dialog.open(ConfirmRemoveSelectionsComponent, {
+        panelClass: 'custom-dialog',
+        backdropClass: 'custom-dialog-overlay',
+        width: '28rem',
+        autoFocus: false,
+      });
 
-    dialogRef.afterClosed().subscribe((res: boolean) => {
-      if (res) {
-        this.selectEach = !this.selectEach;
-
-        if (!this.selectEach && this.selectedService) {
+      dialogRef.afterClosed().subscribe((res: boolean) => {
+        if (res) {
+          this.selectEach = !this.selectEach;
           this.selectedService = null;
-        } else if (this.selectEach && this.separateSelected.length) {
           this.separateSelected = [];
+          this.sum = 0;
         }
-      }
-    });
+      });
+    } else {
+      this.selectEach = !this.selectEach;
+    }
   }
 }

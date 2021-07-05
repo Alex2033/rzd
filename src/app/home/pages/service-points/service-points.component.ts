@@ -30,7 +30,7 @@ export class ServicePointsComponent
   public addressMode: string = 'map';
   public selectedPoint: ServicePointInterface;
   public options: object = {
-    iconImageHref: 'assets/gps.svg',
+    iconImageHref: 'assets/gps-red.svg',
     iconLayout: 'default#image',
   };
 
