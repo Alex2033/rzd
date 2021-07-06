@@ -19,6 +19,7 @@ import {
   takeUntil,
   tap,
 } from 'rxjs/operators';
+import { AccountService } from 'src/app/shared/services/account.service';
 import { QuestionnairesService } from '../../services/questionnaires.service';
 import { DoctypeInterface } from '../../types/doctype.interface';
 import { QuestionnaireDetailInterface } from '../../types/questionnaire-detail.interface';
@@ -65,7 +66,8 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private questionnairesService: QuestionnairesService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private account: AccountService
   ) {}
 
   ngOnInit(): void {
@@ -140,13 +142,16 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
           return of(null);
         }),
         switchMap((res) => {
-          if (res) {
-            this.setChildFromParent(res);
-          }
-
+          const basic = this.createForm.get('basicData');
           const reg = this.createForm.get('registerAddress');
 
-          // todo превратить в функции и повторяющиеся куски тоже
+          if (res) {
+            this.setChildFromParent(res);
+          } else if (!(basic.get('phone').value && basic.get('email').value)) {
+            basic.get('phone').setValue(this.account.user$.value.phone);
+            basic.get('email').setValue(this.account.user$.value.email);
+          }
+
           if (reg.get('adress_single').value) {
             reg.get('no_reg_address').setValue(false, { emitEvent: false });
             reg.disable({ emitEvent: false });

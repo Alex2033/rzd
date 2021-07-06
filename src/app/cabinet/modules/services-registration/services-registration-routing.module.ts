@@ -53,7 +53,6 @@ const routes: Routes = [
     path: 'payment-method/:id',
     component: PaymentMethodComponent,
   },
-
   {
     path: 'payment-response/:id',
     component: PaymentResponseComponent,

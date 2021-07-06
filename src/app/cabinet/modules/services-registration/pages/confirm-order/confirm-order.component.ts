@@ -36,9 +36,13 @@ export class ConfirmOrderComponent implements OnInit, OnDestroy {
       .pipe(
         tap(([params, orders, services]) => {
           this.order = orders.find((o) => o.id === +params.id);
-
-          console.log('this.order:', this.order);
-          console.log('services:', services);
+          this.order.items.forEach((item: any) => {
+            item.services = item.services.map((service: any) => {
+              return (service = services.find(
+                (s) => s.id === service.id_service
+              ));
+            });
+          });
         }),
         switchMap(() => this.points.getServicePoint(this.order.id_point))
       )

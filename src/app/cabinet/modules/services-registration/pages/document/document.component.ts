@@ -90,7 +90,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
         this.router.navigate([
           '/cabinet',
           'services-registration',
-          'payment-method',
+          'confirm',
           this.servicesRegistration.order.id,
         ]);
       }

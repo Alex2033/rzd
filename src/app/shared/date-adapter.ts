@@ -4,7 +4,6 @@ export class AppDateAdapter extends NativeDateAdapter {
   parse(value: any): Date | null {
     if (typeof value === 'string' && value.indexOf('.') > -1) {
       const str = value.split('.');
-      console.log(str);
 
       const year = Number(str[2]);
       const month = Number(str[1]) - 1;

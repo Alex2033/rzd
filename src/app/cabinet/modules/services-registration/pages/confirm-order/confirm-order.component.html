@@ -16,7 +16,10 @@
     <div class="item" *ngFor="let item of order.items">
       <div class="fio">{{ item.fio }}</div>
       <div class="services">
-        <div class="service" *ngFor="let service of item.services"></div>
+        <div class="service" *ngFor="let service of item.services">
+          <div class="service-name">{{ service.name }}</div>
+          <div class="service-price">{{ service.price }}</div>
+        </div>
       </div>
     </div>
   </div>
@@ -29,7 +32,16 @@
   </div>
 
   <div class="buttons">
-    <button type="button" class="button">
+    <button
+      type="button"
+      class="button"
+      [routerLink]="[
+        '/cabinet',
+        'services-registration',
+        'payment-method',
+        order.id
+      ]"
+    >
       <span>Далее</span>
       <svg width="1.6rem" height="1.6rem">
         <use xlink:href="assets/sprites/icons.svg#next"></use>
