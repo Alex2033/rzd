@@ -35,12 +35,7 @@
       <li class="order-item" *ngFor="let order of filteredOrders">
         <a [routerLink]="['/cabinet', 'orders', order.id]" class="order">
           <div class="order-top">
-            <div class="order-top-info">
-              <div class="order-date">
-                {{ order.dt_creation | date: "d MMMM y, HH:mm" }}
-              </div>
-              <div class="order-address">{{ order.shortAddress }}</div>
-            </div>
+            <div class="order-number">Заказ №{{ order.id }}</div>
             <div class="order-status">
               {{
                 order.status === "CREATED" || order.status === "SIGNED"
@@ -54,6 +49,12 @@
                   : null
               }}
             </div>
+          </div>
+          <div class="order-info">
+            <div class="order-date">
+              {{ order.dt_creation | date: "d MMMM y, HH:mm" }}
+            </div>
+            <div class="order-address">{{ order.shortAddress }}</div>
           </div>
           <div class="order-questionnaires">
             <div

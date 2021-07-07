@@ -29,9 +29,8 @@
 
 .order-top {
   display: flex;
-  align-items: flex-start;
-  font-size: 1.2rem;
-  line-height: 1.34;
+  align-items: center;
+
   justify-content: space-between;
 
   > * {
@@ -41,7 +40,11 @@
   }
 }
 
-.order-top-info {
+.order-info {
+  font-size: 1.2rem;
+  line-height: 1.34;
+  margin-top: 1.2rem;
+
   > * {
     &:not(:first-child) {
       margin-top: 0.4rem;
@@ -53,6 +56,8 @@
   color: $light;
   padding: 0.3rem 1.12rem;
   flex-shrink: 0;
+  font-size: 1.2rem;
+  line-height: 1.33;
   background-color: lighten($primary, 17.95%);
 }
 
@@ -109,4 +114,8 @@
       color: $light-gray;
     }
   }
+}
+
+.order-number {
+  color: $primary;
 }
