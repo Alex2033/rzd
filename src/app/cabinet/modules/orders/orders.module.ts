@@ -13,6 +13,7 @@ import { DocumentsComponent } from './pages/documents/documents.component';
 import { HowGetResultsComponent } from './pages/how-get-results/how-get-results.component';
 import { BarcodeModalComponent } from './components/barcode-modal/barcode-modal.component';
 import { SupportServiceComponent } from './pages/support-service/support-service.component';
+import { SupportResponseComponent } from './pages/support-response/support-response.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { SupportServiceComponent } from './pages/support-service/support-service
     HowGetResultsComponent,
     BarcodeModalComponent,
     SupportServiceComponent,
+    SupportResponseComponent,
   ],
   imports: [
     CommonModule,

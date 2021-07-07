@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import {
@@ -15,7 +16,11 @@ import {
 export class SupportServiceComponent implements OnInit {
   public form: FormGroup;
 
-  constructor(private location: Location, private formBuilder: FormBuilder) {}
+  constructor(
+    private location: Location,
+    private formBuilder: FormBuilder,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -27,5 +32,7 @@ export class SupportServiceComponent implements OnInit {
     this.location.back();
   }
 
-  submit(): void {}
+  submit(): void {
+    this.router.navigate(['/cabinet', 'orders', 'support-response']);
+  }
 }
