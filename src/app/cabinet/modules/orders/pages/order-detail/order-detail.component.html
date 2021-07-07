@@ -7,19 +7,36 @@
       <span>Заказы</span>
     </a>
 
-    <div class="order-status" *ngIf="order.status">
-      {{
-        order.status === "CREATED" || order.status === "SIGNED"
-          ? "Черновик"
-          : order.status === "UNPAID"
-          ? "Ожидает оплаты"
-          : order.status === "READY"
-          ? "Оформлен"
-          : order.status === "CONFIRMED"
-          ? "Подтвержден"
-          : null
-      }}
+    <div class="order-top">
+      <div class="order-number">Заказ №{{ order.id }}</div>
+      <div class="order-status" *ngIf="order.status">
+        {{
+          order.status === "CREATED" || order.status === "SIGNED"
+            ? "Черновик"
+            : order.status === "UNPAID"
+            ? "Ожидает оплаты"
+            : order.status === "READY"
+            ? "Оформлен"
+            : order.status === "CONFIRMED"
+            ? "Подтвержден"
+            : null
+        }}
+      </div>
     </div>
+
+    <div
+      class="warning-message"
+      [class.partially-confirmed]="true"
+      *ngIf="false"
+    >
+      К сожалению ваш заказ обработан не полностью, обратитесь в поддержку.
+    </div>
+
+    <a
+      [routerLink]="['/cabinet', 'orders', 'support-service', order.id]"
+      class="support-link"
+      >Служба поддержки</a
+    >
 
     <div class="order-info">
       <div class="order-date">

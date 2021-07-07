@@ -1,6 +1,6 @@
 <div class="page-content">
   <div class="page-container">
-    <a (click)="back()" class="back-link">
+    <a [routerLink]="['/cabinet', 'orders', orderId]" class="back-link">
       <svg width="1rem" height="1rem">
         <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
       </svg>

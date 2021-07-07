@@ -18,7 +18,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 1.7rem;
+  margin-top: 2rem;
 
   > * {
     &:not(:first-child) {
@@ -198,4 +198,49 @@
   svg {
     fill: $primary;
   }
+}
+
+.warning-message {
+  margin-top: 0.8rem;
+  padding: 0.5rem 1.7rem 0.5rem 0.8rem;
+  font-size: 1.2rem;
+  line-height: 1.34;
+
+  &.payment-processing,
+  &.partially-confirmed,
+  &.data-transmission {
+    background-color: rgba(#ffbf42, 0.2);
+  }
+
+  &.not-confirmed,
+  &.data-error,
+  &.payment-error {
+    background-color: rgba(#be1622, 0.1);
+  }
+}
+
+.order-number {
+  color: $primary;
+}
+
+.order-top {
+  display: flex;
+  align-items: center;
+
+  justify-content: space-between;
+
+  > * {
+    &:not(:first-child) {
+      margin-left: 1.4rem;
+    }
+  }
+}
+
+.support-link {
+  font-weight: 600;
+  margin-top: 1.2rem;
+  color: $primary;
+  text-decoration: none;
+  display: flex;
+  justify-content: flex-end;
 }

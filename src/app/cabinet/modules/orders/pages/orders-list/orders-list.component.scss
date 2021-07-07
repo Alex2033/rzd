@@ -119,3 +119,22 @@
 .order-number {
   color: $primary;
 }
+
+.warning-message {
+  margin-top: 0.8rem;
+  padding: 0.5rem 1.7rem 0.5rem 0.8rem;
+  font-size: 1.2rem;
+  line-height: 1.34;
+
+  &.payment-processing,
+  &.partially-confirmed,
+  &.data-transmission {
+    background-color: rgba(#ffbf42, 0.2);
+  }
+
+  &.not-confirmed,
+  &.data-error,
+  &.payment-error {
+    background-color: rgba(#be1622, 0.1);
+  }
+}

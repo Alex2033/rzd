@@ -1,6 +1,5 @@
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
 import {
   FormBuilder,
   FormControl,
@@ -15,21 +14,21 @@ import {
 })
 export class SupportServiceComponent implements OnInit {
   public form: FormGroup;
+  public orderId: number;
 
   constructor(
-    private location: Location,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       text: new FormControl(null, [Validators.required]),
     });
-  }
-
-  back(): void {
-    this.location.back();
+    this.route.params.subscribe((params) => {
+      this.orderId = +params.id;
+    });
   }
 
   submit(): void {

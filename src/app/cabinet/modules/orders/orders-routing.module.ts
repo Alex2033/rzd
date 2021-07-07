@@ -17,7 +17,7 @@ const routes: Routes = [
     component: HowGetResultsComponent,
   },
   {
-    path: 'support-service',
+    path: 'support-service/:id',
     component: SupportServiceComponent,
   },
   {
