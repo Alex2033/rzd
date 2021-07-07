@@ -5,12 +5,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgxBarcodeModule } from 'ngx-barcode';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { OrdersListComponent } from './pages/orders-list/orders-list.component';
 import { OrderDetailComponent } from './pages/order-detail/order-detail.component';
 import { DocumentsComponent } from './pages/documents/documents.component';
 import { HowGetResultsComponent } from './pages/how-get-results/how-get-results.component';
 import { BarcodeModalComponent } from './components/barcode-modal/barcode-modal.component';
+import { SupportServiceComponent } from './pages/support-service/support-service.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,7 @@ import { BarcodeModalComponent } from './components/barcode-modal/barcode-modal.
     DocumentsComponent,
     HowGetResultsComponent,
     BarcodeModalComponent,
+    SupportServiceComponent,
   ],
   imports: [
     CommonModule,
@@ -27,6 +30,8 @@ import { BarcodeModalComponent } from './components/barcode-modal/barcode-modal.
     MatFormFieldModule,
     NgxBarcodeModule,
     MatBottomSheetModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
 })
 export class OrdersModule {}

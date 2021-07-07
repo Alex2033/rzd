@@ -1,3 +1,4 @@
+import { SupportServiceComponent } from './pages/support-service/support-service.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DocumentsComponent } from './pages/documents/documents.component';
@@ -13,6 +14,10 @@ const routes: Routes = [
   {
     path: 'results',
     component: HowGetResultsComponent,
+  },
+  {
+    path: 'support-service',
+    component: SupportServiceComponent,
   },
   {
     path: ':id',

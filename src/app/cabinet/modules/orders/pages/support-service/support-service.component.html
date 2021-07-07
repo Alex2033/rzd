@@ -1,0 +1,38 @@
+<div class="page-content">
+  <div class="page-container">
+    <a (click)="back()" class="back-link">
+      <svg width="1rem" height="1rem">
+        <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
+      </svg>
+      <span>Заказ</span>
+    </a>
+
+    <h1 class="page-title">Служба поддержки</h1>
+
+    <div class="support-text">
+      <p>
+        Пожалуйста, опишите подробно проблемную ситуацию и мы свяжемся с вами в
+        ближайшее время!
+      </p>
+    </div>
+
+    <form (submit)="submit()" [formGroup]="form">
+      <textarea
+        class="support-textarea"
+        name="text"
+        placeholder="Введите текст сообщения..."
+        formControlName="text"
+      ></textarea>
+
+      <button type="submit" class="button support-button">Отправить</button>
+    </form>
+
+    <div class="support-text support-call">
+      <p>
+        Вопрос не терпит отлагательств? <br />
+        Звоните по номеру:
+        <a href="tel:88005553535" class="support-phone">8 (800) 555-35-35</a>
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+@import "theme";
+
+.page-cotntent {
+  padding-bottom: 2rem;
+}
+
+.support-text {
+  margin-top: 1.6rem;
+  color: $dark;
+  line-height: 1.394;
+}
+
+.support-textarea {
+  margin-top: 1.6rem;
+  max-width: 100%;
+  resize: none;
+  padding: 1.2rem;
+  font-size: 1.2rem;
+  line-height: 1.394;
+  border: 0.1rem solid $light-gray;
+  width: 100%;
+  min-height: 17.8rem;
+  font: 400 1.2rem/1.394 "Open Sans", sans-serif;
+
+  &::placeholder {
+    opacity: 1;
+    color: $gray;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $primary;
+  }
+}
+
+.support-button {
+  margin-top: 2.4rem;
+  width: 100%;
+}
+
+.support-phone {
+  text-decoration: none;
+  color: $primary;
+}
+
+.support-call {
+  margin-top: 3.2rem;
+}
