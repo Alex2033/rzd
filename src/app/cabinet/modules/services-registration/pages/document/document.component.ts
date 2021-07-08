@@ -43,20 +43,12 @@ export class DocumentComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.getQueryParams();
     this.getDocs();
   }
 
   ngOnDestroy() {
     this.destroy.next(null);
     this.destroy.complete();
-  }
-
-  getQueryParams(): void {
-    this.route.queryParams.pipe(takeUntil(this.destroy)).subscribe((res) => {
-      this.questionnaireNum = +res.questionnaireNum;
-      this.docIndex = +res.docIndex;
-    });
   }
 
   getDocs(): void {
@@ -68,8 +60,10 @@ export class DocumentComponent implements OnInit, OnDestroy {
         })
       ),
       this.route.queryParams,
-    ]).subscribe((res) => {
-      this.docs = res[0];
+    ]).subscribe(([docs, params]) => {
+      this.docs = docs;
+      this.questionnaireNum = +params.questionnaireNum;
+      this.docIndex = +params.docIndex;
       this.changeDocumentNumber();
     });
   }
@@ -91,7 +85,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
           '/cabinet',
           'services-registration',
           'confirm',
-          this.servicesRegistration.order.id,
+          this.routeId,
         ]);
       }
     });
@@ -117,12 +111,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
           if (this.docIndex === item.documents.length) {
             abort = true;
             this.router.navigate(
-              [
-                '/cabinet',
-                'services-registration',
-                'signature',
-                this.servicesRegistration.order.id,
-              ],
+              ['/cabinet', 'services-registration', 'signature', this.routeId],
               {
                 queryParams: {
                   anketaId: item.id_anketa,

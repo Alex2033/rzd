@@ -1,8 +1,16 @@
+import {
+  takeUntil,
+  switchMap,
+  take,
+  tap,
+  finalize,
+  takeWhile,
+} from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { Router } from '@angular/router';
-import { combineLatest } from 'rxjs';
+import { combineLatest, ReplaySubject, timer } from 'rxjs';
 import { OrdersService } from 'src/app/shared/services/orders.service';
 import { ServicePointsService } from 'src/app/shared/services/service-points.service';
 import { OrderInterface } from 'src/app/shared/types/order.interface';
@@ -43,6 +51,8 @@ export class OrdersListComponent implements OnInit {
   public selectedFilter: string;
   public isLoading: boolean = false;
 
+  private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
+
   constructor(
     private ordersService: OrdersService,
     private points: ServicePointsService,
@@ -63,6 +73,61 @@ export class OrdersListComponent implements OnInit {
           sessionStorage.getItem('rzd-orders-sort') || this.types[0].value;
         this.sortOrder(this.selectedFilter);
         this.isLoading = false;
+        this.filteredOrders.forEach((o, index) => {
+          if (o.status === 'UNPAID_REGISTERED') {
+            let result;
+            o.status = 'UNPAID_PROCESSING';
+            timer(0, 5000)
+              .pipe(
+                takeWhile((val) => val < 5 && o.status === 'UNPAID_PROCESSING'),
+                switchMap(() => this.ordersService.checkPayStatus(o.id)),
+                finalize(() => {
+                  if (
+                    o.status === 'UNPAID_REGISTERED' ||
+                    o.status === 'UNPAID_PROCESSING'
+                  ) {
+                    o.status = 'UNPAID_ERROR';
+                  }
+                }),
+                takeUntil(this.destroy)
+              )
+              .subscribe((res) => {
+                result = res;
+                if (res.status !== 'UNPAID_REGISTERED') {
+                  this.filteredOrders[index].status = res.status;
+                  this.filteredOrders[index].items = res.items;
+                }
+              });
+          }
+
+          if (o.status === 'READY' || o.status === 'READY_PART_CONFIRMED') {
+            let result;
+            o.status = 'READY_PROCESSING';
+            timer(0, 5000)
+              .pipe(
+                takeWhile(
+                  (val) =>
+                    val < 5 &&
+                    o.status !== 'READY' &&
+                    o.status !== 'READY_PART_CONFIRMED'
+                ),
+                switchMap(() => this.ordersService.checkMedmeStatus(o.id)),
+                finalize(() => {
+                  o.status = result.status;
+                }),
+                takeUntil(this.destroy)
+              )
+              .subscribe((res) => {
+                result = res;
+                if (
+                  res.status !== 'READY' &&
+                  res.status !== 'READY_PART_CONFIRMED'
+                ) {
+                  this.filteredOrders[index] = { ...res };
+                }
+              });
+          }
+        });
       },
       (err) => {
         if (err instanceof HttpErrorResponse) {
@@ -72,11 +137,16 @@ export class OrdersListComponent implements OnInit {
     );
   }
 
+  ngOnDestroy() {
+    this.destroy.next(null);
+    this.destroy.complete();
+  }
+
   addAddressToOrder(points: ServicePointInterface[]): void {
     this.orders.forEach((order) => {
       order['shortAddress'] = points.find(
         (point) => point.id === order.id_point
-      )['name'];
+      )?.name;
     });
   }
 
@@ -91,5 +161,42 @@ export class OrdersListComponent implements OnInit {
       return;
     }
     this.filteredOrders = this.orders.filter((order) => order.status === value);
+  }
+
+  orderClick(id: number, status: string): void {
+    switch (status) {
+      case 'CREATED':
+        this.router.navigate(
+          ['/cabinet', 'services-registration', 'document', id],
+          {
+            queryParams: {
+              questionnaireNum: 1,
+              docIndex: 1,
+            },
+          }
+        );
+        break;
+      case 'SIGNED':
+        this.router.navigate([
+          '/cabinet',
+          'services-registration',
+          'confirm',
+          id,
+        ]);
+        break;
+      case 'UNPAID':
+      case 'UNPAID_REFUSED':
+        this.router.navigate([
+          '/cabinet',
+          'services-registration',
+          'payment-method',
+          id,
+        ]);
+        break;
+
+      default:
+        this.router.navigate(['/cabinet', 'orders', id]);
+        break;
+    }
   }
 }

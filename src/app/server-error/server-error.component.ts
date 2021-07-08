@@ -61,14 +61,14 @@ export class ServerErrorComponent implements OnInit, OnDestroy {
         this.text =
           'Выбранная точка обслуживания недоступна. Пожалуйста, выберите другую точку обслуживания.';
         this.buttonText = 'Выбрать точку обслуживания';
-        this.link = '/cabinet/select-point/0';
+        this.link = '/cabinet/services-registration/select-point/0';
         break;
 
       case 'INVALID_RETURN_DATE':
         this.text =
           'Неверный формат даты возвращения в РФ. Пожалуйста укажите верную дату.';
         this.buttonText = 'Указать дату';
-        this.link = '/cabinet/questions/0';
+        this.link = '/cabinet/services-registration/questions/0';
         break;
 
       case 'ANKETA_NOT_FOUND':

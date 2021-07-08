@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { DocumentsOrderInterface } from '../types/documents-order.interface';
+import { FeedBackInterface } from '../types/feedback.interface';
 import { OrderResponseInterface } from '../types/order-response.interface';
 import { OrderInterface } from '../types/order.interface';
 import { PaymentResponseInterface } from '../types/payment-response.interface';
@@ -99,5 +100,24 @@ export class OrdersService {
       environment.api + 'api/order/send',
       { id }
     );
+  }
+
+  addFeedBack(data: FeedBackInterface): Observable<number> {
+    return this.http.post<number>(
+      environment.api + 'api/order/AddFeedback',
+      data
+    );
+  }
+
+  checkMedmeStatus(id_order: number): Observable<any> {
+    return this.http.post<any>(environment.api + 'api/order/CheckMedmeStatus', {
+      id_order,
+    });
+  }
+
+  checkPayStatus(id_order: number): Observable<any> {
+    return this.http.post<any>(environment.api + 'api/order/CheckPayStatus', {
+      id_order,
+    });
   }
 }

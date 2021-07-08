@@ -2,8 +2,14 @@ import { BarcodeModalComponent } from './../../components/barcode-modal/barcode-
 import { Component, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActivatedRoute, Params } from '@angular/router';
-import { combineLatest } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { combineLatest, ReplaySubject, timer } from 'rxjs';
+import {
+  finalize,
+  switchMap,
+  take,
+  takeUntil,
+  takeWhile,
+} from 'rxjs/operators';
 import { OrdersService } from 'src/app/shared/services/orders.service';
 import { ServicePointsService } from 'src/app/shared/services/service-points.service';
 import { ServicesService } from 'src/app/shared/services/services.service';
@@ -18,6 +24,8 @@ import { ServiceInterface } from 'src/app/shared/types/service.interface';
 })
 export class OrderDetailComponent implements OnInit {
   public order: OrderInterface = {} as OrderInterface;
+
+  private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   constructor(
     private ordersService: OrdersService,
@@ -37,9 +45,9 @@ export class OrderDetailComponent implements OnInit {
     ]).subscribe(
       ([services, points, order]) => {
         this.order = order;
-        console.log('this.order:', this.order);
         this.addAddressToOrder(points);
         this.addServicesToOrder(services);
+        this.checkOrderStatus();
       },
       (err) => console.error(err)
     );
@@ -71,5 +79,62 @@ export class OrderDetailComponent implements OnInit {
         extId,
       },
     });
+  }
+
+  checkOrderStatus(): void {
+    if (this.order.status === 'UNPAID_REGISTERED') {
+      let result;
+      this.order.status = 'UNPAID_PROCESSING';
+      timer(0, 5000)
+        .pipe(
+          takeWhile(
+            (val) => val < 5 && this.order.status === 'UNPAID_PROCESSING'
+          ),
+          switchMap(() => this.ordersService.checkPayStatus(this.order.id)),
+          finalize(() => {
+            if (
+              this.order.status === 'UNPAID_REGISTERED' ||
+              this.order.status === 'UNPAID_PROCESSING'
+            )
+              this.order.status = 'UNPAID_ERROR';
+          }),
+          takeUntil(this.destroy)
+        )
+        .subscribe((res) => {
+          result = res;
+          if (res.status !== 'UNPAID_REGISTERED') {
+            this.order.status = res.status;
+            this.order.items = res.items;
+          }
+        });
+    }
+
+    if (
+      this.order.status === 'READY' ||
+      this.order.status === 'READY_PART_CONFIRMED'
+    ) {
+      let result;
+      this.order.status = 'READY_PROCESSING';
+      timer(0, 5000)
+        .pipe(
+          takeWhile(
+            (val) =>
+              val < 5 &&
+              this.order.status !== 'READY' &&
+              this.order.status !== 'READY_PART_CONFIRMED'
+          ),
+          switchMap(() => this.ordersService.checkMedmeStatus(this.order.id)),
+          finalize(() => {
+            this.order.status = result.status;
+          }),
+          takeUntil(this.destroy)
+        )
+        .subscribe((res) => {
+          result = res;
+          if (res.status !== 'READY' && res.status !== 'READY_PART_CONFIRMED') {
+            this.order = { ...res };
+          }
+        });
+    }
   }
 }

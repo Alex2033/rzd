@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, Observable, ReplaySubject } from 'rxjs';
-import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { Location } from '@angular/common';
+import { combineLatest, ReplaySubject } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 import { OrdersService } from 'src/app/shared/services/orders.service';
 import { ServicePointsService } from 'src/app/shared/services/service-points.service';
 import { ServicesService } from 'src/app/shared/services/services.service';
@@ -24,7 +25,8 @@ export class ConfirmOrderComponent implements OnInit, OnDestroy {
     private ordersService: OrdersService,
     private route: ActivatedRoute,
     private points: ServicePointsService,
-    private servicesService: ServicesService
+    private servicesService: ServicesService,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -57,5 +59,9 @@ export class ConfirmOrderComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy.next(null);
     this.destroy.complete();
+  }
+
+  back(): void {
+    this.location.back();
   }
 }

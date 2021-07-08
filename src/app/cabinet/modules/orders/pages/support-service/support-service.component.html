@@ -24,7 +24,14 @@
         formControlName="text"
       ></textarea>
 
-      <button type="submit" class="button support-button">Отправить</button>
+      <button
+        [disabled]="!form.get('text').value || isLoading"
+        type="submit"
+        [class.is-loading]="isLoading"
+        class="button support-button"
+      >
+        Отправить
+      </button>
     </form>
 
     <div class="support-text support-call">

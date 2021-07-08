@@ -12,6 +12,25 @@
   font-size: 1.2rem;
   line-height: 1.34;
   background-color: $primary;
+
+  > * {
+    &:not(:first-child) {
+      margin-left: 0.5rem;
+    }
+  }
+
+  &.draft {
+    background-color: $light-gray;
+    color: $dark;
+  }
+
+  &.confirmed {
+    background-color: $accent;
+  }
+
+  &.not-confirmed {
+    background-color: #444444;
+  }
 }
 
 .order-info {
@@ -46,7 +65,7 @@
 }
 
 .questionnaires {
-  margin-top: 2.5rem;
+  margin-top: 1.6rem;
 
   > * {
     &:not(:first-child) {
@@ -130,26 +149,18 @@
   text-decoration: none;
 }
 
-.ext-id {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  color: $primary;
-  font-size: 1.2rem;
-  line-height: 1.34;
-  margin-top: 0.4rem;
-}
-
 .questionnaire-top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-
   > * {
     &:not(:first-child) {
-      margin-left: 1.2rem;
+      margin-top: 0.8rem;
     }
   }
+}
+
+.ext-id {
+  font-size: 1.2rem;
+  line-height: 1.34;
+  color: rgba(#263238, 0.6);
 }
 
 .document-link {
@@ -206,10 +217,13 @@
   font-size: 1.2rem;
   line-height: 1.34;
 
-  &.payment-processing,
-  &.partially-confirmed,
-  &.data-transmission {
-    background-color: rgba(#ffbf42, 0.2);
+  &.payment-processing {
+    background-color: rgba(#6e91a6, 0.2);
+  }
+
+  &.data-transmission,
+  &.partially-confirmed {
+    background-color: rgba(#e2e9ed, 0.2);
   }
 
   &.not-confirmed,
@@ -243,4 +257,16 @@
   text-decoration: none;
   display: flex;
   justify-content: flex-end;
+}
+
+.order-status-spinner {
+  width: 1.3rem;
+  height: 0.9rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(-360deg);
+  }
 }

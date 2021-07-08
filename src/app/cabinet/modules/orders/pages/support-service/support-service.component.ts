@@ -1,3 +1,5 @@
+import { FeedBackInterface } from './../../../../../shared/types/feedback.interface';
+import { OrdersService } from 'src/app/shared/services/orders.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -15,11 +17,13 @@ import {
 export class SupportServiceComponent implements OnInit {
   public form: FormGroup;
   public orderId: number;
+  public isLoading: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private orders: OrdersService
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +36,14 @@ export class SupportServiceComponent implements OnInit {
   }
 
   submit(): void {
-    this.router.navigate(['/cabinet', 'orders', 'support-response']);
+    this.isLoading = true;
+    const data: FeedBackInterface = {
+      id_order: this.orderId,
+      message: this.form.get('text').value,
+    };
+    this.orders.addFeedBack(data).subscribe(() => {
+      this.router.navigate(['/cabinet', 'orders', 'support-response']);
+      this.isLoading = false;
+    });
   }
 }

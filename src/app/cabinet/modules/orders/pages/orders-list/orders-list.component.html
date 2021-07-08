@@ -33,30 +33,94 @@
   <div class="orders-container" *ngIf="filteredOrders.length">
     <ul class="orders-list">
       <li class="order-item" *ngFor="let order of filteredOrders">
-        <a [routerLink]="['/cabinet', 'orders', order.id]" class="order">
+        <a class="order" (click)="orderClick(order.id, order.status)">
           <div class="order-top">
             <div class="order-number">Заказ №{{ order.id }}</div>
-            <div class="order-status">
-              {{
+            <div
+              class="order-status"
+              [ngClass]="{
+                draft: order.status === 'CREATED' || order.status === 'SIGNED',
+                confirmed: order.status === 'CONFIRMED',
+                'not-confirmed':
+                  order.status === 'READY' ||
+                  order.status === 'READY_PART_CONFIRMED' ||
+                  order.status === 'UNPAID_REFUSED' ||
+                  order.status === 'UNPAID_ERROR'
+              }"
+            >
+              <svg
+                *ngIf="
+                  order.status === 'UNPAID_PROCESSING' ||
+                  order.status === 'READY_PROCESSING'
+                "
+                class="order-status-spinner"
+              >
+                <use xlink:href="assets/sprites/icons.svg#cached"></use>
+              </svg>
+              <span>{{
                 order.status === "CREATED" || order.status === "SIGNED"
                   ? "Черновик"
                   : order.status === "UNPAID"
                   ? "Ожидает оплаты"
-                  : order.status === "READY"
-                  ? "Оформлен"
                   : order.status === "CONFIRMED"
                   ? "Подтвержден"
+                  : order.status === "READY"
+                  ? "Не подтвержден"
+                  : order.status === "READY_PROCESSING"
+                  ? "Передача данных"
+                  : order.status === "READY_PART_CONFIRMED"
+                  ? "Частично подтвержден"
+                  : order.status === "UNPAID_REFUSED"
+                  ? "Ошибка оплаты"
+                  : order.status === "UNPAID_ERROR"
+                  ? "Ошибка данных"
+                  : order.status === "UNPAID_PROCESSING" ||
+                    order.status === "UNPAID_REGISTERED"
+                  ? "Обработка оплаты..."
                   : null
-              }}
+              }}</span>
             </div>
           </div>
           <div
             class="warning-message"
-            [class.partially-confirmed]="true"
-            *ngIf="false"
+            [ngClass]="{
+              'payment-processing':
+                order.status === 'UNPAID_PROCESSING' ||
+                order.status === 'UNPAID_REGISTERED',
+              'partially-confirmed': order.status === 'READY_PART_CONFIRMED',
+              'data-transmission': order.status === 'READY_PROCESSING',
+              'not-confirmed': order.status === 'READY',
+              'data-error': order.status === 'UNPAID_ERROR',
+              'payment-error': order.status === 'UNPAID_REFUSED'
+            }"
+            *ngIf="
+              order.status === 'UNPAID_PROCESSING' ||
+              order.status === 'UNPAID_REGISTERED' ||
+              order.status === 'READY' ||
+              order.status === 'READY_PART_CONFIRMED' ||
+              order.status === 'UNPAID_REFUSED' ||
+              order.status === 'UNPAID_ERROR' ||
+              order.status === 'READY_PROCESSING'
+            "
           >
-            К сожалению ваш заказ обработан не полностью, обратитесь в
-            поддержку.
+            {{
+              order.status === "UNPAID_PROCESSING" ||
+              order.status === "UNPAID_REGISTERED"
+                ? "Дождитесь проведения онлайн-оплаты,
+              чтобы воспользоваться услугами."
+                : order.status === "READY_PROCESSING"
+                ? "Дождитесь окончания передачи данных,
+                чтобы воспользоваться услугами."
+                : order.status === "READY"
+                ? "К сожалению ваш заказ не удалось обработать, обратитесь в поддержку."
+                : order.status === "READY_PART_CONFIRMED"
+                ? "К сожалению ваш заказ обработан не полностью, обратитесь в поддержку."
+                : order.status === "UNPAID_REFUSED"
+                ? "К сожалению вашу оплату не удалось обработать, обратитесь в поддержку."
+                : order.status === "UNPAID_ERROR"
+                ? "К сожалению ваши данные не удалось проверить, обратитесь в поддержку."
+                : null
+            }}
           </div>
           <div class="order-info">
             <div class="order-date">
@@ -69,11 +133,11 @@
               class="order-questionnaire"
               *ngFor="let questionnaire of order.items"
             >
+              <div class="ext-id" *ngIf="questionnaire.ext_id">
+                Лабораторная заявка № {{ questionnaire.ext_id }}
+              </div>
               <div class="questionnaire-fio">
                 {{ questionnaire.fio }}
-              </div>
-              <div class="ext-id" *ngIf="questionnaire.ext_id">
-                № {{ questionnaire.ext_id }}
               </div>
             </div>
           </div>
