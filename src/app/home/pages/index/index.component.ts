@@ -19,6 +19,9 @@ export class IndexComponent implements OnInit {
   public servicePoints$: Observable<ServicePointInterface[]>;
   public isAuth: boolean;
   public addressMode: string = 'map';
+  public mapOptions: object = {
+    suppressMapOpenBlock: true,
+  };
   public options: object = {
     iconImageHref: 'assets/gps-red.svg',
     iconLayout: 'default#image',

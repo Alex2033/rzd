@@ -29,6 +29,9 @@ export class ServicePointsComponent
   public points$: Observable<ServicePointInterface[]>;
   public addressMode: string = 'map';
   public selectedPoint: ServicePointInterface;
+  public mapOptions: object = {
+    suppressMapOpenBlock: true,
+  };
   public options: object = {
     iconImageHref: 'assets/gps-red.svg',
     iconLayout: 'default#image',

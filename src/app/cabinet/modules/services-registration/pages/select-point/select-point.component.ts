@@ -17,6 +17,9 @@ export class SelectPointComponent implements OnInit, OnDestroy {
   public selectedId: number = 0;
   public points: ServicePointInterface[] = [];
   public addressMode: string = 'list';
+  public mapOptions: object = {
+    suppressMapOpenBlock: true,
+  };
   public options: object = {
     iconImageHref: 'assets/gps-red.svg',
     iconLayout: 'default#image',
@@ -38,6 +41,7 @@ export class SelectPointComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy))
       .subscribe((points) => {
         this.points = points;
+        this.points.forEach((p) => (p['selectedOnMap'] = false));
         const pointId = JSON.parse(
           sessionStorage.getItem('rzd-order')
         ).id_point;
@@ -64,9 +68,12 @@ export class SelectPointComponent implements OnInit, OnDestroy {
   }
 
   selectMapPoint(event, point: ServicePointInterface): void {
-    // console.log('event:', event);
-    // console.log('event.target.options:', event.target.options);
+    console.log('event:', event);
     // event.target.options.set('iconImageHref', 'assets/gps-blue.svg');
     this.selectedPoint = point;
+    // if (JSON.stringify(point) !== JSON.stringify(this.selectedPoint)) {
+    // event.target.options.set('iconImageHref', 'assets/gps-blue.svg');
+
+    // }
   }
 }
