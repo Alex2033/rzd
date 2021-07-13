@@ -136,11 +136,6 @@
   }
 }
 
-.citizen-type-info {
-  margin-top: 1.6rem;
-  font-size: 1.2rem;
-}
-
 // test types
 .test-types {
   padding: 2.4rem 0 2rem;
@@ -193,4 +188,10 @@
 .expansion-points-link {
   text-decoration: none;
   color: $primary;
+}
+
+.custom-expansion-attention {
+  font-size: 1.2rem;
+  font-style: italic;
+  margin-top: 2rem;
 }
