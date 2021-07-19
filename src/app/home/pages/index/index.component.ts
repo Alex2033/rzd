@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatExpansionPanel } from '@angular/material/expansion';
 import { Observable } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
 import { slideUpAnimation } from 'src/app/shared/animations/slide-up.animation';
@@ -40,5 +41,18 @@ export class IndexComponent implements OnInit {
       .getServicePoints()
       .pipe(shareReplay());
     this.isAuth = this.account.isAuth();
+  }
+
+  openRefundsPanel(
+    refundsPanel: MatExpansionPanel,
+    cashbackPanel: MatExpansionPanel
+  ): void {
+    const el = document.querySelector('#refunds-panel');
+    refundsPanel.open();
+    cashbackPanel.close();
+    el.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
   }
 }

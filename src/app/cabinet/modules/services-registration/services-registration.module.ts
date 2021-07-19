@@ -1,3 +1,4 @@
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 
@@ -26,6 +27,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmRemoveSelectionsComponent } from './components/confirm-remove-selections/confirm-remove-selections.component';
 import { MatButtonModule } from '@angular/material/button';
 import { AngularYandexMapsModule } from 'angular8-yandex-maps';
+import { EmptyOmsQuestionnairesComponent } from './pages/empty-oms-questionnaires/empty-oms-questionnaires.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,7 @@ import { AngularYandexMapsModule } from 'angular8-yandex-maps';
     PaymentResponseComponent,
     ServicesRegistrationInfoComponent,
     ConfirmRemoveSelectionsComponent,
+    EmptyOmsQuestionnairesComponent,
   ],
   imports: [
     CommonModule,
@@ -58,6 +61,7 @@ import { AngularYandexMapsModule } from 'angular8-yandex-maps';
     MatDialogModule,
     MatButtonModule,
     AngularYandexMapsModule,
+    MatCheckboxModule,
   ],
   providers: [DatePipe],
 })

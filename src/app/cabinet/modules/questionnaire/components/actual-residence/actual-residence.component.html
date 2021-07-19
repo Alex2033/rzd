@@ -34,8 +34,10 @@
           "
           [errors]="actualResidence.get('adress_fact_country').errors"
           [errorMessages]="{
-            bad_format: basicData.get('adress_fact_country').errors?.bad_format,
-            bad_value: basicData.get('adress_fact_country').errors?.bad_value,
+            bad_format: actualResidence.get('adress_fact_country').errors
+              ?.bad_format,
+            bad_value: actualResidence.get('adress_fact_country').errors
+              ?.bad_value,
             required: 'Введите название страны'
           }"
         ></app-error-messages
@@ -76,8 +78,10 @@
           "
           [errors]="actualResidence.get('adress_fact_city').errors"
           [errorMessages]="{
-            bad_format: basicData.get('adress_fact_city').errors?.bad_format,
-            bad_value: basicData.get('adress_fact_city').errors?.bad_value,
+            bad_format:
+              actualResidence.get('adress_fact_city').errors?.bad_format,
+            bad_value:
+              actualResidence.get('adress_fact_city').errors?.bad_value,
             required: 'Введите название населенного пункта'
           }"
         ></app-error-messages
@@ -116,8 +120,10 @@
           "
           [errors]="actualResidence.get('adress_fact_street').errors"
           [errorMessages]="{
-            bad_format: basicData.get('adress_fact_street').errors?.bad_format,
-            bad_value: basicData.get('adress_fact_street').errors?.bad_value,
+            bad_format:
+              actualResidence.get('adress_fact_street').errors?.bad_format,
+            bad_value:
+              actualResidence.get('adress_fact_street').errors?.bad_value,
             required: 'Введите название улицы'
           }"
         ></app-error-messages
@@ -156,9 +162,10 @@
           "
           [errors]="actualResidence.get('adress_fact_building').errors"
           [errorMessages]="{
-            bad_format: basicData.get('adress_fact_building').errors
+            bad_format: actualResidence.get('adress_fact_building').errors
               ?.bad_format,
-            bad_value: basicData.get('adress_fact_building').errors?.bad_value,
+            bad_value: actualResidence.get('adress_fact_building').errors
+              ?.bad_value,
             required: 'Введите номер дома(корпуса)'
           }"
         ></app-error-messages

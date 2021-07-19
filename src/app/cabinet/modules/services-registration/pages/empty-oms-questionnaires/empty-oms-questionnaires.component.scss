@@ -1,0 +1,24 @@
+@import "theme";
+
+.page-content {
+  padding-bottom: 8rem;
+}
+
+.page-container {
+  padding-top: 2rem;
+}
+
+.questionnaires-list {
+  margin-top: 2rem;
+
+  > * {
+    &:not(:first-child) {
+      margin-top: 1rem;
+    }
+  }
+}
+
+.questionnaire {
+  color: $dark;
+  font-weight: 600;
+}

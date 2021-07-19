@@ -1,5 +1,9 @@
 @import "theme";
 
+.page-content {
+  padding-bottom: 8rem;
+}
+
 .info-content {
   margin-top: 2.4rem;
   color: $dark;
@@ -7,4 +11,40 @@
 
 .info-title {
   font-size: 1.6rem;
+}
+
+.info-list {
+  margin-top: 1.6rem;
+  padding-left: 2rem;
+  list-style-type: disc;
+}
+
+.send-results {
+  margin-top: 2rem;
+  color: $accent;
+}
+
+.send-results-checkbox {
+  margin-top: 0.5rem;
+  font: 400 1.6rem/1.5 "Open Sans", sans-serif;
+  border: 0.2rem solid $accent;
+  padding: 0.5rem 1rem;
+
+  ::ng-deep {
+    .mat-checkbox-inner-container {
+      margin-top: 0.3rem;
+    }
+
+    .mat-checkbox-frame {
+      border-color: $accent;
+    }
+
+    .mat-checkbox-label {
+      white-space: normal;
+    }
+  }
+}
+
+.send-results-text {
+  margin-top: 1.6rem;
 }

@@ -48,9 +48,7 @@
       </p>
 
       <p class="introduce-warning">
-        Результаты тестирования не загружаются автоматически в систему
-        ЕМИАС/портал Госуслуг и не подходят для получения QR-кодов для посещения
-        общественных мест и ресторанов.
+        Доступен цифровой сертификат (QR-код) на ЕМИАС
       </p>
     </div>
   </div>
@@ -124,12 +122,11 @@
       </h5>
       <p>
         По возвращении в Россию должны протий обследование на COVID-19 методом
-        ПЦР в течение 3 календарных дней со дня въезда на территорию РФ.
-        Повторный тест должен быть выполнен в срок до 5 календарных дней.
-        Интервал между тестами — не менее суток. При наличии вакцинации против
-        СОVID-19 в течение последних 12 месяцев или сведений о перенесенном в
-        последние шесть месяцев заболевании COVID-19 проведение лабораторного
-        исследования на COVID-19 методом ПЦР не требуется.
+        ПЦР в течение 3 календарных дней со дня въезда на территорию РФ. При
+        наличии вакцинации против СОVID-19 в течение последних 12 месяцев или
+        сведений о перенесенном в последние шесть месяцев заболевании COVID-19
+        проведение лабораторного исследования на COVID-19 методом ПЦР не
+        требуется.
       </p>
     </div>
     <div class="citizen-type">
@@ -467,7 +464,12 @@
       </div>
     </mat-expansion-panel>
     <!-- 8 -->
-    <mat-expansion-panel hideToggle class="custom-expansion">
+    <mat-expansion-panel
+      #refundsPanel
+      id="refunds-panel"
+      hideToggle
+      class="custom-expansion"
+    >
       <mat-expansion-panel-header
         [expandedHeight]="'9rem'"
         [collapsedHeight]="'9rem'"
@@ -494,6 +496,24 @@
         [collapsedHeight]="'9rem'"
       >
         <mat-panel-title
+          >Как получить QR-код для посещения ресторанов и массовых мероприятий?
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="custom-expansion-text">
+        <p>
+          Для получения QR-кода необходимо оформить заказ на Паспорт гражданина
+          РФ, а для детей - на Свидетельство о рождении, указав при этом номер
+          полиса ОМС.
+        </p>
+      </div>
+    </mat-expansion-panel>
+    <!-- 10 -->
+    <mat-expansion-panel hideToggle class="custom-expansion">
+      <mat-expansion-panel-header
+        [expandedHeight]="'9rem'"
+        [collapsedHeight]="'9rem'"
+      >
+        <mat-panel-title
           >Какой документ использовать для вылетов за рубеж?
         </mat-panel-title>
       </mat-expansion-panel-header>
@@ -502,6 +522,41 @@
           В случае, если результаты теста требуются вам для международных
           поездок, рекомендуем указывать данные заграничного паспорта.
         </p>
+      </div>
+    </mat-expansion-panel>
+    <!-- 11 -->
+    <mat-expansion-panel #cashbackPanel hideToggle class="custom-expansion">
+      <mat-expansion-panel-header
+        [expandedHeight]="'9rem'"
+        [collapsedHeight]="'9rem'"
+      >
+        <mat-panel-title
+          >Что делать, если я оплатил заказ онлайн, но передумал сдавать тест?
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="custom-expansion-text">
+        <p>
+          Вы можете вернуть денежные средства
+          <span
+            class="primary-color"
+            (click)="openRefundsPanel(refundsPanel, cashbackPanel)"
+            >оформив заявление на возврат
+          </span>
+        </p>
+      </div>
+    </mat-expansion-panel>
+    <!-- 12 -->
+    <mat-expansion-panel hideToggle class="custom-expansion">
+      <mat-expansion-panel-header
+        [expandedHeight]="'9rem'"
+        [collapsedHeight]="'9rem'"
+      >
+        <mat-panel-title
+          >Сколько действует оформленный заказ на сайте?
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="custom-expansion-text">
+        <p>Оформленный на сайте заказ действует бессрочно.</p>
       </div>
     </mat-expansion-panel>
   </div>

@@ -77,6 +77,22 @@ export class PaymentMethodComponent implements OnInit {
         },
         (err) => {
           if (err instanceof HttpErrorResponse) {
+            if (err.error.error === 'ANKETA_OMS_EMPTY') {
+              this.router.navigate(
+                [
+                  '/cabinet',
+                  'services-registration',
+                  'empty-oms-questionnaires',
+                ],
+                {
+                  queryParams: {
+                    value: err.error.value,
+                  },
+                }
+              );
+              return;
+            }
+
             this.router.navigate(['/server-error', err.error.error], {
               queryParams: {
                 orderId: this.order.id,

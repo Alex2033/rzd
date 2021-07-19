@@ -101,6 +101,7 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
         passport_number: new FormControl(null, Validators.required),
         passport_org: new FormControl(null, Validators.required),
         passport_date: new FormControl(null, [Validators.required]),
+        oms: new FormControl(null),
       }),
       actualResidence: new FormGroup({
         adress_fact_country: new FormControl(null, Validators.required),
@@ -317,12 +318,6 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
       res = this.datePipe.transform(res, 'YYYY-MM-dd T HH:mm:ss');
     }
 
-    // пустое поле не отправлять в запрос
-    if (!res && key !== 'adress_single' && key !== 'no_reg_address') {
-      this.isLoading = false;
-      return of(null);
-    }
-
     // изменение типа документа обнуляет данные документа
     if (key === 'doc_type') {
       this.createForm.get('document').reset();
@@ -500,26 +495,26 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
         .get('name')
         .setValidators([
           Validators.required,
-          Validators.pattern('^[a-zA-Z]*$'),
+          Validators.pattern('^[a-zA-Z _-]*$'),
         ]);
       basicData
         .get('surname')
         .setValidators([
           Validators.required,
-          Validators.pattern('^[a-zA-Z]*$'),
+          Validators.pattern('^[a-zA-Z _-]*$'),
         ]);
     } else {
       basicData
         .get('name')
         .setValidators([
           Validators.required,
-          Validators.pattern('^[а-яА-Я]*$'),
+          Validators.pattern('^[а-яА-ЯёЁ _-]*$'),
         ]);
       basicData
         .get('surname')
         .setValidators([
           Validators.required,
-          Validators.pattern('^[а-яА-Я]*$'),
+          Validators.pattern('^[а-яА-ЯёЁ _-]*$'),
         ]);
     }
   }

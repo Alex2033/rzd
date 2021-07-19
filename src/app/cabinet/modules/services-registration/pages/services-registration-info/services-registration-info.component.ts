@@ -8,6 +8,8 @@ import { ServicesRegistrationService } from 'src/app/shared/services/services-re
   styleUrls: ['./services-registration-info.component.scss'],
 })
 export class ServicesRegistrationInfoComponent implements OnInit {
+  public sendResults: boolean = false;
+
   constructor(
     private router: Router,
     private servicesRegistration: ServicesRegistrationService
@@ -16,6 +18,9 @@ export class ServicesRegistrationInfoComponent implements OnInit {
   ngOnInit(): void {}
 
   goToCreation(): void {
+    this.servicesRegistration.setOrder({
+      qr_send: this.sendResults,
+    });
     this.router.navigate([
       '/cabinet',
       'services-registration',

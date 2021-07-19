@@ -138,6 +138,23 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
         },
         (err) => {
           if (err instanceof HttpErrorResponse) {
+            console.log('err.error.error:', err.error.error);
+            if (err.error.error === 'ANKETA_OMS_EMPTY') {
+              this.router.navigate(
+                [
+                  '/cabinet',
+                  'services-registration',
+                  'empty-oms-questionnaires',
+                ],
+                {
+                  queryParams: {
+                    value: err.error.value,
+                  },
+                }
+              );
+              return;
+            }
+
             this.router.navigate(['/cabinet', 'server-error', err.error.error]);
           }
         }
@@ -163,6 +180,22 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
         },
         (err) => {
           if (err instanceof HttpErrorResponse) {
+            if (err.error.error === 'ANKETA_OMS_EMPTY') {
+              this.router.navigate(
+                [
+                  '/cabinet',
+                  'services-registration',
+                  'empty-oms-questionnaires',
+                ],
+                {
+                  queryParams: {
+                    value: err.error.value,
+                  },
+                }
+              );
+              return;
+            }
+
             this.router.navigate(['/server-error', err.error.error]);
           }
         }

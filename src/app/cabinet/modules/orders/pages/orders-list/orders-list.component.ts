@@ -1,11 +1,4 @@
-import {
-  takeUntil,
-  switchMap,
-  take,
-  tap,
-  finalize,
-  takeWhile,
-} from 'rxjs/operators';
+import { takeUntil, switchMap, finalize, takeWhile } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
@@ -39,12 +32,20 @@ export class OrdersListComponent implements OnInit {
       value: 'CONFIRMED',
     },
     {
-      label: 'Оформлен',
+      label: 'Не подтвержден',
       value: 'READY',
     },
     {
       label: 'Ожидает оплаты',
       value: 'UNPAID',
+    },
+    {
+      label: 'Ошибка оплаты',
+      value: 'UNPAID_REFUSED',
+    },
+    {
+      label: 'Частично подтвержден',
+      value: 'READY_PART_CONFIRMED',
     },
   ];
 

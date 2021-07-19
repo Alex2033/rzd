@@ -11,5 +11,6 @@ export interface OrderInterface {
   abroad_return_date?: string;
   dt_creation?: string;
   dt_last_edit?: string;
+  qr_send?: boolean;
   items: QuestionnaireOrderInterface[];
 }

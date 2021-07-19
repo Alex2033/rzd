@@ -32,8 +32,8 @@
           "
           [errors]="documentStep.get('passport_number').errors"
           [errorMessages]="{
-            bad_format: basicData.get('passport_number').errors?.bad_format,
-            bad_value: basicData.get('passport_number').errors?.bad_value,
+            bad_format: documentStep.get('passport_number').errors?.bad_format,
+            bad_value: documentStep.get('passport_number').errors?.bad_value,
             required: 'Введите серию и номер'
           }"
         ></app-error-messages
@@ -74,8 +74,8 @@
           "
           [errors]="documentStep.get('passport_org').errors"
           [errorMessages]="{
-            bad_format: basicData.get('passport_org').errors?.bad_format,
-            bad_value: basicData.get('passport_org').errors?.bad_value,
+            bad_format: documentStep.get('passport_org').errors?.bad_format,
+            bad_value: documentStep.get('passport_org').errors?.bad_value,
             required: 'Введите кем выдан документ'
           }"
         ></app-error-messages
@@ -112,9 +112,43 @@
           "
           [errors]="documentStep.get('passport_date').errors"
           [errorMessages]="{
-            bad_format: basicData.get('passport_date').errors?.bad_format,
-            bad_value: basicData.get('passport_date').errors?.bad_value,
+            bad_format: documentStep.get('passport_date').errors?.bad_format,
+            bad_value: documentStep.get('passport_date').errors?.bad_value,
             required: 'Введите дату выдачи'
+          }"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- oms -->
+  <div class="form-control" *ngIf="!activeDoctype?.fioLat">
+    <mat-form-field appearance="outline">
+      <mat-label>Полис ОМС</mat-label>
+
+      <input matInput type="text" formControlName="oms" />
+
+      <button
+        *ngIf="documentStep.get('oms').value"
+        (click)="documentStep.get('oms').setValue(null)"
+        type="button"
+        class="icon-button clear-button"
+      >
+        <svg width="2rem" height="2rem">
+          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+        </svg>
+      </button>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="
+            documentStep.get('oms').touched && documentStep.get('oms').invalid
+          "
+          [errors]="documentStep.get('oms').errors"
+          [errorMessages]="{
+            bad_format: documentStep.get('oms').errors?.bad_format,
+            bad_value: documentStep.get('oms').errors?.bad_value,
+            required: 'Введите серию и номер'
           }"
         ></app-error-messages
       ></mat-error>

@@ -1,4 +1,5 @@
 import { Location } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { SignaturePad } from 'angular2-signaturepad';
@@ -72,18 +73,35 @@ export class SignatureComponent implements OnInit {
       autoStatus: true,
     };
 
-    this.ordersService.sign(signData).subscribe(() => {
-      this.isLoading = false;
+    this.ordersService.sign(signData).subscribe(
+      () => {
+        this.isLoading = false;
 
-      this.router.navigate(
-        ['/cabinet', 'services-registration', 'document', this.orderId],
-        {
-          queryParams: {
-            questionnaireNum: this.questionnaireNum + 1,
-            docIndex: 1,
-          },
+        this.router.navigate(
+          ['/cabinet', 'services-registration', 'document', this.orderId],
+          {
+            queryParams: {
+              questionnaireNum: this.questionnaireNum + 1,
+              docIndex: 1,
+            },
+          }
+        );
+      },
+      (err) => {
+        if (err instanceof HttpErrorResponse) {
+          if (err.error.error === 'ANKETA_OMS_EMPTY') {
+            this.router.navigate(
+              ['/cabinet', 'services-registration', 'empty-oms-questionnaires'],
+              {
+                queryParams: {
+                  value: err.error.value,
+                },
+              }
+            );
+            return;
+          }
         }
-      );
-    });
+      }
+    );
   }
 }

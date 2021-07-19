@@ -28,8 +28,8 @@
           "
           [errors]="workplace.get('company').errors"
           [errorMessages]="{
-            bad_format: basicData.get('company').errors?.bad_format,
-            bad_value: basicData.get('company').errors?.bad_value
+            bad_format: workplace.get('company').errors?.bad_format,
+            bad_value: workplace.get('company').errors?.bad_value
           }"
         ></app-error-messages
       ></mat-error>
@@ -67,8 +67,8 @@
           "
           [errors]="workplace.get('company_address').errors"
           [errorMessages]="{
-            bad_format: basicData.get('company_address').errors?.bad_format,
-            bad_value: basicData.get('company_address').errors?.bad_value
+            bad_format: workplace.get('company_address').errors?.bad_format,
+            bad_value: workplace.get('company_address').errors?.bad_value
           }"
         ></app-error-messages
       ></mat-error>
@@ -101,8 +101,8 @@
           "
           [errors]="workplace.get('position').errors"
           [errorMessages]="{
-            bad_format: basicData.get('position').errors?.bad_format,
-            bad_value: basicData.get('position').errors?.bad_value
+            bad_format: workplace.get('position').errors?.bad_format,
+            bad_value: workplace.get('position').errors?.bad_value
           }"
         ></app-error-messages
       ></mat-error>
