@@ -1,0 +1,39 @@
+@import "theme";
+
+.edit-field-container {
+  padding: 2rem 2rem 1.6rem;
+  min-height: 39.1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-field-form {
+  min-height: 0;
+  height: initial;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-field-close-button {
+  svg {
+    stroke-width: 0.2rem;
+    stroke: $dark;
+  }
+}
+
+.edit-field-paste {
+  color: $primary;
+  margin-top: 2rem;
+}
+
+.edit-field-submit {
+  width: 100%;
+  margin-top: auto;
+}
+
+.form-controls {
+  margin-top: 3.2rem;
+}

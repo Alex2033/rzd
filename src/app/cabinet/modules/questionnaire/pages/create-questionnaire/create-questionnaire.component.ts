@@ -1,3 +1,5 @@
+import { EditPhoneModalComponent } from './../../components/edit-phone-modal/edit-phone-modal.component';
+import { EditEmailModalComponent } from './../../components/edit-email-modal/edit-email-modal.component';
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
@@ -543,12 +545,24 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
   }
 
   openEditingModal(fieldData: EditableFieldInterface): void {
-    console.log('fieldData:', fieldData);
-    // const bottomSheet = this._bottomSheet.open(BarcodeModalComponent, {
-    //   panelClass: 'custom-bottom-sheet',
-    //   data: {
-    //     extId,
-    //   },
-    // });
+    const { type, value } = fieldData;
+    const bottomSheet = this._bottomSheet.open(
+      type === 'email' ? EditEmailModalComponent : EditPhoneModalComponent,
+      {
+        panelClass: 'custom-bottom-sheet',
+        data: {
+          value,
+        },
+      }
+    );
+
+    bottomSheet
+      .afterDismissed()
+      .pipe(takeUntil(this.destroy))
+      .subscribe((res) => {
+        if (res) {
+          this.createForm.get('basicData').get('email').setValue(res);
+        }
+      });
   }
 }
