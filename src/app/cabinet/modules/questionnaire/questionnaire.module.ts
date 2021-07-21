@@ -28,6 +28,8 @@ import { RegisterAddressComponent } from './components/register-address/register
 import { ActualResidenceComponent } from './components/actual-residence/actual-residence.component';
 import { WorkplaceComponent } from './components/workplace/workplace.component';
 import { InfoMessageComponent } from './pages/info-message/info-message.component';
+import { EditPhoneModalComponent } from './components/edit-phone-modal/edit-phone-modal.component';
+import { EditEmailModalComponent } from './components/edit-email-modal/edit-email-modal.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import { InfoMessageComponent } from './pages/info-message/info-message.componen
     ActualResidenceComponent,
     WorkplaceComponent,
     InfoMessageComponent,
+    EditPhoneModalComponent,
+    EditEmailModalComponent,
   ],
   imports: [
     CommonModule,
