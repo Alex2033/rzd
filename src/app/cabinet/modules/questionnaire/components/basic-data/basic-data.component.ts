@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { AppDateAdapter, APP_DATE_FORMATS } from 'src/app/shared/date-adapter';
 import { DoctypeInterface } from '../../types/doctype.interface';
+import { EditableFieldInterface } from '../../types/editable-field.interface';
 
 @Component({
   selector: 'app-basic-data',
@@ -21,13 +22,19 @@ export class BasicDataComponent implements OnInit {
   @Input() min: Date;
   @Input() max: Date;
 
+  @Output() editField: EventEmitter<EditableFieldInterface> =
+    new EventEmitter<EditableFieldInterface>();
+
   constructor() {}
 
   ngOnInit(): void {}
 
-  handleKeypress(event: KeyboardEvent): void {
-    if (event.which === 40 || event.which === 41 || event.which === 45) {
-      event.preventDefault();
-    }
+  openEditingModal(type: string, value: string): void {
+    const fieldData: EditableFieldInterface = {
+      type,
+      value,
+    };
+
+    this.editField.emit(fieldData);
   }
 }

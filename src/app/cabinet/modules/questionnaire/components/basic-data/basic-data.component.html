@@ -199,7 +199,7 @@
   <!-- email -->
   <div class="form-control">
     <mat-form-field appearance="outline">
-      <mat-label>E-mail<span class="primary-color">*</span></mat-label>
+      <mat-label>E-mail</mat-label>
 
       <input
         inputmode="email"
@@ -209,14 +209,13 @@
         formControlName="email"
       />
 
-      <button
-        *ngIf="basicData.get('email').value"
-        (click)="basicData.get('email').setValue(null)"
-        type="button"
-        class="icon-button clear-button"
-      >
-        <svg width="2rem" height="2rem">
-          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+      <svg class="confirm-field-success" width="1.8rem" height="1.8rem">
+        <use xlink:href="assets/sprites/icons.svg#success"></use>
+      </svg>
+
+      <button type="button" (click)="openEditingModal('email', basicData.get('email').value)" class="icon-button edit-field-button">
+        <svg width="1.6rem" height="1.6rem">
+          <use xlink:href="assets/sprites/icons.svg#pen"></use>
         </svg>
       </button>
 
@@ -239,7 +238,7 @@
   <!-- phone -->
   <div class="form-control">
     <mat-form-field appearance="outline">
-      <mat-label>Телефон<span class="primary-color">*</span></mat-label>
+      <mat-label>Телефон</mat-label>
 
       <input
         matInput
@@ -248,17 +247,15 @@
         autocomplete="off"
         inputmode="tel"
         formControlName="phone"
-        (keypress)="handleKeypress($event)"
       />
 
-      <button
-        *ngIf="basicData.get('phone').value"
-        (click)="basicData.get('phone').setValue(null)"
-        type="button"
-        class="icon-button clear-button"
-      >
-        <svg width="2rem" height="2rem">
-          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+      <svg class="confirm-field-success" width="1.8rem" height="1.8rem">
+        <use xlink:href="assets/sprites/icons.svg#success"></use>
+      </svg>
+
+      <button type="button" (click)="openEditingModal('phone', basicData.get('phone').value)" class="icon-button edit-field-button">
+        <svg width="1.6rem" height="1.6rem">
+          <use xlink:href="assets/sprites/icons.svg#pen"></use>
         </svg>
       </button>
 

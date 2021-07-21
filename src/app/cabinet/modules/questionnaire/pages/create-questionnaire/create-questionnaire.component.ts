@@ -8,6 +8,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of, ReplaySubject } from 'rxjs';
 import {
@@ -22,6 +23,7 @@ import {
 import { AccountService } from 'src/app/shared/services/account.service';
 import { QuestionnairesService } from '../../services/questionnaires.service';
 import { DoctypeInterface } from '../../types/doctype.interface';
+import { EditableFieldInterface } from '../../types/editable-field.interface';
 import { QuestionnaireDetailInterface } from '../../types/questionnaire-detail.interface';
 import { UpdatedFieldInterface } from '../../types/updated-field.interface';
 
@@ -67,7 +69,8 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
     private router: Router,
     private questionnairesService: QuestionnairesService,
     private datePipe: DatePipe,
-    private account: AccountService
+    private account: AccountService,
+    private _bottomSheet: MatBottomSheet
   ) {}
 
   ngOnInit(): void {
@@ -89,8 +92,11 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
         surname: new FormControl(null, Validators.required),
         patronymic: new FormControl(null),
         birthday: new FormControl(null, [Validators.required]),
-        email: new FormControl(null, [Validators.required, Validators.email]),
-        phone: new FormControl(null, [
+        email: new FormControl({ value: null, disabled: true }, [
+          Validators.required,
+          Validators.email,
+        ]),
+        phone: new FormControl({ value: null, disabled: true }, [
           Validators.required,
           Validators.minLength(11),
           Validators.pattern('^[+]*[]{0,1}[0-9]{1,4}[]{0,1}[\\s0-9]*$'),
@@ -534,5 +540,15 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
       },
       { emitEvent: false }
     );
+  }
+
+  openEditingModal(fieldData: EditableFieldInterface): void {
+    console.log('fieldData:', fieldData);
+    // const bottomSheet = this._bottomSheet.open(BarcodeModalComponent, {
+    //   panelClass: 'custom-bottom-sheet',
+    //   data: {
+    //     extId,
+    //   },
+    // });
   }
 }

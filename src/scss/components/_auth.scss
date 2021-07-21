@@ -71,6 +71,19 @@
     right: 0;
   }
 
+  .edit-field-button {
+    margin-left: 1.6rem;
+    position: static;
+
+    svg {
+      fill: $primary;
+    }
+  }
+
+  .confirm-field-success {
+    flex-shrink: 0;
+  }
+
   .mat-form-field-appearance-outline {
     .mat-form-field-wrapper {
       margin: 0;

@@ -38,6 +38,7 @@
           [min]="isChild ? minChildDate : minAdultDate"
           [max]="isChild ? today : maxAdultDate"
           [activeDoctype]="activeDoctype"
+          (editField)="openEditingModal($event)"
         ></app-basic-data>
         <app-document-step
           [min]="isChild ? minChildDate : minAdultDate"
