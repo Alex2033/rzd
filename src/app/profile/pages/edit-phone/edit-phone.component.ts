@@ -44,7 +44,10 @@ export class EditPhoneComponent implements OnInit, OnDestroy {
   }
 
   getUser(): void {
-    this.account.getUser().subscribe((user) => (this.user = user));
+    this.account
+      .getUser()
+      .pipe(takeUntil(this.destroy))
+      .subscribe((user) => (this.user = user));
   }
 
   createForm(): void {

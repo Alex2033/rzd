@@ -154,6 +154,15 @@
   }
 }
 
+.email-control,
+.phone-control {
+  input {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+
 .form-control-text {
   font-size: 1.2rem;
   margin-top: 0.8rem;

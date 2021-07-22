@@ -1,3 +1,4 @@
+import { SmsConfirmModule } from './../../../shared/modules/sms-confirm/sms-confirm.module';
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { QuestionnaireRoutingModule } from './questionnaire-routing.module';
@@ -66,6 +67,7 @@ import { EditEmailModalComponent } from './components/edit-email-modal/edit-emai
     MatNativeDateModule,
     TextFieldModule,
     MatSelectModule,
+    SmsConfirmModule,
   ],
   providers: [DatePipe],
 })

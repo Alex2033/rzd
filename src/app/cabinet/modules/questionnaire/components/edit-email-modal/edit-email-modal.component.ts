@@ -1,3 +1,4 @@
+import { EditableFieldInterface } from './../../types/editable-field.interface';
 import { takeUntil } from 'rxjs/operators';
 import {
   FormBuilder,
@@ -49,7 +50,11 @@ export class EditEmailModalComponent implements OnInit, OnDestroy {
   }
 
   submit(): void {
-    this._bottomSheetRef.dismiss(this.form.get('email').value);
+    const data: EditableFieldInterface = {
+      type: 'email',
+      value: this.form.get('email').value,
+    };
+    this._bottomSheetRef.dismiss(data);
   }
 
   checkEmailsMatch(): void {

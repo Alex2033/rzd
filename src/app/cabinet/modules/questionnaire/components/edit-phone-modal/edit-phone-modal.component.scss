@@ -1,0 +1,11 @@
+@import "components/edit-field-modal";
+
+.edit-phone-container {
+  min-height: 0;
+  height: initial;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  display: flex;
+  flex-direction: column;
+}

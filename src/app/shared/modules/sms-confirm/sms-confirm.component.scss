@@ -1,7 +1,28 @@
 @import "theme";
 
+:host-context(.mini-version) {
+  .page-title {
+    margin-top: 2.4rem;
+  }
+
+  .back-link,
+  .no-sms {
+    display: none;
+  }
+
+  .sms-description {
+    font-size: 1.6rem;
+    margin-top: 0.8rem;
+    color: $dark;
+  }
+}
+
 .confirm-error {
   color: $accent;
   margin-top: 1.6rem;
   text-align: center;
+}
+
+.sms-description {
+  margin-top: 3.5rem;
 }

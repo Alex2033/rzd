@@ -79,6 +79,9 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
     this.buildForm();
     this.getQuestionnaire();
     this.getQueryParams();
+    setTimeout(() => {
+      console.log(this.createForm.value);
+    }, 5000);
   }
 
   ngOnDestroy(): void {
@@ -546,22 +549,23 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
 
   openEditingModal(fieldData: EditableFieldInterface): void {
     const { type, value } = fieldData;
-    const bottomSheet = this._bottomSheet.open(
-      type === 'email' ? EditEmailModalComponent : EditPhoneModalComponent,
-      {
-        panelClass: 'custom-bottom-sheet',
-        data: {
-          value,
-        },
-      }
-    );
+    let component;
+    if (type === 'email') component = EditEmailModalComponent;
+    if (type === 'phone') component = EditPhoneModalComponent;
+
+    const bottomSheet = this._bottomSheet.open(component, {
+      panelClass: 'custom-bottom-sheet',
+      data: {
+        value,
+      },
+    });
 
     bottomSheet
       .afterDismissed()
       .pipe(takeUntil(this.destroy))
-      .subscribe((res) => {
+      .subscribe((res: EditableFieldInterface) => {
         if (res) {
-          this.createForm.get('basicData').get('email').setValue(res);
+          this.createForm.get('basicData').get(res.type).setValue(res.value);
         }
       });
   }

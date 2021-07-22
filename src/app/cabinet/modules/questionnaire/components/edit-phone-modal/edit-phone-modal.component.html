@@ -1,1 +1,81 @@
-<p>edit-phone-modal works!</p>
+<div class="edit-field-container">
+  <div class="edit-field-top">
+    <button
+      class="icon-button edit-field-close-button"
+      (click)="_bottomSheetRef.dismiss()"
+    >
+      <svg width="1.641rem" height="1.641rem">
+        <use xlink:href="assets/sprites/icons.svg#close"></use>
+      </svg>
+    </button>
+  </div>
+  <form class="edit-field-form" (submit)="submit()" [formGroup]="form">
+    <div class="edit-phone-container" *ngIf="!submitted">
+      <div class="form-controls">
+        <div class="form-control">
+          <mat-form-field appearance="outline">
+            <mat-label>Телефон</mat-label>
+
+            <input
+              matInput
+              type="text"
+              inputmode="tel"
+              name="notASearchField"
+              autocomplete="off"
+              formControlName="phone"
+              (keypress)="handleKeypress($event)"
+            />
+
+            <button
+              *ngIf="form.get('phone').value"
+              (click)="form.get('phone').setValue(null)"
+              type="button"
+              class="icon-button clear-button"
+            >
+              <svg width="2rem" height="2rem">
+                <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+              </svg>
+            </button>
+
+            <mat-error
+              ><app-error-messages
+                *ngIf="form.get('phone').touched && form.get('phone').invalid"
+                [errors]="form.get('phone').errors"
+                [errorMessages]="{
+                  required: 'Введите телефон',
+                  not_unique_phone: form.get('phone').errors?.not_unique_phone,
+                  pattern: 'Неверный формат телефона',
+                  phone_bad_format: 'Неверный формат телефона'
+                }"
+              ></app-error-messages
+            ></mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="edit-field-paste" (click)="setValueFromProfile()">
+        Вставить основной e-mail профиля
+      </div>
+      <button
+        class="button edit-field-submit"
+        *ngIf="!submitted"
+        [class.is-loading]="isLoading"
+        type="button"
+        [disabled]="isLoading || form.get('phone').invalid"
+        (click)="checkPhone()"
+      >
+        Далее
+      </button>
+    </div>
+    <!-- sms confirm -->
+    <app-sms-confirm
+      class="mini-version"
+      [codeForm]="form.get('code')"
+      *ngIf="submitted"
+      [isEditPhone]="true"
+      [smsInterval]="smsInterval"
+      (submitted)="changeSubmitted($event)"
+      [phoneValue]="form.get('phone').value"
+      (submit)="submit()"
+    ></app-sms-confirm>
+  </form>
+</div>

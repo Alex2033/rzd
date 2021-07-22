@@ -197,7 +197,7 @@
   </div>
 
   <!-- email -->
-  <div class="form-control">
+  <div class="form-control email-control">
     <mat-form-field appearance="outline">
       <mat-label>E-mail</mat-label>
 
@@ -213,7 +213,11 @@
         <use xlink:href="assets/sprites/icons.svg#success"></use>
       </svg>
 
-      <button type="button" (click)="openEditingModal('email', basicData.get('email').value)" class="icon-button edit-field-button">
+      <button
+        type="button"
+        (click)="openEditingModal('email', basicData.get('email').value)"
+        class="icon-button edit-field-button"
+      >
         <svg width="1.6rem" height="1.6rem">
           <use xlink:href="assets/sprites/icons.svg#pen"></use>
         </svg>
@@ -236,7 +240,7 @@
   </div>
 
   <!-- phone -->
-  <div class="form-control">
+  <div class="form-control phone-control">
     <mat-form-field appearance="outline">
       <mat-label>Телефон</mat-label>
 
@@ -253,7 +257,11 @@
         <use xlink:href="assets/sprites/icons.svg#success"></use>
       </svg>
 
-      <button type="button" (click)="openEditingModal('phone', basicData.get('phone').value)" class="icon-button edit-field-button">
+      <button
+        type="button"
+        (click)="openEditingModal('phone', basicData.get('phone').value)"
+        class="icon-button edit-field-button"
+      >
         <svg width="1.6rem" height="1.6rem">
           <use xlink:href="assets/sprites/icons.svg#pen"></use>
         </svg>
