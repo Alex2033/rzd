@@ -40,7 +40,8 @@
                 required: 'Введите email',
                 incorrect_email_length:
                   emailControl.errors?.incorrect_email_length,
-                email_already_exists: emailControl.errors?.email_already_exists
+                email_already_exists: emailControl.errors?.email_already_exists,
+                pattern: 'Неверный формат email'
               }"
             ></app-error-messages
           ></mat-error>
@@ -55,7 +56,7 @@
           <input
             matInput
             (paste)="$event.preventDefault()"
-            autocomplete="nope"
+            autocomplete="off"
             type="email"
             name="emailConfirm"
             formControlName="emailConfirm"
@@ -77,23 +78,23 @@
               *ngIf="emailConfirmControl.touched && emailConfirmControl.invalid"
               [errors]="emailConfirmControl.errors"
               [errorMessages]="{
-                does_not_match: emailConfirmControl.errors?.does_not_match
+                does_not_match: emailConfirmControl.errors?.does_not_match,
+                pattern: 'Неверный формат email'
               }"
             ></app-error-messages
           ></mat-error>
         </mat-form-field>
       </div>
+      <div class="buttons">
+        <button
+          type="submit"
+          (click)="submit()"
+          [disabled]="loading || !emailsMatches"
+          class="button"
+        >
+          <span>Сохранить</span>
+        </button>
+      </div>
     </form>
   </div>
-</div>
-
-<div class="buttons">
-  <button
-    type="button"
-    (click)="submit()"
-    [disabled]="loading || !emailsMatches"
-    class="button"
-  >
-    <span>Сохранить</span>
-  </button>
 </div>

@@ -142,7 +142,7 @@
                   not_unique_email: emailControl.errors?.not_unique_email,
                   incorrect_email_length:
                     emailControl.errors?.incorrect_email_length,
-                  pattern: 'Неверный формат телефона'
+                  pattern: 'Неверный формат email'
                 }"
               ></app-error-messages
             ></mat-error>
@@ -169,7 +169,7 @@
             <input
               matInput
               (paste)="$event.preventDefault()"
-              autocomplete="nope"
+              autocomplete="off"
               type="email"
               name="emailConfirm"
               formControlName="emailConfirm"

@@ -99,7 +99,7 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
         birthday: new FormControl(null, [Validators.required]),
         email: new FormControl({ value: null, disabled: true }, [
           Validators.required,
-          Validators.email,
+          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
         ]),
         phone: new FormControl({ value: null, disabled: true }, [
           Validators.required,

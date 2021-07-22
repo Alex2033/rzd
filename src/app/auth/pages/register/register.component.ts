@@ -100,7 +100,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
         Validators.minLength(11),
         Validators.pattern('^[+]*[]{0,1}[0-9]{1,4}[]{0,1}[\\s0-9]*$'),
       ]),
-      email: new FormControl(null, [Validators.required, Validators.email]),
+      email: new FormControl(null, [
+        Validators.required,
+        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+      ]),
       emailConfirm: new FormControl(null),
       code: new FormGroup({
         control1: new FormControl(null, [Validators.required]),

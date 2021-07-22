@@ -232,7 +232,8 @@
           [errorMessages]="{
             bad_format: basicData.get('email').errors?.bad_format,
             bad_value: basicData.get('email').errors?.bad_value,
-            required: 'Введите email'
+            required: 'Введите email',
+            pattern: 'Неверный формат email'
           }"
         ></app-error-messages
       ></mat-error>
