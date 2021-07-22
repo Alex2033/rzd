@@ -210,7 +210,9 @@
     <button
       (click)="goToServicesRegistration()"
       class="button"
-      [disabled]="!checkedQuestionnairesIds.length"
+      [disabled]="
+        !checkedQuestionnairesIds.length && enableOrderCreation$ | async
+      "
     >
       <span>Выбор услуг</span>
       <svg width="1.6rem" height="1.6rem">

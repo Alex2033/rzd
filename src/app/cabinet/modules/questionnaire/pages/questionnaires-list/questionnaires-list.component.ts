@@ -1,3 +1,4 @@
+import { SettingsService } from './../../../../../shared/services/settings.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
@@ -5,7 +6,7 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Observable, of, Subject } from 'rxjs';
-import { finalize, switchMap, takeUntil } from 'rxjs/operators';
+import { finalize, switchMap, takeUntil, map } from 'rxjs/operators';
 import { ServicesRegistrationService } from 'src/app/shared/services/services-registration.service';
 import { OrderInterface } from 'src/app/shared/types/order.interface';
 import { QuestionnaireOrderInterface } from 'src/app/shared/types/questionnaire-order.interface';
@@ -25,6 +26,7 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
   public questionnaires: QuestionnaireInterface[] = [];
   public checkedQuestionnairesIds: QuestionnaireOrderInterface[] = [];
   public isLoading: boolean = false;
+  public enableOrderCreation$: Observable<boolean>;
 
   private destroy$ = new Subject<void>();
 
@@ -33,11 +35,24 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private _bottomSheet: MatBottomSheet,
     private router: Router,
-    private servicesRegistration: ServicesRegistrationService
+    private servicesRegistration: ServicesRegistrationService,
+    private settings: SettingsService
   ) {}
 
   ngOnInit(): void {
+    this.initializeValues();
+    this.getQuestionnaires();
+  }
+
+  initializeValues(): void {
     this.isLoading = true;
+    this.enableOrderCreation$ = this.settings.getSettings().pipe(
+      map((settings) => settings.enableOrderCreation),
+      takeUntil(this.destroy$)
+    );
+  }
+
+  getQuestionnaires(): void {
     this.questionnairesService
       .getQuestionnaires()
       .pipe(

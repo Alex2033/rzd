@@ -1,13 +1,15 @@
+import { SettingsService } from './../../../../../shared/services/settings.service';
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { OrdersService } from 'src/app/shared/services/orders.service';
-import { ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { PaymentInterface } from 'src/app/shared/types/payment.interface';
 import { OrderInterface } from 'src/app/shared/types/order.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LanguageService } from 'src/app/shared/services/language.service';
+import { SettingsInterface } from 'src/app/shared/types/settings.interface';
 
 @Component({
   selector: 'app-payment-method',
@@ -18,6 +20,7 @@ export class PaymentMethodComponent implements OnInit {
   public selectedPayment: string;
   public isLoading: boolean = false;
   public order: OrderInterface;
+  public settings$: Observable<SettingsInterface>;
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -26,11 +29,13 @@ export class PaymentMethodComponent implements OnInit {
     private ordersService: OrdersService,
     private route: ActivatedRoute,
     private router: Router,
-    private language: LanguageService
+    private language: LanguageService,
+    private settings: SettingsService
   ) {}
 
   ngOnInit(): void {
     this.getOrder();
+    this.settings$ = this.settings.getSettings().pipe(takeUntil(this.destroy));
   }
 
   getOrder(): void {

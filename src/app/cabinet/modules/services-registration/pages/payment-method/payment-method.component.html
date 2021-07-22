@@ -19,13 +19,24 @@
       (ngModelChange)="resend = false"
       color="primary"
     >
-      <mat-radio-button [value]="'ONLINE'"> Оплатить онлайн </mat-radio-button>
+      <mat-radio-button
+        [value]="'ONLINE'"
+        [disabled]="!(settings$ | async).enableOnlinePayment"
+      >
+        Оплатить онлайн
+      </mat-radio-button>
       <mat-radio-button disabled [value]="'TERMINAL'">
         Оплатить картой в инфокиоске
       </mat-radio-button>
       <mat-radio-button [value]="'ADMIN'">
         Оплатить у администратора
         <div class="additional-info">Возможно длительное ожидание</div>
+      </mat-radio-button>
+      <mat-radio-button
+        [value]="'CORP'"
+        [disabled]="!(settings$ | async).enableCorpPayment"
+      >
+        С корпоративного счета
       </mat-radio-button>
     </mat-radio-group>
   </div>
