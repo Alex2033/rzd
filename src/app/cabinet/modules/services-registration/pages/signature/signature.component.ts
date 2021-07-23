@@ -23,6 +23,9 @@ export class SignatureComponent implements OnInit {
   public questionnaireNum: number;
   public orderId: number;
   public isLoading: boolean = false;
+  public signaturePadOptions: Object = {
+    penColor: '#0066a2',
+  };
 
   constructor(
     private route: ActivatedRoute,

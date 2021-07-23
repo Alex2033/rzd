@@ -58,7 +58,10 @@
         (click)="clearSignature()"
         class="icon-button clear-signature"
       ></button>
-      <signature-pad (onEndEvent)="drawComplete()"></signature-pad>
+      <signature-pad
+        [options]="signaturePadOptions"
+        (onEndEvent)="drawComplete()"
+      ></signature-pad>
     </div>
     <div class="signature-warning">
       {{
