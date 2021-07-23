@@ -6,7 +6,6 @@
 
 .info-content {
   margin-top: 2.4rem;
-  color: $dark;
 }
 
 .info-title {
@@ -20,23 +19,24 @@
 }
 
 .send-results {
-  margin-top: 2rem;
-  color: $accent;
+  margin-top: 1.6rem;
 }
 
 .send-results-checkbox {
-  margin-top: 0.5rem;
+  margin-top: 0.8rem;
   font: 400 1.6rem/1.5 "Open Sans", sans-serif;
-  border: 0.2rem solid $accent;
-  padding: 0.5rem 1rem;
+
+  &.mat-checkbox-checked.mat-primary {
+    ::ng-deep {
+      .mat-checkbox-background {
+        background-color: lighten($primary, 17.95%);
+      }
+    }
+  }
 
   ::ng-deep {
     .mat-checkbox-inner-container {
       margin-top: 0.3rem;
-    }
-
-    .mat-checkbox-frame {
-      border-color: $accent;
     }
 
     .mat-checkbox-label {
@@ -45,6 +45,10 @@
   }
 }
 
+strong {
+  font-weight: 600;
+}
+
 .send-results-text {
-  margin-top: 1.6rem;
+  margin-top: 1.4rem;
 }
