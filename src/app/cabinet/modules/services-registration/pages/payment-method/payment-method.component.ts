@@ -82,7 +82,7 @@ export class PaymentMethodComponent implements OnInit {
         },
         (err) => {
           if (err instanceof HttpErrorResponse) {
-            if (err.error.error === 'ANKETA_OMS_EMPTY') {
+            if (err.error.error === 'ANKETA_QR_EMPTY_FIELDS') {
               this.router.navigate(
                 [
                   '/cabinet',

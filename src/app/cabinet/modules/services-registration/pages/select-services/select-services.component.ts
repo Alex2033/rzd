@@ -139,7 +139,7 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
         (err) => {
           if (err instanceof HttpErrorResponse) {
             console.log('err.error.error:', err.error.error);
-            if (err.error.error === 'ANKETA_OMS_EMPTY') {
+            if (err.error.error === 'ANKETA_QR_EMPTY_FIELDS') {
               this.router.navigate(
                 [
                   '/cabinet',
@@ -180,7 +180,7 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
         },
         (err) => {
           if (err instanceof HttpErrorResponse) {
-            if (err.error.error === 'ANKETA_OMS_EMPTY') {
+            if (err.error.error === 'ANKETA_QR_EMPTY_FIELDS') {
               this.router.navigate(
                 [
                   '/cabinet',
