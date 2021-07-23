@@ -113,6 +113,7 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
         passport_org: new FormControl(null, Validators.required),
         passport_date: new FormControl(null, [Validators.required]),
         oms: new FormControl(null),
+        snils: new FormControl(null),
       }),
       actualResidence: new FormGroup({
         adress_fact_country: new FormControl(null, Validators.required),

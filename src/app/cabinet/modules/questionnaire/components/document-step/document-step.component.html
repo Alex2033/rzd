@@ -147,8 +147,41 @@
           [errors]="documentStep.get('oms').errors"
           [errorMessages]="{
             bad_format: documentStep.get('oms').errors?.bad_format,
-            bad_value: documentStep.get('oms').errors?.bad_value,
-            required: 'Введите серию и номер'
+            bad_value: documentStep.get('oms').errors?.bad_value
+          }"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- snils -->
+  <div class="form-control" *ngIf="!activeDoctype?.fioLat">
+    <mat-form-field appearance="outline">
+      <mat-label>СНИЛС</mat-label>
+
+      <input matInput type="text" formControlName="snils" />
+
+      <button
+        *ngIf="documentStep.get('snils').value"
+        (click)="documentStep.get('snils').setValue(null)"
+        type="button"
+        class="icon-button clear-button"
+      >
+        <svg width="2rem" height="2rem">
+          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+        </svg>
+      </button>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="
+            documentStep.get('snils').touched &&
+            documentStep.get('snils').invalid
+          "
+          [errors]="documentStep.get('snils').errors"
+          [errorMessages]="{
+            bad_format: documentStep.get('snils').errors?.bad_format,
+            bad_value: documentStep.get('snils').errors?.bad_value
           }"
         ></app-error-messages
       ></mat-error>

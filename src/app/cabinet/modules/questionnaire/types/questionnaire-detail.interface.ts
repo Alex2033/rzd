@@ -23,6 +23,8 @@ interface QuestionnaireContentInterface {
   company?: string;
   position?: string;
   doc_type?: string;
+  oms?: string;
+  snils?: string;
   adress_single?: string;
   adress_reg_country?: string;
   adress_reg_region?: string;
