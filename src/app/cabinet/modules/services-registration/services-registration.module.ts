@@ -28,6 +28,7 @@ import { ConfirmRemoveSelectionsComponent } from './components/confirm-remove-se
 import { MatButtonModule } from '@angular/material/button';
 import { AngularYandexMapsModule } from 'angular8-yandex-maps';
 import { EmptyOmsQuestionnairesComponent } from './pages/empty-oms-questionnaires/empty-oms-questionnaires.component';
+import { QrCodeInfoComponent } from './pages/qr-code-info/qr-code-info.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { EmptyOmsQuestionnairesComponent } from './pages/empty-oms-questionnaire
     ServicesRegistrationInfoComponent,
     ConfirmRemoveSelectionsComponent,
     EmptyOmsQuestionnairesComponent,
+    QrCodeInfoComponent,
   ],
   imports: [
     CommonModule,

@@ -1,3 +1,4 @@
+import { QrCodeInfoComponent } from './pages/qr-code-info/qr-code-info.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BlockingScreenComponent } from './pages/blocking-screen/blocking-screen.component';
@@ -17,6 +18,10 @@ const routes: Routes = [
   {
     path: 'info',
     component: ServicesRegistrationInfoComponent,
+  },
+  {
+    path: 'qr-code-info',
+    component: QrCodeInfoComponent,
   },
   {
     path: 'questions/:id',
