@@ -496,24 +496,6 @@
         [collapsedHeight]="'9rem'"
       >
         <mat-panel-title
-          >Как получить QR-код для посещения ресторанов и массовых мероприятий?
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <div class="custom-expansion-text">
-        <p>
-          Для получения QR-кода необходимо оформить заказ на Паспорт гражданина
-          РФ, а для детей - на Свидетельство о рождении, указав при этом номер
-          полиса ОМС.
-        </p>
-      </div>
-    </mat-expansion-panel>
-    <!-- 10 -->
-    <mat-expansion-panel hideToggle class="custom-expansion">
-      <mat-expansion-panel-header
-        [expandedHeight]="'9rem'"
-        [collapsedHeight]="'9rem'"
-      >
-        <mat-panel-title
           >Какой документ использовать для вылетов за рубеж?
         </mat-panel-title>
       </mat-expansion-panel-header>
@@ -524,7 +506,7 @@
         </p>
       </div>
     </mat-expansion-panel>
-    <!-- 11 -->
+    <!-- 10 -->
     <mat-expansion-panel #cashbackPanel hideToggle class="custom-expansion">
       <mat-expansion-panel-header
         [expandedHeight]="'9rem'"
@@ -545,7 +527,7 @@
         </p>
       </div>
     </mat-expansion-panel>
-    <!-- 12 -->
+    <!-- 11 -->
     <mat-expansion-panel hideToggle class="custom-expansion">
       <mat-expansion-panel-header
         [expandedHeight]="'9rem'"
@@ -557,6 +539,55 @@
       </mat-expansion-panel-header>
       <div class="custom-expansion-text">
         <p>Оформленный на сайте заказ действует бессрочно.</p>
+      </div>
+    </mat-expansion-panel>
+    <!-- 12 -->
+    <mat-expansion-panel hideToggle class="custom-expansion">
+      <mat-expansion-panel-header
+        [expandedHeight]="'9rem'"
+        [collapsedHeight]="'9rem'"
+      >
+        <mat-panel-title
+          >Как получить QR-код на официальном сайте мэра Москвы?
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="custom-expansion-text">
+        <p>
+          Для получения QR-кода на официальном сайте
+          <a class="redirect-link" href="https://immune.mos.ru" target="_blank">
+            <span>мэра Москвы</span>
+            <svg>
+              <use xlink:href="assets/sprites/icons.svg#expand-outline"></use>
+            </svg>
+          </a>
+          при оформлении заказа на сайте необходимо проставить галочку напротив
+          «Необходим цифровой сертификат (QR-код) на ЕМИАС» или же сообщить об
+          этом администратору медицинского центра.
+        </p>
+      </div>
+    </mat-expansion-panel>
+    <!-- 13 -->
+    <mat-expansion-panel hideToggle class="custom-expansion">
+      <mat-expansion-panel-header
+        [expandedHeight]="'9rem'"
+        [collapsedHeight]="'9rem'"
+      >
+        <mat-panel-title
+          >Как получить QR-код на Госуслугах (ЕМИАС)?
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="custom-expansion-text">
+        <p>
+          Для получения QR-кода на Госуслугах при оформлении заказа необходимо
+          проставить галочку напротив «Необходим цифровой сертификат (QR-код) на
+          ЕМИАС» или же сообщить об этом администратору медицинского центра.
+          Обращаем ваше внимание, что получение QR-кода возможно только в случае
+          <strong
+            >оформления на Паспорт гражданина РФ, для детей – Свидетельства о
+            рождении, и при указании правильного номера полиса ОМС и
+            СНИЛС.</strong
+          >
+        </p>
       </div>
     </mat-expansion-panel>
   </div>
