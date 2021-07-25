@@ -57,18 +57,17 @@
               <div class="questionnaire-personal-info">
                 <div class="questionnaire-fio">
                   <ng-container
-                    *ngIf="questionnaire.surname || questionnaire.name"
+                    *ngIf="
+                      questionnaire.surname || questionnaire.name;
+                      else templateAdultName
+                    "
                   >
                     <div class="questionnare-surname">
                       {{ questionnaire.surname }}
                     </div>
                     {{ questionnaire.name }} {{ questionnaire.patronymic }}
                   </ng-container>
-                  <ng-container
-                    *ngIf="!questionnaire.surname && !questionnaire.name"
-                  >
-                    (не заполнено)
-                  </ng-container>
+                  <ng-template #templateAdultName> (не заполнено) </ng-template>
                 </div>
                 <div class="questionnaire-age" *ngIf="questionnaire.age < 200">
                   {{ questionnaire.age }}
@@ -142,14 +141,19 @@
                 <div class="questionnaire-personal-info">
                   <div class="questionnaire-fio">
                     <ng-container
-                      *ngIf="child.surname || child.name; else templateName"
+                      *ngIf="
+                        child.surname || child.name;
+                        else templateChildName
+                      "
                     >
                       <div class="questionnare-surname">
                         {{ child.surname }}
                       </div>
                       {{ child.name }} {{ child.patronymic }}
                     </ng-container>
-                    <ng-template #templateName> (не заполнено) </ng-template>
+                    <ng-template #templateChildName>
+                      (не заполнено)
+                    </ng-template>
                   </div>
                   <div class="questionnaire-age" *ngIf="child.age < 200">
                     {{ child.age }}
