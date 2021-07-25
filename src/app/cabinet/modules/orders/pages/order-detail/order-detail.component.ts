@@ -83,58 +83,66 @@ export class OrderDetailComponent implements OnInit {
 
   checkOrderStatus(): void {
     if (this.order.status === 'UNPAID_REGISTERED') {
-      let result;
-      this.order.status = 'UNPAID_PROCESSING';
-      timer(0, 5000)
-        .pipe(
-          takeWhile(
-            (val) => val < 5 && this.order.status === 'UNPAID_PROCESSING'
-          ),
-          switchMap(() => this.ordersService.checkPayStatus(this.order.id)),
-          finalize(() => {
-            if (
-              this.order.status === 'UNPAID_REGISTERED' ||
-              this.order.status === 'UNPAID_PROCESSING'
-            )
-              this.order.status = 'UNPAID_ERROR';
-          }),
-          takeUntil(this.destroy)
-        )
-        .subscribe((res) => {
-          result = res;
-          if (res.status !== 'UNPAID_REGISTERED') {
-            this.order.status = res.status;
-            this.order.items = res.items;
-          }
-        });
+      this.paymentProcessing();
     }
 
     if (
       this.order.status === 'READY' ||
       this.order.status === 'READY_PART_CONFIRMED'
     ) {
-      let result;
-      this.order.status = 'READY_PROCESSING';
-      timer(0, 5000)
-        .pipe(
-          takeWhile(
-            (val) =>
-              val < 5 &&
-              this.order.status !== 'READY' &&
-              this.order.status !== 'READY_PART_CONFIRMED'
-          ),
-          switchMap(() => this.ordersService.checkMedmeStatus(this.order.id)),
-          finalize(() => {
-            this.order.status = result.status;
-          }),
-          takeUntil(this.destroy)
-        )
-        .subscribe((res) => {
-          result = res;
-          if (res.status !== 'READY' && res.status !== 'READY_PART_CONFIRMED') {
-            this.order = { ...res };
-          }
-        });
+      this.dataTransmission();
     }
+  }
+
+  paymentProcessing(): void {
+    let result;
+    this.order.status = 'UNPAID_PROCESSING';
+    timer(0, 5000)
+      .pipe(
+        takeWhile(
+          (val) => val < 5 && this.order.status === 'UNPAID_PROCESSING'
+        ),
+        switchMap(() => this.ordersService.checkPayStatus(this.order.id)),
+        finalize(() => {
+          if (
+            this.order.status === 'UNPAID_REGISTERED' ||
+            this.order.status === 'UNPAID_PROCESSING'
+          )
+            this.order.status = 'UNPAID_ERROR';
+        }),
+        takeUntil(this.destroy)
+      )
+      .subscribe((res) => {
+        result = res;
+        if (res.status !== 'UNPAID_REGISTERED') {
+          this.order.status = res.status;
+          this.order.items = res.items;
+        }
+      });
+  }
+
+  dataTransmission(): void {
+    let result;
+    this.order.status = 'READY_PROCESSING';
+    timer(0, 5000)
+      .pipe(
+        takeWhile(
+          (val) =>
+            val < 5 &&
+            this.order.status !== 'READY' &&
+            this.order.status !== 'READY_PART_CONFIRMED'
+        ),
+        switchMap(() => this.ordersService.checkMedmeStatus(this.order.id)),
+        finalize(() => {
+          this.order.status = result.status;
+        }),
+        takeUntil(this.destroy)
+      )
+      .subscribe((res) => {
+        result = res;
+        if (res.status !== 'READY' && res.status !== 'READY_PART_CONFIRMED') {
+          this.order = { ...res };
+        }
+      });
   }
 }

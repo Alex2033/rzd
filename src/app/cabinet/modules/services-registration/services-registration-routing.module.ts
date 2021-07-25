@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { BlockingScreenComponent } from './pages/blocking-screen/blocking-screen.component';
 import { ConfirmOrderComponent } from './pages/confirm-order/confirm-order.component';
 import { DocumentComponent } from './pages/document/document.component';
-import { EmptyOmsQuestionnairesComponent } from './pages/empty-oms-questionnaires/empty-oms-questionnaires.component';
 import { PaymentMethodComponent } from './pages/payment-method/payment-method.component';
 import { PaymentResponseComponent } from './pages/payment-response/payment-response.component';
 import { QuestionsComponent } from './pages/questions/questions.component';
@@ -13,6 +12,7 @@ import { SelectPointComponent } from './pages/select-point/select-point.componen
 import { SelectServicesComponent } from './pages/select-services/select-services.component';
 import { ServicesRegistrationInfoComponent } from './pages/services-registration-info/services-registration-info.component';
 import { SignatureComponent } from './pages/signature/signature.component';
+import { EmptyQuestionnairesComponent } from './pages/empty-questionnaires/empty-questionnaires.component';
 
 const routes: Routes = [
   {
@@ -64,8 +64,8 @@ const routes: Routes = [
     component: PaymentResponseComponent,
   },
   {
-    path: 'empty-oms-questionnaires',
-    component: EmptyOmsQuestionnairesComponent,
+    path: 'empty-questionnaires',
+    component: EmptyQuestionnairesComponent,
   },
 ];
 

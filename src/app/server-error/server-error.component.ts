@@ -81,7 +81,9 @@ export class ServerErrorComponent implements OnInit, OnDestroy {
       case 'ANKETA_PARSE_ERROR':
         this.text =
           'Выбранная вами анкета не заполнена или заполнена не полностью. Пожалуйста проверьте правильность заполнения полей.';
-        this.buttonText = 'Перейти к анкете';
+        this.buttonText = 'Перейти к анкетам';
+        this.link = '/cabinet/questionnaires';
+        this.closeLink = '/cabinet/questionnaires';
         break;
 
       case 'ANKETA_BAD_STATUS':

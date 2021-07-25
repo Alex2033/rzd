@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { QuestionnairesService } from '../../services/questionnaires.service';
+import { QuestionnaireContentInterface } from '../../types/questionnaire-content.interface';
 import { QuestionnaireDetailInterface } from '../../types/questionnaire-detail.interface';
 import { QuestionnaireInterface } from '../../types/questionnaire.interface';
 
@@ -26,7 +27,7 @@ export class ChooseAdultComponent implements OnInit {
   selectAdult(): void {
     const newChild: QuestionnaireDetailInterface = {
       id_parent: this.selectedAdult.id,
-      content: {},
+      content: {} as QuestionnaireContentInterface,
     };
 
     this.questionnairesService.create(newChild).subscribe((res) => {

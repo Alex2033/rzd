@@ -22,3 +22,9 @@
   color: $dark;
   font-weight: 600;
 }
+
+.oms-text {
+  ~ p {
+    margin-top: 3rem;
+  }
+}

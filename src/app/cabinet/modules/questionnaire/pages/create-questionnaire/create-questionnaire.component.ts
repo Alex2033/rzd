@@ -12,8 +12,9 @@ import {
 } from '@angular/forms';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, of, ReplaySubject } from 'rxjs';
+import { Observable, of, ReplaySubject, throwError } from 'rxjs';
 import {
+  catchError,
   debounceTime,
   distinctUntilChanged,
   finalize,
@@ -97,11 +98,11 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
         surname: new FormControl(null, Validators.required),
         patronymic: new FormControl(null),
         birthday: new FormControl(null, [Validators.required]),
-        email: new FormControl({ value: null, disabled: true }, [
+        email: new FormControl(null, [
           Validators.required,
           Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
         ]),
-        phone: new FormControl({ value: null, disabled: true }, [
+        phone: new FormControl(null, [
           Validators.required,
           Validators.minLength(11),
           Validators.pattern('^[+]*[]{0,1}[0-9]{1,4}[]{0,1}[\\s0-9]*$'),
@@ -143,6 +144,10 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
     this.route.params
       .pipe(
         switchMap((e) => this.questionnairesService.getQuestionnaire(+e.id)),
+        catchError((err) => {
+          this.router.navigate(['/server-error', err.error.error]);
+          return of(err);
+        }),
         switchMap((res) => {
           this.setControlsValues(this.createForm, res);
           this.updateAllFields(this.createForm, res.id);
@@ -229,7 +234,8 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
 
     controls.forEach((control) => {
       control.keys.forEach((key) => {
-        if (!control.form.get(key).value) {
+        console.log(key, !control.form.get(key).value && parent.content[key]);
+        if (!control.form.get(key).value && parent.content[key] !== '') {
           if (key === 'adress_single') {
             control.form
               .get(key)
@@ -327,12 +333,19 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
   updateSingleField(res: string, key: string, id: number): Observable<void> {
     // преобразование даты для сервера
     if (key === 'birthday' || key === 'passport_date') {
-      res = this.datePipe.transform(res, 'YYYY-MM-dd T HH:mm:ss');
+      res = this.datePipe.transform(res, 'yyyy-MM-dd');
     }
 
     // изменение типа документа обнуляет данные документа
     if (key === 'doc_type') {
-      this.createForm.get('document').reset();
+      const document = this.createForm.get('document');
+
+      document.get('passport_number').setValue(null, { emitEvent: false });
+      document.get('passport_org').setValue(null, { emitEvent: false });
+      document.get('passport_date').setValue(null, { emitEvent: false });
+
+      document.get('oms').setValue(null);
+      document.get('snils').setValue(null);
     }
 
     const updatedField: UpdatedFieldInterface = {
@@ -447,13 +460,16 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
     reg.get('no_reg_address').valueChanges.subscribe((res) => {
       reg.get('adress_single').setValue(false, { emitEvent: false });
       if (res) {
-        reg.patchValue({
-          adress_reg_country: null,
-          adress_reg_city: null,
-          adress_reg_street: null,
-          adress_reg_building: null,
-          adress_reg_flat: null,
-        });
+        reg.patchValue(
+          {
+            adress_reg_country: null,
+            adress_reg_city: null,
+            adress_reg_street: null,
+            adress_reg_building: null,
+            adress_reg_flat: null,
+          },
+          { emitEvent: false }
+        );
 
         reg.disable({ emitEvent: false });
         reg.get('no_reg_address').enable({ emitEvent: false });

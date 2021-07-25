@@ -161,6 +161,17 @@
     white-space: nowrap;
     overflow: hidden;
   }
+
+  .mat-form-field-appearance-outline {
+    .mat-form-field-outline {
+      color: transparent;
+    }
+
+    input,
+    .mat-form-field-label {
+      color: $dark;
+    }
+  }
 }
 
 .form-control-text {

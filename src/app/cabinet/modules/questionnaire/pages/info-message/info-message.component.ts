@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { QuestionnairesService } from '../../services/questionnaires.service';
+import { QuestionnaireContentInterface } from '../../types/questionnaire-content.interface';
 import { QuestionnaireDetailInterface } from '../../types/questionnaire-detail.interface';
 
 @Component({
@@ -42,7 +43,7 @@ export class InfoMessageComponent implements OnInit, OnDestroy {
   createAdultQuestionnaire(): void {
     const newQuestionnaire: QuestionnaireDetailInterface = {
       id_parent: 0,
-      content: {},
+      content: {} as QuestionnaireContentInterface,
     };
     this.questionnairesService
       .create(newQuestionnaire)

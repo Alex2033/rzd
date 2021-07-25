@@ -16,6 +16,7 @@ import { WarningDialogComponent } from '../../components/warning-dialog/warning-
 import { QuestionnairesService } from '../../services/questionnaires.service';
 import { QuestionnaireDetailInterface } from '../../types/questionnaire-detail.interface';
 import { QuestionnaireInterface } from '../../types/questionnaire.interface';
+import { QuestionnaireContentInterface } from '../../types/questionnaire-content.interface';
 
 @Component({
   selector: 'app-questionnaires-list',
@@ -151,7 +152,7 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
     if (res) {
       const newQuestionnaire: QuestionnaireDetailInterface = {
         id_parent: 0,
-        content: {},
+        content: {} as QuestionnaireContentInterface,
       };
       return this.questionnairesService.create(newQuestionnaire);
     }

@@ -94,7 +94,7 @@ export class SignatureComponent implements OnInit {
         if (err instanceof HttpErrorResponse) {
           if (err.error.error === 'ANKETA_QR_EMPTY_FIELDS') {
             this.router.navigate(
-              ['/cabinet', 'services-registration', 'empty-oms-questionnaires'],
+              ['/cabinet', 'services-registration', 'empty-questionnaires'],
               {
                 queryParams: {
                   value: err.error.value,

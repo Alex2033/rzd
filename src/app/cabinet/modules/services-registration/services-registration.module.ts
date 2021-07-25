@@ -27,8 +27,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmRemoveSelectionsComponent } from './components/confirm-remove-selections/confirm-remove-selections.component';
 import { MatButtonModule } from '@angular/material/button';
 import { AngularYandexMapsModule } from 'angular8-yandex-maps';
-import { EmptyOmsQuestionnairesComponent } from './pages/empty-oms-questionnaires/empty-oms-questionnaires.component';
 import { QrCodeInfoComponent } from './pages/qr-code-info/qr-code-info.component';
+import { EmptyQuestionnairesComponent } from './pages/empty-questionnaires/empty-questionnaires.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +44,7 @@ import { QrCodeInfoComponent } from './pages/qr-code-info/qr-code-info.component
     PaymentResponseComponent,
     ServicesRegistrationInfoComponent,
     ConfirmRemoveSelectionsComponent,
-    EmptyOmsQuestionnairesComponent,
+    EmptyQuestionnairesComponent,
     QrCodeInfoComponent,
   ],
   imports: [

@@ -1,0 +1,47 @@
+<div class="page-content">
+  <div class="page-container">
+    <ng-container *ngIf="omsQuestionnaires.length">
+      <p class="oms-text">
+        Введите номер полиса ОМС в поле "Полис ОМС" в следующих анкетах, чтобы
+        получить цифровой сертификат (QR-код) на ЕМИАС:
+      </p>
+
+      <ul class="questionnaires-list">
+        <li
+          class="questionnaire"
+          *ngFor="let questionnaire of omsQuestionnaires"
+        >
+          {{ questionnaire?.surname }} {{ questionnaire?.name }}
+          {{ questionnaire?.patronymic }}
+        </li>
+      </ul>
+    </ng-container>
+
+    <ng-container *ngIf="snilsQuestionnaires.length">
+      <p>
+        Введите номер СНИЛС в поле "СНИЛС" в следующих анкетах, чтобы получить
+        цифровой сертификат (QR-код) на ЕМИАС:
+      </p>
+
+      <ul class="questionnaires-list">
+        <li
+          class="questionnaire"
+          *ngFor="let questionnaire of snilsQuestionnaires"
+        >
+          {{ questionnaire?.surname }} {{ questionnaire?.name }}
+          {{ questionnaire?.patronymic }}
+        </li>
+      </ul>
+    </ng-container>
+  </div>
+
+  <div class="buttons">
+    <button
+      type="button"
+      [routerLink]="['/cabinet', 'questionnaires']"
+      class="button"
+    >
+      <span>К анкетам</span>
+    </button>
+  </div>
+</div>

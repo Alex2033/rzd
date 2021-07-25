@@ -6,19 +6,6 @@
       margin-top: 0.4rem;
       color: $gray;
     }
-
-    .form-control {
-      .mat-form-field-appearance-outline.mat-form-field-disabled {
-        .mat-form-field-outline {
-          color: transparent;
-        }
-
-        input,
-        .mat-form-field-label {
-          color: $dark;
-        }
-      }
-    }
   }
 }
 

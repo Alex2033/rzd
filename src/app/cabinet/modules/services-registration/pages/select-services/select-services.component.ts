@@ -141,11 +141,7 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
             console.log('err.error.error:', err.error.error);
             if (err.error.error === 'ANKETA_QR_EMPTY_FIELDS') {
               this.router.navigate(
-                [
-                  '/cabinet',
-                  'services-registration',
-                  'empty-oms-questionnaires',
-                ],
+                ['/cabinet', 'services-registration', 'empty-questionnaires'],
                 {
                   queryParams: {
                     value: err.error.value,
@@ -155,7 +151,7 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
               return;
             }
 
-            this.router.navigate(['/cabinet', 'server-error', err.error.error]);
+            this.router.navigate(['server-error', err.error.error]);
           }
         }
       );
@@ -182,11 +178,7 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
           if (err instanceof HttpErrorResponse) {
             if (err.error.error === 'ANKETA_QR_EMPTY_FIELDS') {
               this.router.navigate(
-                [
-                  '/cabinet',
-                  'services-registration',
-                  'empty-oms-questionnaires',
-                ],
+                ['/cabinet', 'services-registration', 'empty-questionnaires'],
                 {
                   queryParams: {
                     value: err.error.value,

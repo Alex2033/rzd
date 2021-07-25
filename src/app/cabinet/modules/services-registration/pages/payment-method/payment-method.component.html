@@ -21,7 +21,7 @@
     >
       <mat-radio-button
         [value]="'ONLINE'"
-        [disabled]="!(settings$ | async).enableOnlinePayment"
+        [disabled]="!(settings$ | async)?.enableOnlinePayment"
       >
         Оплатить онлайн
       </mat-radio-button>
