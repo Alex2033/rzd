@@ -21,7 +21,7 @@
     >
       <mat-radio-button
         [value]="'ONLINE'"
-        [disabled]="!(settings$ | async)?.enableOnlinePayment"
+        [disabled]="!settings.enableOnlinePayment"
       >
         Оплатить онлайн
       </mat-radio-button>
@@ -34,7 +34,7 @@
       </mat-radio-button>
       <mat-radio-button
         [value]="'CORP'"
-        [disabled]="!(settings$ | async).enableCorpPayment"
+        [disabled]="!settings.enableCorpPayment"
       >
         С корпоративного счета
       </mat-radio-button>

@@ -6,7 +6,7 @@ import { Observable, ReplaySubject } from 'rxjs';
 import { PaymentInterface } from 'src/app/shared/types/payment.interface';
 import { OrderInterface } from 'src/app/shared/types/order.interface';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LanguageService } from 'src/app/shared/services/language.service';
 import { SettingsInterface } from 'src/app/shared/types/settings.interface';
@@ -20,7 +20,8 @@ export class PaymentMethodComponent implements OnInit {
   public selectedPayment: string;
   public isLoading: boolean = false;
   public order: OrderInterface;
-  public settings$: Observable<SettingsInterface>;
+  public settings: SettingsInterface = {} as SettingsInterface;
+  public utmMark: string = '';
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -30,12 +31,18 @@ export class PaymentMethodComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private language: LanguageService,
-    private settings: SettingsService
+    private settingsService: SettingsService
   ) {}
 
   ngOnInit(): void {
     this.getOrder();
-    this.settings$ = this.settings.getSettings().pipe(takeUntil(this.destroy));
+    this.settingsService
+      .getSettings()
+      .pipe(takeUntil(this.destroy))
+      .subscribe((settings) => {
+        this.settings = settings;
+        this.applyDiscount(settings);
+      });
   }
 
   getOrder(): void {
@@ -54,6 +61,23 @@ export class PaymentMethodComponent implements OnInit {
     this.destroy.complete();
   }
 
+  applyDiscount(settings: SettingsInterface): void {
+    const utmDiscount = settings.utm_discounts.find(
+      (d) => d.utm_source === this.settingsService.utmMark
+    );
+
+    if (utmDiscount) {
+      const start = new Date(utmDiscount.dt_start);
+      const stop = new Date(utmDiscount.dt_stop);
+
+      const expired = start.getTime() >= stop.getTime();
+
+      if (utmDiscount.enabled && !expired) {
+        this.utmMark = this.settingsService.utmMark;
+      }
+    }
+  }
+
   back(): void {
     this.location.back();
   }
@@ -66,6 +90,7 @@ export class PaymentMethodComponent implements OnInit {
       payment: this.selectedPayment,
       autoStatus: true,
       id_lang: this.language.langId.value,
+      utm: this.utmMark,
     };
 
     this.ordersService

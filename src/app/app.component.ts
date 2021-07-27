@@ -1,5 +1,6 @@
+import { SettingsService } from './shared/services/settings.service';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   ActivatedRoute,
   Event,
@@ -7,8 +8,13 @@ import {
   Params,
   Router,
 } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
+import { Observable, of, ReplaySubject } from 'rxjs';
+import {
+  distinctUntilChanged,
+  filter,
+  switchMap,
+  takeUntil,
+} from 'rxjs/operators';
 import { LanguageService } from './shared/services/language.service';
 import { MenuService } from './shared/services/menu.service';
 
@@ -28,15 +34,18 @@ import { MenuService } from './shared/services/menu.service';
     ]),
   ],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   public navigationMenu$: Observable<boolean>;
   public userMenu$: Observable<boolean>;
+
+  private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   constructor(
     private menuService: MenuService,
     private route: ActivatedRoute,
     private language: LanguageService,
-    private router: Router
+    private router: Router,
+    private settings: SettingsService
   ) {
     this.getQueryParams();
   }
@@ -55,9 +64,11 @@ export class AppComponent implements OnInit {
         }),
         distinctUntilChanged(),
         switchMap((params: Params) => {
+          if (params.utm_source) this.settings.setUtmMark(params.utm_source);
           this.language.init(+params.langId);
           return of(void 0);
-        })
+        }),
+        takeUntil(this.destroy)
       )
       .subscribe();
   }
@@ -81,5 +92,10 @@ export class AppComponent implements OnInit {
   closeMenus(): void {
     this.menuService.setNavigationMenu(false);
     this.menuService.setUserMenu(false);
+  }
+
+  ngOnDestroy() {
+    this.destroy.next(null);
+    this.destroy.complete();
   }
 }

@@ -3,4 +3,5 @@ export interface PaymentInterface {
   payment: string;
   autoStatus: boolean;
   id_lang: number;
+  utm: string;
 }

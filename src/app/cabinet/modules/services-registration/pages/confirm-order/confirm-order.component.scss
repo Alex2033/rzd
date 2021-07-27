@@ -45,10 +45,28 @@
   margin-left: 1.6rem;
 }
 
+.discount,
 .total-sum {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.discount {
+  margin-top: 3.2rem;
+  font-size: 1.4rem;
+  line-height: 1.14;
+
+  ~ .total-sum {
+    margin-top: 1.6rem;
+  }
+}
+
+.discount-number {
+  color: $accent;
+}
+
+.total-sum {
   margin-top: 2.4rem;
 
   .service-price {
