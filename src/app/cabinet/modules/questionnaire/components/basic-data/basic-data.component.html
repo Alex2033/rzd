@@ -179,8 +179,8 @@
         #picker
       ></mat-datepicker>
 
-      <mat-error
-        ><app-error-messages
+      <mat-error>
+        <app-error-messages
           *ngIf="
             basicData.get('birthday').touched &&
             basicData.get('birthday').invalid
@@ -189,7 +189,9 @@
           [errorMessages]="{
             bad_format: basicData.get('birthday').errors?.bad_format,
             bad_value: basicData.get('birthday').errors?.bad_value,
-            required: 'Введите дату рождения'
+            required: 'Введите дату рождения',
+            matDatepickerMax: 'Возраст взрослого должен быть не менее 18 лет',
+            matDatepickerMin: 'Возраст ребенка должен быть менее 18 лет'
           }"
         ></app-error-messages
       ></mat-error>

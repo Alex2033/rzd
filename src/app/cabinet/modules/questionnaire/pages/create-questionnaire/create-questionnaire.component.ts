@@ -12,7 +12,7 @@ import {
 } from '@angular/forms';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, of, ReplaySubject, throwError } from 'rxjs';
+import { Observable, of, ReplaySubject } from 'rxjs';
 import {
   catchError,
   debounceTime,
@@ -47,7 +47,7 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
     new Date(Date.now()).setFullYear(this.today.getFullYear() - 18)
   );
 
-  public maxAdultDate: Date = new Date(this.minDate.getTime() - 1 * 86400000);
+  public maxAdultDate: Date = new Date(this.minDate.getTime());
   public minChildDate: Date = new Date(this.minDate.getTime() + 1 * 86400000);
   public isLoading: boolean = false;
   public questionnaire: QuestionnaireDetailInterface =
@@ -80,9 +80,6 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
     this.buildForm();
     this.getQuestionnaire();
     this.getQueryParams();
-    setTimeout(() => {
-      console.log(this.createForm.value);
-    }, 5000);
   }
 
   ngOnDestroy(): void {
@@ -234,7 +231,6 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
 
     controls.forEach((control) => {
       control.keys.forEach((key) => {
-        console.log(key, !control.form.get(key).value && parent.content[key]);
         if (!control.form.get(key).value && parent.content[key] !== '') {
           if (key === 'adress_single') {
             control.form
