@@ -7,7 +7,6 @@ import { DocumentComponent } from './pages/document/document.component';
 import { PaymentMethodComponent } from './pages/payment-method/payment-method.component';
 import { PaymentResponseComponent } from './pages/payment-response/payment-response.component';
 import { QuestionsComponent } from './pages/questions/questions.component';
-import { ReturnDateComponent } from './pages/return-date/return-date.component';
 import { SelectPointComponent } from './pages/select-point/select-point.component';
 import { SelectServicesComponent } from './pages/select-services/select-services.component';
 import { ServicesRegistrationInfoComponent } from './pages/services-registration-info/services-registration-info.component';
@@ -26,10 +25,6 @@ const routes: Routes = [
   {
     path: 'questions/:id',
     component: QuestionsComponent,
-  },
-  {
-    path: 'return-date/:id',
-    component: ReturnDateComponent,
   },
   {
     path: 'blocking-screen',

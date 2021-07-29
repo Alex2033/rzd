@@ -1,8 +1,9 @@
+import { OrdersService } from './../../../../../shared/services/orders.service';
 import { slideUpAnimation } from 'src/app/shared/animations/slide-up.animation';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { ServicePointsService } from 'src/app/shared/services/service-points.service';
 import { ServicesRegistrationService } from 'src/app/shared/services/services-registration.service';
 import { ServicePointInterface } from 'src/app/shared/types/service-point.interface';
@@ -32,10 +33,13 @@ export class SelectPointComponent implements OnInit, OnDestroy {
   constructor(
     private servicePoints: ServicePointsService,
     public servicesRegistration: ServicesRegistrationService,
-    private router: Router
+    private ordersService: OrdersService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.getOrder();
     this.servicePoints
       .getServicePoints()
       .pipe(takeUntil(this.destroy))
@@ -44,8 +48,18 @@ export class SelectPointComponent implements OnInit, OnDestroy {
         this.points.forEach((p) => (p['selectedOnMap'] = false));
         const pointId = JSON.parse(
           sessionStorage.getItem('rzd-order')
-        ).id_point;
+        )?.id_point;
         this.selectedPoint = this.points.find((p) => p.id === pointId);
+      });
+  }
+
+  getOrder(): void {
+    this.route.params
+      .pipe(switchMap((params) => this.ordersService.getOrder(+params.id)))
+      .subscribe((res) => {
+        if (res) {
+          this.servicesRegistration.setOrder(res);
+        }
       });
   }
 
@@ -68,12 +82,13 @@ export class SelectPointComponent implements OnInit, OnDestroy {
   }
 
   selectMapPoint(event, point: ServicePointInterface): void {
+    // возможно сделать запоминание точки в session storage и сравнивать с выбранной точкой (костыль)
+    // if (JSON.stringify(point) !== JSON.stringify(this.selectedPoint)) {
+    //   event.target.options.set('iconImageHref', 'assets/gps-blue.svg');
+    // }
+
     console.log('event:', event);
     // event.target.options.set('iconImageHref', 'assets/gps-blue.svg');
     this.selectedPoint = point;
-    // if (JSON.stringify(point) !== JSON.stringify(this.selectedPoint)) {
-    // event.target.options.set('iconImageHref', 'assets/gps-blue.svg');
-
-    // }
   }
 }

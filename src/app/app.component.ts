@@ -59,7 +59,10 @@ export class AppComponent implements OnInit, OnDestroy {
       .pipe(
         filter((event: Event) => event instanceof NavigationEnd),
         switchMap((event: NavigationEnd) => {
-          this.removeAuthStorage(event);
+          this.removeAuthLocalStorage(event);
+          if (!event.url.includes('services-registration')) {
+            sessionStorage.removeItem('rzd-order');
+          }
           return this.route.queryParams;
         }),
         distinctUntilChanged(),
@@ -73,7 +76,7 @@ export class AppComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  removeAuthStorage(event: NavigationEnd): void {
+  removeAuthLocalStorage(event: NavigationEnd): void {
     if (!event.url.includes('sms-info')) {
       if (!event.url.includes('register')) {
         localStorage.removeItem('registerForm');

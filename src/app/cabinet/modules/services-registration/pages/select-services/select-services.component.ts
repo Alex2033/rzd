@@ -30,7 +30,6 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
   public selectedServices: number[] = [];
   public isLoading: boolean = false;
 
-  private orderId: number;
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   constructor(
@@ -53,24 +52,17 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
   }
 
   getOrder(): void {
+    this.order = this.servicesRegistration.order;
     this.route.params
-      .pipe(
-        switchMap((params) => {
-          this.orderId = +params.id;
-          return this.ordersService.getOrder(+params.id);
-        })
-      )
+      .pipe(switchMap((params) => this.ordersService.getOrder(+params.id)))
       .subscribe((res) => {
         if (res) {
-          this.order = res;
           // преобразование услуг из объекта в число
           res.items.forEach((item, itemIndex) => {
             item.services.forEach((service: any) => {
               this.order.items[itemIndex].services = [service.id_service];
             });
           });
-        } else {
-          this.order = this.servicesRegistration.order;
         }
         this.sum = this.order.sum;
         this.setOrderValues();
@@ -112,7 +104,7 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
   selectService(): void {
     this.isLoading = true;
     this.servicesRegistration.setOrder(this.order);
-    if (this.orderId) {
+    if (this.servicesRegistration.order.id) {
       this.updateOrder();
       return;
     }
@@ -127,7 +119,12 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
       .subscribe(
         () => {
           this.router.navigate(
-            ['/cabinet', 'services-registration', 'document', this.orderId],
+            [
+              '/cabinet',
+              'services-registration',
+              'document',
+              this.servicesRegistration.order.id,
+            ],
             {
               queryParams: {
                 questionnaireNum: 1,
@@ -138,7 +135,6 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
         },
         (err) => {
           if (err instanceof HttpErrorResponse) {
-            console.log('err.error.error:', err.error.error);
             if (err.error.error === 'ANKETA_QR_EMPTY_FIELDS') {
               this.router.navigate(
                 ['/cabinet', 'services-registration', 'empty-questionnaires'],

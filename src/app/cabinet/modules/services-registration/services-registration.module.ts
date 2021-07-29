@@ -6,7 +6,6 @@ import { ServicesRegistrationRoutingModule } from './services-registration-routi
 import { QuestionsComponent } from './pages/questions/questions.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
-import { ReturnDateComponent } from './pages/return-date/return-date.component';
 import { ErrorMessagesModule } from 'src/app/shared/modules/error-messages/error-messages.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -33,7 +32,6 @@ import { EmptyQuestionnairesComponent } from './pages/empty-questionnaires/empty
 @NgModule({
   declarations: [
     QuestionsComponent,
-    ReturnDateComponent,
     BlockingScreenComponent,
     SelectPointComponent,
     SelectServicesComponent,
