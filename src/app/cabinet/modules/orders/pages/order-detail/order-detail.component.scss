@@ -118,23 +118,6 @@
   font-weight: 700;
 }
 
-.total-block {
-  margin-top: 2.4rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  > * {
-    &:not(:first-child) {
-      margin-left: 1.2rem;
-    }
-  }
-}
-
-.total-block-text {
-  color: $dark;
-}
-
 .total-price {
   font-size: 2.4rem;
   line-height: 1.17;
@@ -269,4 +252,39 @@
   100% {
     transform: rotate(-360deg);
   }
+}
+
+.discount {
+  margin-top: 3.2rem;
+  font-size: 1.4rem;
+  line-height: 1.14;
+
+  ~ .total-block {
+    margin-top: 1.6rem;
+  }
+}
+
+.discount,
+.total-block {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.discount-number {
+  color: $accent;
+}
+
+.total-block {
+  margin-top: 2.4rem;
+
+  > * {
+    &:not(:first-child) {
+      margin-left: 1.2rem;
+    }
+  }
+}
+
+.total-block-text {
+  color: $dark;
 }

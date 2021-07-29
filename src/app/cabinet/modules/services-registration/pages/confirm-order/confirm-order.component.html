@@ -27,7 +27,11 @@
   <div class="page-container">
     <div class="discount" *ngIf="discount">
       <span>Скидка</span>
-      <span class="discount-number">-{{ discount | number }}&#8381;</span>
+      <span class="discount-number"
+        >-{{ discount | number }}&#8381; ({{
+          utmDiscount.type === "percent" ? utmDiscount.value + "%" : null
+        }})</span
+      >
     </div>
     <div class="total-sum">
       <span>Итого:</span>

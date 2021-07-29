@@ -1,3 +1,4 @@
+import { UtmDiscountsInterface } from './../../../../../shared/types/utm-discounts.interface';
 import { SettingsInterface } from 'src/app/shared/types/settings.interface';
 import { SettingsService } from './../../../../../shared/services/settings.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
@@ -21,6 +22,7 @@ export class ConfirmOrderComponent implements OnInit, OnDestroy {
   public orderId: number;
   public point: ServicePointInterface;
   public discount: number;
+  public utmDiscount: UtmDiscountsInterface;
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -64,24 +66,24 @@ export class ConfirmOrderComponent implements OnInit, OnDestroy {
   }
 
   applyDiscount(settings: SettingsInterface): void {
-    const utmDiscount = settings.utm_discounts.find(
+    this.utmDiscount = settings.utm_discounts.find(
       (d) => d.utm_source === this.settings.utmMark
     );
 
-    if (utmDiscount) {
-      const start = new Date(utmDiscount.dt_start);
-      const stop = new Date(utmDiscount.dt_stop);
+    if (this.utmDiscount) {
+      const start = new Date(this.utmDiscount.dt_start);
+      const stop = new Date(this.utmDiscount.dt_stop);
 
       const expired = start.getTime() >= stop.getTime();
 
-      if (utmDiscount.enabled && !expired) {
-        if (utmDiscount.type === 'percent') {
-          this.discount = (this.order.sum * utmDiscount.value) / 100;
+      if (this.utmDiscount.enabled && !expired) {
+        if (this.utmDiscount.type === 'percent') {
+          this.discount = (this.order.sum * this.utmDiscount.value) / 100;
           this.order.sum = this.order.sum - this.discount;
         }
 
-        if (utmDiscount.type === 'rub') {
-          this.discount = utmDiscount.value;
+        if (this.utmDiscount.type === 'rub') {
+          this.discount = this.utmDiscount.value;
           this.order.sum = this.order.sum - this.discount;
         }
       }
