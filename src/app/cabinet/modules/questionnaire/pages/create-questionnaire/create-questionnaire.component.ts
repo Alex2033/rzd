@@ -55,7 +55,6 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
   public parentQuestionnaire: QuestionnaireDetailInterface =
     {} as QuestionnaireDetailInterface;
   public pageLoaded: boolean = false;
-  public snilsMask: string = '000-000-000 00';
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 

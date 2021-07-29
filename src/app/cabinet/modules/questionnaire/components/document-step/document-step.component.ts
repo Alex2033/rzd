@@ -18,7 +18,8 @@ export class DocumentStepComponent implements OnInit {
   @Input() activeDoctype: DoctypeInterface;
   @Input() min: Date;
   @Input() max: Date;
-  @Input() snilsMask: string;
+
+  public snilsMask: string = '000-000-000 00';
 
   get mask(): string {
     switch (this.activeDoctype?.val) {
