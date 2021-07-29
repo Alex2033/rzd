@@ -5,15 +5,21 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { AppDateAdapter, APP_DATE_FORMATS } from 'src/app/shared/date-adapter';
 import { ServicesRegistrationService } from 'src/app/shared/services/services-registration.service';
 
 @Component({
   selector: 'app-questions',
   templateUrl: './questions.component.html',
   styleUrls: ['./questions.component.scss'],
+  providers: [
+    { provide: DateAdapter, useClass: AppDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
+  ],
 })
 export class QuestionsComponent implements OnInit, OnDestroy {
   public form: FormGroup;

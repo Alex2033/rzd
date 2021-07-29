@@ -181,7 +181,6 @@
       </button>
 
       <mat-error>
-        {{ documentStep.get("snils").errors | json }}
         <app-error-messages
           *ngIf="
             documentStep.get('snils').touched &&
@@ -190,7 +189,8 @@
           [errors]="documentStep.get('snils').errors"
           [errorMessages]="{
             bad_format: documentStep.get('snils').errors?.bad_format,
-            bad_value: documentStep.get('snils').errors?.bad_value
+            bad_value: documentStep.get('snils').errors?.bad_value,
+            snils: 'Введите корректный СНИЛС'
           }"
         ></app-error-messages
       ></mat-error>
