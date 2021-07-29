@@ -43,6 +43,7 @@
         <app-document-step
           [min]="isChild ? minChildDate : minAdultDate"
           [max]="today"
+          [snilsMask]="snilsMask"
           [documentStep]="currentGroup"
           [activeDoctype]="activeDoctype"
           *ngIf="currentStep === 2"

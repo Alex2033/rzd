@@ -16,6 +16,7 @@ import { ErrorMessagesModule } from 'src/app/shared/modules/error-messages/error
 import { MatNativeDateModule } from '@angular/material/core';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { MatSelectModule } from '@angular/material/select';
+import { NgxMaskModule } from 'ngx-mask';
 
 import { QuestionnairesListComponent } from './pages/questionnaires-list/questionnaires-list.component';
 import { DeleteComponent } from './components/delete/delete.component';
@@ -68,6 +69,7 @@ import { EditEmailModalComponent } from './components/edit-email-modal/edit-emai
     TextFieldModule,
     MatSelectModule,
     SmsConfirmModule,
+    NgxMaskModule.forRoot(),
   ],
   providers: [DatePipe],
 })

@@ -159,7 +159,15 @@
     <mat-form-field appearance="outline">
       <mat-label>СНИЛС</mat-label>
 
-      <input matInput type="text" formControlName="snils" />
+      <input
+        matInput
+        [dropSpecialCharacters]="false"
+        autocomplete="snils"
+        [showMaskTyped]="true"
+        type="text"
+        formControlName="snils"
+        [mask]="snilsMask"
+      />
 
       <button
         *ngIf="documentStep.get('snils').value"
@@ -172,8 +180,9 @@
         </svg>
       </button>
 
-      <mat-error
-        ><app-error-messages
+      <mat-error>
+        {{ documentStep.get("snils").errors | json }}
+        <app-error-messages
           *ngIf="
             documentStep.get('snils').touched &&
             documentStep.get('snils').invalid

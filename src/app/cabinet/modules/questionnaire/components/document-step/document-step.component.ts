@@ -18,6 +18,7 @@ export class DocumentStepComponent implements OnInit {
   @Input() activeDoctype: DoctypeInterface;
   @Input() min: Date;
   @Input() max: Date;
+  @Input() snilsMask: string;
 
   get mask(): string {
     switch (this.activeDoctype?.val) {

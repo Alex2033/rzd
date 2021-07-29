@@ -29,6 +29,7 @@ import { DoctypeInterface } from '../../types/doctype.interface';
 import { EditableFieldInterface } from '../../types/editable-field.interface';
 import { QuestionnaireDetailInterface } from '../../types/questionnaire-detail.interface';
 import { UpdatedFieldInterface } from '../../types/updated-field.interface';
+import { snilsValidator } from '../../validators/snils.validator';
 
 @Component({
   selector: 'app-create-questionnaire',
@@ -46,7 +47,6 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
   public minDate: Date = new Date(
     new Date(Date.now()).setFullYear(this.today.getFullYear() - 18)
   );
-
   public maxAdultDate: Date = new Date(this.minDate.getTime());
   public minChildDate: Date = new Date(this.minDate.getTime() + 1 * 86400000);
   public isLoading: boolean = false;
@@ -55,6 +55,7 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
   public parentQuestionnaire: QuestionnaireDetailInterface =
     {} as QuestionnaireDetailInterface;
   public pageLoaded: boolean = false;
+  public snilsMask: string = '000-000-000 00';
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -111,7 +112,7 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
         passport_org: new FormControl(null, Validators.required),
         passport_date: new FormControl(null, [Validators.required]),
         oms: new FormControl(null),
-        snils: new FormControl(null),
+        snils: new FormControl(null, snilsValidator),
       }),
       actualResidence: new FormGroup({
         adress_fact_country: new FormControl(null, Validators.required),
