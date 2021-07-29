@@ -64,6 +64,10 @@ export class ServiceDetailComponent implements OnInit {
     },
   ];
 
+  private selectedPlacemark;
+  private geoObjects: any[] = [];
+  private uniqueGeoObjects: any[] = [];
+
   constructor(
     private services: ServicesService,
     private route: ActivatedRoute,
@@ -95,5 +99,34 @@ export class ServiceDetailComponent implements OnInit {
     this.owlElement.to(tab.id);
     this.activeLabel = tab.id;
     this.activeTab = tab;
+  }
+
+  selectMapPoint(event, point: ServicePointInterface): void {
+    this.selectedPlacemark = this.uniqueGeoObjects.find(
+      (o) =>
+        o.geometry._coordinates[0] === event.target.geometry._coordinates[0]
+    );
+    this.uniqueGeoObjects.forEach((o) => {
+      o.options.set('iconImageHref', 'assets/gps-red.svg');
+    });
+    this.selectedPlacemark.options.set('iconImageHref', 'assets/gps-blue.svg');
+    this.selectedPoint = point;
+  }
+
+  ready(event): void {
+    this.geoObjects.push(event.target);
+    this.uniqueGeoObjects = this.geoObjects.filter(
+      (thing, index, self) =>
+        index ===
+        self.findIndex(
+          (t) => t.geometry._coordinates[0] === thing.geometry._coordinates[0]
+        )
+    );
+  }
+
+  closeMapCard(): void {
+    this.selectedPoint = null;
+    this.selectedPlacemark.options.set('iconImageHref', 'assets/gps-red.svg');
+    this.selectedPlacemark = null;
   }
 }

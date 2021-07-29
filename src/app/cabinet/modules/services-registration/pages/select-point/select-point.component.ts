@@ -21,18 +21,21 @@ export class SelectPointComponent implements OnInit, OnDestroy {
   public mapOptions: object = {
     suppressMapOpenBlock: true,
   };
-  public options: object = {
+  public options = {
     iconImageHref: 'assets/gps-red.svg',
     iconLayout: 'default#image',
   };
   public selectedPoint: ServicePointInterface;
   public mapPoint: ServicePointInterface;
 
+  private selectedPlacemark;
+  private geoObjects: any[] = [];
+  private uniqueGeoObjects: any[] = [];
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   constructor(
-    private servicePoints: ServicePointsService,
     public servicesRegistration: ServicesRegistrationService,
+    private servicePoints: ServicePointsService,
     private ordersService: OrdersService,
     private router: Router,
     private route: ActivatedRoute
@@ -82,13 +85,35 @@ export class SelectPointComponent implements OnInit, OnDestroy {
   }
 
   selectMapPoint(event, point: ServicePointInterface): void {
-    // возможно сделать запоминание точки в session storage и сравнивать с выбранной точкой (костыль)
-    // if (JSON.stringify(point) !== JSON.stringify(this.selectedPoint)) {
-    //   event.target.options.set('iconImageHref', 'assets/gps-blue.svg');
-    // }
-
-    console.log('event:', event);
-    // event.target.options.set('iconImageHref', 'assets/gps-blue.svg');
+    this.selectedPlacemark = this.uniqueGeoObjects.find(
+      (o) =>
+        o.geometry._coordinates[0] === event.target.geometry._coordinates[0]
+    );
+    this.uniqueGeoObjects.forEach((o) => {
+      o.options.set('iconImageHref', 'assets/gps-red.svg');
+    });
+    this.selectedPlacemark.options.set('iconImageHref', 'assets/gps-blue.svg');
     this.selectedPoint = point;
+  }
+
+  ready(event, point: ServicePointInterface): void {
+    this.geoObjects.push(event.target);
+    this.uniqueGeoObjects = this.geoObjects.filter(
+      (thing, index, self) =>
+        index ===
+        self.findIndex(
+          (t) => t.geometry._coordinates[0] === thing.geometry._coordinates[0]
+        )
+    );
+
+    if (JSON.stringify(this.selectedPoint) === JSON.stringify(point)) {
+      event.target.options.set('iconImageHref', 'assets/gps-blue.svg');
+    }
+  }
+
+  closeMapCard(): void {
+    this.selectedPoint = null;
+    this.selectedPlacemark.options.set('iconImageHref', 'assets/gps-red.svg');
+    this.selectedPlacemark = null;
   }
 }

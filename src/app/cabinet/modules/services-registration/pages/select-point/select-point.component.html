@@ -47,6 +47,7 @@
       [options]="mapOptions"
     >
       <ya-placemark
+        (ready)="ready($event)"
         *ngFor="let point of points"
         [geometry]="[point.latitude, point.longtitude]"
         [options]="options"
@@ -68,7 +69,7 @@
         <div class="point-card-name">
           {{ selectedPoint.name }}
         </div>
-        <svg (click)="selectedPoint = null" class="point-card-close">
+        <svg (click)="closeMapCard()" class="point-card-close">
           <use xlink:href="assets/sprites/icons.svg#close"></use>
         </svg>
       </div>

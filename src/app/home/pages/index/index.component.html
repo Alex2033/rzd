@@ -249,20 +249,24 @@
       [state]="{ controls: [] }"
     >
       <ya-placemark
+        (ready)="ready($event)"
         *ngFor="let point of servicePoints$ | async"
         [geometry]="[point.latitude, point.longtitude]"
         [options]="options"
-        (yaclick)="selectedPoint = point"
+        (yaclick)="selectMapPoint($event, point)"
       ></ya-placemark>
     </ya-map>
 
     <!-- point card -->
     <div class="point-card" [@slideUp] *ngIf="selectedPoint">
       <div class="point-card-top">
-        <div class="point-card-name">
+        <div
+          class="point-card-name"
+          [routerLink]="['/service-points', selectedPoint.id]"
+        >
           {{ selectedPoint.name }}
         </div>
-        <svg (click)="selectedPoint = null" class="point-card-close">
+        <svg (click)="closeMapCard()" class="point-card-close">
           <use xlink:href="assets/sprites/icons.svg#close"></use>
         </svg>
       </div>
