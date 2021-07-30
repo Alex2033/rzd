@@ -36,11 +36,11 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'confirm-corporate-clients',
+    path: 'corporate-clients',
     loadChildren: () =>
-      import(
-        './confirm-corporate-clients/confirm-corporate-clients.module'
-      ).then((m) => m.ConfirmCorporateClientsModule),
+      import('./corporate-clients/corporate-clients.module').then(
+        (m) => m.CorporateClientsModule
+      ),
   },
 ];
 
