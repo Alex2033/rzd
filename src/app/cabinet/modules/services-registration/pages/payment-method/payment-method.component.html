@@ -34,7 +34,7 @@
       </mat-radio-button>
       <mat-radio-button
         [value]="'CORPORATE'"
-        [disabled]="!settings.enableCorpPayment && !corpPaymentEnable"
+        [disabled]="!settings.enableCorpPayment || !corpPaymentEnable"
       >
         <div class="corporate-radio-text">
           <span>С корпоративного счета</span>

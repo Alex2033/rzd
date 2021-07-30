@@ -90,13 +90,20 @@ export class SelectPointComponent implements OnInit, OnDestroy {
         o.geometry._coordinates[0] === event.target.geometry._coordinates[0]
     );
     this.uniqueGeoObjects.forEach((o) => {
-      o.options.set('iconImageHref', 'assets/gps-red.svg');
+      if (
+        o.geometry._coordinates[0] !== event.target.geometry._coordinates[0]
+      ) {
+        event.target.options.set('iconImageHref', 'assets/gps-red.svg');
+      } else {
+        o.options.set('iconImageHref', 'assets/gps-blue.svg');
+      }
     });
-    this.selectedPlacemark.options.set('iconImageHref', 'assets/gps-blue.svg');
+
     this.selectedPoint = point;
   }
 
   ready(event, point: ServicePointInterface): void {
+    console.log('ready');
     this.geoObjects.push(event.target);
     this.uniqueGeoObjects = this.geoObjects.filter(
       (thing, index, self) =>
@@ -106,7 +113,10 @@ export class SelectPointComponent implements OnInit, OnDestroy {
         )
     );
 
-    if (JSON.stringify(this.selectedPoint) === JSON.stringify(point)) {
+    if (
+      JSON.stringify(this.selectedPoint) === JSON.stringify(point) &&
+      this.selectedPoint
+    ) {
       event.target.options.set('iconImageHref', 'assets/gps-blue.svg');
     }
   }

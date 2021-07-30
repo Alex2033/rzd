@@ -47,7 +47,7 @@
       [options]="mapOptions"
     >
       <ya-placemark
-        (ready)="ready($event)"
+        (ready)="ready($event, point)"
         *ngFor="let point of points"
         [geometry]="[point.latitude, point.longtitude]"
         [options]="options"

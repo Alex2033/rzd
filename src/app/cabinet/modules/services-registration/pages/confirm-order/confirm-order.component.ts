@@ -71,12 +71,15 @@ export class ConfirmOrderComponent implements OnInit, OnDestroy {
     );
 
     if (this.utmDiscount) {
-      const start = new Date(this.utmDiscount.dt_start);
-      const stop = new Date(this.utmDiscount.dt_stop);
+      const start: Date = new Date(this.utmDiscount.dt_start);
+      const stop: Date = new Date(this.utmDiscount.dt_stop);
 
-      const expired = start.getTime() >= stop.getTime();
+      const isPointAvailable: boolean = this.utmDiscount.points.some(
+        (p) => p === this.order.id_point
+      );
+      const expired: boolean = start.getTime() >= stop.getTime();
 
-      if (this.utmDiscount.enabled && !expired) {
+      if (this.utmDiscount.enabled && !expired && isPointAvailable) {
         if (this.utmDiscount.type === 'percent') {
           this.discount = (this.order.sum * this.utmDiscount.value) / 100;
           this.order.sum = this.order.sum - this.discount;

@@ -3,11 +3,11 @@ import { SettingsService } from './../../../../../shared/services/settings.servi
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { OrdersService } from 'src/app/shared/services/orders.service';
-import { Observable, ReplaySubject } from 'rxjs';
+import { Observable, of, ReplaySubject } from 'rxjs';
 import { PaymentInterface } from 'src/app/shared/types/payment.interface';
 import { OrderInterface } from 'src/app/shared/types/order.interface';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, takeUntil, tap } from 'rxjs/operators';
+import { switchMap, takeUntil, tap, catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LanguageService } from 'src/app/shared/services/language.service';
 import { SettingsInterface } from 'src/app/shared/types/settings.interface';
@@ -39,21 +39,6 @@ export class PaymentMethodComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getOrder();
-    this.getSettings();
-  }
-
-  getSettings(): void {
-    this.settingsService
-      .getSettings()
-      .pipe(takeUntil(this.destroy))
-      .subscribe((settings) => {
-        this.settings = settings;
-        this.applyDiscount(settings);
-      });
-  }
-
-  getOrder(): void {
     this.route.params
       .pipe(
         switchMap((params) => this.ordersService.getOrder(+params.id)),
@@ -64,18 +49,22 @@ export class PaymentMethodComponent implements OnInit {
           }
 
           return this.corporateClients.corpCheck(order.id);
-        })
-      )
-      .subscribe(
-        (res) => {
-          this.corpPaymentEnable = res;
-        },
-        (err) => {
+        }),
+        catchError((err) => {
           if (err instanceof HttpErrorResponse) {
             this.setErrors(err.error.error);
           }
-        }
-      );
+          return of(undefined);
+        }),
+        switchMap((res) => {
+          this.corpPaymentEnable = res;
+          return this.settingsService.getSettings();
+        })
+      )
+      .subscribe((settings) => {
+        this.settings = settings;
+        this.applyDiscount(settings);
+      });
   }
 
   setErrors(err: string): void {
@@ -104,12 +93,15 @@ export class PaymentMethodComponent implements OnInit {
     );
 
     if (utmDiscount) {
-      const start = new Date(utmDiscount.dt_start);
-      const stop = new Date(utmDiscount.dt_stop);
+      const start: Date = new Date(utmDiscount.dt_start);
+      const stop: Date = new Date(utmDiscount.dt_stop);
 
-      const expired = start.getTime() >= stop.getTime();
+      const isPointAvailable: boolean = utmDiscount.points.some(
+        (p) => p === this.order.id_point
+      );
+      const expired: boolean = start.getTime() >= stop.getTime();
 
-      if (utmDiscount.enabled && !expired) {
+      if (utmDiscount.enabled && !expired && isPointAvailable) {
         this.utmMark = this.settingsService.utmMark;
       }
     }

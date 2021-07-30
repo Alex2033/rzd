@@ -6,4 +6,5 @@ export interface UtmDiscountsInterface {
   dt_start: string;
   dt_stop: string;
   enabled: boolean;
+  points: number[];
 }
