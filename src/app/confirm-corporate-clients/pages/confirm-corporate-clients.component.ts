@@ -29,6 +29,7 @@ export class ConfirmCorporateClientsComponent implements OnInit, OnDestroy {
   public client: CorporateClientInterface;
   public form: FormGroup;
   public isLoading: boolean = false;
+  public reachedLimit: boolean = false;
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -87,7 +88,7 @@ export class ConfirmCorporateClientsComponent implements OnInit, OnDestroy {
         });
         break;
       case 'ATTEMPTS_LIMIT':
-        this.router.navigate(['/']);
+        this.reachedLimit = true;
         break;
       default:
         break;

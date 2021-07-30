@@ -3,6 +3,12 @@
 .confirm-text {
   color: $dark;
   margin-top: 0.8rem;
+
+  > * {
+    &:not(:first-child) {
+      margin-top: 1rem;
+    }
+  }
 }
 
 .confirm-fio {
