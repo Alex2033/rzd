@@ -5,5 +5,6 @@ export interface QuestionnaireInterface {
   patronymic: string;
   age: number;
   draft: boolean;
+  is_corp_client: boolean;
   children: QuestionnaireInterface[];
 }

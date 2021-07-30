@@ -136,3 +136,20 @@
   opacity: 0.4;
   margin-top: 0.4rem;
 }
+
+.corporate-client {
+  margin-top: 0.4rem;
+  display: flex;
+  align-items: center;
+
+  span {
+    color: $accent;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+}
+
+.hint-link {
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+}

@@ -185,9 +185,9 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
       this.checkedQuestionnairesIds.push({
         id_anketa: questionnaire.id,
         services: [],
-        fio: `${questionnaire.surname ? questionnaire.surname : ''} ${
-          questionnaire.name ? questionnaire.name : ''
-        } ${questionnaire.patronymic ? questionnaire.patronymic : ''}`,
+        fio: `${questionnaire.surname ?? ''} ${questionnaire.name ?? ''} ${
+          questionnaire.patronymic ?? ''
+        }`,
       });
     } else {
       this.checkedQuestionnairesIds = this.checkedQuestionnairesIds.filter(

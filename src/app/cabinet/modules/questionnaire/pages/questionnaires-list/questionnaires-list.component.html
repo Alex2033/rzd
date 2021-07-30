@@ -77,6 +77,20 @@
                     [arVariants]="['год', 'года', 'лет']"
                   ></span>
                 </div>
+                <div
+                  class="corporate-client"
+                  *ngIf="questionnaire.is_corp_client"
+                >
+                  <span>Корпоративный клиент</span>
+                  <a
+                    [routerLink]="['/corporate-clients', 'info']"
+                    class="hint-link"
+                  >
+                    <svg>
+                      <use xlink:href="assets/sprites/icons.svg#hint"></use>
+                    </svg>
+                  </a>
+                </div>
                 <div class="draft" *ngIf="questionnaire.draft">
                   Анкета заполнена не полностью
                 </div>
@@ -162,6 +176,17 @@
                       [value]="child.age"
                       [arVariants]="['год', 'года', 'лет']"
                     ></span>
+                  </div>
+                  <div class="corporate-client" *ngIf="child.is_corp_client">
+                    <span>Корпоративный клиент</span>
+                    <a
+                      [routerLink]="['/corporate-clients', 'info']"
+                      class="hint-link"
+                    >
+                      <svg>
+                        <use xlink:href="assets/sprites/icons.svg#hint"></use>
+                      </svg>
+                    </a>
                   </div>
                   <div class="draft" *ngIf="child.draft">
                     Анкета заполнена не полностью

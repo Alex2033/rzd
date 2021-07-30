@@ -112,7 +112,9 @@ export class ConfirmCorporateClientsComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy)
       )
       .subscribe(
-        () => {},
+        () => {
+          this.router.navigate(['/cabinet', 'questionnaires']);
+        },
         (err) => {
           if (err instanceof HttpErrorResponse) {
             this.setErrors(err.error.error);
