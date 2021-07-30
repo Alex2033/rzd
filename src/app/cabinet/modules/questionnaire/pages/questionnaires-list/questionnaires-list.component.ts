@@ -185,6 +185,7 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
       this.checkedQuestionnairesIds.push({
         id_anketa: questionnaire.id,
         services: [],
+        is_corp_client: questionnaire.is_corp_client,
         fio: `${questionnaire.surname ?? ''} ${questionnaire.name ?? ''} ${
           questionnaire.patronymic ?? ''
         }`,

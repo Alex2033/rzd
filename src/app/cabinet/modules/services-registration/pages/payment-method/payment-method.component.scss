@@ -36,6 +36,7 @@
     .mat-radio-label-content {
       padding: 0 3.2rem 1.6rem 0;
       margin-left: 1.8rem;
+      font-weight: 600;
       position: relative;
       flex-grow: 1;
 
@@ -56,5 +57,22 @@
   font-size: 1.2rem;
   line-height: 1.34;
   color: $gray;
+  margin-top: 0.8rem;
+}
+
+.hint-link {
+  margin-left: 0.4rem;
+}
+
+.corporate-radio-text {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.corp-error-text {
+  color: $accent;
+  font-size: 1.2rem;
+  line-height: 1.33;
   margin-top: 0.8rem;
 }

@@ -1,3 +1,4 @@
+import { CorporateClientsService } from 'src/app/shared/services/corporate-clients.service';
 import { SettingsService } from './../../../../../shared/services/settings.service';
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
@@ -22,6 +23,8 @@ export class PaymentMethodComponent implements OnInit {
   public order: OrderInterface;
   public settings: SettingsInterface = {} as SettingsInterface;
   public utmMark: string = '';
+  public corpPaymentEnable: boolean = false;
+  public corpErrorText: string;
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -31,11 +34,16 @@ export class PaymentMethodComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private language: LanguageService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private corporateClients: CorporateClientsService
   ) {}
 
   ngOnInit(): void {
     this.getOrder();
+    this.getSettings();
+  }
+
+  getSettings(): void {
     this.settingsService
       .getSettings()
       .pipe(takeUntil(this.destroy))
@@ -47,13 +55,42 @@ export class PaymentMethodComponent implements OnInit {
 
   getOrder(): void {
     this.route.params
-      .pipe(switchMap((params) => this.ordersService.getOrder(+params.id)))
-      .subscribe((res) => {
-        if (res) {
-          this.order = res;
-          this.selectedPayment = res.payment;
+      .pipe(
+        switchMap((params) => this.ordersService.getOrder(+params.id)),
+        switchMap((order) => {
+          if (order) {
+            this.order = order;
+            this.selectedPayment = order.payment;
+          }
+
+          return this.corporateClients.corpCheck(order.id);
+        })
+      )
+      .subscribe(
+        (res) => {
+          this.corpPaymentEnable = res;
+        },
+        (err) => {
+          if (err instanceof HttpErrorResponse) {
+            this.setErrors(err.error.error);
+          }
         }
-      });
+      );
+  }
+
+  setErrors(err: string): void {
+    switch (err) {
+      case 'LIMIT_EXCEEDED':
+        this.corpErrorText = 'Лимит исчерпан.';
+        break;
+
+      case 'OUTSIDERS_FOUND':
+        this.corpErrorText = 'В заказе несколько анкет.';
+        break;
+
+      default:
+        break;
+    }
   }
 
   ngOnDestroy() {

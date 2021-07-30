@@ -23,4 +23,10 @@ export class CorporateClientsService {
       data
     );
   }
+
+  corpCheck(id: number): Observable<boolean> {
+    return this.http.get<boolean>(
+      environment.api + `api/order/corp_check?id_order=${id}`
+    );
+  }
 }

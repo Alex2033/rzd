@@ -33,10 +33,25 @@
         <div class="additional-info">Возможно длительное ожидание</div>
       </mat-radio-button>
       <mat-radio-button
-        [value]="'CORP'"
-        [disabled]="!settings.enableCorpPayment"
+        [value]="'CORPORATE'"
+        [disabled]="!settings.enableCorpPayment && !corpPaymentEnable"
       >
-        С корпоративного счета
+        <div class="corporate-radio-text">
+          <span>С корпоративного счета</span>
+          <a
+            (click)="$event.stopPropagation()"
+            [routerLink]="['/corporate-clients', 'info']"
+            class="hint-link"
+          >
+            <svg>
+              <use xlink:href="assets/sprites/icons.svg#hint"></use>
+            </svg>
+          </a>
+        </div>
+
+        <div class="corp-error-text" *ngIf="corpErrorText">
+          {{ corpErrorText }}
+        </div>
       </mat-radio-button>
     </mat-radio-group>
   </div>

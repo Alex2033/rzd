@@ -9,13 +9,22 @@ import { ServicesRegistrationService } from 'src/app/shared/services/services-re
 })
 export class ServicesRegistrationInfoComponent implements OnInit {
   public sendResults: boolean = false;
+  public hasCorpQuestionnaires: boolean = false;
 
   constructor(
     private router: Router,
     private servicesRegistration: ServicesRegistrationService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(
+      'this.servicesRegistration.order:',
+      this.servicesRegistration.order
+    );
+    this.hasCorpQuestionnaires = this.servicesRegistration.order.items.some(
+      (q) => q.is_corp_client
+    );
+  }
 
   goToCreation(): void {
     this.servicesRegistration.setOrder({
