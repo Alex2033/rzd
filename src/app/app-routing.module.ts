@@ -35,6 +35,13 @@ const routes: Routes = [
         (m) => m.ServerErrorModule
       ),
   },
+  {
+    path: 'confirm-corporate-clients',
+    loadChildren: () =>
+      import(
+        './confirm-corporate-clients/confirm-corporate-clients.module'
+      ).then((m) => m.ConfirmCorporateClientsModule),
+  },
 ];
 
 @NgModule({
