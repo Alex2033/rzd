@@ -2,7 +2,7 @@ import { environment } from './../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SettingsInterface } from '../types/settings.interface';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
 
 @Injectable({
@@ -24,7 +24,6 @@ export class SettingsService {
 
   setUtmMark(val: string): void {
     this.utmMark = val;
-    console.log('this.utmMark:', this.utmMark);
     if (this.utmMark) sessionStorage.setItem('rzd-utmMark', this.utmMark);
   }
 }

@@ -89,21 +89,16 @@ export class SelectPointComponent implements OnInit, OnDestroy {
       (o) =>
         o.geometry._coordinates[0] === event.target.geometry._coordinates[0]
     );
-    this.uniqueGeoObjects.forEach((o) => {
-      if (
-        o.geometry._coordinates[0] !== event.target.geometry._coordinates[0]
-      ) {
-        event.target.options.set('iconImageHref', 'assets/gps-red.svg');
-      } else {
-        o.options.set('iconImageHref', 'assets/gps-blue.svg');
-      }
-    });
 
+    this.uniqueGeoObjects.forEach((o) => {
+      o.options.set('iconImageHref', 'assets/gps-red.svg');
+    });
+    this.selectedPlacemark.options.set('iconImageHref', 'assets/gps-blue.svg');
     this.selectedPoint = point;
   }
 
   ready(event, point: ServicePointInterface): void {
-    console.log('ready');
+    this.selectedPlacemark = null;
     this.geoObjects.push(event.target);
     this.uniqueGeoObjects = this.geoObjects.filter(
       (thing, index, self) =>

@@ -17,10 +17,6 @@ export class ServicesRegistrationInfoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(
-      'this.servicesRegistration.order:',
-      this.servicesRegistration.order
-    );
     this.hasCorpQuestionnaires = this.servicesRegistration.order.items.some(
       (q) => q.is_corp_client
     );
