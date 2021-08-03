@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { QuestionnairesService } from '../../services/questionnaires.service';
+import { QuestionnairesService } from '../../../../../shared/services/questionnaires.service';
 import { QuestionnaireContentInterface } from '../../types/questionnaire-content.interface';
 import { QuestionnaireDetailInterface } from '../../types/questionnaire-detail.interface';
 

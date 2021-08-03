@@ -11,7 +11,7 @@ import { ServicesService } from 'src/app/shared/services/services.service';
 import { OrderInterface } from 'src/app/shared/types/order.interface';
 import { QuestionnaireOrderInterface } from 'src/app/shared/types/questionnaire-order.interface';
 import { ServiceInterface } from 'src/app/shared/types/service.interface';
-import { QuestionnairesService } from '../../../questionnaire/services/questionnaires.service';
+import { QuestionnairesService } from '../../../../../shared/services/questionnaires.service';
 import { QuestionnaireInterface } from '../../../questionnaire/types/questionnaire.interface';
 
 @Component({

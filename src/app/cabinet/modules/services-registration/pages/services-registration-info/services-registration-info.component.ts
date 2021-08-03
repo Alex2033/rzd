@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { QuestionnairesService } from 'src/app/shared/services/questionnaires.service';
 import { ServicesRegistrationService } from 'src/app/shared/services/services-registration.service';
 
 @Component({
@@ -13,7 +14,8 @@ export class ServicesRegistrationInfoComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private servicesRegistration: ServicesRegistrationService
+    private servicesRegistration: ServicesRegistrationService,
+    private questionnaires: QuestionnairesService
   ) {}
 
   ngOnInit(): void {

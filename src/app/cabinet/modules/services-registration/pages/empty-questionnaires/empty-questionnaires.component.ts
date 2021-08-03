@@ -3,7 +3,7 @@ import { takeUntil } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ReplaySubject, combineLatest } from 'rxjs';
-import { QuestionnairesService } from '../../../questionnaire/services/questionnaires.service';
+import { QuestionnairesService } from '../../../../../shared/services/questionnaires.service';
 
 @Component({
   selector: 'app-empty-questionnaires',

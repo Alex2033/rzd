@@ -24,7 +24,7 @@ import {
   tap,
 } from 'rxjs/operators';
 import { AccountService } from 'src/app/shared/services/account.service';
-import { QuestionnairesService } from '../../services/questionnaires.service';
+import { QuestionnairesService } from '../../../../../shared/services/questionnaires.service';
 import { DoctypeInterface } from '../../types/doctype.interface';
 import { EditableFieldInterface } from '../../types/editable-field.interface';
 import { QuestionnaireDetailInterface } from '../../types/questionnaire-detail.interface';

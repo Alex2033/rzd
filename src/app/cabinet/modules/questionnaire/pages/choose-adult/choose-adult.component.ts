@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { QuestionnairesService } from '../../services/questionnaires.service';
+import { QuestionnairesService } from '../../../../../shared/services/questionnaires.service';
 import { QuestionnaireContentInterface } from '../../types/questionnaire-content.interface';
 import { QuestionnaireDetailInterface } from '../../types/questionnaire-detail.interface';
 import { QuestionnaireInterface } from '../../types/questionnaire.interface';

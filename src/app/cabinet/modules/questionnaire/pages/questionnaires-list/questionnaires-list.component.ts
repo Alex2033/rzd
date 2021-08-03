@@ -13,7 +13,7 @@ import { QuestionnaireOrderInterface } from 'src/app/shared/types/questionnaire-
 import { CreateSheetComponent } from '../../components/create-sheet/create-sheet.component';
 import { DeleteComponent } from '../../components/delete/delete.component';
 import { WarningDialogComponent } from '../../components/warning-dialog/warning-dialog.component';
-import { QuestionnairesService } from '../../services/questionnaires.service';
+import { QuestionnairesService } from '../../../../../shared/services/questionnaires.service';
 import { QuestionnaireDetailInterface } from '../../types/questionnaire-detail.interface';
 import { QuestionnaireInterface } from '../../types/questionnaire.interface';
 import { QuestionnaireContentInterface } from '../../types/questionnaire-content.interface';

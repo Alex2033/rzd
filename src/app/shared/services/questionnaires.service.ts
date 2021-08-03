@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { CheckCorpResponseInterface } from 'src/app/shared/types/check-corp-response.interface';
 import { environment } from 'src/environments/environment';
-import { DoctypeInterface } from '../types/doctype.interface';
-import { QuestionnaireDetailInterface } from '../types/questionnaire-detail.interface';
-import { QuestionnaireInterface } from '../types/questionnaire.interface';
-import { UpdatedFieldInterface } from '../types/updated-field.interface';
+import { DoctypeInterface } from '../../cabinet/modules/questionnaire/types/doctype.interface';
+import { QuestionnaireDetailInterface } from '../../cabinet/modules/questionnaire/types/questionnaire-detail.interface';
+import { QuestionnaireInterface } from '../../cabinet/modules/questionnaire/types/questionnaire.interface';
+import { UpdatedFieldInterface } from '../../cabinet/modules/questionnaire/types/updated-field.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -48,6 +49,12 @@ export class QuestionnairesService {
   ): Observable<DoctypeInterface[]> {
     return this.http.get<DoctypeInterface[]>(
       environment.api + `api/contents/documents?child=${isChild}&lang=${langId}`
+    );
+  }
+
+  checkCorp(id: number): Observable<CheckCorpResponseInterface> {
+    return this.http.get<CheckCorpResponseInterface>(
+      environment.api + `api/anketa/checkcorp?id=${id}`
     );
   }
 }
