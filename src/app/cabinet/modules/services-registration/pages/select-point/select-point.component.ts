@@ -98,7 +98,6 @@ export class SelectPointComponent implements OnInit, OnDestroy {
   }
 
   ready(event, point: ServicePointInterface): void {
-    this.selectedPlacemark = null;
     this.geoObjects.push(event.target);
     this.uniqueGeoObjects = this.geoObjects.filter(
       (thing, index, self) =>
@@ -112,8 +111,18 @@ export class SelectPointComponent implements OnInit, OnDestroy {
       JSON.stringify(this.selectedPoint) === JSON.stringify(point) &&
       this.selectedPoint
     ) {
-      event.target.options.set('iconImageHref', 'assets/gps-blue.svg');
+      this.selectedPlacemark = event.target;
+      this.selectedPlacemark.options.set(
+        'iconImageHref',
+        'assets/gps-blue.svg'
+      );
     }
+  }
+
+  changeToList(): void {
+    this.addressMode = 'list';
+    this.geoObjects = [];
+    this.uniqueGeoObjects = [];
   }
 
   closeMapCard(): void {
