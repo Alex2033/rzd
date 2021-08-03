@@ -38,8 +38,8 @@ export class DocumentComponent implements OnInit, OnDestroy {
     private ordersService: OrdersService,
     private route: ActivatedRoute,
     private router: Router,
-    public servicesRegistration: ServicesRegistrationService,
-    private location: Location
+    private location: Location,
+    private servicesRegistration: ServicesRegistrationService
   ) {}
 
   ngOnInit(): void {
@@ -117,6 +117,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
                   anketaId: item.id_anketa,
                   questionnaireNum: this.questionnaireNum,
                   docIndex: this.docIndex + 1,
+                  docsLength: this.docs.length,
                 },
               }
             );
