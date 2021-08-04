@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatExpansionPanel } from '@angular/material/expansion';
-import { Observable } from 'rxjs';
-import { shareReplay } from 'rxjs/operators';
+import { Observable, ReplaySubject } from 'rxjs';
+import { shareReplay, takeUntil } from 'rxjs/operators';
 import { slideUpAnimation } from 'src/app/shared/animations/slide-up.animation';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { ServicePointsService } from 'src/app/shared/services/service-points.service';
@@ -15,7 +16,9 @@ import { ServicePointInterface } from '../../../shared/types/service-point.inter
   styleUrls: ['./index.component.scss'],
   animations: [slideUpAnimation()],
 })
-export class IndexComponent implements OnInit {
+export class IndexComponent implements OnInit, AfterViewInit {
+  @ViewChild('corpPanel') corpPanel: MatExpansionPanel;
+
   public services$: Observable<ServiceInterface[]>;
   public servicePoints$: Observable<ServicePointInterface[]>;
   public isAuth: boolean;
@@ -32,18 +35,37 @@ export class IndexComponent implements OnInit {
   private selectedPlacemark;
   private geoObjects: any[] = [];
   private uniqueGeoObjects: any[] = [];
+  private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   constructor(
     private services: ServicesService,
     private servicePoints: ServicePointsService,
-    private account: AccountService
+    private account: AccountService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.initializeValues();
+  }
+
+  ngAfterViewInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      if (params['corp-anchor']) {
+        const el = document.querySelector('#corp-clients-faq');
+        this.corpPanel.open();
+        el.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+      }
+    });
+  }
+
+  initializeValues(): void {
     this.services$ = this.services.getServices();
     this.servicePoints$ = this.servicePoints
       .getServicePoints()
-      .pipe(shareReplay());
+      .pipe(shareReplay(), takeUntil(this.destroy));
     this.isAuth = this.account.isAuth();
   }
 
