@@ -51,12 +51,11 @@ export class IndexComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.route.queryParams.subscribe((params) => {
       if (params['corp-anchor']) {
-        const el = document.querySelector('#corp-clients-faq');
+        const el = document.getElementById('corp-clients-faq');
         this.corpPanel.open();
-        el.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        });
+        setTimeout(() => {
+          window.scrollTo(0, el.offsetTop - 70);
+        }, 500);
       }
     });
   }

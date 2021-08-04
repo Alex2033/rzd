@@ -5,7 +5,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of, ReplaySubject } from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { finalize, switchMap, takeUntil } from 'rxjs/operators';
 import { OrdersService } from 'src/app/shared/services/orders.service';
 import { ServicesRegistrationService } from 'src/app/shared/services/services-registration.service';
 import { ServicesService } from 'src/app/shared/services/services.service';
@@ -46,6 +46,9 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getOrder();
+    setTimeout(() => {
+      console.log(this.servicesLoaded);
+    }, 5000);
   }
 
   ngOnDestroy() {
@@ -85,14 +88,21 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
           return of(null);
         })
       )
-      .subscribe((res: CheckCorpResponseInterface | null) => {
-        if (res && res.is_corporate) {
-          this.services = this.services.filter((s) =>
-            res.available_services.includes(s.id)
-          );
+      .subscribe(
+        (res: CheckCorpResponseInterface | null) => {
+          if (res && res.is_corporate && res.available_services.length) {
+            this.services = this.services.filter((s) =>
+              res.available_services.includes(s.id)
+            );
+          }
+          this.servicesLoaded = true;
+        },
+        (err) => {
+          if (err instanceof HttpErrorResponse) {
+            this.router.navigate(['/server-error', err.error.error]);
+          }
         }
-        this.servicesLoaded = true;
-      });
+      );
   }
 
   setOrderValues(): void {
