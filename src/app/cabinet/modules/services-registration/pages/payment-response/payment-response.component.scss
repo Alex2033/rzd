@@ -18,4 +18,10 @@
 
 .response-text {
   margin-top: 1.6rem;
+
+  > * {
+    &:not(:first-child) {
+      margin-top: 2.4rem;
+    }
+  }
 }

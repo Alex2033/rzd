@@ -52,9 +52,6 @@ export class ServicesRegistrationInfoComponent implements OnInit, OnDestroy {
       )
       .subscribe((res) => {
         this.corpQuestionnaire = res.is_corporate;
-        this.servicesRegistration.setAvailableQuestionnaires(
-          res.available_services
-        );
       });
   }
 

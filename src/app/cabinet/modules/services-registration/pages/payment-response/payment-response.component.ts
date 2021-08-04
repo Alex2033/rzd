@@ -43,6 +43,7 @@ export class PaymentResponseComponent implements OnInit {
   setContent(text: string): void {
     switch (text) {
       case 'online':
+      case 'CORPORATE':
         this.text = `Ваш заказ №${this.order.id} успешно оплачен.`;
         break;
       case 'TERMINAL':
@@ -51,6 +52,7 @@ export class PaymentResponseComponent implements OnInit {
       case 'ADMIN':
         this.text = `Ваш заказ №${this.order.id} оформлен. Вы можете оплатить его у администратора.`;
         break;
+
       default:
         break;
     }

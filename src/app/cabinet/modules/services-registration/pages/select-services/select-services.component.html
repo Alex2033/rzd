@@ -29,7 +29,7 @@
       </div>
     </div>
 
-    <div class="fios" [class.each-mode]="selectEach">
+    <div *ngIf="servicesLoaded" class="fios" [class.each-mode]="selectEach">
       <div class="fio" *ngFor="let item of order.items; let i = index">
         {{ item.fio }}
 
@@ -68,7 +68,7 @@
     </div>
   </div>
 
-  <div class="services" *ngIf="!selectEach">
+  <div class="services" *ngIf="!selectEach && servicesLoaded">
     <mat-radio-group
       [(ngModel)]="selectedService"
       (ngModelChange)="selectionChange($event)"

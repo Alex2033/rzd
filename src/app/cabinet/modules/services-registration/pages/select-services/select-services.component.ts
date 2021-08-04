@@ -1,9 +1,10 @@
+import { CheckCorpResponseInterface } from './../../../../../shared/types/check-corp-response.interface';
 import { ConfirmRemoveSelectionsComponent } from './../../components/confirm-remove-selections/confirm-remove-selections.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, ReplaySubject } from 'rxjs';
+import { Observable, of, ReplaySubject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { OrdersService } from 'src/app/shared/services/orders.service';
 import { ServicesRegistrationService } from 'src/app/shared/services/services-registration.service';
@@ -29,6 +30,7 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
   public sum: number = 0;
   public selectedServices: number[] = [];
   public isLoading: boolean = false;
+  public servicesLoaded: boolean = true;
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -53,30 +55,43 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
 
   getOrder(): void {
     this.order = this.servicesRegistration.order;
+    this.servicesLoaded = false;
     this.route.params
-      .pipe(switchMap((params) => this.ordersService.getOrder(+params.id)))
-      .subscribe((res) => {
-        if (res) {
-          // преобразование услуг из объекта в число
-          res.items.forEach((item, itemIndex) => {
-            item.services.forEach((service: any) => {
-              this.order.items[itemIndex].services = [service.id_service];
+      .pipe(
+        switchMap((params) => this.ordersService.getOrder(+params.id)),
+        switchMap((order) => {
+          if (order) {
+            // преобразование услуг из объекта в число
+            order.items.forEach((item, itemIndex) => {
+              item.services.forEach((service: any) => {
+                this.order.items[itemIndex].services = [service.id_service];
+              });
             });
-          });
-        }
-        this.sum = this.order.sum;
-        this.setOrderValues();
-        this.initializeValues();
-      });
-  }
+          }
 
-  initializeValues(): void {
-    this.questionnaires$ = this.questionnairesService.getQuestionnaires();
-    this.servicesService
-      .getServices(this.order.id_point)
-      .pipe(takeUntil(this.destroy))
-      .subscribe((res) => {
-        this.services = res;
+          this.questionnaires$ = this.questionnairesService.getQuestionnaires();
+          this.setOrderValues();
+
+          this.sum = this.order.sum;
+          return this.servicesService.getServices(this.order.id_point);
+        }),
+        switchMap((res) => {
+          this.services = res;
+          if (this.order.items.length <= 1) {
+            return this.questionnairesService.checkCorp(
+              this.servicesRegistration.order.items[0].id_anketa
+            );
+          }
+          return of(null);
+        })
+      )
+      .subscribe((res: CheckCorpResponseInterface | null) => {
+        if (res && res.is_corporate) {
+          this.services = this.services.filter((s) =>
+            res.available_services.includes(s.id)
+          );
+        }
+        this.servicesLoaded = true;
       });
   }
 
