@@ -1,71 +1,103 @@
-<div class="page-content">
-  <div class="page-container">
-    <div class="page-top">
-      <a [routerLink]="['/cabinet', 'questionnaires']" class="back-link">
-        <svg width="1rem" height="1rem">
-          <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
-        </svg>
-        <span>Назад</span>
-      </a>
+<ng-container *ngIf="pageLoaded">
+  <div class="page-content">
+    <div class="page-container">
+      <div class="page-top">
+        <a [routerLink]="['/cabinet', 'questionnaires']" class="back-link">
+          <svg width="1rem" height="1rem">
+            <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
+          </svg>
+          <span>Назад</span>
+        </a>
 
-      <a class="close" [routerLink]="['/cabinet', 'questionnaires']">Закрыть</a>
-    </div>
-
-    <div class="info-content">
-      <p class="corporate-info" *ngIf="hasCorpQuestionnaires">
-        <strong>Обратите внимание!</strong> В заказе выбрано несколько анкет
-        вместе с корпоративной. Оплата с корпоративного счета в данном случае
-        недоступна.
-      </p>
-
-      <h6 class="info-title">
-        Проверьте правильность <br />
-        заполнения анкет!
-      </h6>
-      <ul class="info-list">
-        <li>
-          Для предоставления результатов тестов на территории РФ - указывайте
-          Паспорт гражданина РФ или Свидетельство о рождении
-        </li>
-        <li>
-          Для международных поездок, рекомендуем указывать данные загранпаспорта
-        </li>
-      </ul>
-
-      <div class="send-results">
-        <p class="send-results-label">
-          <strong>Данные для ЕМИАС</strong>
-          <a
-            [routerLink]="['/cabinet', 'services-registration', 'qr-code-info']"
-            class="hint-link"
-          >
-            <svg>
-              <use xlink:href="assets/sprites/icons.svg#hint"></use>
-            </svg>
-          </a>
-        </p>
-        <mat-checkbox
-          class="send-results-checkbox"
-          color="primary"
-          [(ngModel)]="sendResults"
-          >Мне нужен цифровой сертификат (QR-код) в ЕМИАС</mat-checkbox
+        <a class="close" [routerLink]="['/cabinet', 'questionnaires']"
+          >Закрыть</a
         >
+      </div>
 
-        <p class="send-results-text" *ngIf="sendResults">
-          Для загрузки результатов теста на Госуслуги для получения QR-кода -
-          указывайте паспорт гражданина РФ или Свидетельство о рождении, номер
-          полиса <strong>ОМС</strong> и <strong>СНИЛС</strong>.
-        </p>
+      <div class="info-content">
+        <ng-container
+          *ngIf="isOnlyQuestionnaire && corpQuestionnaire; else content"
+        >
+          <p>
+            У вас есть возможность оформить услуги как корпоративный клиент.
+          </p>
+        </ng-container>
+        <ng-template #content>
+          <p class="corporate-info" *ngIf="hasCorpQuestionnaires">
+            <strong>Обратите внимание!</strong> В заказе выбрано несколько анкет
+            вместе с корпоративной. Оплата с корпоративного счета в данном
+            случае недоступна.
+          </p>
+
+          <h6 class="info-title">
+            Проверьте правильность <br />
+            заполнения анкет!
+          </h6>
+          <ul class="info-list">
+            <li>
+              Для предоставления результатов тестов на территории РФ -
+              указывайте Паспорт гражданина РФ или Свидетельство о рождении
+            </li>
+            <li>
+              Для международных поездок, рекомендуем указывать данные
+              загранпаспорта
+            </li>
+          </ul>
+
+          <div class="send-results">
+            <p class="send-results-label">
+              <strong>Данные для ЕМИАС</strong>
+              <a
+                [routerLink]="[
+                  '/cabinet',
+                  'services-registration',
+                  'qr-code-info'
+                ]"
+                class="hint-link"
+              >
+                <svg>
+                  <use xlink:href="assets/sprites/icons.svg#hint"></use>
+                </svg>
+              </a>
+            </p>
+            <mat-checkbox
+              class="send-results-checkbox"
+              color="primary"
+              [(ngModel)]="sendResults"
+              >Мне нужен цифровой сертификат (QR-код) в ЕМИАС</mat-checkbox
+            >
+
+            <p class="send-results-text" *ngIf="sendResults">
+              Для загрузки результатов теста на Госуслуги для получения QR-кода
+              - указывайте паспорт гражданина РФ или Свидетельство о рождении,
+              номер полиса <strong>ОМС</strong> и <strong>СНИЛС</strong>.
+            </p>
+          </div>
+        </ng-template>
       </div>
     </div>
   </div>
-</div>
 
-<div class="buttons">
-  <button type="button" (click)="goToCreation()" class="button">
-    <span>Далее</span>
-    <svg width="1.6rem" height="1.6rem">
-      <use xlink:href="assets/sprites/icons.svg#next"></use>
-    </svg>
-  </button>
-</div>
+  <div
+    class="buttons"
+    *ngIf="!(isOnlyQuestionnaire && corpQuestionnaire); else buttonsGroup"
+  >
+    <button type="button" (click)="goToCreation()" class="button">
+      <span>Далее</span>
+      <svg width="1.6rem" height="1.6rem">
+        <use xlink:href="assets/sprites/icons.svg#next"></use>
+      </svg>
+    </button>
+  </div>
+
+  <ng-template #buttonsGroup>
+    <div class="buttons group">
+      <button type="button" (click)="goToCreation()" class="button primary">
+        <span>Обычный</span>
+      </button>
+      <button type="button" (click)="makeCorporateOrder()" class="button">
+        <span>Корпоративный</span>
+      </button>
+    </div>
+  </ng-template>
+</ng-container>

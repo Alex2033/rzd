@@ -10,10 +10,15 @@
       <a class="close" [routerLink]="['/cabinet', 'questionnaires']">Закрыть</a>
     </div>
 
-    <h1 class="page-title">Выберите способ оплаты</h1>
+    <h1 class="page-title">
+      {{ isCorporatePayment ? "Способ оплаты" : "Выберите способ оплаты" }}
+    </h1>
+    <p *ngIf="isCorporatePayment" class="corp-text">
+      Ваш заказ будет оплачен с корпоративног счета.
+    </p>
   </div>
 
-  <div class="payment-selection">
+  <div class="payment-selection" *ngIf="!isCorporatePayment">
     <mat-radio-group
       [(ngModel)]="selectedPayment"
       (ngModelChange)="resend = false"
@@ -39,10 +44,10 @@
     <button
       type="button"
       (click)="pay()"
-      [disabled]="!selectedPayment"
+      [disabled]="!selectedPayment && !isCorporatePayment"
       class="button"
     >
-      <span>Оплатить</span>
+      <span> {{ isCorporatePayment ? "Подтвердить" : "Оплатить" }}</span>
     </button>
   </div>
 </div>

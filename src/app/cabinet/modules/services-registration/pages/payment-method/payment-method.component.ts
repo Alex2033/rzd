@@ -23,6 +23,7 @@ export class PaymentMethodComponent implements OnInit {
   public order: OrderInterface;
   public settings: SettingsInterface = {} as SettingsInterface;
   public utmMark: string = '';
+  public isCorporatePayment: boolean = false;
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -32,8 +33,7 @@ export class PaymentMethodComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private language: LanguageService,
-    private settingsService: SettingsService,
-    private corporateClients: CorporateClientsService
+    private settingsService: SettingsService
   ) {}
 
   ngOnInit(): void {
@@ -44,6 +44,10 @@ export class PaymentMethodComponent implements OnInit {
           if (order) {
             this.order = order;
             this.selectedPayment = order.payment;
+          }
+
+          if (order.payment === 'CORPORATE') {
+            this.isCorporatePayment = true;
           }
 
           return this.settingsService.getSettings();
