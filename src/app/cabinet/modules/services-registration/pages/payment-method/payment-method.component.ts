@@ -23,8 +23,6 @@ export class PaymentMethodComponent implements OnInit {
   public order: OrderInterface;
   public settings: SettingsInterface = {} as SettingsInterface;
   public utmMark: string = '';
-  public corpPaymentEnable: boolean = false;
-  public corpErrorText: string;
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -48,16 +46,6 @@ export class PaymentMethodComponent implements OnInit {
             this.selectedPayment = order.payment;
           }
 
-          return this.corporateClients.corpCheck(order.id);
-        }),
-        catchError((err) => {
-          if (err instanceof HttpErrorResponse) {
-            this.setErrors(err.error.error);
-          }
-          return of(undefined);
-        }),
-        switchMap((res) => {
-          this.corpPaymentEnable = res;
           return this.settingsService.getSettings();
         })
       )
@@ -65,21 +53,6 @@ export class PaymentMethodComponent implements OnInit {
         this.settings = settings;
         this.applyDiscount(settings);
       });
-  }
-
-  setErrors(err: string): void {
-    switch (err) {
-      case 'LIMIT_EXCEEDED':
-        this.corpErrorText = 'Лимит исчерпан.';
-        break;
-
-      case 'OUTSIDERS_FOUND':
-        this.corpErrorText = 'В заказе несколько анкет.';
-        break;
-
-      default:
-        break;
-    }
   }
 
   ngOnDestroy() {
