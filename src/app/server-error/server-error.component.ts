@@ -167,6 +167,13 @@ export class ServerErrorComponent implements OnInit, OnDestroy {
           : '/cabinet/orders';
         break;
 
+      case 'LIMIT_EXCEEDED':
+        this.closeLink = '/cabinet/questionnaires';
+        this.text = 'Лимит на оплату услуг с корпоративного счета исчерпан.';
+        this.buttonText = 'Анкеты';
+        this.link = '/cabinet/questionnaires';
+        break;
+
       default:
         this.text = 'Ошибка соединения с сервером...';
         this.buttonText = 'Попробовать снова';

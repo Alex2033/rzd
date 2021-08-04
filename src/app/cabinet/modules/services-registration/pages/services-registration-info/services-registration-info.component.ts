@@ -17,6 +17,7 @@ export class ServicesRegistrationInfoComponent implements OnInit, OnDestroy {
   public hasCorpQuestionnaires: boolean = false;
   public corpQuestionnaire: boolean = false;
   public pageLoaded: boolean = true;
+  public areAvailableQuestionnaires: boolean;
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -52,6 +53,7 @@ export class ServicesRegistrationInfoComponent implements OnInit, OnDestroy {
       )
       .subscribe((res) => {
         this.corpQuestionnaire = res.is_corporate;
+        this.areAvailableQuestionnaires = res.available_services.length > 0;
       });
   }
 
@@ -71,12 +73,17 @@ export class ServicesRegistrationInfoComponent implements OnInit, OnDestroy {
     this.servicesRegistration.setOrder({
       payment: 'CORPORATE',
     });
-    this.router.navigate([
-      '/cabinet',
-      'services-registration',
-      'questions',
-      this.servicesRegistration.order.id,
-    ]);
+    if (this.areAvailableQuestionnaires) {
+      this.router.navigate([
+        '/cabinet',
+        'services-registration',
+        'questions',
+        this.servicesRegistration.order.id,
+      ]);
+      return;
+    }
+
+    this.router.navigate(['/server-error', 'LIMIT_EXCEEDED']);
   }
 
   ngOnDestroy() {
