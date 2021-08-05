@@ -46,9 +46,6 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getOrder();
-    setTimeout(() => {
-      console.log(this.servicesLoaded);
-    }, 5000);
   }
 
   ngOnDestroy() {

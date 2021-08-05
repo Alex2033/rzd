@@ -70,7 +70,11 @@ export class ConfirmOrderComponent implements OnInit, OnDestroy {
       (d) => d.utm_source === this.settings.utmMark
     );
 
-    if (this.utmDiscount) {
+    if (
+      this.utmDiscount &&
+      this.order.items.length !== 1 &&
+      this.order.payment !== 'CORPORATE'
+    ) {
       const start: Date = new Date(this.utmDiscount.dt_start);
       const stop: Date = new Date(this.utmDiscount.dt_stop);
 
