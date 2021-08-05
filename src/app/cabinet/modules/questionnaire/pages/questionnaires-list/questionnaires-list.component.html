@@ -83,7 +83,8 @@
                 >
                   <span>Корпоративный клиент</span>
                   <a
-                    [routerLink]="['/corporate-clients', 'info']"
+                    (click)="$event.stopPropagation()"
+                    [routerLink]="['/c', 'info']"
                     class="hint-link"
                   >
                     <svg>
@@ -180,7 +181,8 @@
                   <div class="corporate-client" *ngIf="child.is_corp_client">
                     <span>Корпоративный клиент</span>
                     <a
-                      [routerLink]="['/corporate-clients', 'info']"
+                      (click)="$event.stopPropagation()"
+                      [routerLink]="['/c', 'info']"
                       class="hint-link"
                     >
                       <svg>
