@@ -13,29 +13,11 @@
     <h1 class="page-title">Подписать документы</h1>
 
     <div class="docs">
-      <div class="doc">
+      <div class="doc" *ngFor="let doc of doc.documents">
         <svg width="1.6rem" height="1.22rem">
           <use xlink:href="assets/sprites/icons.svg#done"></use>
         </svg>
-        <span>Договор оферты</span>
-      </div>
-      <div class="doc">
-        <svg width="1.6rem" height="1.22rem">
-          <use xlink:href="assets/sprites/icons.svg#done"></use>
-        </svg>
-        <span>Заказ к договору оферты</span>
-      </div>
-      <div class="doc">
-        <svg width="1.6rem" height="1.22rem">
-          <use xlink:href="assets/sprites/icons.svg#done"></use>
-        </svg>
-        <span>Согласие на обработку персональных данных</span>
-      </div>
-      <div class="doc">
-        <svg width="1.6rem" height="1.22rem" [hidden]="doc.id_parent">
-          <use xlink:href="assets/sprites/icons.svg#done"></use>
-        </svg>
-        <span>Добровольное согласие на медицинское вмещательство</span>
+        <span>{{ doc.name }}</span>
       </div>
     </div>
 
