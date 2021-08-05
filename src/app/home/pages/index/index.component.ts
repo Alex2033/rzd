@@ -50,7 +50,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.route.queryParams.subscribe((params) => {
-      if (params['corp-anchor']) {
+      if (params['c'] !== undefined && params['c'] !== null) {
         const el = document.getElementById('corp-clients-faq');
         this.corpPanel.open();
         setTimeout(() => {

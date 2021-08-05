@@ -49,7 +49,7 @@ export class ConfirmCorporateClientsComponent implements OnInit, OnDestroy {
   getClient(): void {
     this.route.queryParams
       .pipe(
-        switchMap((params) => this.corporateClients.getClient(params.code)),
+        switchMap((params) => this.corporateClients.getClient(params.c)),
         takeUntil(this.destroy)
       )
       .subscribe(
