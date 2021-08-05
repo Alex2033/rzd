@@ -36,7 +36,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'corporate-clients',
+    path: 'c', // используется как ссылка в смс, нужна как можно короче
     loadChildren: () =>
       import('./corporate-clients/corporate-clients.module').then(
         (m) => m.CorporateClientsModule
