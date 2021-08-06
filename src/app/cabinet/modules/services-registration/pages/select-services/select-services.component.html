@@ -22,7 +22,7 @@
       <h1 class="page-title">Услуги</h1>
       <div
         class="change-selection-mode"
-        *ngIf="order.items?.length > 1"
+        *ngIf="order.items?.length > 1 && services.length"
         (click)="changeSelectionMode()"
       >
         {{ selectEach ? "Выбрать для всех" : "Выбрать для каждого" }}
