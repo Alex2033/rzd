@@ -82,8 +82,9 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
               this.servicesRegistration.order.items[0].id_anketa
             );
           }
-          return of(null);
-        })
+          return of('null');
+        }),
+        takeUntil(this.destroy)
       )
       .subscribe(
         (res: CheckCorpResponseInterface | null) => {

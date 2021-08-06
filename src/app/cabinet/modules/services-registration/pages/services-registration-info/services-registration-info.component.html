@@ -82,7 +82,7 @@
     class="buttons"
     *ngIf="!(isOnlyQuestionnaire && corpQuestionnaire); else buttonsGroup"
   >
-    <button type="button" (click)="goToCreation()" class="button">
+    <button type="button" (click)="goToQuestions()" class="button">
       <span>Далее</span>
       <svg width="1.6rem" height="1.6rem">
         <use xlink:href="assets/sprites/icons.svg#next"></use>
@@ -92,7 +92,11 @@
 
   <ng-template #buttonsGroup>
     <div class="buttons group">
-      <button type="button" (click)="goToCreation()" class="button primary">
+      <button
+        type="button"
+        (click)="corpQuestionnaire = false"
+        class="button primary"
+      >
         <span>Обычный</span>
       </button>
       <button type="button" (click)="makeCorporateOrder()" class="button">

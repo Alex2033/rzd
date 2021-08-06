@@ -57,7 +57,7 @@ export class ServicesRegistrationInfoComponent implements OnInit, OnDestroy {
       });
   }
 
-  goToCreation(): void {
+  goToQuestions(): void {
     this.servicesRegistration.setOrder({
       qr_send: this.sendResults,
     });
@@ -74,12 +74,7 @@ export class ServicesRegistrationInfoComponent implements OnInit, OnDestroy {
       payment: 'CORPORATE',
     });
     if (this.areAvailableQuestionnaires) {
-      this.router.navigate([
-        '/cabinet',
-        'services-registration',
-        'questions',
-        this.servicesRegistration.order.id,
-      ]);
+      this.corpQuestionnaire = false;
       return;
     }
 

@@ -29,7 +29,11 @@
       </div>
     </div>
 
-    <div *ngIf="servicesLoaded" class="fios" [class.each-mode]="selectEach">
+    <div
+      *ngIf="servicesLoaded && services.length"
+      class="fios"
+      [class.each-mode]="selectEach"
+    >
       <div class="fio" *ngFor="let item of order.items; let i = index">
         {{ item.fio }}
 
@@ -68,7 +72,10 @@
     </div>
   </div>
 
-  <div class="services" *ngIf="!selectEach && servicesLoaded">
+  <div
+    class="services"
+    *ngIf="!selectEach && servicesLoaded && services.length"
+  >
     <mat-radio-group
       [(ngModel)]="selectedService"
       (ngModelChange)="selectionChange($event)"
@@ -96,7 +103,20 @@
       </mat-radio-button>
     </mat-radio-group>
   </div>
-  <div class="page-container total-sum-container">
+
+  <div
+    class="page-container no-services"
+    *ngIf="!services.length && servicesLoaded"
+  >
+    <p>
+      В данной точке нет доступных вам услуг, вернитесь и выберите другую точку.
+    </p>
+  </div>
+
+  <div
+    class="page-container total-sum-container"
+    *ngIf="servicesLoaded && services.length"
+  >
     <div class="total-sum">
       <span>Итого:</span>
       <span class="service-price">{{ sum ? sum : 0 }}&#8381;</span>
@@ -104,7 +124,7 @@
   </div>
 </div>
 
-<div class="buttons">
+<div class="buttons" *ngIf="servicesLoaded && services.length">
   <button
     class="button"
     [class.is-loading]="isLoading"
