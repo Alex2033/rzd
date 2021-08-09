@@ -23,7 +23,14 @@
           </p>
         </ng-container>
         <ng-template #content>
-          <p class="corporate-info" *ngIf="hasCorpQuestionnaires">
+          <p
+            class="corporate-info"
+            *ngIf="
+              hasCorpQuestionnaires &&
+              !isOnlyQuestionnaire &&
+              !corpQuestionnaire
+            "
+          >
             <strong>Обратите внимание!</strong> В заказе выбрано несколько анкет
             вместе с корпоративной. Оплата с корпоративного счета в данном
             случае недоступна.
