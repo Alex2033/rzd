@@ -65,10 +65,7 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
             this.convertServiceObjToNum(order);
           }
 
-          this.questionnaires$ = this.questionnairesService.getQuestionnaires();
-          this.setOrderValues();
-
-          this.sum = this.order.sum;
+          this.mapQuestionnaires();
           return this.servicesService.getServices(this.order.id_point);
         }),
         switchMap((res) => {
@@ -101,6 +98,13 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
           }
         }
       );
+  }
+
+  mapQuestionnaires(): void {
+    this.questionnaires$ = this.questionnairesService.getQuestionnaires();
+    this.setOrderValues();
+
+    this.sum = this.order.sum;
   }
 
   convertServiceObjToNum(order: OrderInterface): void {
