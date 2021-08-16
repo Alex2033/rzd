@@ -41,6 +41,7 @@
   -webkit-appearance: none;
   border: 0.1rem solid $light-gray;
   appearance: none;
+  -moz-appearance: textfield;
 
   &.invalid {
     color: $accent;
