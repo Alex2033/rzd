@@ -108,7 +108,11 @@
 
   <!-- points -->
   <div class="select-points" *ngIf="addressMode === 'list'">
-    <mat-radio-group [(ngModel)]="selectedPoint" color="primary">
+    <mat-radio-group
+      (ngModelChange)="clearOrderServices()"
+      [(ngModel)]="selectedPoint"
+      color="primary"
+    >
       <mat-radio-button *ngFor="let point of points" [value]="point">
         <div class="point-name">{{ point.name }}</div>
         <div class="point-address">{{ point.address }}</div>

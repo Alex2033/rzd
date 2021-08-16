@@ -90,6 +90,13 @@ export class SelectPointComponent implements OnInit, OnDestroy {
     ]);
   }
 
+  clearOrderServices(): void {
+    this.servicesRegistration.order.items.forEach((item) => {
+      item.services = [];
+    });
+    this.servicesRegistration.order.sum = 0;
+  }
+
   selectMapPoint(event, point: ServicePointInterface): void {
     this.selectedPlacemark = this.uniqueGeoObjects.find(
       (o) =>
