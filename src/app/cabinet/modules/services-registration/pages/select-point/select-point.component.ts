@@ -43,17 +43,7 @@ export class SelectPointComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getOrder();
-    this.servicePoints
-      .getServicePoints()
-      .pipe(takeUntil(this.destroy))
-      .subscribe((points) => {
-        this.points = points;
-        this.points.forEach((p) => (p['selectedOnMap'] = false));
-        const pointId = JSON.parse(
-          sessionStorage.getItem('rzd-order')
-        )?.id_point;
-        this.selectedPoint = this.points.find((p) => p.id === pointId);
-      });
+    this.getPoints();
   }
 
   getOrder(): void {
@@ -64,6 +54,22 @@ export class SelectPointComponent implements OnInit, OnDestroy {
           this.servicesRegistration.setOrder(res);
         }
       });
+  }
+
+  getPoints(): void {
+    this.servicePoints
+      .getServicePoints()
+      .pipe(takeUntil(this.destroy))
+      .subscribe((points) => {
+        this.mapPoints(points);
+      });
+  }
+
+  mapPoints(points: ServicePointInterface[]): void {
+    this.points = points;
+    this.points.forEach((p) => (p['selectedOnMap'] = false));
+    const pointId = JSON.parse(sessionStorage.getItem('rzd-order'))?.id_point;
+    this.selectedPoint = this.points.find((p) => p.id === pointId);
   }
 
   ngOnDestroy() {
