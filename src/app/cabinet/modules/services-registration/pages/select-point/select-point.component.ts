@@ -98,14 +98,7 @@ export class SelectPointComponent implements OnInit, OnDestroy {
   }
 
   ready(event, point: ServicePointInterface): void {
-    this.geoObjects.push(event.target);
-    this.uniqueGeoObjects = this.geoObjects.filter(
-      (thing, index, self) =>
-        index ===
-        self.findIndex(
-          (t) => t.geometry._coordinates[0] === thing.geometry._coordinates[0]
-        )
-    );
+    this.mapGeoObjects(event);
 
     if (
       JSON.stringify(this.selectedPoint) === JSON.stringify(point) &&
@@ -117,6 +110,17 @@ export class SelectPointComponent implements OnInit, OnDestroy {
         'assets/gps-blue.svg'
       );
     }
+  }
+
+  mapGeoObjects(event): void {
+    this.geoObjects.push(event.target);
+    this.uniqueGeoObjects = this.geoObjects.filter(
+      (thing, index, self) =>
+        index ===
+        self.findIndex(
+          (t) => t.geometry._coordinates[0] === thing.geometry._coordinates[0]
+        )
+    );
   }
 
   changeToList(): void {
