@@ -129,7 +129,10 @@
     class="button"
     [class.is-loading]="isLoading"
     (click)="selectService()"
-    [disabled]="(!selectedService && !separateSelected.length) || isLoading"
+    [disabled]="
+      (!selectedService && separateSelected.length !== order.items.length) ||
+      isLoading
+    "
   >
     <span>Далее</span>
     <svg width="1.6rem" height="1.6rem">
