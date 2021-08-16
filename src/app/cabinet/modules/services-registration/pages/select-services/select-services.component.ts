@@ -62,11 +62,7 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
         switchMap((order) => {
           if (order) {
             // преобразование услуг из объекта в число
-            order.items.forEach((item, itemIndex) => {
-              item.services.forEach((service: any) => {
-                this.order.items[itemIndex].services = [service.id_service];
-              });
-            });
+            this.convertServiceObjToNum(order);
           }
 
           this.questionnaires$ = this.questionnairesService.getQuestionnaires();
@@ -82,13 +78,17 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
               this.servicesRegistration.order.items[0].id_anketa
             );
           }
-          return of('null');
+          return of('');
         }),
         takeUntil(this.destroy)
       )
       .subscribe(
         (res: CheckCorpResponseInterface | null) => {
-          if (res && res.is_corporate && res.available_services.length) {
+          if (
+            res.is_corporate &&
+            res.available_services.length &&
+            this.order.payment === 'CORPORATE'
+          ) {
             this.services = this.services.filter((s) =>
               res.available_services.includes(s.id)
             );
@@ -101,6 +101,14 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
           }
         }
       );
+  }
+
+  convertServiceObjToNum(order: OrderInterface): void {
+    order.items.forEach((item, itemIndex) => {
+      item.services.forEach((service: any) => {
+        this.order.items[itemIndex].services = [service.id_service];
+      });
+    });
   }
 
   setOrderValues(): void {
@@ -158,19 +166,7 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
         },
         (err) => {
           if (err instanceof HttpErrorResponse) {
-            if (err.error.error === 'ANKETA_QR_EMPTY_FIELDS') {
-              this.router.navigate(
-                ['/cabinet', 'services-registration', 'empty-questionnaires'],
-                {
-                  queryParams: {
-                    value: err.error.value,
-                  },
-                }
-              );
-              return;
-            }
-
-            this.router.navigate(['server-error', err.error.error]);
+            this.handleError(err);
           }
         }
       );
@@ -195,22 +191,26 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
         },
         (err) => {
           if (err instanceof HttpErrorResponse) {
-            if (err.error.error === 'ANKETA_QR_EMPTY_FIELDS') {
-              this.router.navigate(
-                ['/cabinet', 'services-registration', 'empty-questionnaires'],
-                {
-                  queryParams: {
-                    value: err.error.value,
-                  },
-                }
-              );
-              return;
-            }
-
-            this.router.navigate(['/server-error', err.error.error]);
+            this.handleError(err);
           }
         }
       );
+  }
+
+  handleError(err: HttpErrorResponse): void | null {
+    if (err.error.error === 'ANKETA_QR_EMPTY_FIELDS') {
+      this.router.navigate(
+        ['/cabinet', 'services-registration', 'empty-questionnaires'],
+        {
+          queryParams: {
+            value: err.error.value,
+          },
+        }
+      );
+      return;
+    }
+
+    this.router.navigate(['server-error', err.error.error]);
   }
 
   selectionChange(event: number, item: QuestionnaireOrderInterface): void {

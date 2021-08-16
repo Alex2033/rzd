@@ -385,7 +385,9 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
 
   getQueryParams(): void {
     this.route.queryParams.pipe(takeUntil(this.destroy)).subscribe((e) => {
-      this.currentStep = +e.step;
+      if (+e.step) {
+        this.currentStep = +e.step;
+      }
     });
   }
 
