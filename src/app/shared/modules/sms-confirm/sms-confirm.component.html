@@ -18,14 +18,14 @@
       </p>
     </div>
 
-    <div class="otc" name="one-time-code">
+    <div class="otc">
       <fieldset>
         <label for="otc-1" #otc>Number 1</label>
         <label for="otc-2">Number 2</label>
         <label for="otc-3">Number 3</label>
         <label for="otc-4">Number 4</label>
 
-        <div [formGroup]="codeForm">
+        <div [formGroup]="codeForm" name="one-time-code">
           <input
             *ngFor="let input of [1, 2, 3, 4]; index as i"
             type="number"
@@ -37,6 +37,7 @@
             (input)="inputKeyup(inputNum, $event)"
             (keyup)="check(inputNum, $event)"
             inputtype="numeric"
+            (paste)="i === 0 ? onPaste($event) : null"
             [autocomplete]="i === 0 ? 'one-time-code' : null"
             id="{{ 'otc-' + (i + 1) }}"
             #inputNum

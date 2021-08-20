@@ -70,6 +70,7 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
         }),
         switchMap((res) => {
           this.services = res;
+
           if (this.order.items.length <= 1) {
             return this.questionnairesService.checkCorp(
               this.servicesRegistration.order.items[0].id_anketa
@@ -90,6 +91,10 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
               res.available_services.includes(s.id)
             );
           }
+
+          // todo: hard code, временное решение, потом убрать
+          this.filterServices(res);
+
           this.servicesLoaded = true;
         },
         (err) => {
@@ -98,6 +103,20 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
           }
         }
       );
+  }
+
+  filterServices(res): void {
+    if (this.order.id_point === 1115) {
+      if (
+        res.is_corporate &&
+        res.available_services.length &&
+        this.order.payment === 'CORPORATE'
+      ) {
+        this.services = this.services.filter((s) => s.id !== 1109);
+      } else {
+        this.services = this.services.filter((s) => s.id === 1109);
+      }
+    }
   }
 
   mapQuestionnaires(): void {

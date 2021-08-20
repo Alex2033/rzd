@@ -50,12 +50,19 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.setTimer();
+    this.codeFormChanges();
   }
 
   ngOnDestroy() {
     this.destroy.next(null);
     this.destroy.complete();
     this.stopTimer.next();
+  }
+
+  codeFormChanges(): void {
+    this.codeForm.valueChanges.subscribe(() => {
+      this.codeIsValidated();
+    });
   }
 
   getNewCode(): void {
@@ -125,8 +132,23 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
     this.resendCode = false;
   }
 
+  splitNumber(e: any): void {
+    let data = e.data || e.target.value;
+    if (!data) return;
+    if (data.length === 1) return;
+
+    this.popuNext(e.target, data);
+  }
+
+  popuNext(el, data): void {
+    el.value = data[0];
+    data = data.substring(1);
+    if (el.nextElementSibling && data.length) {
+      this.popuNext(el.nextElementSibling, data);
+    }
+  }
+
   inputKeyup(inputNum: HTMLInputElement, e: any): void {
-    const valueLength = inputNum.value.length;
     const previousSibling = <HTMLInputElement>inputNum.previousElementSibling;
     const nextSibling = <HTMLInputElement>inputNum.nextElementSibling;
 
@@ -140,32 +162,30 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (inputNum.value.length > inputNum.maxLength) {
-      inputNum.value = inputNum.value.slice(0, inputNum.maxLength);
-    }
-
     if (
       (e.keyCode === 8 || e.keyCode === 37) &&
       previousSibling &&
       previousSibling.tagName === 'INPUT'
     ) {
       previousSibling.select();
-    } else if (e.keyCode !== 8 && nextSibling && valueLength === 1) {
-      (<HTMLInputElement>nextSibling).select();
+    } else if (e.keyCode !== 8 && nextSibling) {
+      nextSibling.select();
     }
 
-    this.codeIsValidated();
+    if (e.target.value.length > 1) {
+      this.splitNumber(e);
+    }
   }
 
   codeIsValidated(): void {
     if (this.codeForm.valid) {
       this.isLoading = true;
 
-      const values: string = Object.values(this.codeForm.value).join('');
+      const code: string = Object.values(this.codeForm.value).join('');
 
       const confirmCode: SmsConfirmInterface = {
         phone: this.phoneValue,
-        code: values,
+        code,
       };
 
       let type: string = 'confirm_invite';
@@ -221,10 +241,27 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
   }
 
   inputFocus(inputNum: HTMLInputElement): void {
+    const previousSibling = <HTMLInputElement>inputNum.previousElementSibling;
+
     if (inputNum === this.otc.nativeElement) return;
 
     if (this.otc.nativeElement.value == '') {
       this.otc.nativeElement.focus();
     }
+
+    if (previousSibling && previousSibling.value == '') {
+      previousSibling.focus();
+    }
+  }
+
+  onPaste(event: ClipboardEvent): void {
+    const clipboardData: DataTransfer = event.clipboardData;
+    const pastedText: string = clipboardData.getData('text');
+
+    setTimeout(() => {
+      Object.values(this.codeForm.value).forEach((_, index) => {
+        this.codeForm.get(`control${index + 1}`).setValue(+pastedText[index]);
+      });
+    });
   }
 }
