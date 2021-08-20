@@ -61,7 +61,7 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
 
   codeFormChanges(): void {
     this.codeForm.valueChanges.subscribe(() => {
-      this.codeIsValidated();
+      this.validateCode();
     });
   }
 
@@ -177,7 +177,7 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
     }
   }
 
-  codeIsValidated(): void {
+  validateCode(): void {
     if (this.codeForm.valid) {
       this.isLoading = true;
 
