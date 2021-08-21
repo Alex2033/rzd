@@ -1,3 +1,4 @@
+import { ServerErrorComponent } from './server-error/server-error.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './shared/guards/auth.guard';
@@ -30,13 +31,10 @@ const routes: Routes = [
   },
   {
     path: 'server-error/:key',
-    loadChildren: () =>
-      import('./server-error/server-error.module').then(
-        (m) => m.ServerErrorModule
-      ),
+    component: ServerErrorComponent,
   },
   {
-    path: 'c', // используется как ссылка в смс, нужна как можно короче
+    path: 'c', // используется как ссылка в смс, нужно как можно короче
     loadChildren: () =>
       import('./corporate-clients/corporate-clients.module').then(
         (m) => m.CorporateClientsModule
