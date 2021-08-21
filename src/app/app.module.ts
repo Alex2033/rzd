@@ -14,6 +14,7 @@ import { AuthInterceptor } from './auth/interceptors/auth.interceptor';
 import { registerLocaleData } from '@angular/common';
 import { ClickOutsideDirective } from './shared/directives/click-outside/click-outside.directive';
 import localeRu from '@angular/common/locales/ru';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -24,6 +25,7 @@ registerLocaleData(localeRu, 'ru');
     NavigationMenuComponent,
     UserMenuComponent,
     ClickOutsideDirective,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,

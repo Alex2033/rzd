@@ -1,0 +1,33 @@
+@import "theme";
+@import "vars";
+
+.not-found {
+  text-align: center;
+  padding-bottom: 8rem;
+  height: calc(100vh - #{$header-height});
+}
+
+.not-found-container {
+  padding-top: 17.4rem;
+}
+
+.not-found-number {
+  color: #be1622;
+  line-height: 0.75;
+  font-size: 13.3rem;
+  font-weight: 700;
+}
+
+.not-found-title {
+  font-size: 2.4rem;
+  margin-top: 2.9rem;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.not-found-pattern {
+  height: 2.4rem;
+  object-fit: cover;
+  width: 100%;
+  margin-top: 0.7rem;
+}
