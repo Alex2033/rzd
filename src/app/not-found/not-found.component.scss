@@ -3,12 +3,13 @@
 
 .not-found {
   text-align: center;
-  padding-bottom: 8rem;
+  display: flex;
+  flex-direction: column;
   height: calc(100vh - #{$header-height});
 }
 
-.not-found-container {
-  padding-top: 17.4rem;
+.not-found-content {
+  margin: auto;
 }
 
 .not-found-number {
