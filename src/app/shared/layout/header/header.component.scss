@@ -1,16 +1,19 @@
 @import "theme";
 @import "vars";
 
+.header-inner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+}
+
 .header {
   background-color: $light;
   box-shadow: 0rem 0.2rem 0.8rem rgba(147, 147, 147, 0.35);
   padding: 0 2rem;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: $header-height;
-  width: 100%;
-  z-index: 100;
+  height: var(--header-height);
   display: flex;
   align-items: center;
 }

@@ -1,3 +1,4 @@
+import { HeaderModule } from './shared/layout/header/header.module';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -6,7 +7,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatExpansionModule } from '@angular/material/expansion';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './shared/layout/header/header.component';
 import { NavigationMenuComponent } from './shared/layout/navigation-menu/navigation-menu.component';
 import { UserMenuComponent } from './shared/layout/user-menu/user-menu.component';
 import { LanguagesResolver } from './shared/resolvers/language.resolver';
@@ -21,7 +21,6 @@ registerLocaleData(localeRu, 'ru');
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
     NavigationMenuComponent,
     UserMenuComponent,
     ClickOutsideDirective,
@@ -33,6 +32,7 @@ registerLocaleData(localeRu, 'ru');
     BrowserAnimationsModule,
     HttpClientModule,
     MatExpansionModule,
+    HeaderModule,
   ],
   providers: [
     LanguagesResolver,

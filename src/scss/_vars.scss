@@ -1,2 +1,6 @@
 $container-gap: 2rem;
-$header-height: 6.4rem;
+
+// для динамического изменения в компоненте
+:root {
+  --header-height: 6.4rem;
+}

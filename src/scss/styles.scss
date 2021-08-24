@@ -84,10 +84,6 @@ ul {
   color: $gray;
 }
 
-.page-content {
-  padding-top: $header-height;
-}
-
 .page-container {
   padding-right: $container-gap;
   padding-left: $container-gap;
@@ -122,8 +118,6 @@ ul {
 }
 
 .home-inner-page {
-  padding-top: $header-height;
-
   .back-link {
     margin-bottom: 1.6rem;
   }

@@ -5,6 +5,10 @@
   flex-direction: column;
 }
 
+.content {
+  padding-top: var(--header-height);
+}
+
 .menu-overlay {
   position: fixed;
   height: 100%;

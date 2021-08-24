@@ -1,4 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { LanguageService } from '../../services/language.service';
@@ -10,7 +17,9 @@ import { LanguageInterface } from '../../types/language.interface';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild('headerInner') headerInner: ElementRef;
+
   public activeLanguage: LanguageInterface = {} as LanguageInterface;
   public showDropdown: boolean = false;
   public isAuth: boolean;
@@ -46,6 +55,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
     });
     this.isAuth = this.account.isAuth();
+  }
+
+  ngAfterViewInit(): void {
+    console.log(this.headerInner.nativeElement.offsetHeight);
   }
 
   ngOnDestroy(): void {

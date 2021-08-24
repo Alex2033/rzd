@@ -1,62 +1,70 @@
-<header class="header">
-  <div class="header-container">
-    <button class="header-button menu-button" (click)="setNavigationMenu(true)">
-      <svg width="3.3rem" height="1.8rem">
-        <use xlink:href="assets/sprites/icons.svg#burger"></use>
-      </svg>
-    </button>
-    <div class="spacer"></div>
-
-    <!-- language -->
-    <div class="language-select" (clickOutside)="showDropdown = false">
-      <div class="flag" (click)="showDropdown = !showDropdown">
-        <img [src]="activeLanguage.flag" alt="country flag" />
-      </div>
-      <div class="language" (click)="showDropdown = !showDropdown">
-        <span>{{ activeLanguage.label }}</span>
-        <svg
-          class="language-arrow"
-          [class.rotated]="showDropdown"
-          width="1.4rem"
-          height="1.4rem"
-        >
-          <use xlink:href="assets/sprites/icons.svg#arrow-down"></use>
+<div class="header-inner" #headerInner>
+  <!-- header -->
+  <header class="header">
+    <div class="header-container">
+      <button
+        class="header-button menu-button"
+        (click)="setNavigationMenu(true)"
+      >
+        <svg width="3.3rem" height="1.8rem">
+          <use xlink:href="assets/sprites/icons.svg#burger"></use>
         </svg>
+      </button>
+      <div class="spacer"></div>
+
+      <!-- language -->
+      <div class="language-select" (clickOutside)="showDropdown = false">
+        <div class="flag" (click)="showDropdown = !showDropdown">
+          <img [src]="activeLanguage.flag" alt="country flag" />
+        </div>
+        <div class="language" (click)="showDropdown = !showDropdown">
+          <span>{{ activeLanguage.label }}</span>
+          <svg
+            class="language-arrow"
+            [class.rotated]="showDropdown"
+            width="1.4rem"
+            height="1.4rem"
+          >
+            <use xlink:href="assets/sprites/icons.svg#arrow-down"></use>
+          </svg>
+        </div>
+
+        <!-- language dropdown -->
+        <ul class="language-dropdown" [class.is-visible]="showDropdown">
+          <li
+            (click)="setActiveLanguage(language)"
+            class="language-item"
+            *ngFor="let language of languages"
+          >
+            <ng-container
+              *ngIf="activeLanguage['langId'] !== language['langId']"
+            >
+              <img [src]="language.flag" alt="country flag" />
+              <span>{{ language.label }}</span>
+            </ng-container>
+          </li>
+        </ul>
       </div>
 
-      <!-- language dropdown -->
-      <ul class="language-dropdown" [class.is-visible]="showDropdown">
-        <li
-          (click)="setActiveLanguage(language)"
-          class="language-item"
-          *ngFor="let language of languages"
-        >
-          <ng-container *ngIf="activeLanguage['langId'] !== language['langId']">
-            <img [src]="language.flag" alt="country flag" />
-            <span>{{ language.label }}</span>
-          </ng-container>
-        </li>
-      </ul>
+      <button
+        *ngIf="!this.account.isAuth()"
+        [routerLink]="['/auth', 'login']"
+        class="header-button login-button"
+      >
+        <svg width="2.223rem" height="2.34rem">
+          <use xlink:href="assets/sprites/icons.svg#login"></use>
+        </svg>
+      </button>
+
+      <button
+        *ngIf="this.account.isAuth()"
+        class="header-button user-button"
+        (click)="setUserMenu(true)"
+      >
+        <svg width="2.6rem" height="2.6rem">
+          <use xlink:href="assets/sprites/icons.svg#user"></use>
+        </svg>
+      </button>
     </div>
-
-    <button
-      *ngIf="!this.account.isAuth()"
-      [routerLink]="['/auth', 'login']"
-      class="header-button login-button"
-    >
-      <svg width="2.223rem" height="2.34rem">
-        <use xlink:href="assets/sprites/icons.svg#login"></use>
-      </svg>
-    </button>
-
-    <button
-      *ngIf="this.account.isAuth()"
-      class="header-button user-button"
-      (click)="setUserMenu(true)"
-    >
-      <svg width="2.6rem" height="2.6rem">
-        <use xlink:href="assets/sprites/icons.svg#user"></use>
-      </svg>
-    </button>
-  </div>
-</header>
+  </header>
+</div>
