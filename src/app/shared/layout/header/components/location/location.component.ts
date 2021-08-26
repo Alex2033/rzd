@@ -1,3 +1,4 @@
+import { LocationService } from './../../../../services/location.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,14 +9,5 @@ import { Component, OnInit } from '@angular/core';
 export class LocationComponent implements OnInit {
   constructor() {}
 
-  ngOnInit() {
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        console.log('pos:', pos);
-      },
-      (err) => {
-        console.log('err:', err);
-      }
-    );
-  }
+  ngOnInit() {}
 }
