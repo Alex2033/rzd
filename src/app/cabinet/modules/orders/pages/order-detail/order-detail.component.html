@@ -173,7 +173,7 @@
     <div class="discount" *ngIf="order.utm_discount_value">
       <span>Скидка</span>
       <span class="discount-number"
-        >-{{ order.sum - order.total | number }}&#8381; ({{
+        >-{{ order.sum - order.total | number }} ({{
           order.utm_discount_type === "percent"
             ? order.utm_discount_value + "%"
             : null
@@ -183,7 +183,7 @@
 
     <div class="total-block">
       <div class="total-block-text">Итого:</div>
-      <div class="total-price">{{ order.total }}₽</div>
+      <div class="total-price">{{ order.total }}&#8381;</div>
     </div>
 
     <a [routerLink]="['/cabinet', 'orders', 'results']" class="get-results"
