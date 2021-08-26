@@ -58,7 +58,7 @@ export class ConfirmCorporateClientsComponent implements OnInit, OnDestroy {
         },
         (err) => {
           if (err instanceof HttpErrorResponse) {
-            this.setErrors(err.error.error);
+            this.router.navigate(['/auth', 'login']);
           }
         }
       );
@@ -70,7 +70,7 @@ export class ConfirmCorporateClientsComponent implements OnInit, OnDestroy {
     });
   }
 
-  setErrors(err: string): void {
+  setControlErrors(err: string): void {
     switch (err) {
       case 'USER_NOT_FOUND':
         this.form.get('birthday').setErrors({
@@ -117,7 +117,7 @@ export class ConfirmCorporateClientsComponent implements OnInit, OnDestroy {
         },
         (err) => {
           if (err instanceof HttpErrorResponse) {
-            this.setErrors(err.error.error);
+            this.setControlErrors(err.error.error);
           }
         }
       );
