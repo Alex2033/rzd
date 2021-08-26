@@ -1,0 +1,33 @@
+@import "theme";
+@import "vars";
+
+.location-bar {
+  padding: 0.9rem $container-gap;
+  background-color: #f9f9f9;
+  border-bottom: 0.1rem solid #eeeeee;
+  display: flex;
+  font-size: 1.2rem;
+  line-height: 1.34;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.phone-link {
+  color: $primary;
+  text-decoration: none;
+}
+
+.selected-city {
+  display: flex;
+  align-items: center;
+
+  > * {
+    &:not(:first-child) {
+      margin-left: 0.4rem;
+    }
+  }
+}
+
+.selected-city-icon {
+  margin-top: 0.2rem;
+}

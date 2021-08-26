@@ -3,13 +3,19 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-location',
   templateUrl: './location.component.html',
-  styleUrls: ['./location.component.scss']
+  styleUrls: ['./location.component.scss'],
 })
 export class LocationComponent implements OnInit {
-
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        console.log('pos:', pos);
+      },
+      (err) => {
+        console.log('err:', err);
+      }
+    );
   }
-
 }
