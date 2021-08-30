@@ -1,3 +1,4 @@
+import { LocationService } from 'src/app/shared/services/location.service';
 import { SettingsService } from './shared/services/settings.service';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -45,7 +46,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private language: LanguageService,
     private router: Router,
-    private settings: SettingsService
+    private settings: SettingsService,
+    private location: LocationService
   ) {
     this.getQueryParams();
   }
@@ -62,6 +64,15 @@ export class AppComponent implements OnInit, OnDestroy {
           this.removeAuthLocalStorage(event);
           if (!event.url.includes('services-registration')) {
             sessionStorage.removeItem('rzd-order');
+          }
+          if (
+            event.url.includes('auth') ||
+            (event.url.includes('cabinet') &&
+              !event.url.includes('select-point'))
+          ) {
+            this.location.showLocation = false;
+          } else {
+            this.location.showLocation = true;
           }
           return this.route.queryParams;
         }),

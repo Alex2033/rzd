@@ -1,6 +1,6 @@
 <div class="header-inner" #headerInner>
   <!-- location -->
-  <app-location></app-location>
+  <app-location *ngIf="location.showLocation"></app-location>
 
   <!-- header -->
   <header class="header">

@@ -1,3 +1,4 @@
+import { NavigationEnd, Router } from '@angular/router';
 import { CityInterface } from './../types/city.interface';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, BehaviorSubject } from 'rxjs';
@@ -26,6 +27,7 @@ export class LocationService {
     this.currentLocationSubject$.asObservable();
   public readonly cityId: number = this.currentLocationSubject$.getValue()?.id;
 
+  public showLocation: boolean = false;
   private readonly ipInfo: string = 'http://ipwhois.app/json/';
 
   constructor(private http: HttpClient) {
@@ -40,24 +42,26 @@ export class LocationService {
   }
 
   getCity(): void {
-    this.getCurrentLocation()
-      .pipe(
-        catchError(() => this.getCityByIp()),
-        switchMap((coords) =>
-          this.getCityByCoords(coords.latitude, coords.longitude)
-        ),
-        catchError((err) => {
-          return of(err.error);
-        })
-      )
-      .subscribe((res: CityInterface) => {
-        if (
-          JSON.stringify(this.currentLocationSubject$.getValue) ===
-          JSON.stringify(res)
-        ) {
-          this.currentLocationSubject$.next(res);
-        }
-      });
+    if (this.showLocation) {
+      this.getCurrentLocation()
+        .pipe(
+          catchError(() => this.getCityByIp()),
+          switchMap((coords) =>
+            this.getCityByCoords(coords.latitude, coords.longitude)
+          ),
+          catchError((err) => {
+            return of(err.error);
+          })
+        )
+        .subscribe((res: CityInterface) => {
+          if (
+            JSON.stringify(this.currentLocationSubject$.getValue) ===
+            JSON.stringify(res)
+          ) {
+            this.currentLocationSubject$.next(res);
+          }
+        });
+    }
   }
 
   getCurrentLocation(): Observable<GeolocationCoordinates> {

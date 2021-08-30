@@ -7,18 +7,19 @@ import {
   ElementRef,
   AfterViewInit,
 } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { combineLatest, Subscription } from 'rxjs';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { LanguageService } from '../../services/language.service';
 import { MenuService } from '../../services/menu.service';
 import { LanguageInterface } from '../../types/language.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   @ViewChild('headerInner') headerInner: ElementRef;
 
   public activeLanguage: LanguageInterface = {} as LanguageInterface;
@@ -42,7 +43,8 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private menuService: MenuService,
     private language: LanguageService,
-    private location: LocationService,
+    private router: Router,
+    public location: LocationService,
     public account: AccountService
   ) {}
 
@@ -57,10 +59,10 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
     this.isAuth = this.account.isAuth();
-  }
-
-  ngAfterViewInit(): void {
-    this.location.currentLocation$.subscribe(() => {
+    combineLatest([
+      this.router.events,
+      this.location.currentLocation$,
+    ]).subscribe(([events, currentLocation]) => {
       setTimeout(() => {
         document.documentElement.style.setProperty(
           '--header-content-height',
