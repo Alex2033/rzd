@@ -1,8 +1,9 @@
+import { LocationService } from 'src/app/shared/services/location.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { Observable, ReplaySubject } from 'rxjs';
-import { shareReplay, takeUntil } from 'rxjs/operators';
+import { shareReplay, switchMap, takeUntil } from 'rxjs/operators';
 import { slideUpAnimation } from 'src/app/shared/animations/slide-up.animation';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { ServicePointsService } from 'src/app/shared/services/service-points.service';
@@ -41,7 +42,8 @@ export class IndexComponent implements OnInit, AfterViewInit {
     private services: ServicesService,
     private servicePoints: ServicePointsService,
     private account: AccountService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: LocationService
   ) {}
 
   ngOnInit(): void {
@@ -61,10 +63,14 @@ export class IndexComponent implements OnInit, AfterViewInit {
   }
 
   initializeValues(): void {
-    this.services$ = this.services.getServices();
-    this.servicePoints$ = this.servicePoints
-      .getServicePoints()
-      .pipe(shareReplay(), takeUntil(this.destroy));
+    this.services$ = this.location.currentLocation$.pipe(
+      switchMap(() => this.services.getServices())
+    );
+    this.servicePoints$ = this.location.currentLocation$.pipe(
+      switchMap(() => this.servicePoints.getServicePoints()),
+      shareReplay(),
+      takeUntil(this.destroy)
+    );
     this.isAuth = this.account.isAuth();
   }
 
