@@ -1,3 +1,4 @@
+import { LocationService } from 'src/app/shared/services/location.service';
 import {
   Component,
   OnDestroy,
@@ -41,6 +42,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private menuService: MenuService,
     private language: LanguageService,
+    private location: LocationService,
     public account: AccountService
   ) {}
 
@@ -58,10 +60,14 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    document.documentElement.style.setProperty(
-      '--header-content-height',
-      this.headerInner.nativeElement.offsetHeight + 'px'
-    );
+    this.location.currentLocation$.subscribe(() => {
+      setTimeout(() => {
+        document.documentElement.style.setProperty(
+          '--header-content-height',
+          this.headerInner.nativeElement.offsetHeight + 'px'
+        );
+      }, 0);
+    });
   }
 
   ngOnDestroy(): void {
