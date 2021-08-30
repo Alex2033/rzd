@@ -1,3 +1,4 @@
+import { LocationService } from 'src/app/shared/services/location.service';
 import { OrdersService } from './../../../../../shared/services/orders.service';
 import { slideUpAnimation } from 'src/app/shared/animations/slide-up.animation';
 import { Component, OnDestroy, OnInit } from '@angular/core';
@@ -38,7 +39,8 @@ export class SelectPointComponent implements OnInit, OnDestroy {
     private servicePoints: ServicePointsService,
     private ordersService: OrdersService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: LocationService
   ) {}
 
   ngOnInit(): void {
@@ -57,9 +59,11 @@ export class SelectPointComponent implements OnInit, OnDestroy {
   }
 
   getPoints(): void {
-    this.servicePoints
-      .getServicePoints()
-      .pipe(takeUntil(this.destroy))
+    this.location.currentLocation$
+      .pipe(
+        switchMap(() => this.servicePoints.getServicePoints()),
+        takeUntil(this.destroy)
+      )
       .subscribe((points) => {
         this.mapPoints(points);
       });

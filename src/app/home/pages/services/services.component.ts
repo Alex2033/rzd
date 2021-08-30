@@ -1,3 +1,4 @@
+import { LocationService } from 'src/app/shared/services/location.service';
 import {
   AfterViewInit,
   Component,
@@ -8,7 +9,8 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, pipe, Subscription } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 import { ServiceInterface } from 'src/app/shared/types/service.interface';
 import { ServicesService } from '../../../shared/services/services.service';
 
@@ -24,10 +26,16 @@ export class ServicesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private servicesSub: Subscription;
 
-  constructor(private servicesService: ServicesService) {}
+  constructor(
+    private servicesService: ServicesService,
+    private location: LocationService
+  ) {}
 
   ngOnInit(): void {
-    this.services$ = this.servicesService.getServices();
+    this.services$ = this.location.currentLocation$.pipe(
+      switchMap(() => this.servicesService.getServices()),
+      tap(() => this.focusBlock())
+    );
   }
 
   ngAfterViewInit(): void {
