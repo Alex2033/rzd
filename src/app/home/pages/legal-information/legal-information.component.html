@@ -8,50 +8,8 @@
 
   <div class="page-container">
     <ul class="docs">
-      <li class="doc">
-        <a
-          href="assets/files/Приложение_№1_к_приказу_ПУБЛИЧНАЯ_ОФЕРТА_июль.pdf"
-          download
-          target="_blank"
-          >Договор оферты</a
-        >
-      </li>
-      <li class="doc">
-        <a
-          href="assets/files/Приложение №5 Правила подготовки.pdf"
-          download
-          target="_blank"
-          >Правила подготовки</a
-        >
-      </li>
-      <li class="doc">
-        <a
-          href="assets/files/Приказ № 253-ОД от 09.06.2021.pdf"
-          download
-          target="_blank"
-          >Приказ № 253-ОД от 09.06.2021</a
-        >
-      </li>
-      <li class="doc">
-        <a
-          href="assets/files/1.Лицензия на медицинскую деятельность ЧУЗ ЦКБ РЖД-Медицина от 27.07.2020г. (новейшая).pdf"
-          download
-          target="_blank"
-          >Лицензия на медицинскую деятельность Москва</a
-        >
-      </li>
-      <li class="doc">
-        <a href="assets/files/Лицензия_Новосибирск.pdf" download target="_blank"
-          >Лицензия на медицинскую деятельность Новосибирск</a
-        >
-      </li>
-      <li class="doc">
-        <a
-          href="assets/files/Согласие_пациента_на_обработку_персональных_данных_шаблон.docx"
-          download
-          target="_blank"
-          >Согласие пациента на обработку персональных данных</a
-        >
+      <li class="doc" *ngFor="let doc of docs">
+        <a [href]="doc.file" download target="_blank">{{ doc.name }}</a>
       </li>
     </ul>
   </div>
