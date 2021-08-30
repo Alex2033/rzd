@@ -1,3 +1,4 @@
+import { LocationService } from 'src/app/shared/services/location.service';
 import { AfterViewInit, OnDestroy } from '@angular/core';
 import {
   Component,
@@ -8,7 +9,7 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, combineLatest } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { slideUpAnimation } from 'src/app/shared/animations/slide-up.animation';
 import { ServicePointsService } from 'src/app/shared/services/service-points.service';
@@ -44,12 +45,16 @@ export class ServicePointsComponent
 
   constructor(
     private servicePoints: ServicePointsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: LocationService
   ) {}
 
   ngOnInit(): void {
-    this.points$ = this.route.queryParams.pipe(
-      switchMap((params) =>
+    this.points$ = combineLatest([
+      this.route.queryParams,
+      this.location.currentLocation$,
+    ]).pipe(
+      switchMap(([params]) =>
         this.servicePoints.getServicePoints(+params.serviceId)
       )
     );
