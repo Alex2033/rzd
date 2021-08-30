@@ -1,3 +1,4 @@
+import { LocationService } from './../services/location.service';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { QuestionnairesService } from 'src/app/shared/services/questionnaires.service';
@@ -14,7 +15,8 @@ export class LanguagesResolver implements Resolve<any> {
     private services: ServicesService,
     private points: ServicePointsService,
     private orders: OrdersService,
-    private questionnaires: QuestionnairesService
+    private questionnaires: QuestionnairesService,
+    private location: LocationService
   ) {}
 
   resolve(snapshot: ActivatedRouteSnapshot): any {
@@ -23,6 +25,7 @@ export class LanguagesResolver implements Resolve<any> {
       this.points.langId = res;
       this.orders.langId = res;
       this.questionnaires.langId = res;
+      this.location.langId = res;
     });
   }
 }
