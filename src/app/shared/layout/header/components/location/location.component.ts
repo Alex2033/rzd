@@ -15,6 +15,7 @@ export class LocationComponent implements OnInit {
   constructor(private location: LocationService) {}
 
   ngOnInit(): void {
+    this.location.getCity();
     this.cities$ = this.location.getCities();
     this.currentLocation$ = this.location.currentLocation$;
   }

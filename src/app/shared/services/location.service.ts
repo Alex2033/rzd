@@ -29,11 +29,10 @@ export class LocationService {
           this.getCityByCoords(coords.latitude, coords.longitude)
         ),
         catchError((err) => {
-          return of(err);
+          return of(err.error);
         })
       )
-      .subscribe((res) => {
-        console.log('res:', res);
+      .subscribe((res: CityInterface) => {
         this.currentLocationSubject$.next(res);
       });
   }
