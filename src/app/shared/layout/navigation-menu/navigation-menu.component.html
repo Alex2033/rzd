@@ -36,6 +36,7 @@
           <span>Точки обслуживания</span>
         </a>
       </li>
+
       <li
         class="navigation-list-item"
         (click)="closeMenu()"
@@ -43,6 +44,16 @@
       >
         <a href="#faq" class="nav-item nav-link">
           <span>FAQ</span>
+        </a>
+      </li>
+      <li class="navigation-list-item">
+        <a
+          [routerLink]="['/legal-information']"
+          class="nav-item nav-link"
+          (click)="closeMenu()"
+          routerLinkActive="active"
+        >
+          <span>информация</span>
         </a>
       </li>
     </ul>

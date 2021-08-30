@@ -1,0 +1,25 @@
+@import "theme";
+
+.home-inner-header {
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+}
+
+.docs {
+  padding: 2rem 0 3.3rem;
+
+  > * {
+    &:not(:first-child) {
+      margin-top: 1.6rem;
+    }
+  }
+}
+
+.doc {
+  font-weight: 600;
+
+  a {
+    color: $primary;
+    text-decoration: none;
+  }
+}

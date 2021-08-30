@@ -15,6 +15,7 @@ import { ServiceDetailComponent } from './pages/service-detail/service-detail.co
 import { ServicePointDetailComponent } from './pages/service-point-detail/service-point-detail.component';
 import { ParagraphsPipe } from '../shared/pipes/paragraphs.pipe';
 import { SearchModule } from '../shared/pipes/search/search.module';
+import { LegalInformationComponent } from './pages/legal-information/legal-information.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { SearchModule } from '../shared/pipes/search/search.module';
     ServiceDetailComponent,
     ServicePointDetailComponent,
     ParagraphsPipe,
+    LegalInformationComponent,
   ],
   imports: [
     CommonModule,

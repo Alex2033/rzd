@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { IndexComponent } from './pages/index/index.component';
+import { LegalInformationComponent } from './pages/legal-information/legal-information.component';
 import { ServiceDetailComponent } from './pages/service-detail/service-detail.component';
 import { ServicePointDetailComponent } from './pages/service-point-detail/service-point-detail.component';
 import { ServicePointsComponent } from './pages/service-points/service-points.component';
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path: 'service-points/:id',
     component: ServicePointDetailComponent,
+  },
+  {
+    path: 'legal-information',
+    component: LegalInformationComponent,
   },
 ];
 
