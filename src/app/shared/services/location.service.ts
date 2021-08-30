@@ -16,6 +16,7 @@ export class LocationService {
     new BehaviorSubject<CityInterface>(null);
   public readonly currentLocation$: Observable<CityInterface> =
     this.currentLocationSubject$.asObservable();
+  public readonly cityId: number = this.currentLocationSubject$.getValue()?.id;
 
   private readonly ipInfo: string = 'http://ipwhois.app/json/';
 

@@ -5,7 +5,7 @@
   text-align: center;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - #{var(---header-content-height)});
+  height: calc(100vh - #{var(--header-content-height)});
 }
 
 .not-found-content {
