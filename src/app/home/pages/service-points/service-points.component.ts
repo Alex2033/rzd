@@ -10,10 +10,11 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription, combineLatest } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import { slideUpAnimation } from 'src/app/shared/animations/slide-up.animation';
 import { ServicePointsService } from 'src/app/shared/services/service-points.service';
 import { ServicePointInterface } from '../../../shared/types/service-point.interface';
+import { YaReadyEvent } from 'angular8-yandex-maps';
 
 @Component({
   selector: 'app-service-points',
@@ -40,6 +41,7 @@ export class ServicePointsComponent
 
   private cardsSub: Subscription;
   private selectedPlacemark;
+  private map: YaReadyEvent<ymaps.Map>;
   private geoObjects: any[] = [];
   private uniqueGeoObjects: any[] = [];
 
@@ -56,7 +58,10 @@ export class ServicePointsComponent
     ]).pipe(
       switchMap(([params]) =>
         this.servicePoints.getServicePoints(+params.serviceId)
-      )
+      ),
+      tap(() => {
+        this.setMapBounds();
+      })
     );
   }
 
@@ -69,6 +74,15 @@ export class ServicePointsComponent
   ngOnDestroy(): void {
     if (this.cardsSub) {
       this.cardsSub.unsubscribe();
+    }
+  }
+
+  setMapBounds(): void {
+    if (this.map) {
+      setTimeout(() => {
+        this.map.target.setBounds(this.map.target.geoObjects.getBounds());
+        this.map.target.setZoom(9);
+      }, 0);
     }
   }
 
@@ -130,5 +144,12 @@ export class ServicePointsComponent
     this.selectedPoint = null;
     this.selectedPlacemark.options.set('iconImageHref', 'assets/gps-red.svg');
     this.selectedPlacemark = null;
+  }
+
+  mapLoaded(event: YaReadyEvent<ymaps.Map>): void {
+    this.map = event;
+
+    this.map.target.setBounds(this.map.target.geoObjects.getBounds());
+    this.map.target.setZoom(9);
   }
 }

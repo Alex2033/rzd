@@ -1,7 +1,9 @@
+import { LocationService } from 'src/app/shared/services/location.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { YaReadyEvent } from 'angular8-yandex-maps';
 import { CarouselComponent, OwlOptions } from 'ngx-owl-carousel-o';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
 import { shareReplay, switchMap, tap } from 'rxjs/operators';
 import { slideUpAnimation } from 'src/app/shared/animations/slide-up.animation';
 import { ServicePointsService } from 'src/app/shared/services/service-points.service';
@@ -65,25 +67,30 @@ export class ServiceDetailComponent implements OnInit {
   ];
 
   private selectedPlacemark;
+  private map: YaReadyEvent<ymaps.Map>;
   private geoObjects: any[] = [];
   private uniqueGeoObjects: any[] = [];
 
   constructor(
     private services: ServicesService,
     private route: ActivatedRoute,
-    private points: ServicePointsService
+    private points: ServicePointsService,
+    private location: LocationService
   ) {
     this.activeTab = this.tabs[0];
     this.activeLabel = this.tabs[0].id;
   }
 
   ngOnInit(): void {
-    this.route.params
+    combineLatest([this.route.params, this.location.currentLocation$])
       .pipe(
-        switchMap((params: Params) => {
-          this.points$ = this.points
-            .getServicePoints(+params.id)
-            .pipe(shareReplay());
+        switchMap(([params]) => {
+          this.points$ = this.points.getServicePoints(+params.id).pipe(
+            tap(() => {
+              this.setMapBounds();
+            }),
+            shareReplay()
+          );
           return this.services.getService(+params.id);
         })
       )
@@ -93,6 +100,15 @@ export class ServiceDetailComponent implements OnInit {
         this.tabs[1].text = res.preparing;
         this.tabs[2].text = res.method;
       });
+  }
+
+  setMapBounds(): void {
+    if (this.map) {
+      setTimeout(() => {
+        this.map.target.setBounds(this.map.target.geoObjects.getBounds());
+        this.map.target.setZoom(9);
+      }, 0);
+    }
   }
 
   selectTab(tab: TabInterface): void {
@@ -128,5 +144,12 @@ export class ServiceDetailComponent implements OnInit {
     this.selectedPoint = null;
     this.selectedPlacemark.options.set('iconImageHref', 'assets/gps-red.svg');
     this.selectedPlacemark = null;
+  }
+
+  mapLoaded(event: YaReadyEvent<ymaps.Map>): void {
+    this.map = event;
+
+    this.map.target.setBounds(this.map.target.geoObjects.getBounds());
+    this.map.target.setZoom(9);
   }
 }

@@ -3,13 +3,14 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { Observable, ReplaySubject } from 'rxjs';
-import { shareReplay, switchMap, takeUntil } from 'rxjs/operators';
+import { shareReplay, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { slideUpAnimation } from 'src/app/shared/animations/slide-up.animation';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { ServicePointsService } from 'src/app/shared/services/service-points.service';
 import { ServiceInterface } from 'src/app/shared/types/service.interface';
 import { ServicesService } from '../../../shared/services/services.service';
 import { ServicePointInterface } from '../../../shared/types/service-point.interface';
+import { YaReadyEvent } from 'angular8-yandex-maps';
 
 @Component({
   selector: 'app-index',
@@ -34,6 +35,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
   public selectedPoint: ServicePointInterface;
 
   private selectedPlacemark;
+  private map: YaReadyEvent<ymaps.Map>;
   private geoObjects: any[] = [];
   private uniqueGeoObjects: any[] = [];
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
@@ -68,10 +70,22 @@ export class IndexComponent implements OnInit, AfterViewInit {
     );
     this.servicePoints$ = this.location.currentLocation$.pipe(
       switchMap(() => this.servicePoints.getServicePoints()),
+      tap(() => {
+        this.setMapBounds();
+      }),
       shareReplay(),
       takeUntil(this.destroy)
     );
     this.isAuth = this.account.isAuth();
+  }
+
+  setMapBounds(): void {
+    if (this.map) {
+      setTimeout(() => {
+        this.map.target.setBounds(this.map.target.geoObjects.getBounds());
+        this.map.target.setZoom(9);
+      }, 0);
+    }
   }
 
   openRefundsPanel(
@@ -114,5 +128,12 @@ export class IndexComponent implements OnInit, AfterViewInit {
     this.selectedPoint = null;
     this.selectedPlacemark.options.set('iconImageHref', 'assets/gps-red.svg');
     this.selectedPlacemark = null;
+  }
+
+  mapLoaded(event: YaReadyEvent<ymaps.Map>): void {
+    this.map = event;
+
+    this.map.target.setBounds(this.map.target.geoObjects.getBounds());
+    this.map.target.setZoom(9);
   }
 }

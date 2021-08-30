@@ -41,8 +41,7 @@
   <!-- map -->
   <div class="map-container" *ngIf="addressMode === 'map'">
     <ya-map
-      [center]="[55.751952, 37.600739]"
-      [zoom]="9"
+      (ready)="mapLoaded($event)"
       [state]="{ controls: [] }"
       [options]="mapOptions"
     >

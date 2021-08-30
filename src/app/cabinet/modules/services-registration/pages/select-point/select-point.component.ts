@@ -4,10 +4,11 @@ import { slideUpAnimation } from 'src/app/shared/animations/slide-up.animation';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { ServicePointsService } from 'src/app/shared/services/service-points.service';
 import { ServicesRegistrationService } from 'src/app/shared/services/services-registration.service';
 import { ServicePointInterface } from 'src/app/shared/types/service-point.interface';
+import { YaReadyEvent } from 'angular8-yandex-maps';
 
 @Component({
   selector: 'app-select-point',
@@ -30,6 +31,7 @@ export class SelectPointComponent implements OnInit, OnDestroy {
   public mapPoint: ServicePointInterface;
 
   private selectedPlacemark;
+  private map: YaReadyEvent<ymaps.Map>;
   private geoObjects: any[] = [];
   private uniqueGeoObjects: any[] = [];
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
@@ -61,10 +63,14 @@ export class SelectPointComponent implements OnInit, OnDestroy {
   getPoints(): void {
     this.location.currentLocation$
       .pipe(
+        tap(() => {
+          this.selectedPoint = null;
+        }),
         switchMap(() => this.servicePoints.getServicePoints()),
         takeUntil(this.destroy)
       )
       .subscribe((points) => {
+        this.setMapBounds();
         this.mapPoints(points);
       });
   }
@@ -74,6 +80,15 @@ export class SelectPointComponent implements OnInit, OnDestroy {
     this.points.forEach((p) => (p['selectedOnMap'] = false));
     const pointId = JSON.parse(sessionStorage.getItem('rzd-order'))?.id_point;
     this.selectedPoint = this.points.find((p) => p.id === pointId);
+  }
+
+  setMapBounds(): void {
+    if (this.map) {
+      setTimeout(() => {
+        this.map.target.setBounds(this.map.target.geoObjects.getBounds());
+        this.map.target.setZoom(9);
+      }, 0);
+    }
   }
 
   ngOnDestroy() {
@@ -127,6 +142,13 @@ export class SelectPointComponent implements OnInit, OnDestroy {
         'assets/gps-blue.svg'
       );
     }
+  }
+
+  mapLoaded(event: YaReadyEvent<ymaps.Map>): void {
+    this.map = event;
+
+    this.map.target.setBounds(this.map.target.geoObjects.getBounds());
+    this.map.target.setZoom(9);
   }
 
   mapGeoObjects(event): void {
