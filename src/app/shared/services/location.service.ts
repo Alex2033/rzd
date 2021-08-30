@@ -13,13 +13,18 @@ export class LocationService {
   public langId: number;
 
   private currentLocationSubject$: BehaviorSubject<CityInterface> =
-    new BehaviorSubject<CityInterface>({} as CityInterface);
+    new BehaviorSubject<CityInterface>(null);
   public readonly currentLocation$: Observable<CityInterface> =
     this.currentLocationSubject$.asObservable();
 
   private readonly ipInfo: string = 'http://ipwhois.app/json/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    const currentLocation = localStorage.getItem('rzd-current-location');
+    if (currentLocation) {
+      this.currentLocationSubject$.next(JSON.parse(currentLocation));
+    }
+  }
 
   getCity(): void {
     this.getCurrentLocation()
@@ -85,5 +90,6 @@ export class LocationService {
 
   setLocation(val: CityInterface): void {
     this.currentLocationSubject$.next(val);
+    localStorage.setItem('rzd-current-location', JSON.stringify(val));
   }
 }

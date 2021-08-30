@@ -1,2 +1,5 @@
-<app-location-bar></app-location-bar>
-<app-city-confirm></app-city-confirm>
+<div class="location-content">
+  <app-location-bar *ngIf="currentLocation$ | async"></app-location-bar>
+  <app-city-confirm *ngIf="!(currentLocation$ | async)"></app-city-confirm>
+  <app-city-list [cities]="cities$ | async"></app-city-list>
+</div>

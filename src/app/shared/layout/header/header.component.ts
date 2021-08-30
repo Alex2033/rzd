@@ -58,7 +58,10 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log(this.headerInner.nativeElement.offsetHeight);
+    document.documentElement.style.setProperty(
+      '--header-content-height',
+      this.headerInner.nativeElement.offsetHeight + 'px'
+    );
   }
 
   ngOnDestroy(): void {

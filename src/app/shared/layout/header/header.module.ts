@@ -1,3 +1,4 @@
+import { CityListComponent } from './components/city-list/city-list.component';
 import { LocationBarComponent } from './components/location-bar/location-bar.component';
 import { CitySelectComponent } from './components/city-select/city-select.component';
 import { RouterModule } from '@angular/router';
@@ -17,6 +18,7 @@ const components = [
   CityItemComponent,
   CitySearchComponent,
   LocationBarComponent,
+  CityListComponent,
 ];
 
 @NgModule({

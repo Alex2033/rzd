@@ -28,7 +28,7 @@
   width: 100%;
   background-color: $light;
   position: sticky;
-  top: var(--header-height);
+  top: var(--header-content-height);
   left: 0;
 
   &.fixed {

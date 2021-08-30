@@ -11,6 +11,7 @@ import { CityInterface } from 'src/app/shared/types/city.interface';
 export class LocationComponent implements OnInit {
   public cities$: Observable<CityInterface[]>;
   public currentLocation$: Observable<CityInterface>;
+  public showCityList: boolean = false;
 
   constructor(private location: LocationService) {}
 
