@@ -12,20 +12,14 @@ import { ServicePointsService } from '../services/service-points.service';
 export class LanguagesResolver implements Resolve<any> {
   constructor(
     private language: LanguageService,
-    private services: ServicesService,
-    private points: ServicePointsService,
     private orders: OrdersService,
-    private questionnaires: QuestionnairesService,
-    private location: LocationService
+    private questionnaires: QuestionnairesService
   ) {}
 
   resolve(snapshot: ActivatedRouteSnapshot): any {
     this.language.getLangId().subscribe((res) => {
-      this.services.langId = res;
-      this.points.langId = res;
       this.orders.langId = res;
       this.questionnaires.langId = res;
-      this.location.langId = res;
     });
   }
 }

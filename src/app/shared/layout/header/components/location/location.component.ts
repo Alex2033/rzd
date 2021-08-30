@@ -14,10 +14,7 @@ export class LocationComponent implements OnInit {
   public currentLocation$: Observable<CityInterface>;
   public showConfirm: boolean = false;
 
-  constructor(
-    private location: LocationService,
-    private language: LanguageService
-  ) {
+  constructor(private location: LocationService) {
     if (!localStorage.getItem('rzd-current-location')) {
       this.showConfirm = true;
     }
@@ -25,7 +22,7 @@ export class LocationComponent implements OnInit {
 
   ngOnInit(): void {
     this.location.getCity();
-    this.cities$ = this.location.getCities(this.language.langId.getValue());
+    this.cities$ = this.location.getCities();
     this.currentLocation$ = this.location.currentLocation$;
   }
 }

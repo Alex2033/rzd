@@ -1,3 +1,4 @@
+import { LanguageService } from './language.service';
 import { LocationService } from 'src/app/shared/services/location.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -10,13 +11,15 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class ServicePointsService {
-  public langId: number;
-
-  constructor(private http: HttpClient, private location: LocationService) {}
+  constructor(
+    private http: HttpClient,
+    private location: LocationService,
+    private language: LanguageService
+  ) {}
 
   getServicePoints(
     serviceId?: number,
-    langId: number = this.langId,
+    langId: number = this.language.langId.getValue(),
     city: number = this.location.getLocationValue().id
   ): Observable<ServicePointInterface[]> {
     return this.http.get<ServicePointInterface[]>(

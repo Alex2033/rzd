@@ -1,4 +1,4 @@
-import { NavigationEnd, Router } from '@angular/router';
+import { LanguageService } from './language.service';
 import { CityInterface } from './../types/city.interface';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, BehaviorSubject } from 'rxjs';
@@ -11,8 +11,6 @@ import { CoordinatesInterface } from '../types/coordinates.interface';
   providedIn: 'root',
 })
 export class LocationService {
-  public langId: number;
-
   private readonly defaultLocation: CityInterface = {
     id: 1101,
     ur_id: 1082,
@@ -30,7 +28,7 @@ export class LocationService {
   public showLocation: boolean = false;
   private readonly ipInfo: string = 'http://ipwhois.app/json/';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private language: LanguageService) {
     this.getLocationFromStorage();
   }
 
@@ -76,7 +74,9 @@ export class LocationService {
     });
   }
 
-  getCities(lang: number): Observable<CityInterface[]> {
+  getCities(
+    lang: number = this.language.langId.getValue()
+  ): Observable<CityInterface[]> {
     return this.http.get<CityInterface[]>(
       `${environment.api}api/contents/cities?lang=${lang}`
     );
@@ -85,7 +85,7 @@ export class LocationService {
   getCityByCoords(
     lat: number,
     lot: number,
-    lang: number = this.langId
+    lang: number = this.language.langId.getValue()
   ): Observable<CityInterface> {
     return this.http.get<CityInterface>(
       `${environment.api}api/contents/findcity`,
