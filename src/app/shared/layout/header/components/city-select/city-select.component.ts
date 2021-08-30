@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { LocationService } from './../../../../services/location.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CityInterface } from 'src/app/shared/types/city.interface';
 
 @Component({
   selector: 'app-city-select',
@@ -6,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./city-select.component.scss'],
 })
 export class CitySelectComponent implements OnInit {
+  @Output() selectCity: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  @Input() cities: CityInterface[];
+
+  public searchText: string;
+
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit() {}
 }

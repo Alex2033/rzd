@@ -1,3 +1,14 @@
-<p>
-  city-select works!
-</p>
+<div class="city-select">
+  <div class="city-search">
+    <app-city-search (search)="searchText = $event"></app-city-search>
+  </div>
+  <ul class="cities">
+    <li>
+      <app-city-item
+        (select)="selectCity.emit($event)"
+        [city]="city"
+        *ngFor="let city of cities | search: searchText:'name'"
+      ></app-city-item>
+    </li>
+  </ul>
+</div>

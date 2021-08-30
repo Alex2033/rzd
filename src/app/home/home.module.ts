@@ -12,9 +12,9 @@ import { FooterComponent } from '../shared/layout/footer/footer.component';
 import { ServicesComponent } from './pages/services/services.component';
 import { ServicePointsComponent } from './pages/service-points/service-points.component';
 import { ServiceDetailComponent } from './pages/service-detail/service-detail.component';
-import { SearchPipe } from '../shared/pipes/search.pipe';
 import { ServicePointDetailComponent } from './pages/service-point-detail/service-point-detail.component';
 import { ParagraphsPipe } from '../shared/pipes/paragraphs.pipe';
+import { SearchModule } from '../shared/pipes/search/search.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,6 @@ import { ParagraphsPipe } from '../shared/pipes/paragraphs.pipe';
     ServicesComponent,
     ServicePointsComponent,
     ServiceDetailComponent,
-    SearchPipe,
     ServicePointDetailComponent,
     ParagraphsPipe,
   ],
@@ -35,6 +34,7 @@ import { ParagraphsPipe } from '../shared/pipes/paragraphs.pipe';
     CarouselModule,
     PluralRuModule,
     AngularYandexMapsModule,
+    SearchModule,
   ],
 })
 export class HomeModule {}

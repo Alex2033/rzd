@@ -1,3 +1,33 @@
-<p>
-  city-confirm works!
-</p>
+<div class="city-confirm">
+  <div class="city-confirm-content">
+    <div class="selected-city">
+      <span>Ваш город: </span>
+      <strong class="primary-color">{{ currentLocation?.name }}</strong>
+    </div>
+
+    <div class="no-services" *ngIf="false">
+      К сожалению в вашем городе услуги пока <br />
+      не доступны.
+    </div>
+
+    <div class="city-confirm-buttons">
+      <button class="button" (click)="confirmLocation()">Да, верно</button>
+      <button class="button select-city-btn" (click)="showCityList = true">
+        Выбрать другой
+      </button>
+
+      <app-city-select
+        (selectCity)="selectCity($event)"
+        [exclude]="'.select-city-btn'"
+        (clickOutside)="showCityList = false"
+        *ngIf="showCityList"
+        class="location-bar-confirm"
+        [cities]="cities"
+      ></app-city-select>
+    </div>
+
+    <div class="city-confirm-info">
+      <p>От выбранного города зависят цены и способы оплаты.</p>
+    </div>
+  </div>
+</div>

@@ -1,3 +1,7 @@
-<p>
-  city-item works!
-</p>
+<div
+  class="city-item"
+  [class.active]="city.id === (currentLocation$ | async)?.id"
+  (click)="select.emit(city)"
+>
+  {{ city.name }}
+</div>

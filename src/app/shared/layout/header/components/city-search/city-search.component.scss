@@ -1,0 +1,28 @@
+@import "theme";
+
+.city-search {
+  position: relative;
+}
+
+.city-search-control {
+  border: 0.1rem solid #d3d3d3;
+  padding: 1.1rem 3.6rem 1.1rem 0.8rem;
+  font-size: 1.2rem;
+  line-height: 1.394;
+  width: 100%;
+
+  &::placeholder {
+    opacity: 1;
+    color: $placeholder;
+  }
+}
+
+.city-search-icon {
+  width: 1.6rem;
+  height: 1.6rem;
+  fill: $placeholder;
+  position: absolute;
+  top: 50%;
+  right: 1.6rem;
+  transform: translateY(-50%);
+}

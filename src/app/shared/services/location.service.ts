@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -12,8 +12,16 @@ import { CoordinatesInterface } from '../types/coordinates.interface';
 export class LocationService {
   public langId: number;
 
+  private readonly defaultLocation: CityInterface = {
+    id: 1101,
+    ur_id: 1082,
+    name: 'Москва',
+    latitude: 37.6358,
+    longtitude: 55.7539,
+  };
+
   private currentLocationSubject$: BehaviorSubject<CityInterface> =
-    new BehaviorSubject<CityInterface>(null);
+    new BehaviorSubject<CityInterface>(this.defaultLocation);
   public readonly currentLocation$: Observable<CityInterface> =
     this.currentLocationSubject$.asObservable();
   public readonly cityId: number = this.currentLocationSubject$.getValue()?.id;
@@ -21,6 +29,10 @@ export class LocationService {
   private readonly ipInfo: string = 'http://ipwhois.app/json/';
 
   constructor(private http: HttpClient) {
+    this.getLocationFromStorage();
+  }
+
+  getLocationFromStorage(): void {
     const currentLocation = localStorage.getItem('rzd-current-location');
     if (currentLocation) {
       this.currentLocationSubject$.next(JSON.parse(currentLocation));
@@ -39,7 +51,12 @@ export class LocationService {
         })
       )
       .subscribe((res: CityInterface) => {
-        this.currentLocationSubject$.next(res);
+        if (
+          JSON.stringify(this.currentLocationSubject$.getValue) ===
+          JSON.stringify(res)
+        ) {
+          this.currentLocationSubject$.next(res);
+        }
       });
   }
 
@@ -55,7 +72,7 @@ export class LocationService {
     });
   }
 
-  getCities(lang: number = this.langId): Observable<CityInterface[]> {
+  getCities(lang: number): Observable<CityInterface[]> {
     return this.http.get<CityInterface[]>(
       `${environment.api}api/contents/cities?lang=${lang}`
     );

@@ -1,0 +1,55 @@
+@import "theme";
+@import "vars";
+
+.city-confirm {
+  position: relative;
+  background-color: #ccecf8;
+}
+
+.city-confirm-content {
+  padding: 1.7rem $container-gap 1.6rem;
+}
+
+.no-services {
+  color: $accent;
+  font-size: 1.2rem;
+  line-height: 1.34;
+  margin-top: 0.8rem;
+}
+
+.city-confirm-buttons {
+  display: flex;
+  margin-top: 1.3rem;
+  flex-wrap: wrap;
+  position: relative;
+
+  .button {
+    font-size: 1.2rem;
+    line-height: 1.397;
+    padding: 0.6rem 1rem;
+    min-width: 11.7rem;
+  }
+}
+
+.selected-city {
+  span {
+    font-size: 1.2rem;
+  }
+
+  strong {
+    font-size: 1.4rem;
+  }
+}
+
+.city-confirm-info {
+  margin-top: 1.2rem;
+  color: $gray;
+  font-size: 1.2rem;
+  line-height: 1.34;
+}
+
+.select-city-btn {
+  background-color: $light;
+  color: $dark;
+  margin-left: 0.8rem;
+}

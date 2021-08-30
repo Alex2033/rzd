@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { CityInterface } from './../../../../types/city.interface';
+import { LocationService } from './../../../../services/location.service';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-location-bar',
@@ -6,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./location-bar.component.scss'],
 })
 export class LocationBarComponent implements OnInit {
-  constructor() {}
+  @Input() cities: CityInterface[];
+  @Input() currentLocation: CityInterface;
+
+  public showCityList: boolean = false;
+
+  constructor(private location: LocationService) {}
 
   ngOnInit() {}
 
-  openCitySelection(): void {}
+  selectCity(city: CityInterface): void {
+    this.location.setLocation(city);
+    this.showCityList = false;
+  }
 }

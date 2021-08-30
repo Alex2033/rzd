@@ -1,9 +1,20 @@
 <div class="location-bar">
-  <div class="selected-city" (click)="openCitySelection()">
-    <div class="selected-city-text">Москва</div>
-    <svg class="selected-city-icon" width="1.35rem" height="0.6rem">
-      <use xlink:href="assets/sprites/icons.svg#arrow-down"></use>
-    </svg>
+  <div class="location-bar-content">
+    <div class="selected-city" (click)="showCityList = true">
+      <div class="selected-city-text">{{ currentLocation?.name }}</div>
+      <svg class="selected-city-icon" width="1.35rem" height="0.6rem">
+        <use xlink:href="assets/sprites/icons.svg#arrow-down"></use>
+      </svg>
+    </div>
+    <div class="spacer"></div>
+    <a href="tel:88002343333" class="phone-link">8 (800) 234 - 33 - 33</a>
+    <app-city-select
+      (selectCity)="selectCity($event)"
+      [exclude]="'.selected-city'"
+      (clickOutside)="showCityList = false"
+      *ngIf="showCityList"
+      class="location-bar-select"
+      [cities]="cities"
+    ></app-city-select>
   </div>
-  <a href="tel:88002343333" class="phone-link">8 (800) 234 - 33 - 33</a>
 </div>

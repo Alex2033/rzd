@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { LocationService } from 'src/app/shared/services/location.service';
+import { CityInterface } from 'src/app/shared/types/city.interface';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-city-item',
@@ -6,7 +9,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./city-item.component.scss'],
 })
 export class CityItemComponent implements OnInit {
-  constructor() {}
+  @Output() select: EventEmitter<CityInterface> =
+    new EventEmitter<CityInterface>();
 
-  ngOnInit(): void {}
+  @Input() city: CityInterface;
+
+  public currentLocation$: Observable<CityInterface>;
+
+  constructor(private location: LocationService) {}
+
+  ngOnInit(): void {
+    this.currentLocation$ = this.location.currentLocation$;
+  }
 }

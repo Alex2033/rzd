@@ -1,5 +1,13 @@
 <div class="location-content">
-  <app-location-bar *ngIf="currentLocation$ | async"></app-location-bar>
-  <app-city-confirm *ngIf="!(currentLocation$ | async)"></app-city-confirm>
-  <app-city-list [cities]="cities$ | async"></app-city-list>
+  <app-location-bar
+    [currentLocation]="currentLocation$ | async"
+    *ngIf="(currentLocation$ | async) && !showConfirm"
+    [cities]="cities$ | async"
+  ></app-location-bar>
+  <app-city-confirm
+    (confirm)="showConfirm = $event"
+    [currentLocation]="currentLocation$ | async"
+    *ngIf="!(currentLocation$ | async) || showConfirm"
+    [cities]="cities$ | async"
+  ></app-city-confirm>
 </div>
