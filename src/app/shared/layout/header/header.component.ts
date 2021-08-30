@@ -5,7 +5,6 @@ import {
   OnInit,
   ViewChild,
   ElementRef,
-  AfterViewInit,
 } from '@angular/core';
 import { combineLatest, Subscription } from 'rxjs';
 import { AccountService } from 'src/app/shared/services/account.service';
