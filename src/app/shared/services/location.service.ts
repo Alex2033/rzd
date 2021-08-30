@@ -1,8 +1,8 @@
+import { CityInterface } from './../types/city.interface';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { CityInterface } from '../types/city.interface';
 import { switchMap, map, catchError } from 'rxjs/operators';
 import { CoordinatesInterface } from '../types/coordinates.interface';
 
@@ -20,7 +20,7 @@ export class LocationService {
     longtitude: 55.7539,
   };
 
-  private currentLocationSubject$: BehaviorSubject<CityInterface> =
+  public currentLocationSubject$: BehaviorSubject<CityInterface> =
     new BehaviorSubject<CityInterface>(this.defaultLocation);
   public readonly currentLocation$: Observable<CityInterface> =
     this.currentLocationSubject$.asObservable();
@@ -109,5 +109,9 @@ export class LocationService {
   setLocation(val: CityInterface): void {
     this.currentLocationSubject$.next(val);
     localStorage.setItem('rzd-current-location', JSON.stringify(val));
+  }
+
+  getLocationValue(): CityInterface {
+    return this.currentLocationSubject$.getValue();
   }
 }

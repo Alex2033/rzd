@@ -1,3 +1,4 @@
+import { LocationService } from 'src/app/shared/services/location.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -11,15 +12,16 @@ import { environment } from 'src/environments/environment';
 export class ServicePointsService {
   public langId: number;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private location: LocationService) {}
 
   getServicePoints(
     serviceId?: number,
-    langId: number = this.langId
+    langId: number = this.langId,
+    city: number = this.location.getLocationValue().id
   ): Observable<ServicePointInterface[]> {
     return this.http.get<ServicePointInterface[]>(
       environment.api +
-        `api/contents/points?lang=${langId}${
+        `api/contents/points?city=${city}&lang=${langId}${
           serviceId ? '&service=' + serviceId : ''
         }`
     );
