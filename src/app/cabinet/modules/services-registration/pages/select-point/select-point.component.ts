@@ -166,6 +166,7 @@ export class SelectPointComponent implements OnInit, OnDestroy {
     this.addressMode = 'list';
     this.geoObjects = [];
     this.uniqueGeoObjects = [];
+    this.map = null;
   }
 
   closeMapCard(): void {
