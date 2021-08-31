@@ -28,6 +28,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { AngularYandexMapsModule } from 'angular8-yandex-maps';
 import { QrCodeInfoComponent } from './pages/qr-code-info/qr-code-info.component';
 import { EmptyQuestionnairesComponent } from './pages/empty-questionnaires/empty-questionnaires.component';
+import { SafeHtmlPipe } from '../../../shared/pipes/safe-html.pipe';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { EmptyQuestionnairesComponent } from './pages/empty-questionnaires/empty
     ConfirmRemoveSelectionsComponent,
     EmptyQuestionnairesComponent,
     QrCodeInfoComponent,
+    SafeHtmlPipe,
   ],
   imports: [
     CommonModule,
