@@ -117,3 +117,26 @@
     }
   }
 }
+
+.expansion-ordered-list {
+  padding: 0;
+  margin: 1rem 0 0;
+  list-style-type: none;
+  counter-reset: my-awesome-counter;
+
+  > * {
+    &:not(:first-child) {
+      margin-top: 0.7rem;
+    }
+  }
+
+  li {
+    font-size: 1.4rem;
+    counter-increment: my-awesome-counter;
+
+    &::before {
+      content: counter(my-awesome-counter) ") ";
+      font-weight: 600;
+    }
+  }
+}
