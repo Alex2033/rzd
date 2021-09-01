@@ -32,25 +32,40 @@ export class LocationService {
   }
 
   getCity(): void {
-    if (this.showLocation) {
-      this.getCurrentLocation()
+    if (this.showLocation && !localStorage.getItem('rzd-current-location')) {
+      this.getCityByCoords(0, 0)
         .pipe(
-          catchError(() => this.getCityByIp()),
-          switchMap((coords) =>
-            this.getCityByCoords(coords.latitude, coords.longitude)
-          ),
           catchError((err) => {
             return of(err.error);
           })
         )
         .subscribe((res: CityInterface) => {
           if (
-            JSON.stringify(this.currentLocationSubject$.getValue) ===
+            JSON.stringify(this.currentLocationSubject$.getValue()) ===
             JSON.stringify(res)
           ) {
             this.currentLocationSubject$.next(res);
           }
         });
+
+      // this.getCurrentLocation()
+      //   .pipe(
+      //     catchError(() => this.getCityByIp()),
+      //     switchMap((coords) =>
+      //       this.getCityByCoords(coords.latitude, coords.longitude)
+      //     ),
+      //     catchError((err) => {
+      //       return of(err.error);
+      //     })
+      //   )
+      //   .subscribe((res: CityInterface) => {
+      //     if (
+      //       JSON.stringify(this.currentLocationSubject$.getValue) ===
+      //       JSON.stringify(res)
+      //     ) {
+      //       this.currentLocationSubject$.next(res);
+      //     }
+      //   });
     }
   }
 
