@@ -63,7 +63,7 @@ export class OrdersListComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = true;
     combineLatest([
-      this.points.getServicePoints(),
+      this.points.getServicePoints(undefined, undefined, 0),
       this.ordersService.getOrders(),
     ]).subscribe(
       ([points, orders]) => {

@@ -11,16 +11,8 @@ import { CoordinatesInterface } from '../types/coordinates.interface';
   providedIn: 'root',
 })
 export class LocationService {
-  private readonly defaultLocation: CityInterface = {
-    id: 1122,
-    ur_id: 1120,
-    name: 'Москва',
-    latitude: 55.75322,
-    longtitude: 37.622513,
-  };
-
   public currentLocationSubject$: BehaviorSubject<CityInterface> =
-    new BehaviorSubject<CityInterface>(this.defaultLocation);
+    new BehaviorSubject<CityInterface>(environment.defaultLocation);
   public readonly currentLocation$: Observable<CityInterface> =
     this.currentLocationSubject$.asObservable();
   public readonly cityId: number = this.currentLocationSubject$.getValue()?.id;

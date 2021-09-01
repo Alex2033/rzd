@@ -7,6 +7,14 @@ import { EnvironmentInterface } from 'src/app/shared/types/environment.interface
 export const environment: EnvironmentInterface = {
   production: false,
   api: 'http://87.242.76.45:8080/',
+  // todo: потом убрать
+  defaultLocation: {
+    id: 1101,
+    ur_id: 1082,
+    name: 'Москва',
+    latitude: 55.7539,
+    longtitude: 37.6358,
+  },
 };
 
 /*
