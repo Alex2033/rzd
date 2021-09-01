@@ -69,7 +69,7 @@ export class OrdersListComponent implements OnInit {
       ([points, orders]) => {
         this.orders = orders;
         this.filteredOrders = this.orders;
-        this.addAddressToOrder(points);
+        this.addShortAddressToOrder(points);
         this.selectedFilter =
           sessionStorage.getItem('rzd-orders-sort') || this.types[0].value;
         this.sortOrder(this.selectedFilter);
@@ -148,7 +148,7 @@ export class OrdersListComponent implements OnInit {
     this.destroy.complete();
   }
 
-  addAddressToOrder(points: ServicePointInterface[]): void {
+  addShortAddressToOrder(points: ServicePointInterface[]): void {
     this.orders.forEach((order) => {
       order['shortAddress'] = points.find(
         (point) => point.id === order.id_point

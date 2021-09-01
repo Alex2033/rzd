@@ -12,11 +12,11 @@ import { CoordinatesInterface } from '../types/coordinates.interface';
 })
 export class LocationService {
   private readonly defaultLocation: CityInterface = {
-    id: 1101,
-    ur_id: 1082,
+    id: 1122,
+    ur_id: 1120,
     name: 'Москва',
-    latitude: 37.6358,
-    longtitude: 55.7539,
+    latitude: 55.75322,
+    longtitude: 37.622513,
   };
 
   public currentLocationSubject$: BehaviorSubject<CityInterface> =
