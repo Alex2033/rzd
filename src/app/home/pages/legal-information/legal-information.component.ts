@@ -1,5 +1,6 @@
 import { LocationService } from 'src/app/shared/services/location.service';
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-legal-information',
@@ -62,7 +63,7 @@ export class LegalInformationComponent implements OnInit {
 
   ngOnInit() {
     this.location.currentLocation$.subscribe((location) => {
-      if (location.id === 1101) {
+      if (location.id === environment.defaultLocation.id) {
         this.docs = [...this.moscowDocs];
       } else {
         this.docs = [...this.novosibDocs];

@@ -10,6 +10,9 @@
   font-size: 1.2rem;
   line-height: 1.394;
   width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  -moz-appearance: textfield;
 
   &::placeholder {
     opacity: 1;
