@@ -93,7 +93,7 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
           }
 
           // todo: hard code, временное решение, потом убрать
-          this.filterServices(res);
+          // this.filterServices(res);
 
           this.servicesLoaded = true;
         },
@@ -105,19 +105,19 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
       );
   }
 
-  filterServices(res): void {
-    if (this.order.id_point === 1115) {
-      if (
-        res.is_corporate &&
-        res.available_services.length &&
-        this.order.payment === 'CORPORATE'
-      ) {
-        this.services = this.services.filter((s) => s.id !== 1109);
-      } else {
-        this.services = this.services.filter((s) => s.id === 1109);
-      }
-    }
-  }
+  // filterServices(res): void {
+  //   if (this.order.id_point === 1115) {
+  //     if (
+  //       res.is_corporate &&
+  //       res.available_services.length &&
+  //       this.order.payment === 'CORPORATE'
+  //     ) {
+  //       this.services = this.services.filter((s) => s.id !== 1109);
+  //     } else {
+  //       this.services = this.services.filter((s) => s.id === 1109);
+  //     }
+  //   }
+  // }
 
   mapQuestionnaires(): void {
     this.questionnaires$ = this.questionnairesService.getQuestionnaires();
