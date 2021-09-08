@@ -1,4 +1,3 @@
-import { ServicePointsService } from 'src/app/shared/services/service-points.service';
 import { LocationService } from 'src/app/shared/services/location.service';
 import { SettingsService } from './shared/services/settings.service';
 import { trigger, transition, style, animate } from '@angular/animations';
@@ -19,6 +18,9 @@ import {
 } from 'rxjs/operators';
 import { LanguageService } from './shared/services/language.service';
 import { MenuService } from './shared/services/menu.service';
+import { GoogleTagManagerService } from 'angular-google-tag-manager';
+
+// declare let gtag: Function;
 
 @Component({
   selector: 'app-root',
@@ -48,7 +50,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private language: LanguageService,
     private router: Router,
     private settings: SettingsService,
-    private location: LocationService
+    private location: LocationService,
+    private gtmService: GoogleTagManagerService
   ) {
     this.getQueryParams();
   }
@@ -62,6 +65,8 @@ export class AppComponent implements OnInit, OnDestroy {
       .pipe(
         filter((event: Event) => event instanceof NavigationEnd),
         switchMap((event: NavigationEnd) => {
+          this.setGtmTag(event.url);
+
           this.removeAuthLocalStorage(event);
           if (!event.url.includes('services-registration')) {
             sessionStorage.removeItem('rzd-order');
@@ -86,6 +91,15 @@ export class AppComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy)
       )
       .subscribe();
+  }
+
+  setGtmTag(url: string): void {
+    const gtmTag = {
+      event: 'page',
+      pageName: url,
+    };
+
+    this.gtmService.pushTag(gtmTag);
   }
 
   removeAuthLocalStorage(event: NavigationEnd): void {

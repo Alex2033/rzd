@@ -14,6 +14,7 @@ import { AuthInterceptor } from './auth/interceptors/auth.interceptor';
 import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { GoogleTagManagerModule } from 'angular-google-tag-manager';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -31,6 +32,9 @@ registerLocaleData(localeRu, 'ru');
     HttpClientModule,
     MatExpansionModule,
     HeaderModule,
+    GoogleTagManagerModule.forRoot({
+      id: 'GTM-MNMP264',
+    }),
   ],
   providers: [
     LanguagesResolver,
