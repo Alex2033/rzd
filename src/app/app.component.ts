@@ -20,8 +20,6 @@ import { LanguageService } from './shared/services/language.service';
 import { MenuService } from './shared/services/menu.service';
 import { GoogleTagManagerService } from 'angular-google-tag-manager';
 
-// declare let gtag: Function;
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
