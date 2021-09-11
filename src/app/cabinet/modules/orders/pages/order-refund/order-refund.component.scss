@@ -1,0 +1,17 @@
+@import "theme";
+
+.page-content {
+  padding-bottom: 8rem;
+}
+
+.refund-text {
+  color: $dark;
+  line-height: 1.375;
+  margin-top: 1.6rem;
+
+  > * {
+    &:not(:first-child) {
+      margin-top: 2.2rem;
+    }
+  }
+}

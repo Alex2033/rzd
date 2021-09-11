@@ -1,3 +1,4 @@
+import { OrderRefundComponent } from './pages/order-refund/order-refund.component';
 import { SupportResponseComponent } from './pages/support-response/support-response.component';
 import { SupportServiceComponent } from './pages/support-service/support-service.component';
 import { NgModule } from '@angular/core';
@@ -27,6 +28,10 @@ const routes: Routes = [
   {
     path: ':id',
     component: OrderDetailComponent,
+  },
+  {
+    path: ':id/refund',
+    component: OrderRefundComponent,
   },
   {
     path: ':id/documents',

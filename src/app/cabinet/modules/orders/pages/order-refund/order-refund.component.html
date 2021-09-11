@@ -1,0 +1,30 @@
+<div class="page-content" *ngIf="orderId$ | async as orderId">
+  <div class="page-container">
+    <a [routerLink]="['/cabinet', 'orders', orderId]" class="back-link">
+      <svg width="1rem" height="1rem">
+        <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
+      </svg>
+      <span>Заказы</span>
+    </a>
+
+    <h1 class="page-title">Отмена заказа</h1>
+
+    <div class="refund-text">
+      <p>После отмены заказа оказание услуг по нему будет невозможно.</p>
+      <p>
+        Денежные средства будут возвращены на счет после обработки заявки
+        менеджером.
+      </p>
+      <p>
+        Обратите внимание, что возврат не может быть осуществлен, если услуга
+        была оказана
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="buttons">
+  <button type="button" class="button">
+    <span>Подтвердить отмену</span>
+  </button>
+</div>
