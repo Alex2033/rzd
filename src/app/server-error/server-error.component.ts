@@ -136,7 +136,7 @@ export class ServerErrorComponent implements OnInit, OnDestroy {
 
       case 'FIELD_BAD_VALUE':
         this.text =
-          'Неккоректное значение поля. Пожалуйста, заполните поле по формату.';
+          'Некорректное значение поля. Пожалуйста, заполните поле по формату.';
         this.buttonText = 'Перейти к анкете';
         break;
 
