@@ -1,3 +1,4 @@
+import { OrderRefundSuccessComponent } from './pages/order-refund-success/order-refund-success.component';
 import { OrderRefundComponent } from './pages/order-refund/order-refund.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -26,6 +27,7 @@ import { SupportResponseComponent } from './pages/support-response/support-respo
     SupportServiceComponent,
     SupportResponseComponent,
     OrderRefundComponent,
+    OrderRefundSuccessComponent,
   ],
   imports: [
     CommonModule,
