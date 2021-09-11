@@ -26,11 +26,7 @@
     >
       <mat-radio-button
         [value]="'ONLINE'"
-        [disabled]="
-          !settings.enableOnlinePayment ||
-          order.id_point === 1112 ||
-          order.id_point === 1113
-        "
+        [disabled]="!settings.enableOnlinePayment || order.id_point === 1112"
       >
         Оплатить онлайн
       </mat-radio-button>
