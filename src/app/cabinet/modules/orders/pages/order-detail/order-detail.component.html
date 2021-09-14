@@ -147,7 +147,7 @@
 
       <div class="barcode" *ngIf="questionnaire.ext_id">
         <div class="barcode-content">
-          <ngx-barcode
+          <ngx-barcode6
             bc-font-size="23"
             [bc-value]="questionnaire.ext_id"
             [bc-display-value]="true"
@@ -155,7 +155,7 @@
             bc-margin-top="-1"
             [bc-font]="'Open Sans'"
             bc-font-options="bold"
-          ></ngx-barcode>
+          ></ngx-barcode6>
           <button
             (click)="openBottomSheet(questionnaire.ext_id)"
             class="icon-button expand-button"

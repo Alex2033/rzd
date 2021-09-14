@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { OrdersRoutingModule } from './orders-routing.module';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { NgxBarcodeModule } from 'ngx-barcode';
+import { NgxBarcode6Module } from 'ngx-barcode6';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -34,7 +34,7 @@ import { SupportResponseComponent } from './pages/support-response/support-respo
     OrdersRoutingModule,
     MatSelectModule,
     MatFormFieldModule,
-    NgxBarcodeModule,
+    NgxBarcode6Module,
     MatBottomSheetModule,
     FormsModule,
     ReactiveFormsModule,
