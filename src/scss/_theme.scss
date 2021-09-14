@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @import "~@angular/material/theming";
 @import "colors";
 
@@ -41,12 +42,12 @@ $error-palette: (
   ),
 );
 
-@include mat-core();
+@include mat.core();
 
 // custom themes
-$app-primary: mat-palette($primary-palette);
-$app-accent: mat-palette($accent-palette);
-$app-error: mat-palette($error-palette);
-$app-theme: mat-light-theme($app-primary, $app-accent, $app-error);
+$app-primary: mat.define-palette($primary-palette);
+$app-accent: mat.define-palette($accent-palette);
+$app-error: mat.define-palette($error-palette);
+$app-theme: mat.define-light-theme($app-primary, $app-accent, $app-error);
 
-@include angular-material-theme($app-theme);
+@include mat.all-component-themes($app-theme);
