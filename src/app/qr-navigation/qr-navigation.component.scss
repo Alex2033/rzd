@@ -1,0 +1,13 @@
+@import "theme";
+
+.qr-map-container {
+  position: absolute;
+  z-index: 10000;
+  background-color: $light;
+  inset: 0;
+}
+
+.qr-map {
+  width: 100%;
+  height: 100vh;
+}

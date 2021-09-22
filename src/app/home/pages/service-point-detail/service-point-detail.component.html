@@ -20,20 +20,26 @@
           {{ point.address }}
         </div>
       </div>
-      <div class="infocard-field infocard-worktime">
+      <div class="infocard-field">
         <div class="caption">Время работы:</div>
         <div class="infocard-text">{{ point.worktime }}</div>
       </div>
-      <div class="infocard-field infocard-location">
+      <div class="infocard-field">
         <div class="caption">Где находится:</div>
         <div class="infocard-text">
           {{ point.address }}
         </div>
+        <a [routerLink]="['/qr', point.id]" class="qr-link detailed-link">
+          <span>Посмотреть на схеме</span>
+          <svg width="2.2rem" height="1rem">
+            <use xlink:href="assets/sprites/icons.svg#arrow-right-long"></use>
+          </svg>
+        </a>
       </div>
-      <div class="infocard-field">
+      <div class="infocard-field infocard-contacts">
         <div class="caption">Контакты:</div>
         <div
-          class="infocard-text infocard-contacts"
+          class="infocard-text"
           [innerHTML]="point.contacts | paragraphs"
         ></div>
       </div>

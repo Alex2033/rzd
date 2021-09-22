@@ -242,7 +242,7 @@
       (click)="goToServicesRegistration()"
       class="button"
       [disabled]="
-        !checkedQuestionnairesIds.length && enableOrderCreation$ | async
+        !checkedQuestionnairesIds.length || !(enableOrderCreation$ | async)
       "
     >
       <span>Выбор услуг</span>

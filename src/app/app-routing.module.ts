@@ -42,6 +42,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'qr',
+    loadChildren: () =>
+      import('./qr-navigation/qr-navigation.module').then(
+        (m) => m.QrNavigationModule
+      ),
+  },
+  {
     path: '**',
     component: NotFoundComponent,
   },

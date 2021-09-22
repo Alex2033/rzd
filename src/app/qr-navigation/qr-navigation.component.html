@@ -1,0 +1,10 @@
+<div class="qr-map-container">
+  <iframe
+    *ngIf="order"
+    (load)="iframeLoad()"
+    id="qr-map-id"
+    class="qr-map"
+    [src]="order.webNavigation | safeUrl"
+    frameborder="0"
+  ></iframe>
+</div>

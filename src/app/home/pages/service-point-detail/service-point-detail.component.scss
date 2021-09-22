@@ -13,7 +13,7 @@
   line-height: 1.394;
 
   &:not(:first-child) {
-    margin-top: 2.4rem;
+    margin-top: 1.6rem;
   }
 
   > * {
@@ -22,12 +22,8 @@
     }
   }
 
-  &.infocard-location {
-    margin-top: 4.6rem;
-  }
-
-  &.infocard-worktime {
-    margin-top: 1.6rem;
+  &.infocard-contacts {
+    margin-top: 2.4rem;
   }
 }
 
@@ -50,4 +46,9 @@
 
 .custom-expansions {
   margin-top: 2.4rem;
+}
+
+.qr-link {
+  justify-content: flex-start;
+  padding-top: 0;
 }

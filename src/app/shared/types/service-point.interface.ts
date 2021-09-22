@@ -8,4 +8,5 @@ export interface ServicePointInterface {
   contacts: string;
   latitude: number;
   longtitude: number;
+  webNavigation?: string;
 }
