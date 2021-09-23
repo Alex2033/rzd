@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeRoutingModule } from './home-routing.module';
@@ -37,6 +38,7 @@ import { LegalInformationComponent } from './pages/legal-information/legal-infor
     PluralRuModule,
     AngularYandexMapsModule,
     SearchModule,
+    TranslateModule,
   ],
 })
 export class HomeModule {}

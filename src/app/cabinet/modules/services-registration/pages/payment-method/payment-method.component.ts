@@ -1,15 +1,14 @@
-import { CorporateClientsService } from 'src/app/shared/services/corporate-clients.service';
+import { TranslateService } from '@ngx-translate/core';
 import { SettingsService } from './../../../../../shared/services/settings.service';
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { OrdersService } from 'src/app/shared/services/orders.service';
-import { Observable, of, ReplaySubject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 import { PaymentInterface } from 'src/app/shared/types/payment.interface';
 import { OrderInterface } from 'src/app/shared/types/order.interface';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, takeUntil, tap, catchError } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
-import { LanguageService } from 'src/app/shared/services/language.service';
 import { SettingsInterface } from 'src/app/shared/types/settings.interface';
 
 @Component({
@@ -32,8 +31,8 @@ export class PaymentMethodComponent implements OnInit {
     private ordersService: OrdersService,
     private route: ActivatedRoute,
     private router: Router,
-    private language: LanguageService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -95,7 +94,7 @@ export class PaymentMethodComponent implements OnInit {
       id_order: this.order.id,
       payment: this.selectedPayment,
       autoStatus: true,
-      id_lang: this.language.langId.value,
+      id_lang: this.translate.currentLang,
       utm: this.utmMark,
     };
 

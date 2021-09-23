@@ -1,11 +1,11 @@
-import { LanguageService } from './language.service';
 import { CityInterface } from './../types/city.interface';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { switchMap, map, catchError } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { CoordinatesInterface } from '../types/coordinates.interface';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +20,7 @@ export class LocationService {
   public showLocation: boolean = false;
   private readonly ipInfo: string = 'http://ipwhois.app/json/';
 
-  constructor(private http: HttpClient, private language: LanguageService) {
+  constructor(private http: HttpClient, private translate: TranslateService) {
     this.getLocationFromStorage();
   }
 
@@ -82,7 +82,7 @@ export class LocationService {
   }
 
   getCities(
-    lang: number = this.language.langId.getValue()
+    lang: string = this.translate.currentLang
   ): Observable<CityInterface[]> {
     return this.http.get<CityInterface[]>(
       `${environment.api}api/contents/cities?lang=${lang}`
@@ -92,7 +92,7 @@ export class LocationService {
   getCityByCoords(
     lat: number,
     lot: number,
-    lang: number = this.language.langId.getValue()
+    lang: number = 1
   ): Observable<CityInterface> {
     return this.http.get<CityInterface>(
       `${environment.api}api/contents/findcity`,

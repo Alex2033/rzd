@@ -1,0 +1,60 @@
+{
+  "HOME": {
+    "TITLE": "Take the COVID-19 test at the airport or railway station",
+    "WELCOME": "Three types of PCR tests for COVID-19 are available:",
+    "URGENT": "<strong>Urgent</strong>(result within 1,5 hours)",
+    "EXPRESS": "<strong>Express</strong>(result within 3 hours)",
+    "STANDARD": "<strong>Standard</strong>(result within 24 hours)",
+    "REGISTER_INFO": "You may set up your personal account and quickly apply for PCR test for yourself and your family using saved data",
+    "DISCOUNT_COUPON": "To use a discount coupon, please contact the medical center manager",
+    "DIGITAL_CERTIFICATE": "A digital certificate (QR code) is available",
+    "HOW_IT_WORKS": {
+      "TITLE": "How it works?",
+      "SIGN_UP_TEXT": "Sign up on the website and fill out a profile",
+      "SCAN_QR": "Scan your order QR-code at the self-service terminal",
+      "TAKE_TEST": "Take test at the medical center located at the airport or railway station",
+      "RECEIVE_RESULT": "Receive your test result by e-mail",
+      "RELIABLE_RESULT": "We understand how important it is for you not to change your plans. Therefore, we double check all questionable tests to give a reliable result. In these cases, the time for preparing the results may be increased."
+    },
+    "COVID_TEST": {
+      "TITLE": "Why should travelers take test for COVID-19 in Russia?",
+      "DOCUMENT_LINK": "In accordance with <a href='{{link}}' target='_blank'>the Resolution of the Chief State Sanitary Doctor of the Russian Federation dated July 7, 2020 No. 18</a>",
+      "CITIZENS_TITLE": "Citizens of the Russian Federation",
+      "CITIZENS_TEXT": "Russian citizens who arrive from abroad by any transport must pass a PCR test for coronavirus and transmit the results to Rospotrebnadzor through State Services. From the date of arrival, you will have three days to take the test and four days to download it. If you have been vaccinated against COVID-19 within the last 12 months or if you have had a COVID-19 disease in the last six months, a laboratory test for COVID-19 by PCR is not required.",
+      "FOREIGN_CITIZENS_TITLE": "Foreign citizens",
+      "FOREIGN_CITIZENS_TEXT": "In the absence of a medical document confirming a negative test result for COVID-19 by the PCR method, selected no earlier than three calendar days before arriving in Russia, they must take a COVID-19 test by the PCR method upon arrival."
+    },
+    "TEST_TYPES": {
+      "TITLE": "What test can I take at the airport?",
+      "PRICE": "Price",
+      "READINESS_TIME": "Result readiness time",
+      "LOCATION": "Location",
+      "AVAILABLE_AT": "Available at",
+      "MEDICINES_SINGLE": "medical center",
+      "MEDICINES_MULTI": "medical centers"
+    },
+    "TEST_LOCATION": {
+      "TITLE": "Where can I take the test on COVID-19?",
+      "TEXT": "In our medical centers, you can take all the necessary PCR-tests and get results as soon as possible.",
+      "ADDRESS": "Address",
+      "WORKING_HOURS": "Working hours"
+    },
+    "FAQ": {
+      "TITLE": "FAQ",
+      "RECEIVE_RESULT_TITLE": "How to receive the test result?",
+      "RECEIVE_RESULT_TEXT": "You can get the result in printed form from the administrator of the medical center or receive it to the e-mail address specified during registration.",
+      "AVAILABLE_LANGUAGES_TITLE": "In which languages is the result available?",
+      "AVAILABLE_LANGUAGES_TEXT": "The result is available in two languages - Russian and English (RUS + ENG).",
+      "RECOMMENDATIONS_TITLE": "What are the recommendations before taking the test?"
+    }
+  },
+  "BUTTON": {
+    "SIGN_UP": "Sign up",
+    "HAVE_ACCOUNT": "Already have an account? Log in",
+    "TAKE_TEST": "Take the test",
+    "MORE_DETAILS": "More details",
+    "VIEW_ALL": "View all",
+    "ADDRESSES_LIST": "Addresses: list",
+    "ADDRESSES_MAP": "Addresses: map"
+  }
+}

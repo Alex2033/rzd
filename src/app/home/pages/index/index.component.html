@@ -8,30 +8,23 @@
 
   <div class="introduce-description">
     <div class="introduce-title">
-      <h1 class="home-title">
-        Сделайте тест на COVID-19 в аэропорту <br />
-        или на железнодорожном вокзале
-      </h1>
+      <h1 class="home-title" [innerHTML]="'HOME.TITLE' | translate"></h1>
     </div>
     <div class="page-container">
       <div class="introduce-text">
         <p>
-          Для вас доступны три вида тестирования на коронавирусную инфекцию
-          COVID-19 методом ПЦР:
+          {{ "HOME.WELCOME" | translate }}
         </p>
         <p>
-          <strong>Стандартное тестирование</strong> — получение результата за 24
-          часа
+          <span [innerHTML]="'HOME.URGENT' | translate"></span>
           <br />
-          <strong>Экспресс-тестирование</strong> — получение результата до 3
-          часов
+          <span [innerHTML]="'HOME.EXPRESS' | translate"></span>
           <br />
-          <strong>Срочное тестирование</strong> — получение результата за 1.5
-          часа (для г. Москва)
+          <span [innerHTML]="'HOME.STANDARD' | translate"></span>
         </p>
+
         <p>
-          Вы можете зарегистрировать себя и своих близких прямо на сайте для
-          экономии времени
+          {{ "HOME.REGISTER_INFO" | translate }}
         </p>
       </div>
       <a
@@ -39,19 +32,18 @@
           isAuth ? ['/cabinet', 'questionnaires'] : ['/auth', 'register']
         "
         class="introduce-button button"
-        >Зарегистрироваться</a
+        >{{ "BUTTON.SIGN_UP" | translate }}</a
       >
-      <a class="login-link" [routerLink]="['/cabinet', 'questionnaires']"
-        >Уже есть аккаунт? Войти</a
-      >
+      <a class="login-link" [routerLink]="['/cabinet', 'questionnaires']">{{
+        "BUTTON.HAVE_ACCOUNT" | translate
+      }}</a>
 
       <p class="coupon-info">
-        Для использования купона со скидкой на повторный тест, пожалуйста,
-        обратитесь к администратору мед. центра.
+        {{ "HOME.DISCOUNT_COUPON" | translate }}
       </p>
 
       <p class="introduce-warning">
-        Доступен цифровой сертификат (QR-код) на ЕМИАС
+        {{ "HOME.DIGITAL_CERTIFICATE" | translate }}
       </p>
     </div>
   </div>
@@ -60,42 +52,37 @@
 <!-- how works -->
 <section id="how-works" class="how-works-section">
   <div class="page-container">
-    <h2 class="section-title">Как это работает?</h2>
+    <h2 class="section-title">{{ "HOME.HOW_IT_WORKS.TITLE" | translate }}</h2>
 
     <ul class="works-list">
       <li class="works-list-item">
         <div class="works-list-image">
           <img src="assets/home/questionnaire.svg" alt="questionnaire icon" />
         </div>
-        <span>Зарегистрируйтесь на сайте и заполните анкету</span>
+        <span>{{ "HOME.HOW_IT_WORKS.SIGN_UP_TEXT" | translate }}</span>
       </li>
       <li class="works-list-item">
         <div class="works-list-image">
           <img src="assets/home/qr-code.svg" alt="qr-code icon" />
         </div>
-        <span>Отсканируйте полученный QR-код в терминале оплаты</span>
+        <span>{{ "HOME.HOW_IT_WORKS.SCAN_QR" | translate }}</span>
       </li>
       <li class="works-list-item">
         <div class="works-list-image">
           <img src="assets/home/undraw-map.svg" alt="undraw map icon" />
         </div>
-        <span
-          >Сдайте анализ в мед. центре, находящимся в аэропорту и на
-          железнодорожном вокзале</span
-        >
+        <span>{{ "HOME.HOW_IT_WORKS.TAKE_TEST" | translate }}</span>
       </li>
       <li class="works-list-item">
         <div class="works-list-image">
           <img src="assets/home/result.svg" alt="result icon" />
         </div>
-        <span>Результат теста будет известен в течение 3 - 24 часов</span>
+        <span>{{ "HOME.HOW_IT_WORKS.RECEIVE_RESULT" | translate }}</span>
       </li>
     </ul>
 
     <p class="how-works-text">
-      Мы понимаем как важно для вас не менять ваши планы. Поэтому все
-      сомнительные тесты мы проверяем дважды, чтобы выдать достоверный
-      результат. В этих случаях срок подготовки анализов может быть увеличен.
+      {{ "HOME.HOW_IT_WORKS.RELIABLE_RESULT" | translate }}
     </p>
   </div>
 </section>
@@ -104,32 +91,26 @@
 <section id="test-necessity" class="test-necessity">
   <div class="page-container">
     <h2 class="section-title">
-      Зачем путешественникам сдавать анализ на COVID-19 в России?
+      {{ "HOME.COVID_TEST.TITLE" | translate }}
     </h2>
-    <p>
-      В соответствии с
-      <a
-        href="http://publication.pravo.gov.ru/Document/View/0001202107060020?index=0&rangeSize=1"
-        target="_blank"
-      >
-        Постановление Главного государственного санитарного врача РФ от
-        02.07.2021</a
-      >
-    </p>
+    <p
+      [innerHTML]="
+        'HOME.COVID_TEST.DOCUMENT_LINK'
+          | translate
+            : {
+                link: 'http://publication.pravo.gov.ru/Document/View/0001202107060020?index=0&rangeSize=1'
+              }
+      "
+    ></p>
     <div class="citizen-type">
       <h5 class="subtitle citizen-type-title primary-color">
         <svg width="1.4rem" height="1.4rem">
           <use xlink:href="assets/sprites/icons.svg#arrow-right"></use>
         </svg>
-        <span>Граждане Российской Федерации</span>
+        <span>{{ "HOME.COVID_TEST.CITIZENS_TITLE" | translate }}</span>
       </h5>
       <p>
-        По возвращении в Россию должны протий обследование на COVID-19 методом
-        ПЦР в течение 3 календарных дней со дня въезда на территорию РФ. При
-        наличии вакцинации против СОVID-19 в течение последних 12 месяцев или
-        сведений о перенесенном в последние шесть месяцев заболевании COVID-19
-        проведение лабораторного исследования на COVID-19 методом ПЦР не
-        требуется.
+        {{ "HOME.COVID_TEST.CITIZENS_TEXT" | translate }}
       </p>
     </div>
     <div class="citizen-type">
@@ -137,13 +118,10 @@
         <svg width="1.4rem" height="1.4rem">
           <use xlink:href="assets/sprites/icons.svg#arrow-right"></use>
         </svg>
-        <span>Иностранные граждане и лица без гражданства</span>
+        <span>{{ "HOME.COVID_TEST.FOREIGN_CITIZENS_TITLE" | translate }}</span>
       </h5>
       <p>
-        При отсутствии медицинского документа об отрицательном результате
-        исследования материала на COVID-19 методом ПЦР, отобранного не ранее,
-        чем за три календарных дня до прибытия на территорию России, должны по
-        прилету сдать тест на COVID-19 методом ПЦР.
+        {{ "HOME.COVID_TEST.FOREIGN_CITIZENS_TEXT" | translate }}
       </p>
     </div>
   </div>
@@ -152,7 +130,7 @@
 <!-- test types -->
 <section id="test-type" class="test-types">
   <div class="page-container">
-    <h2 class="section-title">Какой тест можно сдать?</h2>
+    <h2 class="section-title">{{ "HOME.TEST_TYPES.TITLE" | translate }}</h2>
   </div>
   <div class="custom-expansions">
     <mat-expansion-panel
@@ -169,17 +147,20 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="custom-expansion-info">
-        <p class="caption">Стоимость анализа:</p>
+        <p class="caption">{{ "HOME.TEST_TYPES.PRICE" | translate }}:</p>
         <p>{{ service.price }} {{ service.priceType }}</p>
       </div>
+
       <div class="custom-expansion-info">
-        <p class="caption">Срок исполнения:</p>
+        <p class="caption">
+          {{ "HOME.TEST_TYPES.READINESS_TIME" | translate }}:
+        </p>
         <p>{{ service.duration }}</p>
       </div>
       <div class="custom-expansion-info">
-        <p class="caption">Местоположение:</p>
+        <p class="caption">{{ "HOME.TEST_TYPES.LOCATION" | translate }}:</p>
         <p>
-          Доступно в
+          {{ "HOME.TEST_TYPES.AVAILABLE_AT" | translate }}
           <a
             [routerLink]="['/service-points']"
             [queryParams]="{ serviceId: service.id }"
@@ -188,18 +169,24 @@
             <span
               appPluralRu
               [value]="service.numCenters"
-              [arVariants]="['мед. центре', 'мед. центрах', 'мед. центрах']"
+              [arVariants]="[
+                translate.instant('HOME.TEST_TYPES.MEDICINES_SINGLE'),
+                translate.instant('HOME.TEST_TYPES.MEDICINES_MULTI'),
+                translate.instant('HOME.TEST_TYPES.MEDICINES_MULTI')
+              ]"
             ></span
           ></a>
         </p>
       </div>
 
       <div class="custom-expansion-buttons">
-        <a [routerLink]="['/cabinet', 'questionnaires']" class="button"
-          >Записаться</a
-        >
-        <a [routerLink]="['/services', service.id]" class="button no-bg accent"
-          >Подробнее</a
+        <a [routerLink]="['/cabinet', 'questionnaires']" class="button">{{
+          "BUTTON.TAKE_TEST" | translate
+        }}</a>
+        <a
+          [routerLink]="['/services', service.id]"
+          class="button no-bg accent"
+          >{{ "BUTTON.MORE_DETAILS" | translate }}</a
         >
       </div>
     </mat-expansion-panel>
@@ -207,7 +194,7 @@
 
   <div class="page-container">
     <a [routerLink]="['/services']" class="detailed-link">
-      <span>Посмотреть все</span>
+      <span>{{ "BUTTON.VIEW_ALL" | translate }}</span>
       <svg width="2.2rem" height="1rem">
         <use xlink:href="assets/sprites/icons.svg#arrow-right-long"></use>
       </svg>
@@ -218,11 +205,10 @@
 <!-- test location -->
 <section id="test-location" class="test-location">
   <div class="page-container">
-    <h2 class="section-title">Где можно сдать тест на COVID-19?</h2>
+    <h2 class="section-title">{{ "HOME.TEST_LOCATION.TITLE" | translate }}</h2>
     <div class="test-location-text">
       <p>
-        В наших медицинских центрах вы сможете сдать все необходимые анализы и
-        получить результаты в кратчайшие сроки
+        {{ "HOME.TEST_LOCATION.TEXT" | translate }}
       </p>
     </div>
     <div class="address-buttons">
@@ -231,14 +217,14 @@
         [class.stroke]="addressMode === 'map'"
         class="button primary service-detail-button"
       >
-        На карте
+        {{ "BUTTON.ADDRESSES_MAP" | translate }}
       </button>
       <button
         (click)="addressMode = 'list'"
         [class.stroke]="addressMode === 'list'"
         class="button primary service-detail-button"
       >
-        Списком
+        {{ "BUTTON.ADDRESSES_LIST" | translate }}
       </button>
     </div>
   </div>
@@ -316,29 +302,31 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="custom-expansion-info">
-        <p class="caption">Адрес:</p>
+        <p class="caption">{{ "HOME.TEST_LOCATION.ADDRESS" | translate }}:</p>
         <p>{{ point.address }}</p>
       </div>
       <div class="custom-expansion-info">
-        <p class="caption">Время работы:</p>
+        <p class="caption">
+          {{ "HOME.TEST_LOCATION.WORKING_HOURS" | translate }}:
+        </p>
         <p>{{ point.worktime }}</p>
       </div>
 
       <div class="custom-expansion-buttons">
-        <a [routerLink]="['/cabinet', 'questionnaires']" class="button"
-          >Записаться</a
-        >
+        <a [routerLink]="['/cabinet', 'questionnaires']" class="button">{{
+          "BUTTON.TAKE_TEST" | translate
+        }}</a>
         <a
           [routerLink]="['/service-points', point.id]"
           class="button no-bg accent"
-          >Подробнее</a
+          >{{ "BUTTON.MORE_DETAILS" | translate }}</a
         >
       </div>
     </mat-expansion-panel>
   </div>
   <div class="page-container more-detailed-link" *ngIf="addressMode === 'list'">
     <a [routerLink]="['/service-points']" class="detailed-link">
-      <span>Подробнее</span>
+      <span>{{ "BUTTON.MORE_DETAILS" | translate }}</span>
       <svg width="2.2rem" height="1rem">
         <use xlink:href="assets/sprites/icons.svg#arrow-right-long"></use>
       </svg>
@@ -349,10 +337,7 @@
 <!-- faq -->
 <section id="faq" class="faq-section">
   <div class="page-container">
-    <h2 class="section-title">
-      Часто задаваемые <br />
-      вопросы
-    </h2>
+    <h2 class="section-title" [innerHTML]="'HOME.FAQ.TITLE' | translate"></h2>
   </div>
 
   <div class="custom-expansions">
@@ -362,12 +347,13 @@
         [expandedHeight]="'9rem'"
         [collapsedHeight]="'9rem'"
       >
-        <mat-panel-title>Как получить результат?</mat-panel-title>
+        <mat-panel-title>{{
+          "HOME.FAQ.RECEIVE_RESULT_TITLE" | translate
+        }}</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="custom-expansion-text">
         <p>
-          Забрать результат можно в печатном виде у администратора мед. центра
-          или получить его на указанный при регистрации адрес электронной почты.
+          {{ "HOME.FAQ.RECEIVE_RESULT_TEXT" | translate }}
         </p>
       </div>
     </mat-expansion-panel>
@@ -377,10 +363,12 @@
         [expandedHeight]="'9rem'"
         [collapsedHeight]="'9rem'"
       >
-        <mat-panel-title>На каких языках доступен результат?</mat-panel-title>
+        <mat-panel-title>{{
+          "HOME.FAQ.AVAILABLE_LANGUAGES_TITLE" | translate
+        }}</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="custom-expansion-text">
-        <p>Сразу на двух языках – русский и английский (RUS + ENG).</p>
+        <p>{{ "HOME.FAQ.AVAILABLE_LANGUAGES_TEXT" | translate }}</p>
       </div>
     </mat-expansion-panel>
     <!-- 3 -->
@@ -389,9 +377,9 @@
         [expandedHeight]="'9rem'"
         [collapsedHeight]="'9rem'"
       >
-        <mat-panel-title
-          >Какие рекомендации перед сдачей теста?</mat-panel-title
-        >
+        <mat-panel-title>{{
+          "HOME.FAQ.RECOMMENDATIONS_TITLE" | translate
+        }}</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="custom-expansion-text">
         <p>

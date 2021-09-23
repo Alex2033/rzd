@@ -33,7 +33,8 @@
       <mat-radio-button disabled [value]="'TERMINAL'">
         Оплатить картой в инфокиоске
       </mat-radio-button>
-      <mat-radio-button [value]="'ADMIN'" [disabled]="order.id_point === 1115">
+      <mat-radio-button [value]="'ADMIN'">
+        <!-- [disabled]="order.id_point === 1115" -->
         Оплатить у администратора
         <div class="additional-info">Возможно длительное ожидание</div>
       </mat-radio-button>

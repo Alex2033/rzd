@@ -1,3 +1,4 @@
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { LocationService } from 'src/app/shared/services/location.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
@@ -45,11 +46,15 @@ export class IndexComponent implements OnInit, AfterViewInit {
     private servicePoints: ServicePointsService,
     private account: AccountService,
     private route: ActivatedRoute,
-    private location: LocationService
+    private location: LocationService,
+    public translate: TranslateService
   ) {}
 
   ngOnInit(): void {
-    this.initializeValues();
+    this.translate.onLangChange.pipe(takeUntil(this.destroy)).subscribe(() => {
+      this.initializeValues();
+    });
+    this.isAuth = this.account.isAuth();
   }
 
   ngAfterViewInit(): void {
@@ -76,7 +81,6 @@ export class IndexComponent implements OnInit, AfterViewInit {
       shareReplay(),
       takeUntil(this.destroy)
     );
-    this.isAuth = this.account.isAuth();
   }
 
   setMapBounds(): void {

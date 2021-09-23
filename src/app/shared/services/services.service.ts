@@ -1,10 +1,10 @@
+import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ServiceInterface } from '../types/service.interface';
-import { LanguageService } from './language.service';
 import { LocationService } from './location.service';
 
 @Injectable({
@@ -14,12 +14,12 @@ export class ServicesService {
   constructor(
     private http: HttpClient,
     private location: LocationService,
-    private language: LanguageService
+    private translate: TranslateService
   ) {}
 
   getServices(
     point?: number,
-    langId: number = this.language.langId.getValue(),
+    langId: string = this.translate.currentLang,
     city: number = this.location.getLocationValue().id
   ): Observable<ServiceInterface[]> {
     return this.http.get<ServiceInterface[]>(

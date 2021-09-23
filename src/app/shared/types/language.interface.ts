@@ -1,5 +1,5 @@
 export interface LanguageInterface {
-  langId: number;
+  langId: string;
   flag: string;
   label: string;
 }

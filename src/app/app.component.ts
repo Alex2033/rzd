@@ -16,9 +16,9 @@ import {
   switchMap,
   takeUntil,
 } from 'rxjs/operators';
-import { LanguageService } from './shared/services/language.service';
 import { MenuService } from './shared/services/menu.service';
 import { GoogleTagManagerService } from 'angular-google-tag-manager';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -39,22 +39,24 @@ import { GoogleTagManagerService } from 'angular-google-tag-manager';
 export class AppComponent implements OnInit, OnDestroy {
   public navigationMenu$: Observable<boolean>;
   public userMenu$: Observable<boolean>;
+  public name: string = 'Alex';
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   constructor(
     private menuService: MenuService,
     private route: ActivatedRoute,
-    private language: LanguageService,
     private router: Router,
     private settings: SettingsService,
     private location: LocationService,
-    private gtmService: GoogleTagManagerService
+    private gtmService: GoogleTagManagerService,
+    private translate: TranslateService
   ) {
     this.getQueryParams();
   }
 
   ngOnInit(): void {
+    this.translate.use(localStorage.getItem('langId') || '1');
     this.initializeValues();
   }
 
@@ -83,7 +85,9 @@ export class AppComponent implements OnInit, OnDestroy {
         distinctUntilChanged(),
         switchMap((params: Params) => {
           if (params.utm_source) this.settings.setUtmMark(params.utm_source);
-          this.language.init(+params.langId);
+          if (params.langId) {
+            this.setLanguage(params.langId);
+          }
           return of(void 0);
         }),
         takeUntil(this.destroy)
@@ -98,6 +102,11 @@ export class AppComponent implements OnInit, OnDestroy {
     };
 
     this.gtmService.pushTag(gtmTag);
+  }
+
+  setLanguage(langId: string): void {
+    this.translate.use(langId);
+    localStorage.setItem('langId', langId);
   }
 
   removeAuthLocalStorage(event: NavigationEnd): void {
@@ -124,5 +133,9 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy.next(null);
     this.destroy.complete();
+  }
+
+  onChangeName(val: string): void {
+    this.name = val;
   }
 }

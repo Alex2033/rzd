@@ -3,20 +3,29 @@ import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpClientModule,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { GoogleTagManagerModule } from 'angular-google-tag-manager';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppComponent } from './app.component';
 import { NavigationMenuComponent } from './shared/layout/navigation-menu/navigation-menu.component';
 import { UserMenuComponent } from './shared/layout/user-menu/user-menu.component';
-import { LanguagesResolver } from './shared/resolvers/language.resolver';
 import { AuthInterceptor } from './auth/interceptors/auth.interceptor';
 import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { GoogleTagManagerModule } from 'angular-google-tag-manager';
 
 registerLocaleData(localeRu, 'ru');
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -35,9 +44,15 @@ registerLocaleData(localeRu, 'ru');
     GoogleTagManagerModule.forRoot({
       id: 'GTM-MNMP264',
     }),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
   providers: [
-    LanguagesResolver,
     {
       provide: HTTP_INTERCEPTORS,
       multi: true,
