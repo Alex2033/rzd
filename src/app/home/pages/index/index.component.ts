@@ -54,6 +54,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
     this.translate.onLangChange.pipe(takeUntil(this.destroy)).subscribe(() => {
       this.initializeValues();
     });
+    this.initializeValues();
     this.isAuth = this.account.isAuth();
   }
 
