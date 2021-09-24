@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { CheckCorpResponseInterface } from 'src/app/shared/types/check-corp-response.interface';
 import { environment } from 'src/environments/environment';
@@ -12,9 +13,7 @@ import { UpdatedFieldInterface } from '../../cabinet/modules/questionnaire/types
   providedIn: 'root',
 })
 export class QuestionnairesService {
-  public langId: number;
-
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private translate: TranslateService) {}
 
   getQuestionnaires(): Observable<QuestionnaireInterface[]> {
     return this.http.get<QuestionnaireInterface[]>(
@@ -45,7 +44,7 @@ export class QuestionnairesService {
 
   getDocumentTypes(
     isChild: boolean,
-    langId: number = this.langId
+    langId: string = this.translate.currentLang
   ): Observable<DoctypeInterface[]> {
     return this.http.get<DoctypeInterface[]>(
       environment.api + `api/contents/documents?child=${isChild}&lang=${langId}`

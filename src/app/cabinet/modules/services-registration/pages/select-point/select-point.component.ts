@@ -76,11 +76,7 @@ export class SelectPointComponent implements OnInit, OnDestroy {
   }
 
   mapPoints(points: ServicePointInterface[]): void {
-    if (this.servicesRegistration.order.payment === 'CORPORATE') {
-      this.points = points.filter((p) => p.id !== 1115);
-    } else {
-      this.points = points;
-    }
+    this.points = points;
     const pointId = JSON.parse(sessionStorage.getItem('rzd-order'))?.id_point;
     this.selectedPoint = this.points.find((p) => p.id === pointId);
   }

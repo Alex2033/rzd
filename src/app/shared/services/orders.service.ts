@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -15,9 +16,7 @@ import { SignInterface } from '../types/sign.interface';
   providedIn: 'root',
 })
 export class OrdersService {
-  public langId: number;
-
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private translate: TranslateService) {}
 
   createOrder(order: OrderInterface): Observable<OrderResponseInterface> {
     return this.http.post<OrderResponseInterface>(
@@ -39,7 +38,7 @@ export class OrdersService {
 
   getDocuments(
     id: number,
-    langId: number = this.langId
+    langId: string = this.translate.currentLang
   ): Observable<DocumentsOrderInterface[]> {
     return this.http.get<DocumentsOrderInterface[]>(
       environment.api + `api/document?id_order=${id}&id_lang=${langId}`
@@ -50,7 +49,7 @@ export class OrdersService {
     orderId: number,
     questionnaireId: number,
     documentId: number,
-    langId: number = this.langId
+    langId: string = this.translate.currentLang
   ) {
     return this.http
       .get(
@@ -69,7 +68,7 @@ export class OrdersService {
     orderId: number,
     anketaId: number,
     documentId: number,
-    langId: number = this.langId
+    langId: string = this.translate.currentLang
   ) {
     return this.http.get(
       environment.api +
