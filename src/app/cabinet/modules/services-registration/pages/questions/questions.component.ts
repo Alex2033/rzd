@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -19,6 +20,7 @@ import { ServicesRegistrationService } from 'src/app/shared/services/services-re
   providers: [
     { provide: DateAdapter, useClass: AppDateAdapter },
     { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
+    DatePipe,
   ],
 })
 export class QuestionsComponent implements OnInit, OnDestroy {
@@ -31,7 +33,8 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private servicesRegistration: ServicesRegistrationService
+    private servicesRegistration: ServicesRegistrationService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -90,7 +93,10 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     const symptomsVal = this.form.get('symptoms').value;
     const contactVal = this.form.get('patientContact').value;
     const been_abroad = this.form.get('been_abroad').value;
-    const abroad_return_date = this.form.get('abroad_return_date').value;
+    const abroad_return_date = this.datePipe.transform(
+      this.form.get('abroad_return_date').value,
+      'yyyy-MM-dd'
+    );
 
     if (symptomsVal || contactVal) {
       this.router.navigate([
