@@ -28,7 +28,7 @@ export class QrNavigationComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy)
       )
       .subscribe((order) => {
-        if (!order) {
+        if (!order || !order.webNavigation) {
           this.router.navigate(['/']);
         }
 
