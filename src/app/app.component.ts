@@ -39,7 +39,6 @@ import { TranslateService } from '@ngx-translate/core';
 export class AppComponent implements OnInit, OnDestroy {
   public navigationMenu$: Observable<boolean>;
   public userMenu$: Observable<boolean>;
-  public name: string = 'Alex';
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -133,9 +132,5 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy.next(null);
     this.destroy.complete();
-  }
-
-  onChangeName(val: string): void {
-    this.name = val;
   }
 }

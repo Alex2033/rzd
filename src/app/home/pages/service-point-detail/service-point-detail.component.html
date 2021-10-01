@@ -29,7 +29,11 @@
         <div class="infocard-text">
           {{ point.address }}
         </div>
-        <a [routerLink]="['/qr', point.id]" class="qr-link detailed-link">
+        <a
+          *ngIf="point.webNavigation"
+          [routerLink]="['/qr', point.id]"
+          class="qr-link detailed-link"
+        >
           <span>Посмотреть на схеме</span>
           <svg width="2.2rem" height="1rem">
             <use xlink:href="assets/sprites/icons.svg#arrow-right-long"></use>
