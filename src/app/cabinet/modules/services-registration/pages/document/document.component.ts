@@ -11,7 +11,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, ReplaySubject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { OrdersService } from 'src/app/shared/services/orders.service';
-import { ServicesRegistrationService } from 'src/app/shared/services/services-registration.service';
 import { DocumentsOrderInterface } from 'src/app/shared/types/documents-order.interface';
 
 @Component({
@@ -38,8 +37,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
     private ordersService: OrdersService,
     private route: ActivatedRoute,
     private router: Router,
-    private location: Location,
-    private servicesRegistration: ServicesRegistrationService
+    private location: Location
   ) {}
 
   ngOnInit(): void {
