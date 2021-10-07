@@ -267,8 +267,6 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
     });
   }
 
-  // todo эту строчку this.isLoading = false зарефакторить
-
   updateAllFields(group, id: number): void {
     Object.keys(group.controls).forEach((key) => {
       let formControl = group.controls[key];
