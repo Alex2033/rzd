@@ -15,7 +15,7 @@
   ::ng-deep {
     .mat-checkbox-indeterminate.mat-primary .mat-checkbox-background,
     .mat-checkbox-checked.mat-primary .mat-checkbox-background {
-      background-color: lighten($primary, 17.95%);
+      background-color: $primary-light;
     }
   }
 

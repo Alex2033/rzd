@@ -26,7 +26,7 @@
     .mat-form-field {
       .mat-focus {
         svg {
-          fill: lighten($primary, 17.95%);
+          fill: $primary-light;
         }
       }
     }
@@ -131,7 +131,7 @@
       &:not(.mat-form-field-invalid) {
         .mat-form-field-label,
         .mat-form-field-outline-thick {
-          color: lighten($primary, 17.95%);
+          color: $primary-light;
         }
       }
     }

@@ -52,7 +52,7 @@
   appearance: none;
 
   &:focus {
-    border-color: lighten($primary, 17.95%);
+    border-color: $primary-light;
     outline: 0;
   }
 

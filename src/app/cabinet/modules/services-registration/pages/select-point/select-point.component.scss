@@ -37,11 +37,11 @@
     }
 
     .mat-radio-button.mat-primary.mat-radio-checked .mat-radio-outer-circle {
-      border-color: lighten($primary, 17.95%);
+      border-color: $primary-light;
     }
 
     .mat-radio-button.mat-primary .mat-radio-inner-circle {
-      background-color: lighten($primary, 17.95%);
+      background-color: $primary-light;
     }
 
     .mat-radio-label-content {

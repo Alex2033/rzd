@@ -49,7 +49,7 @@
 
   &:focus {
     outline: 0;
-    box-shadow: 0 0 0 0.1rem lighten($primary, 17.95%);
+    box-shadow: 0 0 0 0.1rem $primary-light;
   }
 }
 
