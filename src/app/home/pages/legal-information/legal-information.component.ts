@@ -16,11 +16,11 @@ export class LegalInformationComponent implements OnInit {
     },
     {
       name: 'Договор оферты',
-      file: 'assets/files/Приложение_№1_к_приказу_ПУБЛИЧНАЯ_ОФЕРТА_июль.pdf',
+      file: 'assets/files/1.docx',
     },
     {
-      name: 'Приказ № 253-ОД от 09.06.2021',
-      file: 'assets/files/Приказ № 253-ОД от 09.06.2021.pdf',
+      name: 'Приказ № 414/ОД от 04.10.2021',
+      file: 'assets/files/414- 04.10.2021.pdf',
     },
     {
       name: 'Согласие пациента на обработку персональных данных',
@@ -39,11 +39,11 @@ export class LegalInformationComponent implements OnInit {
     },
     {
       name: 'Договор оферты',
-      file: 'assets/files/Договор оферты.pdf',
+      file: 'assets/files/Приложение №1 к приказу ПУБЛИЧНАЯ ОФЕРТА_исправ.docx',
     },
     {
-      name: 'Приказ № 618 от 23.08.2021',
-      file: 'assets/files/Приказ № 618 от 23.08.2021_договор оферты.pdf',
+      name: 'Приказ №778 от 05.10.2021',
+      file: 'assets/files/Приказ № 778 от 05.10.2021.pdf',
     },
     {
       name: 'Согласие пациента на обработку персональных данных',
