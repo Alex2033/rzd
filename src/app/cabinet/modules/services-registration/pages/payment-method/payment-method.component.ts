@@ -49,7 +49,7 @@ export class PaymentMethodComponent implements OnInit {
             this.isCorporatePayment = true;
           }
 
-          return this.settingsService.getSettings();
+          return this.settingsService.getSettings(this.order.id_point);
         })
       )
       .subscribe((settings) => {

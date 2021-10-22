@@ -1,7 +1,14 @@
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { LocationService } from 'src/app/shared/services/location.service';
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+  ElementRef,
+  HostListener,
+} from '@angular/core';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { Observable, ReplaySubject } from 'rxjs';
 import { shareReplay, switchMap, takeUntil, tap } from 'rxjs/operators';
@@ -21,6 +28,7 @@ import { YaReadyEvent } from 'angular8-yandex-maps';
 })
 export class IndexComponent implements OnInit, AfterViewInit {
   @ViewChild('corpPanel') corpPanel: MatExpansionPanel;
+  @ViewChild('faq') faq: ElementRef;
 
   public services$: Observable<ServiceInterface[]>;
   public servicePoints$: Observable<ServicePointInterface[]>;
@@ -140,5 +148,14 @@ export class IndexComponent implements OnInit, AfterViewInit {
 
     this.map.target.setBounds(this.map.target.geoObjects.getBounds());
     this.map.target.setZoom(9);
+  }
+
+  @HostListener('window:scroll', ['$event']) checkScroll(): void {
+    if (
+      this.faq.nativeElement.getBoundingClientRect().top * 2 <=
+      (window.innerHeight || document.documentElement.clientHeight)
+    ) {
+      console.log('FAQ is IN');
+    }
   }
 }

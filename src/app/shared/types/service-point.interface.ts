@@ -8,5 +8,10 @@ export interface ServicePointInterface {
   contacts: string;
   latitude: number;
   longtitude: number;
+  enableOnlinePayment: boolean;
+  enableCorpPayment: boolean;
+  enableAdminPayment: boolean;
+  enableOrderCreation: boolean;
+  enableTerminalPayment: boolean;
   webNavigation?: string;
 }

@@ -16,9 +16,13 @@ export class SettingsService {
       this.utmMark = sessionStorage.getItem('rzd-utmMark');
   }
 
-  getSettings(): Observable<SettingsInterface> {
+  getSettings(id_point?: number): Observable<SettingsInterface> {
     return this.http
-      .get<SettingsInterface>(environment.api + 'api/contents/settings')
+      .get<SettingsInterface>(
+        `${environment.api}api/contents/settings${
+          id_point ? '?id_point=' + id_point : ''
+        }`
+      )
       .pipe(shareReplay(1));
   }
 

@@ -5,7 +5,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of, ReplaySubject } from 'rxjs';
-import { finalize, switchMap, takeUntil } from 'rxjs/operators';
+import { finalize, map, switchMap, takeUntil } from 'rxjs/operators';
 import { OrdersService } from 'src/app/shared/services/orders.service';
 import { ServicesRegistrationService } from 'src/app/shared/services/services-registration.service';
 import { ServicesService } from 'src/app/shared/services/services.service';
@@ -14,6 +14,7 @@ import { QuestionnaireOrderInterface } from 'src/app/shared/types/questionnaire-
 import { ServiceInterface } from 'src/app/shared/types/service.interface';
 import { QuestionnairesService } from '../../../../../shared/services/questionnaires.service';
 import { QuestionnaireInterface } from '../../../questionnaire/types/questionnaire.interface';
+import { SettingsService } from 'src/app/shared/services/settings.service';
 
 @Component({
   selector: 'app-select-services',
@@ -31,6 +32,7 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
   public selectedServices: number[] = [];
   public isLoading: boolean = false;
   public servicesLoaded: boolean = true;
+  public enableOrderCreation$: Observable<boolean>;
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -41,7 +43,8 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
     private router: Router,
     private ordersService: OrdersService,
     private route: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private settings: SettingsService
   ) {}
 
   ngOnInit(): void {
@@ -66,6 +69,8 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
           }
 
           this.mapQuestionnaires();
+          this.getEnableOrderCreation(this.order.id_point);
+
           return this.servicesService.getServices(this.order.id_point);
         }),
         switchMap((res) => {
@@ -124,6 +129,12 @@ export class SelectServicesComponent implements OnInit, OnDestroy {
     this.setOrderValues();
 
     this.sum = this.order.sum;
+  }
+
+  getEnableOrderCreation(id: number): void {
+    this.enableOrderCreation$ = this.settings
+      .getSettings(id)
+      .pipe(map((settings) => settings.enableOrderCreation));
   }
 
   convertServiceObjToNum(order: OrderInterface): void {

@@ -131,7 +131,8 @@
     (click)="selectService()"
     [disabled]="
       (!selectedService && separateSelected.length !== order.items.length) ||
-      isLoading
+      isLoading ||
+      !(enableOrderCreation$ | async)
     "
   >
     <span>Далее</span>

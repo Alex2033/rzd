@@ -30,10 +30,17 @@
       >
         Оплатить онлайн
       </mat-radio-button>
-      <mat-radio-button disabled [value]="'TERMINAL'">
+      <mat-radio-button
+        disabled
+        [value]="'TERMINAL'"
+        [disabled]="!settings.enableTerminalPayment"
+      >
         Оплатить картой в инфокиоске
       </mat-radio-button>
-      <mat-radio-button [value]="'ADMIN'">
+      <mat-radio-button
+        [value]="'ADMIN'"
+        [disabled]="!settings.enableAdminPayment"
+      >
         Оплатить у администратора
         <div class="additional-info">Возможно длительное ожидание</div>
       </mat-radio-button>
@@ -44,7 +51,9 @@
     <button
       type="button"
       (click)="pay()"
-      [disabled]="!selectedPayment && !isCorporatePayment"
+      [disabled]="
+        !selectedPayment && !isCorporatePayment && !settings.enableCorpPayment
+      "
       class="button"
     >
       <span> {{ isCorporatePayment ? "Подтвердить" : "Оплатить" }}</span>
