@@ -64,22 +64,12 @@ export class AppComponent implements OnInit, OnDestroy {
     this.router.events
       .pipe(
         filter((event: Event) => event instanceof NavigationEnd),
-        switchMap((event: NavigationEnd) => {
-          this.setGtmTag(event.url);
+        switchMap(({ url }: NavigationEnd) => {
+          this.setGtmTag(url);
+          this.removeAuthLocalStorage(url);
+          this.removeOrderSessionStorage(url);
+          this.toggleLocationPanel(url);
 
-          this.removeAuthLocalStorage(event);
-          if (!event.url.includes('services-registration')) {
-            sessionStorage.removeItem('rzd-order');
-          }
-          if (
-            event.url.includes('auth') ||
-            (event.url.includes('cabinet') &&
-              !event.url.includes('select-point'))
-          ) {
-            this.location.showLocation = false;
-          } else {
-            this.location.showLocation = true;
-          }
           return this.route.queryParams;
         }),
         distinctUntilChanged(),
@@ -93,6 +83,11 @@ export class AppComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy)
       )
       .subscribe();
+  }
+
+  initializeValues(): void {
+    this.navigationMenu$ = this.menuService.showNavigationMenu;
+    this.userMenu$ = this.menuService.showUserMenu;
   }
 
   setGtmTag(url: string): void {
@@ -109,20 +104,32 @@ export class AppComponent implements OnInit, OnDestroy {
     localStorage.setItem('langId', langId);
   }
 
-  removeAuthLocalStorage(event: NavigationEnd): void {
-    if (!event.url.includes('sms-info')) {
-      if (!event.url.includes('register')) {
+  removeAuthLocalStorage(url: string): void {
+    if (!url.includes('sms-info')) {
+      if (!url.includes('register')) {
         localStorage.removeItem('registerForm');
       }
-      if (!event.url.includes('login')) {
+      if (!url.includes('login')) {
         localStorage.removeItem('loginForm');
       }
     }
   }
 
-  initializeValues(): void {
-    this.navigationMenu$ = this.menuService.showNavigationMenu;
-    this.userMenu$ = this.menuService.showUserMenu;
+  removeOrderSessionStorage(url: string): void {
+    if (!url.includes('services-registration')) {
+      sessionStorage.removeItem('rzd-order');
+    }
+  }
+
+  toggleLocationPanel(url: string): void {
+    if (
+      url.includes('auth') ||
+      (url.includes('cabinet') && !url.includes('select-point'))
+    ) {
+      this.location.showLocation = false;
+    } else {
+      this.location.showLocation = true;
+    }
   }
 
   closeMenus(): void {
