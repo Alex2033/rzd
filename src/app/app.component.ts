@@ -57,6 +57,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.translate.use(localStorage.getItem('langId') || '1');
     this.initializeValues();
+    console.log(document.referrer);
   }
 
   getQueryParams(): void {

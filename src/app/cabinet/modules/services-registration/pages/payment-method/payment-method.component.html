@@ -51,9 +51,7 @@
     <button
       type="button"
       (click)="pay()"
-      [disabled]="
-        !selectedPayment && !isCorporatePayment && !settings.enableCorpPayment
-      "
+      [disabled]="!selectedPayment && !isCorporatePayment"
       class="button"
     >
       <span> {{ isCorporatePayment ? "Подтвердить" : "Оплатить" }}</span>

@@ -106,7 +106,12 @@
       >
         <span>Обычный</span>
       </button>
-      <button type="button" (click)="makeCorporateOrder()" class="button">
+      <button
+        type="button"
+        (click)="makeCorporateOrder()"
+        [disabled]="!(enableCorpPayment$ | async)"
+        class="button"
+      >
         <span>Корпоративный</span>
       </button>
     </div>

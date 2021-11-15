@@ -1,10 +1,11 @@
-import { takeUntil, finalize } from 'rxjs/operators';
+import { takeUntil, finalize, map } from 'rxjs/operators';
 import { Observable, ReplaySubject } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { QuestionnairesService } from 'src/app/shared/services/questionnaires.service';
 import { ServicesRegistrationService } from 'src/app/shared/services/services-registration.service';
 import { CheckCorpResponseInterface } from 'src/app/shared/types/check-corp-response.interface';
+import { SettingsService } from 'src/app/shared/services/settings.service';
 
 @Component({
   selector: 'app-services-registration-info',
@@ -18,13 +19,15 @@ export class ServicesRegistrationInfoComponent implements OnInit, OnDestroy {
   public corpQuestionnaire: boolean = false;
   public pageLoaded: boolean = true;
   public areAvailableQuestionnaires: boolean;
+  public enableCorpPayment$: Observable<boolean>;
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   constructor(
     private router: Router,
     private servicesRegistration: ServicesRegistrationService,
-    private questionnaires: QuestionnairesService
+    private questionnaires: QuestionnairesService,
+    private settings: SettingsService
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +43,11 @@ export class ServicesRegistrationInfoComponent implements OnInit, OnDestroy {
 
     this.hasCorpQuestionnaires = this.servicesRegistration.order.items.some(
       (q) => q.is_corp_client
+    );
+
+    this.enableCorpPayment$ = this.settings.getSettings().pipe(
+      map((settings) => settings.enableCorpPayment),
+      takeUntil(this.destroy)
     );
   }
 
