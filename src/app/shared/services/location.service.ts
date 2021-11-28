@@ -6,13 +6,14 @@ import { environment } from 'src/environments/environment';
 import { map, catchError } from 'rxjs/operators';
 import { CoordinatesInterface } from '../types/coordinates.interface';
 import { TranslateService } from '@ngx-translate/core';
+import { defaultLocation } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocationService {
   public currentLocationSubject$: BehaviorSubject<CityInterface> =
-    new BehaviorSubject<CityInterface>(environment.defaultLocation);
+    new BehaviorSubject<CityInterface>(defaultLocation);
   public readonly currentLocation$: Observable<CityInterface> =
     this.currentLocationSubject$.asObservable();
   public readonly cityId: number = this.currentLocationSubject$.getValue()?.id;

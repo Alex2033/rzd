@@ -59,14 +59,40 @@ export class LegalInformationComponent implements OnInit {
     },
   ];
 
+  public kaliningradDocs: object[] = [
+    {
+      name: 'Приказ об утверждении оферты',
+      file: 'assets/files/kaliningrad/Приказ Об утверждении публичной оферты Калининград (ред. 22.10.2021).docx',
+    },
+    {
+      name: 'Договор оферты',
+      file: 'assets/files/kaliningrad/КГД Оферта.docx',
+    },
+    {
+      name: 'Политика обработки персональных данных',
+      file: 'assets/files/kaliningrad/pd_politika.pdf',
+    },
+  ];
+
   constructor(private location: LocationService) {}
 
   ngOnInit() {
     this.location.currentLocation$.subscribe((location) => {
-      if (location.id === environment.defaultLocation.id) {
-        this.docs = [...this.moscowDocs];
-      } else {
-        this.docs = [...this.novosibDocs];
+      switch (location.id) {
+        case environment.isProdMode ? 1122 : 1101:
+          this.docs = [...this.moscowDocs];
+          break;
+
+        case environment.isProdMode ? 1123 : 1102:
+          this.docs = [...this.novosibDocs];
+          break;
+
+        case environment.isProdMode ? 1143 : 1111:
+          this.docs = [...this.kaliningradDocs];
+          break;
+
+        default:
+          break;
       }
     });
   }

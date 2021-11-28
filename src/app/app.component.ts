@@ -137,7 +137,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.menuService.setUserMenu(false);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.destroy.next(null);
     this.destroy.complete();
   }
