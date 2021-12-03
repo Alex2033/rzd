@@ -1,6 +1,6 @@
-<div class="home-inner-page" *ngIf="points$ | async as points">
+<div class="home-inner-page">
   <header class="home-inner-header">
-    <h1 class="home-title">Точки обслуживания</h1>
+    <h1 class="home-title">{{ "SERVICE_POINTS" | translate }}</h1>
   </header>
   <div class="page-container">
     <!-- search -->
@@ -27,9 +27,9 @@
           appPluralRu
           [value]="(points | search: searchText)?.length"
           [arVariants]="[
-            'медицинский центр',
-            'медицинских центра',
-            'медицинских центров'
+            translate.instant('MEDICINES_SINGLE'),
+            translate.instant('MEDICINES_MULTI'),
+            translate.instant('MEDICINES_MULTI')
           ]"
         ></span>
       </ng-container>
@@ -42,14 +42,14 @@
         [class.stroke]="addressMode === 'map'"
         class="button primary service-detail-button"
       >
-        На карте
+        {{ "BUTTON.ADDRESSES_MAP" | translate }}
       </button>
       <button
         (click)="addressMode = 'list'"
         [class.stroke]="addressMode === 'list'"
         class="button primary service-detail-button"
       >
-        Списком
+        {{ "BUTTON.ADDRESSES_LIST" | translate }}
       </button>
     </div>
 
@@ -134,7 +134,7 @@
         <a
           [routerLink]="['/cabinet', 'questionnaires']"
           class="point-card-button button no-bg accent"
-          >Записаться</a
+          >{{ "BUTTON.SIGN_UP" | translate }}</a
         >
       </div>
     </div>

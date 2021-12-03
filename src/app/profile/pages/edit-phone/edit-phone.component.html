@@ -4,14 +4,14 @@
       <div class="page-top">
         <div class="spacer"></div>
 
-        <a class="close" [routerLink]="['/']">Закрыть</a>
+        <a class="close" [routerLink]="['/']">{{ "CLOSE" | translate }}</a>
       </div>
       <h1 class="subtitle profile-title">Редактирование телефона</h1>
 
       <div class="form-controls">
         <div class="form-control">
           <mat-form-field appearance="outline">
-            <mat-label>Телефон</mat-label>
+            <mat-label>{{ "MOBILE" | translate }}</mat-label>
 
             <input
               matInput
@@ -41,11 +41,11 @@
                 "
                 [errors]="editForm.get('phone').errors"
                 [errorMessages]="{
-                  required: 'Введите телефон',
+                  required: ('ENTER_YOUR_PHONE' | translate),
                   not_unique_phone:
                     editForm.get('phone').errors?.not_unique_phone,
-                  pattern: 'Неверный формат телефона',
-                  phone_bad_format: 'Неверный формат телефона'
+                  pattern: ('INVALID_PHONE_FORMAT' | translate),
+                  phone_bad_format: ('INVALID_PHONE_FORMAT' | translate)
                 }"
               ></app-error-messages
             ></mat-error>

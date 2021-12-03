@@ -1,10 +1,13 @@
-<div class="create-form-description">Основные данные</div>
+<div class="create-form-description">{{ "BASIC_DATA" | translate }}</div>
 
 <div class="form-controls" [formGroup]="basicData">
   <!-- doc_type -->
   <div class="form-control select-control">
     <mat-form-field appearance="outline">
-      <mat-label>Тип документа<span class="primary-color">*</span></mat-label>
+      <mat-label
+        >{{ "DOCUMENT_TYPE" | translate
+        }}<span class="primary-color">*</span></mat-label
+      >
       <mat-select formControlName="doc_type">
         <mat-option *ngFor="let item of doctypes" [value]="item.val">{{
           item.name
@@ -21,7 +24,7 @@
           [errorMessages]="{
             bad_format: basicData.get('doc_type').errors?.bad_format,
             bad_value: basicData.get('doc_type').errors?.bad_value,
-            required: 'Выберите тип документа'
+            required: ('SELECT_DOCUMENT_TYPE' | translate)
           }"
         ></app-error-messages
       ></mat-error>
@@ -31,7 +34,9 @@
   <!-- name -->
   <div class="form-control">
     <mat-form-field appearance="outline">
-      <mat-label>Имя<span class="primary-color">*</span></mat-label>
+      <mat-label
+        >{{ "NAME" | translate }}<span class="primary-color">*</span></mat-label
+      >
 
       <input
         autocomplete="nope"
@@ -59,7 +64,7 @@
           [errorMessages]="{
             bad_format: basicData.get('name').errors?.bad_format,
             bad_value: basicData.get('name').errors?.bad_value,
-            required: 'Введите имя',
+            required: ('ENTER_NAME' | translate),
             pattern: activeDoctype?.fioLat
               ? 'Некорректный ввод. Введите на английском'
               : 'Некорректный ввод. Введите на русском',
@@ -75,7 +80,10 @@
   <!-- surname -->
   <div class="form-control">
     <mat-form-field appearance="outline">
-      <mat-label>Фамилия<span class="primary-color">*</span></mat-label>
+      <mat-label
+        >{{ "LAST_NAME" | translate
+        }}<span class="primary-color">*</span></mat-label
+      >
 
       <input
         autocomplete="nope"
@@ -105,7 +113,7 @@
           [errorMessages]="{
             bad_format: basicData.get('surname').errors?.bad_format,
             bad_value: basicData.get('surname').errors?.bad_value,
-            required: 'Введите фамилию',
+            required: ('ENTER_LAST_NAME' | translate),
             pattern: activeDoctype?.fioLat
               ? 'Некорректный ввод. Введите на английском'
               : 'Некорректный ввод. Введите на русском',
@@ -121,7 +129,7 @@
   <!-- patronymic -->
   <div class="form-control" *ngIf="!activeDoctype?.fioLat">
     <mat-form-field appearance="outline">
-      <mat-label>Отчество (если есть)</mat-label>
+      <mat-label>{{ "PATRONYMIC" | translate }}</mat-label>
 
       <input
         name="patronymic"
@@ -157,11 +165,14 @@
   <!-- birthday -->
   <div class="form-control date-form-control">
     <mat-form-field appearance="outline">
-      <mat-label>Дата рождения<span class="primary-color">*</span></mat-label>
+      <mat-label
+        >{{ "DATE_OF_BIRTH" | translate
+        }}<span class="primary-color">*</span></mat-label
+      >
 
       <input
         matInput
-        placeholder="дд.мм.гггг"
+        [placeholder]="'DATE_OF_BIRTH' | translate"
         name="birthday"
         formControlName="birthday"
         [matDatepicker]="picker"
@@ -189,8 +200,8 @@
           [errorMessages]="{
             bad_format: basicData.get('birthday').errors?.bad_format,
             bad_value: basicData.get('birthday').errors?.bad_value,
-            required: 'Введите дату рождения',
-            matDatepickerMax: 'Возраст взрослого должен быть не менее 18 лет',
+            required: ('ENTER_DATE_BIRTH' | translate),
+            matDatepickerMax: ('MUST_BE_18' | translate),
             matDatepickerMin: 'Возраст ребенка должен быть менее 18 лет'
           }"
         ></app-error-messages
@@ -236,7 +247,7 @@
             bad_format: basicData.get('email').errors?.bad_format,
             bad_value: basicData.get('email').errors?.bad_value,
             required: 'Введите email',
-            pattern: 'Неверный формат email'
+            pattern: ('INVALID_EMAIL_FORMAT' | translate)
           }"
         ></app-error-messages
       ></mat-error>
@@ -246,7 +257,7 @@
   <!-- phone -->
   <div class="form-control phone-control">
     <mat-form-field appearance="outline">
-      <mat-label>Телефон</mat-label>
+      <mat-label>{{ "MOBILE" | translate }}</mat-label>
 
       <input
         matInput
@@ -285,10 +296,10 @@
               'Минимальная длина ' +
               basicData.get('phone').errors.minlength?.requiredLength +
               ' символов',
-            required: 'Введите номер телефона',
+            required: ('ENTER_YOUR_PHONE' | translate),
             not_unique_phone: basicData.get('phone').errors?.not_unique_phone,
-            pattern: 'Неверный формат телефона',
-            phone_bad_format: 'Неверный формат телефона'
+            pattern: ('INVALID_PHONE_FORMAT' | translate),
+            phone_bad_format: ('INVALID_PHONE_FORMAT' | translate)
           }"
         ></app-error-messages
       ></mat-error>
@@ -297,10 +308,12 @@
 
   <!-- sex -->
   <div class="form-control">
-    <div class="sex-label">Пол</div>
+    <div class="sex-label">{{ "GENDER" | translate }}</div>
     <mat-radio-group formControlName="sex" color="primary">
-      <mat-radio-button value="MALE">Мужской</mat-radio-button>
-      <mat-radio-button value="FEMALE">Женский</mat-radio-button>
+      <mat-radio-button value="MALE">{{ "MALE" | translate }}</mat-radio-button>
+      <mat-radio-button value="FEMALE">{{
+        "FEMALE" | translate
+      }}</mat-radio-button>
     </mat-radio-group>
 
     <mat-error>
@@ -310,7 +323,7 @@
         [errorMessages]="{
           bad_format: basicData.get('sex').errors?.bad_format,
           bad_value: basicData.get('sex').errors?.bad_value,
-          required: 'Выберите пол'
+          required: ('SELECT_GENDER' | translate)
         }"
       ></app-error-messages>
     </mat-error>

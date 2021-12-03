@@ -7,14 +7,14 @@
         alt="Успешно"
       />
       <div class="refund-success-text">
-        <p>Ваша заявка принята. Мы свяжемся с вами в ближайшее время.</p>
+        <p>{{ "APPLICATION_IS_ACCEPTED" | translate }}</p>
       </div>
     </div>
   </div>
 
   <div class="buttons">
     <button type="button" [routerLink]="['/cabinet', 'orders']" class="button">
-      <span>Заказы</span>
+      <span>{{ "ORDERS" | translate }}</span>
     </button>
   </div>
 </div>

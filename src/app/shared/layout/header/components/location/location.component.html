@@ -2,12 +2,12 @@
   <app-location-bar
     [currentLocation]="currentLocation$ | async"
     *ngIf="(currentLocation$ | async) && !showConfirm"
-    [cities]="cities$ | async"
+    [cities]="cities"
   ></app-location-bar>
   <app-city-confirm
     (confirm)="showConfirm = $event"
     [currentLocation]="currentLocation$ | async"
     *ngIf="!(currentLocation$ | async) || showConfirm"
-    [cities]="cities$ | async"
+    [cities]="cities"
   ></app-city-confirm>
 </div>

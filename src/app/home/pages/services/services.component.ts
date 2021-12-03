@@ -9,10 +9,11 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core';
-import { Observable, pipe, Subscription } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { combineLatest, Observable, ReplaySubject, Subscription } from 'rxjs';
+import { startWith, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { ServiceInterface } from 'src/app/shared/types/service.interface';
 import { ServicesService } from '../../../shared/services/services.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-services',
@@ -25,16 +26,22 @@ export class ServicesComponent implements OnInit, AfterViewInit, OnDestroy {
   public services$: Observable<ServiceInterface[]>;
 
   private servicesSub: Subscription;
+  private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   constructor(
     private servicesService: ServicesService,
-    private location: LocationService
+    private location: LocationService,
+    public translate: TranslateService
   ) {}
 
   ngOnInit(): void {
-    this.services$ = this.location.currentLocation$.pipe(
+    this.services$ = combineLatest([
+      this.translate.onLangChange,
+      this.location.currentLocation$,
+    ]).pipe(
+      startWith(undefined),
       switchMap(() => this.servicesService.getServices()),
-      tap(() => this.focusBlock())
+      takeUntil(this.destroy)
     );
   }
 
@@ -48,7 +55,11 @@ export class ServicesComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.servicesSub) {
       this.servicesSub.unsubscribe();
     }
+    this.destroy.next(null);
+    this.destroy.complete();
   }
+
+  setServices(): void {}
 
   @HostListener('window:scroll', ['$event']) checkScroll() {
     this.focusBlock();

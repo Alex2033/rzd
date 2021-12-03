@@ -1,16 +1,28 @@
 import { LocationService } from 'src/app/shared/services/location.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { YaReadyEvent } from 'angular8-yandex-maps';
 import { CarouselComponent, OwlOptions } from 'ngx-owl-carousel-o';
-import { Observable, combineLatest } from 'rxjs';
-import { shareReplay, switchMap, tap } from 'rxjs/operators';
+import { Observable, combineLatest, ReplaySubject, timer, of } from 'rxjs';
+import {
+  catchError,
+  first,
+  map,
+  shareReplay,
+  skipWhile,
+  startWith,
+  switchMap,
+  take,
+  takeUntil,
+  tap,
+} from 'rxjs/operators';
 import { slideUpAnimation } from 'src/app/shared/animations/slide-up.animation';
 import { ServicePointsService } from 'src/app/shared/services/service-points.service';
 import { ServiceInterface } from 'src/app/shared/types/service.interface';
 import { ServicesService } from '../../../shared/services/services.service';
 import { ServicePointInterface } from '../../../shared/types/service-point.interface';
 import { TabInterface } from '../../types/tab.interface';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-service-detail',
@@ -18,7 +30,7 @@ import { TabInterface } from '../../types/tab.interface';
   styleUrls: ['./service-detail.component.scss'],
   animations: [slideUpAnimation()],
 })
-export class ServiceDetailComponent implements OnInit {
+export class ServiceDetailComponent implements OnInit, OnDestroy {
   @ViewChild('owlElement') owlElement: CarouselComponent;
 
   public activeTab: TabInterface = {} as TabInterface;
@@ -48,19 +60,19 @@ export class ServiceDetailComponent implements OnInit {
   public tabs: TabInterface[] = [
     {
       id: '1',
-      label: 'Описание',
+      label: 'DESCRIPTION',
       labelWidth: 79,
       text: '',
     },
     {
       id: '2',
-      label: 'Подготовка',
+      label: 'BEFORE_TEST',
       labelWidth: 91,
       text: '',
     },
     {
       id: '3',
-      label: 'Метод диагностики',
+      label: 'DIAGNOSTIC_METHOD',
       labelWidth: 153,
       text: '',
     },
@@ -70,35 +82,80 @@ export class ServiceDetailComponent implements OnInit {
   private map: YaReadyEvent<ymaps.Map>;
   private geoObjects: any[] = [];
   private uniqueGeoObjects: any[] = [];
+  private id: number;
+  private firstTime: boolean = true;
+  private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   constructor(
     private services: ServicesService,
     private route: ActivatedRoute,
     private points: ServicePointsService,
-    private location: LocationService
+    private location: LocationService,
+    private translate: TranslateService
   ) {
     this.activeTab = this.tabs[0];
     this.activeLabel = this.tabs[0].id;
   }
 
   ngOnInit(): void {
+    this.getData();
+    this.langChange();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy.next(null);
+    this.destroy.complete();
+  }
+
+  getData(): void {
     combineLatest([this.route.params, this.location.currentLocation$])
       .pipe(
         switchMap(([params]) => {
-          this.points$ = this.points.getServicePoints(+params.id).pipe(
-            tap(() => {
-              this.setMapBounds();
-            }),
-            shareReplay()
-          );
-          return this.services.getService(+params.id);
+          this.mapPoints(+params.id);
+          return this.services.getService(this.id);
         })
       )
-      .subscribe((res) => {
-        this.service = res;
-        this.tabs[0].text = res.fullDescription;
-        this.tabs[1].text = res.preparing;
-        this.tabs[2].text = res.method;
+      .subscribe((service) => {
+        this.mapServices(service);
+      });
+  }
+
+  mapPoints(id: number): void {
+    this.id = id;
+    this.points$ = this.points.getServicePoints(this.id).pipe(
+      tap(() => {
+        this.setMapBounds();
+      }),
+      shareReplay()
+    );
+  }
+
+  mapServices(service: ServiceInterface): void {
+    this.service = service;
+    this.tabs[0].text = service?.fullDescription;
+    this.tabs[1].text = service?.preparing;
+    this.tabs[2].text = service?.method;
+  }
+
+  langChange(): void {
+    this.translate.onLangChange
+      .pipe(
+        startWith(''),
+        map((event, index) => [event, index]),
+        tap(([event, index]) => {
+          if (index > 0) {
+            this.firstTime = false;
+          }
+        }),
+        skipWhile(() => this.firstTime),
+        switchMap(() => {
+          this.mapPoints(this.id);
+          return this.services.getService(this.id);
+        }),
+        takeUntil(this.destroy)
+      )
+      .subscribe((service) => {
+        this.mapServices(service);
       });
   }
 
@@ -149,7 +206,10 @@ export class ServiceDetailComponent implements OnInit {
   mapLoaded(event: YaReadyEvent<ymaps.Map>): void {
     this.map = event;
 
-    this.map.target.setBounds(this.map.target.geoObjects.getBounds());
+    const bounds = this.map.target.geoObjects.getBounds();
+    if (bounds) {
+      this.map.target.setBounds(this.map.target.geoObjects.getBounds());
+    }
     this.map.target.setZoom(9);
   }
 }

@@ -5,12 +5,14 @@
         <svg width="1rem" height="1rem">
           <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
         </svg>
-        <span>Назад</span>
+        <span>{{ "BACK" | translate }}</span>
       </a>
-      <a class="close" [routerLink]="['/cabinet', 'questionnaires']">Закрыть</a>
+      <a class="close" [routerLink]="['/cabinet', 'questionnaires']">{{
+        "CLOSE" | translate
+      }}</a>
     </div>
 
-    <h1 class="page-title">Подписать документы</h1>
+    <h1 class="page-title">{{ "TO_SIGN_DOCUMENTS" | translate }}</h1>
 
     <div class="docs">
       <div class="doc" *ngFor="let doc of doc.documents">
@@ -23,15 +25,13 @@
 
     <div class="confirm-text">
       <ng-container *ngIf="!doc.id_parent">
-        Я, <strong>{{ doc.fio }},</strong> подписываясь в следующем поле,
-        выражаю информированное добровольное согласие с условиями вышеуказанных
-        документов.
+        {{ "I" | translate }}, <strong>{{ doc.fio }},</strong>
+        {{ "SIGNING" | translate }}
       </ng-container>
       <ng-container *ngIf="doc.id_parent">
-        Я, <strong>{{ doc.parent_fio }},</strong> являюсь законным
-        представителем <strong>{{ doc.fio }}</strong>
-        подписываясь в следующем поле, выражаю информированное добровольное
-        согласие с условиями вышеуказанных документов.
+        {{ "I" | translate }}, <strong>{{ doc.parent_fio }},</strong> являюсь
+        законным представителем <strong>{{ doc.fio }}</strong>
+        {{ "SIGNING" | translate }}.
       </ng-container>
     </div>
 
@@ -48,8 +48,8 @@
     <div class="signature-warning">
       {{
         doc.id_parent
-          ? "Внимание! Здесь должна стоять подпись законного представителя ребенка, указанного при оформлении."
-          : "Внимание! Здесь должна стоять собственная подпись взрослого пациента."
+          ? ("SIGNED_BY_LEGAL_REPRESENTATIVE" | translate)
+          : ("SIGNED_BY_AN_ADULT" | translate)
       }}
     </div>
   </div>
@@ -63,7 +63,7 @@
     [disabled]="isEmpty || isLoading"
     [class.is-loading]="isLoading"
   >
-    <span>Далее</span>
+    <span>{{ "BUTTON.NEXT" | translate }}</span>
     <svg width="1.6rem" height="1.6rem">
       <use xlink:href="assets/sprites/icons.svg#next"></use>
     </svg>

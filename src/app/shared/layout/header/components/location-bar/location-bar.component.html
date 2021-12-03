@@ -1,7 +1,13 @@
 <div class="location-bar">
   <div class="location-bar-content">
     <div class="selected-city" (click)="showCityList = true">
-      <div class="selected-city-text">{{ currentLocation?.name }}</div>
+      <div class="selected-city-text">
+        {{
+          currentLocation?.name === "Moscow"
+            ? ("MOSCOW" | translate)
+            : currentLocation?.name
+        }}
+      </div>
       <svg class="selected-city-icon" width="1.35rem" height="0.6rem">
         <use xlink:href="assets/sprites/icons.svg#arrow-down"></use>
       </svg>

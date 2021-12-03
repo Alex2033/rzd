@@ -6,14 +6,17 @@
   >
     <!-- registration content -->
     <div class="page-container" *ngIf="!submitted">
-      <h1 class="page-title">Регистрация</h1>
+      <h1 class="page-title">{{ "REGISTER_NOW" | translate }}</h1>
 
       <!-- registration controls -->
       <div class="form-controls">
         <!-- name -->
         <div class="form-control">
           <mat-form-field appearance="outline">
-            <mat-label>Имя<span class="primary-color">*</span></mat-label>
+            <mat-label
+              >{{ "NAME" | translate
+              }}<span class="primary-color">*</span></mat-label
+            >
 
             <input
               name="notASearchField"
@@ -39,7 +42,7 @@
                 *ngIf="nameControl.touched && nameControl.invalid"
                 [errors]="nameControl.errors"
                 [errorMessages]="{
-                  required: 'Введите имя',
+                  required: 'ENTER_YOUR_NAME' | translate,
                   incorrect_name_length:
                     nameControl.errors?.incorrect_name_length
                 }"
@@ -58,7 +61,10 @@
         <!-- phone -->
         <div class="form-control">
           <mat-form-field appearance="outline">
-            <mat-label>Телефон<span class="primary-color">*</span></mat-label>
+            <mat-label
+              >{{ "MOBILE" | translate
+              }}<span class="primary-color">*</span></mat-label
+            >
 
             <input
               matInput
@@ -87,13 +93,16 @@
                 [errors]="phoneControl.errors"
                 [errorMessages]="{
                   minlength:
-                    'Минимальная длина ' +
+                    ('MIN_LENGTH_PRE' | translate) +
+                    ' ' +
                     phoneControl.errors.minlength?.requiredLength +
-                    ' символов',
-                  required: 'Введите номер телефона',
+                    ' ' +
+                    ('MIN_LENGTH_POST' | translate),
+
+                  required: ('ENTER_YOUR_PHONE' | translate),
                   not_unique_phone: phoneControl.errors?.not_unique_phone,
-                  pattern: 'Неверный формат телефона',
-                  phone_bad_format: 'Неверный формат телефона'
+                  pattern: 'INVALID_FORMAT' | translate,
+                  phone_bad_format: 'INVALID_FORMAT' | translate
                 }"
               ></app-error-messages
             ></mat-error>
@@ -111,7 +120,10 @@
         <!-- email -->
         <div class="form-control">
           <mat-form-field appearance="outline">
-            <mat-label>E-mail<span class="primary-color">*</span></mat-label>
+            <mat-label
+              >{{ "EMAIL" | translate
+              }}<span class="primary-color">*</span></mat-label
+            >
 
             <input
               matInput
@@ -137,12 +149,12 @@
                 *ngIf="emailControl.touched && emailControl.invalid"
                 [errors]="emailControl.errors"
                 [errorMessages]="{
-                  required: 'Введите email',
+                  required: ('ENTER_YOUR_EMAIL' | translate),
                   email_bad_format: emailControl.errors?.email_bad_format,
                   not_unique_email: emailControl.errors?.not_unique_email,
                   incorrect_email_length:
                     emailControl.errors?.incorrect_email_length,
-                  pattern: 'Неверный формат email'
+                  pattern: ('INVALID_FORMAT' | translate)
                 }"
               ></app-error-messages
             ></mat-error>
@@ -161,9 +173,8 @@
         <div class="form-control">
           <mat-form-field appearance="outline">
             <mat-label
-              >Повторите ваш E-mail<span class="primary-color"
-                >*</span
-              ></mat-label
+              >{{ "REPEAT_YOUR_EMAIL" | translate
+              }}<span class="primary-color">*</span></mat-label
             >
 
             <input
@@ -227,7 +238,7 @@
           isLoading
         "
       >
-        <span>Далее</span>
+        <span>{{ "BUTTON.NEXT" | translate }}</span>
         <svg width="1.6rem" height="1.6rem">
           <use xlink:href="assets/sprites/icons.svg#next"></use>
         </svg>

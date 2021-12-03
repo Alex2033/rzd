@@ -12,7 +12,7 @@
           [routerLinkActiveOptions]="{ exact: true }"
           (click)="closeMenu()"
         >
-          <span>Путешественникам</span>
+          <span>{{ "FOR_CLIENTS" | translate }}</span>
         </a>
       </li>
 
@@ -23,7 +23,7 @@
           (click)="closeMenu()"
           routerLinkActive="active"
         >
-          <span>Услуги</span>
+          <span>{{ "SERVICES" | translate }}</span>
         </a>
       </li>
       <li class="navigation-list-item">
@@ -33,7 +33,7 @@
           (click)="closeMenu()"
           routerLinkActive="active"
         >
-          <span>Точки обслуживания</span>
+          <span>{{ "SERVICE_POINTS" | translate }}</span>
         </a>
       </li>
 
@@ -53,7 +53,7 @@
           (click)="closeMenu()"
           routerLinkActive="active"
         >
-          <span>информация</span>
+          <span>{{ "INFORMATION" | translate }}</span>
         </a>
       </li>
     </ul>

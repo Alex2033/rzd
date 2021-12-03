@@ -146,6 +146,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
   mapLoaded(event: YaReadyEvent<ymaps.Map>): void {
     this.map = event;
 
+    const bounds = this.map.target.geoObjects.getBounds();
     this.map.target.setBounds(this.map.target.geoObjects.getBounds());
     this.map.target.setZoom(9);
   }

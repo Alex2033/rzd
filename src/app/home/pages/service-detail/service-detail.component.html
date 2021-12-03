@@ -5,7 +5,7 @@
         <svg width="1rem" height="1rem">
           <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
         </svg>
-        <span>Услуги</span>
+        <span>{{ "SERVICES" | translate | titlecase }}</span>
       </a>
     </div>
 
@@ -17,17 +17,17 @@
 
     <div class="page-container service-detail-body">
       <div class="infocard-field">
-        <div class="caption">Цена:</div>
+        <div class="caption">{{ "PRICE" | translate }}:</div>
         <div class="infocard-text infocard-price">
           {{ service.price }} {{ service.priceType }}
         </div>
       </div>
       <div class="infocard-field">
-        <div class="caption">Срок исполнения:</div>
+        <div class="caption">{{ "READINESS_TIME" | translate }}:</div>
         <div class="infocard-text">{{ service.duration }}</div>
       </div>
       <div class="infocard-field">
-        <div class="caption">Адрес:</div>
+        <div class="caption">{{ "ADDRESS" | translate }}:</div>
       </div>
 
       <div class="address-buttons">
@@ -36,14 +36,14 @@
           [class.stroke]="addressMode === 'map'"
           class="button primary service-detail-button"
         >
-          На карте
+          {{ "BUTTON.ADDRESSES_MAP" | translate }}
         </button>
         <button
           (click)="addressMode = 'list'"
           [class.stroke]="addressMode === 'list'"
           class="button primary service-detail-button"
         >
-          Списком
+          {{ "BUTTON.ADDRESSES_LIST" | translate }}
         </button>
       </div>
     </div>
@@ -95,7 +95,7 @@
           <a
             [routerLink]="['/cabinet', 'questionnaires']"
             class="point-card-button button no-bg accent"
-            >Записаться</a
+            >{{ "BUTTON.SIGN_UP" | translate }}</a
           >
         </div>
       </div>
@@ -117,22 +117,22 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="custom-expansion-info">
-          <p class="caption">Адрес:</p>
+          <p class="caption">{{ "ADDRESS" | translate }}:</p>
           <p>{{ point.address }}</p>
         </div>
         <div class="custom-expansion-info">
-          <p class="caption">Время работы:</p>
+          <p class="caption">{{ "WORKING_HOURS" | translate }}:</p>
           <p>{{ point.worktime }}</p>
         </div>
 
         <div class="custom-expansion-buttons">
-          <a [routerLink]="['/cabinet', 'questionnaires']" class="button"
-            >Записаться</a
-          >
+          <a [routerLink]="['/cabinet', 'questionnaires']" class="button">{{
+            "BUTTON.SIGN_UP" | translate
+          }}</a>
           <a
             [routerLink]="['/service-points', point.id]"
             class="button no-bg accent"
-            >Подробнее</a
+            >{{ "BUTTON.MORE_DETAILS" | translate }}</a
           >
         </div>
       </mat-expansion-panel>
@@ -153,7 +153,7 @@
               [class.selected]="activeLabel === tab.id"
               (click)="selectTab(tab)"
             >
-              {{ tab.label }}
+              {{ tab.label | translate }}
             </div>
           </ng-template>
         </owl-carousel-o>

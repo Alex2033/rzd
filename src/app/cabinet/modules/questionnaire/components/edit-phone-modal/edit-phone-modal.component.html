@@ -14,7 +14,7 @@
       <div class="form-controls">
         <div class="form-control">
           <mat-form-field appearance="outline">
-            <mat-label>Телефон</mat-label>
+            <mat-label>{{ "MOBILE" | translate }}</mat-label>
 
             <input
               matInput
@@ -42,10 +42,10 @@
                 *ngIf="form.get('phone').touched && form.get('phone').invalid"
                 [errors]="form.get('phone').errors"
                 [errorMessages]="{
-                  required: 'Введите телефон',
+                  required: ('ENTER_YOUR_PHONE' | translate),
                   not_unique_phone: form.get('phone').errors?.not_unique_phone,
-                  pattern: 'Неверный формат телефона',
-                  phone_bad_format: 'Неверный формат телефона'
+                  pattern: ('INVALID_PHONE_FORMAT' | translate),
+                  phone_bad_format: ('INVALID_PHONE_FORMAT' | translate)
                 }"
               ></app-error-messages
             ></mat-error>
@@ -53,7 +53,7 @@
         </div>
       </div>
       <div class="edit-field-paste" (click)="setValueFromProfile()">
-        Вставить основной телефон профиля
+        {{ "INSERT_MAIN_PROFILE_NUMBER" | translate }}
       </div>
       <button
         class="button edit-field-submit"
@@ -63,7 +63,7 @@
         [disabled]="isLoading || form.get('phone').invalid"
         (click)="checkPhone()"
       >
-        Далее
+        {{ "BUTTON.NEXT" | translate }}
       </button>
     </div>
     <!-- sms confirm -->

@@ -1,4 +1,6 @@
-<div class="create-form-description">Адрес регистрации</div>
+<div class="create-form-description">
+  {{ "REGISTRATION_ADDRESS" | translate }}
+</div>
 
 <div class="form-controls" [formGroup]="registerAddress">
   <div class="address-checkboxes">
@@ -7,7 +9,7 @@
       class="address-checkbox"
       color="primary"
       formControlName="no_reg_address"
-      >Не применимо / отсутствует</mat-checkbox
+      >{{ "NOT_APPLICABLE" | translate }}</mat-checkbox
     >
 
     <!-- single -->
@@ -15,15 +17,17 @@
       class="address-checkbox"
       color="primary"
       formControlName="adress_single"
-      >Совпадает с адресом фактического проживания или нахождения в
-      РФ</mat-checkbox
+      >{{ "MATCHES_ADDRESS" | translate }}</mat-checkbox
     >
   </div>
 
   <!-- country -->
   <div class="form-control">
     <mat-form-field appearance="outline">
-      <mat-label>Страна<span class="primary-color">*</span></mat-label>
+      <mat-label
+        >{{ "COUNTRY" | translate
+        }}<span class="primary-color">*</span></mat-label
+      >
 
       <input
         name="adress_reg_country"
@@ -66,7 +70,7 @@
   <div class="form-control">
     <mat-form-field appearance="outline">
       <mat-label
-        >Город (нас. пункт)<span class="primary-color">*</span></mat-label
+        >{{ "CITY" | translate }}<span class="primary-color">*</span></mat-label
       >
 
       <input
@@ -98,7 +102,7 @@
             bad_format:
               registerAddress.get('adress_reg_city').errors?.bad_format,
             bad_value: registerAddress.get('adress_reg_city').errors?.bad_value,
-            required: 'Введите название населенного пункта'
+            required: ('ENTER_NAME_CITY' | translate)
           }"
         ></app-error-messages
       ></mat-error>
@@ -108,7 +112,10 @@
   <!-- street -->
   <div class="form-control">
     <mat-form-field appearance="outline">
-      <mat-label>Улица<span class="primary-color">*</span></mat-label>
+      <mat-label
+        >{{ "STREET" | translate
+        }}<span class="primary-color">*</span></mat-label
+      >
 
       <input
         name="adress_reg_street"
@@ -150,7 +157,10 @@
   <!-- building -->
   <div class="form-control">
     <mat-form-field appearance="outline">
-      <mat-label>Дом (корпус)<span class="primary-color">*</span></mat-label>
+      <mat-label
+        >{{ "BUILDING_NUMBER" | translate
+        }}<span class="primary-color">*</span></mat-label
+      >
 
       <input
         name="adress_reg_building"
@@ -182,7 +192,7 @@
               ?.bad_format,
             bad_value: registerAddress.get('adress_reg_building').errors
               ?.bad_value,
-            required: 'Введите номер дома(корпуса)'
+            required: ('ENTER_BUILDING_NUMBER' | translate)
           }"
         ></app-error-messages
       ></mat-error>
@@ -192,7 +202,7 @@
   <!-- flat -->
   <div class="form-control">
     <mat-form-field appearance="outline">
-      <mat-label>Квартира (№ в отеле)</mat-label>
+      <mat-label>{{ "APARTMENT" | translate }}</mat-label>
 
       <input
         name="adress_reg_flat"

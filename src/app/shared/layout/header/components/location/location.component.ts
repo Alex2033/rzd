@@ -1,7 +1,7 @@
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, ReplaySubject } from 'rxjs';
 import { LocationService } from './../../../../services/location.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CityInterface } from 'src/app/shared/types/city.interface';
 import { takeUntil } from 'rxjs/operators';
 
@@ -10,8 +10,8 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './location.component.html',
   styleUrls: ['./location.component.scss'],
 })
-export class LocationComponent implements OnInit {
-  public cities$: Observable<CityInterface[]>;
+export class LocationComponent implements OnInit, OnDestroy {
+  public cities: CityInterface[];
   public currentLocation$: Observable<CityInterface>;
   public showConfirm: boolean = false;
 
@@ -33,6 +33,11 @@ export class LocationComponent implements OnInit {
     this.currentLocation$ = this.location.currentLocation$;
   }
 
+  ngOnDestroy(): void {
+    this.destroy.next(null);
+    this.destroy.complete();
+  }
+
   langChange(): void {
     this.translate.onLangChange.pipe(takeUntil(this.destroy)).subscribe(() => {
       this.getCities();
@@ -40,6 +45,16 @@ export class LocationComponent implements OnInit {
   }
 
   getCities(): void {
-    this.cities$ = this.location.getCities();
+    this.location.getCities().subscribe((cities) => {
+      this.cities = cities;
+      this.mapCurrentLocation();
+    });
+  }
+
+  mapCurrentLocation(): void {
+    const currentLocation = this.cities.find(
+      (c) => c.id === this.location.currentLocationSubject$.value.id
+    );
+    this.location.setLocation(currentLocation);
   }
 }

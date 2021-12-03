@@ -32,6 +32,7 @@ import { WorkplaceComponent } from './components/workplace/workplace.component';
 import { InfoMessageComponent } from './pages/info-message/info-message.component';
 import { EditPhoneModalComponent } from './components/edit-phone-modal/edit-phone-modal.component';
 import { EditEmailModalComponent } from './components/edit-email-modal/edit-email-modal.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { EditEmailModalComponent } from './components/edit-email-modal/edit-emai
     MatSelectModule,
     SmsConfirmModule,
     NgxMaskModule.forRoot(),
+    TranslateModule,
   ],
   providers: [DatePipe],
 })

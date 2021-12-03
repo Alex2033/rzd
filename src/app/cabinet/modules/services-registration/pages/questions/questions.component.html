@@ -8,28 +8,36 @@
         <svg width="1rem" height="1rem">
           <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
         </svg>
-        <span>Назад</span>
+        <span>{{ "BACK" | translate }}</span>
       </a>
-      <a class="close" [routerLink]="['/cabinet', 'questionnaires']">Закрыть</a>
+      <a class="close" [routerLink]="['/cabinet', 'questionnaires']">{{
+        "CLOSE" | translate
+      }}</a>
     </div>
 
-    <h2 class="page-title">Ответьте на вопросы</h2>
+    <h2 class="page-title">{{ "ANSWER_THE_QUESTIONS" | translate }}</h2>
 
     <form [formGroup]="form" (submit)="submit()" class="questions-content">
       <div class="question-item">
-        <p>Выезжали ли вы за пределы РФ за последние 14 дней?</p>
+        <p>{{ "HAVE_YOU_TRAVELED_OUTSIDE" | translate }}</p>
         <mat-radio-group formControlName="been_abroad" color="primary">
-          <mat-radio-button [value]="true">Да</mat-radio-button>
-          <mat-radio-button [value]="false">Нет</mat-radio-button>
+          <mat-radio-button [value]="true">{{
+            "YES" | translate
+          }}</mat-radio-button>
+          <mat-radio-button [value]="false">{{
+            "NO" | translate
+          }}</mat-radio-button>
         </mat-radio-group>
 
         <ng-container *ngIf="showReturnDate">
-          <h4 class="return-date-title">Укажите дату возвращения в РФ</h4>
+          <h4 class="return-date-title">
+            {{ "INDICATE_DATE_OF_RETURN" | translate }}
+          </h4>
 
           <!-- date picker -->
           <div class="form-control date-form-control">
             <mat-form-field appearance="outline">
-              <mat-label>Дата</mat-label>
+              <mat-label>{{ "DATE" | translate }}</mat-label>
 
               <input
                 matInput
@@ -55,8 +63,9 @@
                   "
                   [errors]="form.get('abroad_return_date').errors"
                   [errorMessages]="{
-                    required: 'Введите дату возвращения',
-                    matDatepickerMin: 'Укажите дату не ранее двух недель назад'
+                    required: ('ENTER_RETURN_DATE' | translate),
+                    matDatepickerMin:
+                      ('SPECIFY_DATE_NOT_EARLY_TWO_WEEKS' | translate)
                   }"
                 ></app-error-messages
               ></mat-error>
@@ -66,29 +75,34 @@
       </div>
       <div class="question-item">
         <p>
-          У меня есть симптомы ОРВИ, кашель, затрудненное дыхание, температура
-          выше 37°С
+          {{ "ARVI_SYMPTOMS" | translate }}
         </p>
         <mat-radio-group formControlName="symptoms" color="primary">
-          <mat-radio-button [value]="true">Да</mat-radio-button>
-          <mat-radio-button [value]="false">Нет</mat-radio-button>
+          <mat-radio-button [value]="true">{{
+            "YES" | translate
+          }}</mat-radio-button>
+          <mat-radio-button [value]="false">{{
+            "NO" | translate
+          }}</mat-radio-button>
         </mat-radio-group>
       </div>
       <div class="question-item">
         <p>
-          Я контактировал с людьми, находящимися на карантине или имеющими
-          подтвержденное заболеевание “Коронавирусная инфекция, вызванная
-          вирусом COVID-19 за последние 14 дней”
+          {{ "HAVE_BEEN_IN_CONTACT" | translate }}
         </p>
         <mat-radio-group formControlName="patientContact" color="primary">
-          <mat-radio-button [value]="true">Да</mat-radio-button>
-          <mat-radio-button [value]="false">Нет</mat-radio-button>
+          <mat-radio-button [value]="true">{{
+            "YES" | translate
+          }}</mat-radio-button>
+          <mat-radio-button [value]="false">{{
+            "NO" | translate
+          }}</mat-radio-button>
         </mat-radio-group>
       </div>
 
       <div class="buttons">
         <button class="button" [disabled]="form.invalid">
-          <span>Далее</span>
+          <span>{{ "BUTTON.NEXT" | translate }}</span>
           <svg width="1.6rem" height="1.6rem">
             <use xlink:href="assets/sprites/icons.svg#next"></use>
           </svg>

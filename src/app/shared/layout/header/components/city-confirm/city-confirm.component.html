@@ -1,19 +1,22 @@
 <div class="city-confirm">
   <div class="city-confirm-content">
     <div class="selected-city">
-      <span>Ваш город: </span>
+      <span>{{ "YOUR_CITY" | translate }}: </span>
       <strong class="primary-color">{{ currentLocation?.name }}</strong>
     </div>
 
-    <div class="no-services" *ngIf="false">
-      К сожалению в вашем городе услуги пока <br />
-      не доступны.
-    </div>
+    <div
+      class="no-services"
+      *ngIf="false"
+      [innerHTML]="'UNFORTUNATELY_SERVICES_NOT_AVAILABLE' | translate"
+    ></div>
 
     <div class="city-confirm-buttons">
-      <button class="button" (click)="confirmLocation()">Да, верно</button>
+      <button class="button" (click)="confirmLocation()">
+        {{ "YES_RIGHT" | translate }}
+      </button>
       <button class="button select-city-btn" (click)="showCityList = true">
-        Выбрать другой
+        {{ "CHOOSE_ANOTHER" | translate }}
       </button>
 
       <app-city-select
@@ -27,7 +30,7 @@
     </div>
 
     <div class="city-confirm-info">
-      <p>От выбранного города зависят цены и способы оплаты.</p>
+      <p>{{ "DEPEND_ON_SELECTED_CITY" | translate }}</p>
     </div>
   </div>
 </div>

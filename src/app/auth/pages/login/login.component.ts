@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { ReplaySubject } from 'rxjs';
 import { takeUntil, finalize } from 'rxjs/operators';
 import { AccountService } from '../../../shared/services/account.service';
@@ -33,7 +34,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private account: AccountService
+    private account: AccountService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -116,7 +118,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
       case 'PHONE_BAD_FORMAT':
         this.phone.setErrors({
-          phone_bad_format: 'Неверный формат телефона',
+          phone_bad_format: this.translate.instant('INVALID_PHONE_FORMAT'),
         });
         break;
 

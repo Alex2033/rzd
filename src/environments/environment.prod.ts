@@ -4,7 +4,7 @@ import { EnvironmentInterface } from 'src/app/shared/types/environment.interface
 const testLocation = {
   id: 1101,
   ur_id: 1082,
-  name: 'Москва',
+  name: 'Moscow',
   latitude: 55.7539,
   longtitude: 37.6358,
 };
@@ -13,7 +13,7 @@ const testLocation = {
 const prodLocation = {
   id: 1122,
   ur_id: 1120,
-  name: 'Москва',
+  name: 'Moscow',
   latitude: 55.75322,
   longtitude: 37.622513,
 };

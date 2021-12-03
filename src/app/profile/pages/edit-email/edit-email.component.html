@@ -3,9 +3,9 @@
     <div class="page-top">
       <div class="spacer"></div>
 
-      <a class="close" [routerLink]="['/']">Закрыть</a>
+      <a class="close" [routerLink]="['/']">{{ "CLOSE" | translate }}</a>
     </div>
-    <h1 class="subtitle profile-title">Редактирование E-mail</h1>
+    <h1 class="subtitle profile-title">{{ "EDITING_EMAIL" | translate }}</h1>
 
     <form (submit)="submit()" [formGroup]="editForm" class="form-controls">
       <!-- email -->
@@ -41,7 +41,7 @@
                 incorrect_email_length:
                   emailControl.errors?.incorrect_email_length,
                 email_already_exists: emailControl.errors?.email_already_exists,
-                pattern: 'Неверный формат email'
+                pattern: ('INVALID_EMAIL_FORMAT' | translate)
               }"
             ></app-error-messages
           ></mat-error>
@@ -51,7 +51,7 @@
       <!-- confirm email -->
       <div class="form-control">
         <mat-form-field appearance="outline">
-          <mat-label>Повторите ваш E-mail</mat-label>
+          <mat-label>{{ "REPEAT_YOUR_EMAIL" | translate }}</mat-label>
 
           <input
             matInput
@@ -79,7 +79,7 @@
               [errors]="emailConfirmControl.errors"
               [errorMessages]="{
                 does_not_match: emailConfirmControl.errors?.does_not_match,
-                pattern: 'Неверный формат email'
+                pattern: ('INVALID_EMAIL_FORMAT' | translate)
               }"
             ></app-error-messages
           ></mat-error>
@@ -92,7 +92,7 @@
           [disabled]="loading || !emailsMatches"
           class="button"
         >
-          <span>Сохранить</span>
+          <span>{{ "SAVE" | translate }}</span>
         </button>
       </div>
     </form>

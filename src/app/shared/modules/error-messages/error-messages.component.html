@@ -11,7 +11,7 @@
           {{
             errorMessages && errorMessages["required"]
               ? errorMessages["required"]
-              : "Является обязательным для заполнения"
+              : ("FIELD_REQUIRED" | translate)
           }}
         </ng-container>
         <ng-container *ngSwitchCase="'email'">

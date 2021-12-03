@@ -21,6 +21,8 @@
           <span [innerHTML]="'HOME.EXPRESS' | translate"></span>
           <br />
           <span [innerHTML]="'HOME.STANDARD' | translate"></span>
+          <br />
+          <span [innerHTML]="'HOME.ANTIGEN' | translate"></span>
         </p>
 
         <p>
@@ -32,7 +34,7 @@
           isAuth ? ['/cabinet', 'questionnaires'] : ['/auth', 'register']
         "
         class="introduce-button button"
-        >{{ "BUTTON.SIGN_UP" | translate }}</a
+        >{{ "BUTTON.REGISTRATION" | translate }}</a
       >
       <a class="login-link" [routerLink]="['/cabinet', 'questionnaires']">{{
         "BUTTON.HAVE_ACCOUNT" | translate
@@ -59,7 +61,7 @@
         <div class="works-list-image">
           <img src="assets/home/questionnaire.svg" alt="questionnaire icon" />
         </div>
-        <span>{{ "HOME.HOW_IT_WORKS.SIGN_UP_TEXT" | translate }}</span>
+        <span>{{ "HOME.HOW_IT_WORKS.REGISTRATION_TEXT" | translate }}</span>
       </li>
       <li class="works-list-item">
         <div class="works-list-image">
@@ -152,15 +154,13 @@
       </div>
 
       <div class="custom-expansion-info">
-        <p class="caption">
-          {{ "HOME.TEST_TYPES.READINESS_TIME" | translate }}:
-        </p>
+        <p class="caption">{{ "READINESS_TIME" | translate }}:</p>
         <p>{{ service.duration }}</p>
       </div>
       <div class="custom-expansion-info">
-        <p class="caption">{{ "HOME.TEST_TYPES.LOCATION" | translate }}:</p>
+        <p class="caption">{{ "LOCATION" | translate }}:</p>
         <p>
-          {{ "HOME.TEST_TYPES.AVAILABLE_AT" | translate }}
+          {{ "AVAILABLE_AT" | translate }}
           <a
             [routerLink]="['/service-points']"
             [queryParams]="{ serviceId: service.id }"
@@ -170,9 +170,9 @@
               appPluralRu
               [value]="service.numCenters"
               [arVariants]="[
-                translate.instant('HOME.TEST_TYPES.MEDICINES_SINGLE'),
-                translate.instant('HOME.TEST_TYPES.MEDICINES_MULTI'),
-                translate.instant('HOME.TEST_TYPES.MEDICINES_MULTI')
+                translate.instant('MEDICINES_SINGLE'),
+                translate.instant('MEDICINES_MULTI'),
+                translate.instant('MEDICINES_MULTI')
               ]"
             ></span
           ></a>
@@ -280,7 +280,7 @@
         <a
           [routerLink]="['/cabinet', 'questionnaires']"
           class="point-card-button button no-bg accent"
-          >Записаться</a
+          >{{ "BUTTON.SIGN_UP" | translate }}</a
         >
       </div>
     </div>
@@ -306,9 +306,7 @@
         <p>{{ point.address }}</p>
       </div>
       <div class="custom-expansion-info">
-        <p class="caption">
-          {{ "HOME.TEST_LOCATION.WORKING_HOURS" | translate }}:
-        </p>
+        <p class="caption">{{ "WORKING_HOURS" | translate }}:</p>
         <p>{{ point.worktime }}</p>
       </div>
 
@@ -383,9 +381,7 @@
       </mat-expansion-panel-header>
       <div class="custom-expansion-text">
         <p>
-          Минимум за 1 час до сдачи теста нельзя: употреблять пищу, пить,
-          чистить зубы, полоскать рот/горло, жевать жевательную резинку, курить,
-          закапывать капли/спреи и промывать нос.
+          {{ "HOME.FAQ.RECOMMENDATIONS_TEXT" | translate }}
         </p>
       </div>
     </mat-expansion-panel>
@@ -395,12 +391,11 @@
         [expandedHeight]="'9rem'"
         [collapsedHeight]="'9rem'"
       >
-        <mat-panel-title>Способы оплаты</mat-panel-title>
+        <mat-panel-title>{{ "PAYMENT_METHODS" | translate }}</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="custom-expansion-text">
         <p>
-          Безналичная оплата на сайте или в медицинском центре, на терминалах
-          или у администратора.
+          {{ "HOME.FAQ.RECOMMENDATIONS_TEXT" | translate }}
         </p>
       </div>
     </mat-expansion-panel>
@@ -410,10 +405,12 @@
         [expandedHeight]="'9rem'"
         [collapsedHeight]="'9rem'"
       >
-        <mat-panel-title>Как берется тест?</mat-panel-title>
+        <mat-panel-title>{{
+          "HOME.FAQ.HOW_TEST_TAKES_TITLE" | translate
+        }}</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="custom-expansion-text">
-        <p>Мазок берется зондом из ротоглотки и носоглотки.</p>
+        <p>{{ "HOME.FAQ.HOW_TEST_TAKES_TEXT" | translate }}</p>
       </div>
     </mat-expansion-panel>
     <!-- 6 -->
@@ -423,20 +420,11 @@
         [collapsedHeight]="'9rem'"
       >
         <mat-panel-title
-          >Если у меня признаки ОРВИ или я контактировал с пациентом, больным
-          коронавирусной инфекцией?
+          >{{ "HOME.FAQ.ARVI_TITLE" | translate }}
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="custom-expansion-text">
-        <p>
-          Исследование доступно только бессимптомным пациентам. Пациентам,
-          контактировавшим с больными COVID-19, или имеющим повышенную
-          температуру тела и/или явные симптомы ОРВИ, рекомендуем обратиться в
-          единый консультационный центр Роспотребнадзора по тел.: <br />
-          <a class="custom-expansion-phone" href="tel:88005554943"
-            >8-800-555-49-43</a
-          >
-        </p>
+        <p [innerHTML]="'HOME.FAQ.ARVI_TEXT' | translate"></p>
       </div>
     </mat-expansion-panel>
     <!-- 7 -->
@@ -446,14 +434,12 @@
         [collapsedHeight]="'9rem'"
       >
         <mat-panel-title
-          >Что делать, если результат положительный?
+          >{{ "HOME.FAQ.POSITIVE_RESULT_TITLE" | translate }}
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="custom-expansion-text">
         <p>
-          Все положительные результаты выполненных лабораторных исследований
-          будут передаваться в Роспотребнадзор, ведомство самостоятельно
-          свяжется с пациентами для дальнейших действий.
+          {{ "HOME.FAQ.POSITIVE_RESULT_TEXT" | translate }}
         </p>
       </div>
     </mat-expansion-panel>
@@ -468,18 +454,17 @@
         [expandedHeight]="'9rem'"
         [collapsedHeight]="'9rem'"
       >
-        <mat-panel-title>Оформление возвратов </mat-panel-title>
+        <mat-panel-title>{{
+          "HOME.FAQ.MAKING_REFUNDS_TITLE" | translate
+        }}</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="custom-expansion-text">
         <p>
-          Для того, чтобы осуществить возврат по заказу необходимо заполнить
-          заявление на возврат в свободной форме и отправить его по электронному
-          адресу info.lab@rzd-medicine.ru или передать администратору
-          медицинского центра. Адреса точек обслуживания можете посмотреть
-          <a [routerLink]="['/service-points']" class="expansion-points-link"
-            >здесь</a
-          >. При одобрении заявки денежные средства возвращаются на реквизиты, с
-          которых производилась оплата.
+          {{ "HOME.FAQ.MAKING_REFUNDS_TEXT_PRE" | translate }}
+          <a [routerLink]="['/service-points']" class="expansion-points-link">{{
+            "HOME.FAQ.MAKING_REFUNDS_LINK" | translate
+          }}</a
+          >. {{ "HOME.FAQ.MAKING_REFUNDS_TEXT_POST" | translate }}
         </p>
       </div>
     </mat-expansion-panel>
@@ -490,13 +475,12 @@
         [collapsedHeight]="'9rem'"
       >
         <mat-panel-title
-          >Какой документ использовать для вылетов за рубеж?
+          >{{ "HOME.FAQ.FLIGHTS_ABROAD_TITLE" | translate }}
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="custom-expansion-text">
         <p>
-          В случае, если результаты теста требуются вам для международных
-          поездок, рекомендуем указывать данные заграничного паспорта.
+          {{ "HOME.FAQ.FLIGHTS_ABROAD_TEXT" | translate }}
         </p>
       </div>
     </mat-expansion-panel>
@@ -507,16 +491,16 @@
         [collapsedHeight]="'9rem'"
       >
         <mat-panel-title
-          >Что делать, если я оплатил заказ онлайн, но передумал сдавать тест?
+          >{{ "HOME.FAQ.ABORT_TEST_TITLE" | translate }}
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="custom-expansion-text">
         <p>
-          Вы можете вернуть денежные средства
+          {{ "HOME.FAQ.ABORT_TEST_TEXT" | translate }}
           <span
             class="primary-color"
             (click)="openRefundsPanel(refundsPanel, cashbackPanel)"
-            >оформив заявление на возврат
+            >{{ "HOME.FAQ.ABORT_TEST_REFUND" | translate }}
           </span>
         </p>
       </div>
@@ -528,11 +512,11 @@
         [collapsedHeight]="'9rem'"
       >
         <mat-panel-title
-          >Сколько действует оформленный заказ на сайте?
+          >{{ "HOME.FAQ.ORDER_DURATION_TITLE" | translate }}
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="custom-expansion-text">
-        <p>Оформленный на сайте заказ действует бессрочно.</p>
+        <p>{{ "HOME.FAQ.ORDER_DURATION_TEXT" | translate }}</p>
       </div>
     </mat-expansion-panel>
     <!-- 12 -->
@@ -542,49 +526,23 @@
         [collapsedHeight]="'9rem'"
       >
         <mat-panel-title
-          >Как получить QR-код на официальном сайте мэра Москвы?
+          >{{ "HOME.FAQ.QR_MAYOR_TITLE" | translate }}
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="custom-expansion-text">
         <p>
-          Для получения QR-кода на официальном сайте
+          {{ "HOME.FAQ.QR_PUBLIC_EVENTS_TEXT_PRE" | translate }}
           <a class="redirect-link" href="https://immune.mos.ru" target="_blank">
-            <span>мэра Москвы</span>
+            <span>{{ "HOME.FAQ.QR_PUBLIC_EVENTS_LINK" | translate }}</span>
             <svg>
               <use xlink:href="assets/sprites/icons.svg#expand-outline"></use>
             </svg>
           </a>
-          при оформлении заказа на сайте необходимо проставить галочку напротив
-          «Необходим цифровой сертификат (QR-код) на ЕМИАС» или же сообщить об
-          этом администратору медицинского центра.
+          {{ "HOME.FAQ.QR_PUBLIC_EVENTS_TEXT_POST" | translate }}
         </p>
       </div>
     </mat-expansion-panel>
     <!-- 13 -->
-    <mat-expansion-panel hideToggle class="custom-expansion">
-      <mat-expansion-panel-header
-        [expandedHeight]="'9rem'"
-        [collapsedHeight]="'9rem'"
-      >
-        <mat-panel-title
-          >Как получить QR-код на Госуслугах (ЕМИАС)?
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <div class="custom-expansion-text">
-        <p>
-          Для получения QR-кода на Госуслугах при оформлении заказа необходимо
-          проставить галочку напротив «Необходим цифровой сертификат (QR-код) на
-          ЕМИАС» или же сообщить об этом администратору медицинского центра.
-          Обращаем ваше внимание, что получение QR-кода возможно только в случае
-          <strong
-            >оформления на Паспорт гражданина РФ, для детей – Свидетельства о
-            рождении, и при указании правильного номера полиса ОМС и
-            СНИЛС.</strong
-          >
-        </p>
-      </div>
-    </mat-expansion-panel>
-    <!-- 14 -->
     <mat-expansion-panel
       id="corp-clients-faq"
       hideToggle
@@ -595,13 +553,13 @@
         [expandedHeight]="'9rem'"
         [collapsedHeight]="'9rem'"
       >
-        <mat-panel-title>Корпоративным клиентам </mat-panel-title>
+        <mat-panel-title>{{
+          "HOME.FAQ.CORPORATE_CLIENTS_TITLE" | translate
+        }}</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="custom-expansion-text">
         <p>
-          Корпоративным клиентам доступна оплата заказов за счет компании. У
-          заказов есть лимит. Оплатить заказ сверх лимита корпоративного счета
-          нельзя.
+          {{ "HOME.FAQ.CORPORATE_CLIENTS_TEXT" | translate }}
         </p>
       </div>
     </mat-expansion-panel>
@@ -616,42 +574,36 @@
         [expandedHeight]="'9rem'"
         [collapsedHeight]="'9rem'"
       >
-        <mat-panel-title
-          >Как получить результат в приложении «Путешествую без
-          COVID-19»?</mat-panel-title
-        >
+        <mat-panel-title>{{
+          "HOME.FAQ.HOW_TO_GET_RESULT_TITLE" | translate
+        }}</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="custom-expansion-text">
         <p>
-          Результат ПЦР-тестирования "РЖД-Медицина" можно получить в приложении
-          "Путешествую без COVID-19" в виде QR-кода, который можно использовать
-          при пересечении границы. Для этого вам понадобится:
+          {{ "HOME.FAQ.HOW_TO_GET_RESULT_TEXT" | translate }}
         </p>
         <ol class="expansion-ordered-list">
           <li>
-            Скачать приложение "Путешествую без COVID-19" из AppStore или Google
-            Play;
+            {{ "HOME.FAQ.HOW_TO_GET_RESULT_FIRST" | translate }}
           </li>
-          <li>Выбрать ближайший ПЦР-пункт "РЖД-Медицина" из списка;</li>
+          <li>{{ "HOME.FAQ.HOW_TO_GET_RESULT_SECOND" | translate }}</li>
           <li>
-            Перейти на сайт (<a
+            {{ "HOME.FAQ.HOW_TO_GET_RESULT_THIRD_PRE" | translate }} (<a
               href="https://lab.rzd-medicine.ru"
               class="expansion-points-link"
               >https://lab.rzd-medicine.ru</a
-            >), зарегистрироваться и оформить заказ, выбрав необходимый вид
-            ПЦР-тестирования;
+            >), {{ "HOME.FAQ.HOW_TO_GET_RESULT_THIRD_POST" | translate }}
           </li>
-          <li>Пройти исследование в удобное для вас время;</li>
+          <li>{{ "HOME.FAQ.HOW_TO_GET_RESULT_FOURTH" | translate }}</li>
           <li>
-            После получения результата перейти в приложение и добавить тест,
-            отсканировав документ, введя 4 последние цифры телефона и указав
-            номер заказа;
+            {{ "HOME.FAQ.HOW_TO_GET_RESULT_FIFTH" | translate }}
           </li>
           <li>
-            Убедиться, что информация о результатах теста доступна и что сроки
-            действия теста действительны на дату отправления;
+            {{ "HOME.FAQ.HOW_TO_GET_RESULT_SIXTH" | translate }}
           </li>
-          <li>При пересечении границы показать QR-код контролеру.</li>
+          <li *ngIf="translate.currentLang !== '2'">
+            {{ "HOME.FAQ.HOW_TO_GET_RESULT_SEVENTH" | translate }}
+          </li>
         </ol>
       </div>
     </mat-expansion-panel>

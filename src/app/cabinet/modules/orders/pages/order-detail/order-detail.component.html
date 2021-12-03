@@ -4,11 +4,11 @@
       <svg width="1rem" height="1rem">
         <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
       </svg>
-      <span>Заказы</span>
+      <span>{{ "ORDERS" | translate }}</span>
     </a>
 
     <div class="order-top">
-      <div class="order-number">Заказ №{{ order.id }}</div>
+      <div class="order-number">{{ "ORDER" | translate }} №{{ order.id }}</div>
       <div
         *ngIf="order.status"
         class="order-status"
@@ -33,20 +33,20 @@
         </svg>
         <span>{{
           order.status === "CREATED" || order.status === "SIGNED"
-            ? "Черновик"
+            ? ("DRAFT" | translate)
             : order.status === "UNPAID"
-            ? "Ожидает оплаты"
+            ? ("PENDING_PAYMENT" | translate)
             : order.status === "CONFIRMED"
-            ? "Подтвержден"
+            ? ("CONFIRMED" | translate)
             : order.status === "READY"
-            ? "Не подтвержден"
+            ? ("NOT_CONFIRMED" | translate)
             : order.status === "READY_PROCESSING"
             ? "Передача данных"
             : order.status === "READY_PART_CONFIRMED"
             ? "Частично подтвержден"
             : order.status === "UNPAID_REFUSED" ||
               order.status === "UNPAID_ERROR"
-            ? "Ошибка оплаты"
+            ? ("PAYMENT_ERROR" | translate)
             : order.status === "UNPAID_PROCESSING" ||
               order.status === "UNPAID_REGISTERED"
             ? "Обработка оплаты..."
@@ -100,7 +100,7 @@
     <a
       [routerLink]="['/cabinet', 'orders', 'support-service', order.id]"
       class="support-link"
-      >Служба поддержки</a
+      >{{ 'SUPPORT' | translate }}</a
     >
 
     <div class="order-info">
@@ -117,7 +117,7 @@
       <div class="questionnaire-wrapper">
         <div class="questionnaire-top">
           <div class="ext-id" *ngIf="questionnaire.ext_id">
-            Лабораторная заявка № {{ questionnaire.ext_id }}
+            {{ 'LABORATORY_APPLICATION' | translate }} № {{ questionnaire.ext_id }}
           </div>
           <div class="questionnaire-fio">{{ questionnaire.fio }}</div>
         </div>
@@ -142,7 +142,7 @@
         <svg>
           <use xlink:href="assets/sprites/icons.svg#paper-clip"></use>
         </svg>
-        <span>Документы по заказу</span>
+        <span>{{ "ORDER_DOCUMENTS" | translate }}</span>
       </a>
 
       <div class="barcode" *ngIf="questionnaire.ext_id">
@@ -182,12 +182,12 @@
     </div>
 
     <div class="total-block">
-      <div class="total-block-text">Итого:</div>
+      <div class="total-block-text">{{ "TOTAL" | translate }}:</div>
       <div class="total-price">{{ order.total }}&#8381;</div>
     </div>
 
-    <a [routerLink]="['/cabinet', 'orders', 'results']" class="get-results"
-      >Как получить результаты?</a
-    >
+    <a [routerLink]="['/cabinet', 'orders', 'results']" class="get-results">{{
+      "HOW_TO_GET_RESULTS" | translate
+    }}</a>
   </div>
 </div>

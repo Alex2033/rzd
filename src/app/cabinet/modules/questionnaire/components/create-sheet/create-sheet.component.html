@@ -1,10 +1,9 @@
 <div class="create-container">
   <div class="create-options">
     <div class="create-option" (click)="selectQuestionnaire('adult')">
-      <h4 class="subtitle create-title">Анкета для взрослого</h4>
+      <h4 class="subtitle create-title">{{ "FOR_ADULT" | translate }}</h4>
       <div class="create-text">
-        Можно добавить анкету взрослого начиная с 18 лет, который будет
-        проходить исследование вместе с вами.
+        {{ "ADD_PROFILE_FROM_18" | translate }}
       </div>
     </div>
     <div
@@ -12,13 +11,12 @@
       [class.disabled]="!data.questionnaires.length"
       (click)="selectQuestionnaire('child')"
     >
-      <h4 class="subtitle create-title">Анкета для ребенка</h4>
+      <h4 class="subtitle create-title">{{ "FOR_CHILD" | translate }}</h4>
       <div class="create-text">
         {{
           data.questionnaires.length
-            ? "Можно добавить анкету ребенка до 18 лет, законным представителем
-        которого вы являетесь."
-            : "Анкету для ребенка можно создать только при наличии анкеты законного представителя."
+            ? ("PROFILE_OF_CHILD_UNDER_18" | translate)
+            : ("PROFILE_LEGAL_REPRESENTATIVE" | translate)
         }}
       </div>
     </div>

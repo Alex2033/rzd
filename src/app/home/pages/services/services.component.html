@@ -1,6 +1,6 @@
 <div class="home-inner-page">
   <header class="home-inner-header">
-    <h1 class="home-title">Услуги</h1>
+    <h1 class="home-title">{{ "SERVICES" | translate }}</h1>
   </header>
 
   <div class="page-container">
@@ -29,7 +29,7 @@
             </svg>
           </div>
           <span
-            >Доступно в
+            >{{ "AVAILABLE_AT" | translate }}
             <a
               [routerLink]="['/service-points']"
               [queryParams]="{ serviceId: service.id }"
@@ -38,7 +38,11 @@
               <span
                 appPluralRu
                 [value]="service.numCenters"
-                [arVariants]="['мед. центре', 'мед. центрах', 'мед. центрах']"
+                [arVariants]="[
+                  translate.instant('MEDICINES_SINGLE'),
+                  translate.instant('MEDICINES_MULTI'),
+                  translate.instant('MEDICINES_MULTI')
+                ]"
               ></span> </a
           ></span>
         </div>
@@ -50,7 +54,7 @@
           (click)="$event.stopPropagation()"
           class="button stroke services-block-button"
         >
-          Записаться
+          {{ "BUTTON.SIGN_UP" | translate }}
         </button>
       </div>
     </div>

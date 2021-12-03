@@ -17,6 +17,7 @@ import { QuestionnairesService } from '../../../../../shared/services/questionna
 import { QuestionnaireDetailInterface } from '../../types/questionnaire-detail.interface';
 import { QuestionnaireInterface } from '../../types/questionnaire.interface';
 import { QuestionnaireContentInterface } from '../../types/questionnaire-content.interface';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-questionnaires-list',
@@ -37,7 +38,8 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
     private _bottomSheet: MatBottomSheet,
     private router: Router,
     private servicesRegistration: ServicesRegistrationService,
-    private settings: SettingsService
+    private settings: SettingsService,
+    public translate: TranslateService
   ) {}
 
   ngOnInit(): void {

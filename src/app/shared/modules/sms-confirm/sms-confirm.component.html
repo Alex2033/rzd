@@ -3,17 +3,21 @@
     <svg width="1rem" height="1rem">
       <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
     </svg>
-    <span>Назад</span>
+    <span>{{ "BACK" | translate }}</span>
   </a>
 
   <h1 class="page-title">
-    {{ timeExpired ? "Истекло время ожидания" : "Введите код" }}
+    {{
+      timeExpired
+        ? ("TIME_EXPIRED" | translate)
+        : ("ENTER_THE_CODE" | translate)
+    }}
   </h1>
 
   <ng-container *ngIf="!timeExpired">
     <div class="sms-description">
       <p>
-        Ввведите код, полученный в СМС на номер
+        {{ "ENTER_CODE_FROM_SMS" | translate }}
         <strong class="primary-color">{{ phoneValue }}</strong>
       </p>
     </div>
@@ -51,10 +55,13 @@
     <div class="confirm-error" *ngIf="confirmError">{{ confirmError }}</div>
 
     <div class="new-code-text" *ngIf="!resendCode">
-      Получить новый код можно через {{ counter$ | async }} секунд
+      {{ "GET_NEW_CODE_IN_SEC_PRE" | translate }} {{ counter$ | async }}
+      {{ "GET_NEW_CODE_IN_SEC_POST" | translate }}
     </div>
 
-    <a [routerLink]="['/auth', 'sms-info']" class="no-sms">Не приходит СМС?</a>
+    <a [routerLink]="['/auth', 'sms-info']" class="no-sms"
+      >{{ "DIDNT_RECEIVE_SMS" | translate }}?</a
+    >
   </ng-container>
 </div>
 

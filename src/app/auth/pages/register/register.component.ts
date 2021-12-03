@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { ReplaySubject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
 import { AccountService } from '../../../shared/services/account.service';
@@ -49,7 +50,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private account: AccountService
+    private account: AccountService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -75,7 +77,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.registerForm.valueChanges.subscribe(() => {
       if (this.email.value && this.email.value !== this.emailConfirm.value) {
         this.emailConfirm.setErrors({
-          does_not_match: 'Поля Email не совпадают',
+          does_not_match: this.translate.instant('EMAIL_FIELDS_DONT_MATCH'),
         });
       } else {
         this.emailConfirm.setErrors(null);
@@ -169,12 +171,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
         break;
       case 'EMAIL_BAD_FORMAT':
         this.email.setErrors({
-          email_bad_format: 'Неверный формат email',
+          email_bad_format: this.translate.instant('INVALID_EMAIL_FORMAT'),
         });
         break;
       case 'PHONE_BAD_FORMAT':
         this.phone.setErrors({
-          phone_bad_format: 'Неверный формат телефона',
+          phone_bad_format: this.translate.instant('INVALID_PHONE_FORMAT'),
         });
         break;
       case 'NAME_LENGTH':

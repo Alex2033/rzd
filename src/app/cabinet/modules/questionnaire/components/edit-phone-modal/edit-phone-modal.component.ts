@@ -10,6 +10,7 @@ import {
   MatBottomSheetRef,
   MAT_BOTTOM_SHEET_DATA,
 } from '@angular/material/bottom-sheet';
+import { TranslateService } from '@ngx-translate/core';
 import { ReplaySubject } from 'rxjs';
 import { takeUntil, finalize } from 'rxjs/operators';
 import { AccountService } from 'src/app/shared/services/account.service';
@@ -35,7 +36,8 @@ export class EditPhoneModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private account: AccountService,
     @Inject(MAT_BOTTOM_SHEET_DATA)
-    public data: { value: string }
+    public data: { value: string },
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -116,7 +118,7 @@ export class EditPhoneModalComponent implements OnInit {
 
       case 'PHONE_BAD_FORMAT':
         this.form.get('phone').setErrors({
-          phone_bad_format: 'Неверный формат телефона',
+          phone_bad_format: this.translate.instant('INVALID_PHONE_FORMAT'),
         });
         break;
 

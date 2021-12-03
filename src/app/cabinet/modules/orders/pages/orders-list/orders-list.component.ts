@@ -25,7 +25,7 @@ export class OrdersListComponent implements OnInit {
     },
     {
       label: 'Черновик',
-      value: 'CREATED',
+      value: 'DRAFT',
     },
     {
       label: 'Подтвержден',
@@ -33,19 +33,19 @@ export class OrdersListComponent implements OnInit {
     },
     {
       label: 'Не подтвержден',
-      value: 'READY',
+      value: 'NOT_CONFIRMED',
     },
     {
       label: 'Ожидает оплаты',
-      value: 'UNPAID',
+      value: 'PENDING_PAYMENT',
     },
     {
       label: 'Ошибка оплаты',
-      value: 'UNPAID_REFUSED',
+      value: 'PAYMENT_ERROR',
     },
     {
       label: 'Частично подтвержден',
-      value: 'READY_PART_CONFIRMED',
+      value: 'Частично подтвержден',
     },
   ];
 

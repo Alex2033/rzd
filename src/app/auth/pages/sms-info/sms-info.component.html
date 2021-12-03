@@ -4,20 +4,19 @@
       <svg width="1rem" height="1rem">
         <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
       </svg>
-      <span>Назад</span>
+      <span>{{ "BACK" | translate }}</span>
     </a>
 
-    <h1 class="page-title">Не приходит смс с кодом</h1>
+    <h1 class="page-title">{{ "NOT_RECEIVED_SMS" | translate }}</h1>
 
     <div class="info">
-      Проверьте что:
+      {{ "CHECK_THAT" | translate }}:
       <ul class="info-list">
-        <li>ваш телефон включен и находится в зоне приема сети;</li>
-        <li>вы ввели правильный номер телефона или адрес электронной почты.</li>
+        <li>{{ "YOUR_PHONE_IS_SWITCHED" | translate }}</li>
+        <li>{{ "ENTERED_CORRECT_PHONE_OR_EMAIL" | translate }}</li>
       </ul>
       <div class="info-text">
-        Иногда СМС приходит не сразу. Если СМС нет 10 минут, попробуйте получить
-        код еще раз.
+        {{ "SMS_10_MIN_INFO" | translate }}
       </div>
     </div>
   </div>

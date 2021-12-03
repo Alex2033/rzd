@@ -5,7 +5,7 @@
         <svg width="1rem" height="1rem">
           <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
         </svg>
-        <span>Точки обслуживания</span>
+        <span>{{ "SERVICE_POINTS" | translate | titlecase }}</span>
       </a>
     </div>
 
@@ -15,17 +15,17 @@
 
     <div class="page-container service-point-body">
       <div class="infocard-field">
-        <div class="caption">Адрес:</div>
+        <div class="caption">{{ "ADDRESS" | translate }}:</div>
         <div class="infocard-text">
           {{ point.address }}
         </div>
       </div>
       <div class="infocard-field">
-        <div class="caption">Время работы:</div>
+        <div class="caption">{{ "WORKING_HOURS" | translate }}:</div>
         <div class="infocard-text">{{ point.worktime }}</div>
       </div>
       <div class="infocard-field">
-        <div class="caption">Где находится:</div>
+        <div class="caption">{{ "WHERE_IS_LOCATED" | translate }}:</div>
         <div class="infocard-text">
           {{ point.address }}
         </div>
@@ -34,14 +34,14 @@
           [routerLink]="['/qr', point.id]"
           class="qr-link detailed-link"
         >
-          <span>Посмотреть на схеме</span>
+          <span>{{ "VIEW_ON_SCHEME" | translate }}</span>
           <svg width="2.2rem" height="1rem">
             <use xlink:href="assets/sprites/icons.svg#arrow-right-long"></use>
           </svg>
         </a>
       </div>
       <div class="infocard-field infocard-contacts">
-        <div class="caption">Контакты:</div>
+        <div class="caption">{{ "CONTACTS" | translate }}:</div>
         <div
           class="infocard-text"
           [innerHTML]="point.contacts | paragraphs"
@@ -51,7 +51,7 @@
         [routerLink]="['/cabinet', 'questionnaires']"
         class="button accent service-point-button"
       >
-        Записаться
+        {{ "BUTTON.SIGN_UP" | translate }}
       </button>
     </div>
 
@@ -75,11 +75,11 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div class="custom-expansion-info">
-            <p class="caption">Стоимость анализа:</p>
+            <p class="caption">{{ "COST_OF_ANALYSIS" | translate }}:</p>
             <p>{{ service.price }} {{ service.priceType }}</p>
           </div>
           <div class="custom-expansion-info">
-            <p class="caption">Срок исполнения:</p>
+            <p class="caption">{{ "READINESS_TIME" | translate }}:</p>
             <p>{{ service.duration }}</p>
           </div>
 
@@ -87,11 +87,11 @@
             <a
               [routerLink]="['/cabinet', 'questionnaires']"
               class="button stroke"
-              >Записаться</a
+              >{{ "BUTTON.SIGN_UP" | translate }}</a
             >
-            <a [routerLink]="['/services', service.id]" class="button no-bg"
-              >Подробнее</a
-            >
+            <a [routerLink]="['/services', service.id]" class="button no-bg">{{
+              "BUTTON.MORE_DETAILS" | translate
+            }}</a>
           </div>
         </mat-expansion-panel>
       </div>

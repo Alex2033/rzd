@@ -1,6 +1,6 @@
 <div class="page-content" [hidden]="isLoading">
   <div class="page-container">
-    <h1 class="page-title">Заказы</h1>
+    <h1 class="page-title">{{ "ORDERS" | translate }}</h1>
 
     <div class="form-control select-control">
       <mat-form-field appearance="outline">
@@ -9,7 +9,7 @@
           (selectionChange)="filterChange($event)"
         >
           <mat-option *ngFor="let type of types" [value]="type.value">{{
-            type.label
+            type.value | translate
           }}</mat-option>
         </mat-select>
       </mat-form-field>
@@ -59,19 +59,19 @@
               </svg>
               <span>{{
                 order.status === "CREATED" || order.status === "SIGNED"
-                  ? "Черновик"
+                  ? ("DRAFT" | translate)
                   : order.status === "UNPAID"
-                  ? "Ожидает оплаты"
+                  ? ("PENDING_PAYMENT" | translate)
                   : order.status === "CONFIRMED"
-                  ? "Подтвержден"
+                  ? ("CONFIRMED" | translate)
                   : order.status === "READY"
-                  ? "Не подтвержден"
+                  ? ("NOT_CONFIRMED" | translate)
                   : order.status === "READY_PROCESSING"
                   ? "Передача данных"
                   : order.status === "READY_PART_CONFIRMED"
                   ? "Частично подтвержден"
                   : order.status === "UNPAID_REFUSED"
-                  ? "Ошибка оплаты"
+                  ? ("PAYMENT_ERROR" | translate)
                   : order.status === "UNPAID_ERROR"
                   ? "Ошибка данных"
                   : order.status === "UNPAID_PROCESSING" ||
@@ -134,7 +134,8 @@
               *ngFor="let questionnaire of order.items"
             >
               <div class="ext-id" *ngIf="questionnaire.ext_id">
-                Лабораторная заявка № {{ questionnaire.ext_id }}
+                {{ "LABORATORY_APPLICATION" | translate }} №
+                {{ questionnaire.ext_id }}
               </div>
               <div class="questionnaire-fio">
                 {{ questionnaire.fio }}
@@ -151,7 +152,7 @@
       <svg width="1.6rem" height="1.6rem">
         <use xlink:href="assets/sprites/icons.svg#plus"></use>
       </svg>
-      <span>Новый заказ</span>
+      <span>{{ "NEW_ORDER" | translate }}</span>
     </button>
   </div>
 </div>

@@ -15,7 +15,7 @@ export class LocationBarComponent implements OnInit {
 
   constructor(private location: LocationService) {}
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
   selectCity(city: CityInterface): void {
     this.location.setLocation(city);

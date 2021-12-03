@@ -12,6 +12,7 @@ import { finalize, takeUntil } from 'rxjs/operators';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { AuthResponseInterface } from 'src/app/auth/types/auth-response.interface';
 import { CheckPhoneDataInterface } from 'src/app/shared/types/phone-data.interface';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-edit-phone',
@@ -30,7 +31,8 @@ export class EditPhoneComponent implements OnInit, OnDestroy {
   constructor(
     private account: AccountService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -130,7 +132,7 @@ export class EditPhoneComponent implements OnInit, OnDestroy {
 
       case 'PHONE_BAD_FORMAT':
         this.editForm.get('phone').setErrors({
-          phone_bad_format: 'Неверный формат телефона',
+          phone_bad_format: this.translate.instant('INVALID_PHONE_FORMAT'),
         });
         break;
 

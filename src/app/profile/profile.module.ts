@@ -11,6 +11,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { EditNameComponent } from './pages/edit-name/edit-name.component';
 import { EditEmailComponent } from './pages/edit-email/edit-email.component';
 import { EditPhoneComponent } from './pages/edit-phone/edit-phone.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { EditPhoneComponent } from './pages/edit-phone/edit-phone.component';
     MatInputModule,
     ErrorMessagesModule,
     SmsConfirmModule,
+    TranslateModule,
   ],
 })
 export class ProfileModule {}

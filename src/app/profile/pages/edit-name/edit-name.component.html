@@ -3,14 +3,14 @@
     <div class="page-top">
       <div class="spacer"></div>
 
-      <a class="close" [routerLink]="['/']">Закрыть</a>
+      <a class="close" [routerLink]="['/']">{{ "CLOSE" | translate }}</a>
     </div>
-    <h1 class="subtitle profile-title">Редактирование имени</h1>
+    <h1 class="subtitle profile-title">{{ "EDITING_NAME" | translate }}</h1>
 
     <form (submit)="submit()" [formGroup]="editForm" class="form-controls">
       <div class="form-control">
         <mat-form-field appearance="outline">
-          <mat-label>Имя</mat-label>
+          <mat-label>{{ "NAME" | translate }}</mat-label>
 
           <input matInput type="text" name="name" formControlName="name" />
 
@@ -32,7 +32,7 @@
               "
               [errors]="editForm.get('name').errors"
               [errorMessages]="{
-                required: 'Введите имя',
+                required: ('ENTER_NAME' | translate),
                 incorrect_name_length:
                   editForm.get('name').errors?.incorrect_name_length
               }"
@@ -51,6 +51,6 @@
     [disabled]="loading || editForm.get('name').invalid"
     class="button"
   >
-    <span>Сохранить</span>
+    <span>{{ "SAVE" | translate }}</span>
   </button>
 </div>

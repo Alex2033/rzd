@@ -10,6 +10,7 @@ import { CitySearchComponent } from './components/city-search/city-search.compon
 import { CityItemComponent } from './components/city-item/city-item.component';
 import { CityConfirmComponent } from './components/city-confirm/city-confirm.component';
 import { SearchModule } from '../../pipes/search/search.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 const components = [
   HeaderComponent,
@@ -22,7 +23,13 @@ const components = [
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule, SearchModule, ClickOutsideModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    SearchModule,
+    ClickOutsideModule,
+    TranslateModule,
+  ],
   declarations: [components],
   exports: [components],
 })

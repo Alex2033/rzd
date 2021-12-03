@@ -5,20 +5,18 @@
         <svg width="1rem" height="1rem">
           <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
         </svg>
-        <span>Назад</span>
+        <span>{{ "BACK" | translate }}</span>
       </a>
 
-      <a class="close" [routerLink]="['/cabinet', 'questionnaires']">Закрыть</a>
+      <a class="close" [routerLink]="['/cabinet', 'questionnaires']">{{
+        "CLOSE" | translate
+      }}</a>
     </div>
 
     <div class="info-content">
-      <h6 class="info-title">Внимание!</h6>
+      <h6 class="info-title">{{ "ATTENTION" | translate }}</h6>
       <p>
-        Если вы планируете использовать результаты теста для предоставления на
-        территории РФ, пожалуйста, указывайте Паспорт гражданина РФ, а для детей
-        Свидетельство о рождении. В случае, если результаты теста вам требуются
-        для международных поездок, рекомендуем указывать данные заграничного
-        паспорта.
+        {{ "TEST_RESULTS_FOR_SUBMISSION" | translate }}
       </p>
     </div>
   </div>
@@ -26,7 +24,7 @@
 
 <div class="buttons">
   <button type="button" (click)="goToCreation()" class="button">
-    <span>Далее</span>
+    <span>{{ "BUTTON.NEXT" | translate }}</span>
     <svg width="1.6rem" height="1.6rem">
       <use xlink:href="assets/sprites/icons.svg#next"></use>
     </svg>

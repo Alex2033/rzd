@@ -1,21 +1,23 @@
 <div class="page-content">
   <div class="page-container">
     <p>
-      Исследование доступно только бессимптомным пациентам. Для пациентов,
-      контактировавших с больными COVID-19, или имеющим повышенную температуру
-      тела и/или явные симптомы ОРВИ проведение исследования невозможно.
+      {{ "AVAILABLE_ONLY_TO_ASYMPTOMATIC_PATIENTS_PRE" | translate }}
     </p>
     <p>
       Рекомендуем обратиться в единый консультационный центр Роспотребнадзора по
       тел.: <br />
       <a class="phone-link" href="tel:88005554943">8 (800) 555-49-43</a>
     </p>
-    <p><strong>Будьте здоровы!</strong></p>
+    <p>
+      <strong>{{
+        "AVAILABLE_ONLY_TO_ASYMPTOMATIC_PATIENTS_POST" | translate
+      }}</strong>
+    </p>
   </div>
 </div>
 
 <div class="buttons">
   <button class="button" [routerLink]="['/cabinet', 'questionnaires']">
-    <span>К анкетам</span>
+    <span>{{ "TO_PROFILES" | translate }}</span>
   </button>
 </div>

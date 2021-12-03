@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { ReplaySubject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { OrdersService } from 'src/app/shared/services/orders.service';
@@ -18,7 +19,8 @@ export class PaymentResponseComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private ordersService: OrdersService
+    private ordersService: OrdersService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -44,13 +46,13 @@ export class PaymentResponseComponent implements OnInit {
     switch (text) {
       case 'online':
       case 'CORPORATE':
-        this.text = `Ваш заказ №${this.order.id} успешно оплачен.`;
+        this.text = this.translate.instant('ORDER_COMPLETED_ONLINE');
         break;
       case 'TERMINAL':
-        this.text = `Ваш заказ №${this.order.id} оформлен. Вы можете оплатить его в инфокиоске.`;
+        this.text = this.translate.instant('ORDER_COMPLETED_KIOSKS');
         break;
       case 'ADMIN':
-        this.text = `Ваш заказ №${this.order.id} оформлен. Вы можете оплатить его у администратора.`;
+        this.text = this.translate.instant('ORDER_COMPLETED_ADMIN');
         break;
 
       default:

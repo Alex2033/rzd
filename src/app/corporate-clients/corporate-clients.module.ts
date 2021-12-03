@@ -10,9 +10,13 @@ import { ErrorMessagesModule } from '../shared/modules/error-messages/error-mess
 import { CorporateClientsRoutingModule } from './corporate-clients-routing.module';
 import { ConfirmCorporateClientsComponent } from './pages/confirm-corporate-clients/confirm-corporate-clients.component';
 import { InfoCorporateClientsComponent } from './pages/info-corporate-clients/info-corporate-clients.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-  declarations: [ConfirmCorporateClientsComponent, InfoCorporateClientsComponent],
+  declarations: [
+    ConfirmCorporateClientsComponent,
+    InfoCorporateClientsComponent,
+  ],
   imports: [
     CommonModule,
     CorporateClientsRoutingModule,
@@ -23,6 +27,7 @@ import { InfoCorporateClientsComponent } from './pages/info-corporate-clients/in
     ErrorMessagesModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    TranslateModule,
   ],
   providers: [DatePipe],
 })

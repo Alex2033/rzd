@@ -43,7 +43,7 @@
                 required: 'Введите email',
                 incorrect_email_length:
                   form.get('email').errors?.incorrect_email_length,
-                pattern: 'Неверный формат email'
+                pattern: ('INVALID_EMAIL_FORMAT' | translate)
               }"
             ></app-error-messages
           ></mat-error>
@@ -93,7 +93,7 @@
     </div>
 
     <div class="edit-field-paste" (click)="setValueFromProfile()">
-      Вставить основной e-mail профиля
+      {{ "INSERT_MAIN_EMAIL" | translate }}
     </div>
 
     <button
@@ -101,7 +101,7 @@
       [disabled]="form.invalid"
       type="submit"
     >
-      Сохранить
+      {{ "SAVE" | translate }}
     </button>
   </form>
 </div>

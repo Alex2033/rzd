@@ -6,17 +6,18 @@
           <svg width="1rem" height="1rem">
             <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
           </svg>
-          <span>Назад</span>
+          <span>{{ "BACK" | translate }}</span>
         </a>
 
-        <a class="close" [routerLink]="['/cabinet', 'questionnaires']"
-          >Закрыть</a
-        >
+        <a class="close" [routerLink]="['/cabinet', 'questionnaires']">{{
+          "CLOSE" | translate
+        }}</a>
       </div>
 
       <form (submit)="submit()" [formGroup]="createForm" class="create-form">
         <h2 class="subtitle create-form-title">
-          Шаг {{ currentStep }} из {{ formLength }}
+          {{ "STEP" | translate }} {{ currentStep }} {{ "OF" | translate }}
+          {{ formLength }}
           <svg
             class="child-icon"
             width="2.4rem"
@@ -71,7 +72,7 @@
       (click)="next()"
       class="button next-button"
     >
-      <span>Далее</span>
+      <span>{{ "BUTTON.NEXT" | translate }}</span>
       <svg class="arrow-next" width="1.6rem" height="1.6rem">
         <use xlink:href="assets/sprites/icons.svg#next"></use>
       </svg>

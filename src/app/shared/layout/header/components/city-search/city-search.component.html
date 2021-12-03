@@ -3,7 +3,7 @@
     class="city-search-control"
     type="text"
     name="search"
-    placeholder="Название вашего города"
+    [placeholder]="'YOUR_CITY_NAME' | translate"
     (change)="update($event.target.value)"
   />
   <svg class="city-search-icon">

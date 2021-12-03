@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { combineLatest, ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-server-error',
@@ -20,7 +21,8 @@ export class ServerErrorComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -31,7 +33,7 @@ export class ServerErrorComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.destroy.next(null);
     this.destroy.complete();
   }
@@ -39,129 +41,115 @@ export class ServerErrorComponent implements OnInit, OnDestroy {
   setError(key: string, orderId: string): void {
     switch (key) {
       case 'ORDER_PARSE_ERROR':
-        this.text = 'Произошла ошибка при создании заказа...';
-        this.buttonText = 'Попробовать снова';
+        this.text = this.translate.instant('ERROR_CREATING_ORDER');
+        this.buttonText = this.translate.instant('TRY_AGAIN');
         break;
 
       case 'PAYMENT_UNKNOWN':
-        this.text =
-          'Не удалось оплатить заказ. Попробуйте еще раз или выберите другой способ оплаты.';
-        this.buttonText = 'Попробовать снова';
+        this.text = this.translate.instant('FAILED_PAY_TRY_AGAIN');
+        this.buttonText = this.translate.instant('TRY_AGAIN');
         this.link = `/cabinet/services-registration/payment-method/${orderId}`;
         break;
 
       case 'ORDER_NOT_FOUND':
         this.closeLink = '/cabinet/orders';
-        this.text = 'Заказ не найден';
-        this.buttonText = 'К заказам';
+        this.text = this.translate.instant('ORDER_NOT_FOUND');
+        this.buttonText = this.translate.instant('TO_ORDERS');
         this.link = '/cabinet/orders';
         break;
 
       case 'POINT_NOT_FOUND':
-        this.text =
-          'Выбранная точка обслуживания недоступна. Пожалуйста, выберите другую точку обслуживания.';
-        this.buttonText = 'Выбрать точку обслуживания';
+        this.text = this.translate.instant('SELECTED_SERVICE_NOT_AVAILABLE');
+        this.buttonText = this.translate.instant('SELECT_SERVICE_POINT');
         this.link = '/cabinet/services-registration/select-point/0';
         break;
 
       case 'INVALID_RETURN_DATE':
-        this.text =
-          'Неверный формат даты возвращения в РФ. Пожалуйста укажите верную дату.';
-        this.buttonText = 'Указать дату';
+        this.text = this.translate.instant('INVALID_FORMAT_DATE_RETURN');
+        this.buttonText = this.translate.instant('SPECIFY_DATE');
         this.link = '/cabinet/services-registration/questions/0';
         break;
 
       case 'ANKETA_NOT_FOUND':
-        this.text =
-          'Выбранная вами анкета не найдена. Пожалуйста выберите другую анкету или попробуйте еще раз.';
-        this.buttonText = 'Выбрать анкету';
+        this.text = this.translate.instant('SELECTED_PROFILE_NOT_FOUND');
+        this.buttonText = this.translate.instant('SELECT_PROFILE');
         this.link = '/cabinet/questionnaires';
         break;
 
       case 'ANKETA_PARSE_ERROR':
-        this.text =
-          'Выбранная вами анкета не заполнена или заполнена не полностью. Пожалуйста проверьте правильность заполнения полей.';
-        this.buttonText = 'Перейти к анкетам';
+        this.text = this.translate.instant('CHOSEN_PROFILE_NOT_COMPLETED');
+        this.buttonText = this.translate.instant('GO_TO_PROFILES');
         this.link = '/cabinet/questionnaires';
         this.closeLink = '/cabinet/questionnaires';
         break;
 
       case 'ANKETA_BAD_STATUS':
-        this.text =
-          'Выбранная вами анкета заполнена не полностью. Пожалуйста заполните все обязательные поля.';
-        this.buttonText = 'Перейти к анкете';
+        this.text = this.translate.instant('CHOSEN_PROFILE_NOT_FULLY');
+        this.buttonText = this.translate.instant('GO_TO_PROFILE');
         break;
 
       case 'SERVICES_NOT_SELECTED':
-        this.text =
-          'Не удалось оформить заказ, так как не выбраны услуги. Пожалуйста выберите услуги и продолжите оформление заказа.';
-        this.buttonText = 'Перейти к выбору услуг';
+        this.text = this.translate.instant(
+          'FAILED_ORDER_SERVICES_NOT_SELECTED'
+        );
+        this.buttonText = this.translate.instant('GO_TO_SERVICE_SELECTION');
         break;
 
       case 'SERVICE_NOT_FOUND':
-        this.text =
-          'Выбранная услуга не доступна для выбранной точки обслуживания. Пожалуйста выберите другую услугу или смените точку обслуживания.';
-        this.buttonText = 'Перейти к выбору услуг';
+        this.text = this.translate.instant('SELECTED_SERVICE_NOT_SELECTED');
+        this.buttonText = this.translate.instant('GO_TO_SERVICE_SELECTION');
         break;
 
       case 'PRICE_NOT_FOUND':
-        this.text =
-          'Не удалось узнать цену выбранной услуги. Пожалуйста попробуйте снова.';
-        this.buttonText = 'Попробовать снова';
+        this.text = this.translate.instant('UNABLE_FIND_PRICE');
+        this.buttonText = this.translate.instant('TRY_AGAIN');
         break;
 
       case 'ANKETA_NOT_FOUND':
-        this.text =
-          'Выбранная вами анкета не найдена. Пожалуйста выберите другую анкету или попробуйте снова.';
-        this.buttonText = 'Перейти к анкетам';
+        this.text = this.translate.instant('SELECTED_PROFILE_NOT_FOUND');
+        this.buttonText = this.translate.instant('GO_TO_PROFILES');
         break;
 
       case 'DOC_CONTENT_NOT_FOUND':
-        this.text =
-          'Документ указан не верно. Пожалуйста выберите документ из списка.';
-        this.buttonText = 'Перейти к анкете';
+        this.text = this.translate.instant('document_listed_incorrectly');
+        this.buttonText = this.translate.instant('GO_TO_PROFILE');
         break;
 
       case 'FIO_LANG_MISMATCH':
-        this.text =
-          'Данные ФИО не соответствуют документу. Пожалуйста введите верные данные.';
-        this.buttonText = 'Перейти к анкете';
+        this.text = this.translate.instant('FIO_NOT_CORRESPOND');
+        this.buttonText = this.translate.instant('GO_TO_PROFILE');
         break;
 
       case 'FIELD_NOT_FOUND':
-        this.text =
-          'Поле заполнено не полностью или неверно. Пожалуйста повторите попытку.';
-        this.buttonText = 'Перейти к анкете';
+        this.text = this.translate.instant('FIELD_FILLED_INCOMPLETELY');
+        this.buttonText = this.translate.instant('GO_TO_PROFILE');
         break;
 
       case 'FIELD_BAD_VALUE':
-        this.text =
-          'Некорректное значение поля. Пожалуйста, заполните поле по формату.';
-        this.buttonText = 'Перейти к анкете';
+        this.text = this.translate.instant('INCORRET_FIELD_VALUE');
+        this.buttonText = this.translate.instant('GO_TO_PROFILE');
         break;
 
       case 'FIELD_BAD_FORMAT':
-        this.text =
-          'Неверный формат поля анкеты. Пожалуйста проверьте корректность веденных данных';
-        this.buttonText = 'Попробовать снова';
+        this.text = this.translate.instant('INVALID_PROFILE_FIELD_FORMAT');
+        this.buttonText = this.translate.instant('TRY_AGAIN');
         break;
 
       case 'REQUIRED_FIELD_EMPTY':
-        this.text =
-          'Обязательные поля заполнены не полностью. Пожалуйста заполните все обязательные поля.';
-        this.buttonText = 'Перейти к анкете';
+        this.text = this.translate.instant('REQUIRED_FIELDS_INCOMPLETE');
+        this.buttonText = this.translate.instant('GO_TO_PROFILE');
         break;
 
       case 'SMS_ERROR':
         this.closeLink = '/';
-        this.text = 'Ошибка соединения с сервером...';
-        this.buttonText = 'Попробовать снова';
+        this.text = this.translate.instant('SERVER_CONNECTION_ERROR');
+        this.buttonText = this.translate.instant('TRY_AGAIN');
         break;
 
       case 'PAYMENT_ERROR':
         this.closeLink = '/cabinet/orders';
-        this.text = 'Ошибка оплаты...';
-        this.buttonText = 'Попробовать снова';
+        this.text = this.translate.instant('PAYMENT_ERROR') + '...';
+        this.buttonText = this.translate.instant('TRY_AGAIN');
         this.link = orderId
           ? `/cabinet/services-registration/payment-method/${orderId}`
           : '/cabinet/orders';
@@ -169,14 +157,14 @@ export class ServerErrorComponent implements OnInit, OnDestroy {
 
       case 'LIMIT_EXCEEDED':
         this.closeLink = '/cabinet/questionnaires';
-        this.text = 'Лимит на оплату услуг с корпоративного счета исчерпан.';
-        this.buttonText = 'Анкеты';
+        this.text = this.translate.instant('LIMIT_ON_PAYMENT');
+        this.buttonText = this.translate.instant('PROFILES');
         this.link = '/cabinet/questionnaires';
         break;
 
       default:
-        this.text = 'Ошибка соединения с сервером...';
-        this.buttonText = 'Попробовать снова';
+        this.text = this.translate.instant('SERVER_CONNECTION_ERROR');
+        this.buttonText = this.translate.instant('TRY_AGAIN');
         break;
     }
   }

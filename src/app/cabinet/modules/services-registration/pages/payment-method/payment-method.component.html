@@ -5,13 +5,19 @@
         <svg width="1rem" height="1rem">
           <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
         </svg>
-        <span>Назад</span>
+        <span>{{ "BACK" | translate }}</span>
       </a>
-      <a class="close" [routerLink]="['/cabinet', 'questionnaires']">Закрыть</a>
+      <a class="close" [routerLink]="['/cabinet', 'questionnaires']">{{
+        "CLOSE" | translate
+      }}</a>
     </div>
 
     <h1 class="page-title">
-      {{ isCorporatePayment ? "Способ оплаты" : "Выберите способ оплаты" }}
+      {{
+        isCorporatePayment
+          ? ("PAYMENT_METHOD" | translate)
+          : ("SELECT_PAYMENT_METHOD" | translate)
+      }}
     </h1>
     <p *ngIf="isCorporatePayment" class="corp-text">
       Ваш заказ будет оплачен с корпоративного счета.
@@ -28,21 +34,23 @@
         [value]="'ONLINE'"
         [disabled]="!settings.enableOnlinePayment"
       >
-        Оплатить онлайн
+        {{ "PAY_ONLINE" | translate }}
       </mat-radio-button>
       <mat-radio-button
         disabled
         [value]="'TERMINAL'"
         [disabled]="!settings.enableTerminalPayment"
       >
-        Оплатить картой в инфокиоске
+        {{ "PAY_BY_CARD" | translate }}
       </mat-radio-button>
       <mat-radio-button
         [value]="'ADMIN'"
         [disabled]="!settings.enableAdminPayment"
       >
-        Оплатить у администратора
-        <div class="additional-info">Возможно длительное ожидание</div>
+        {{ "PAY_AT_MEDICAL_CENTER" | translate }}
+        <div class="additional-info">
+          {{ "LONG_WAIT_POSSIBLE" | translate }}
+        </div>
       </mat-radio-button>
     </mat-radio-group>
   </div>
@@ -54,7 +62,9 @@
       [disabled]="!selectedPayment && !isCorporatePayment"
       class="button"
     >
-      <span> {{ isCorporatePayment ? "Подтвердить" : "Оплатить" }}</span>
+      <span>
+        {{ isCorporatePayment ? "Подтвердить" : ("Pay" | translate) }}</span
+      >
     </button>
   </div>
 </div>

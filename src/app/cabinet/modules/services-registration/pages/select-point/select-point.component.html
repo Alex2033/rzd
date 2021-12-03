@@ -18,7 +18,7 @@
         <svg width="1rem" height="1rem">
           <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
         </svg>
-        <span>Вопросы</span>
+        <span>{{ "QUESTIONS" | translate }}</span>
       </a>
       <a
         *ngIf="addressMode === 'map'"
@@ -28,13 +28,15 @@
         <svg width="1rem" height="1rem">
           <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
         </svg>
-        <span>Вернуться к списку</span>
+        <span>{{ "BACK_TO_LIST" | translate }}</span>
       </a>
-      <a class="close" [routerLink]="['/cabinet', 'questionnaires']">Закрыть</a>
+      <a class="close" [routerLink]="['/cabinet', 'questionnaires']">{{
+        "CLOSE" | translate
+      }}</a>
     </div>
 
     <h1 class="page-title" *ngIf="addressMode === 'list'">
-      Выберите точку обслуживания
+      {{ "SELECT_SERVICE_POINT" | translate }}
     </h1>
   </div>
 
@@ -56,9 +58,9 @@
 
     <!-- info panel -->
     <div class="info-panel" *ngIf="!selectedPoint" [@slideUp]>
-      <h5 class="info-panel-title">Где вы планируйте пройти исследование?</h5>
+      <h5 class="info-panel-title">{{ "PLAN_TO_TAKE_TEST" | translate }}</h5>
       <div class="info-panel-text">
-        <p>Выберите точку на карте</p>
+        <p>{{ "SELECT_POINT_ON_MAP" | translate }}</p>
       </div>
     </div>
 
@@ -98,7 +100,7 @@
             (click)="selectPoint()"
             class="point-card-button button accent"
           >
-            Выбрать точку
+            {{ "SELECT_POINT" | translate }}
           </button>
         </footer>
       </div>
@@ -124,7 +126,7 @@
         *ngIf="addressMode === 'list'"
         (click)="addressMode = 'map'"
       >
-        Посмотреть на карте
+        {{ "VIEW_ON_SCHEME" | translate }}
       </div>
     </div>
 
@@ -134,7 +136,7 @@
         (click)="selectPoint()"
         [disabled]="!selectedPoint"
       >
-        <span>Далее</span>
+        <span>{{ "BUTTON.NEXT" | translate }}</span>
         <svg width="1.6rem" height="1.6rem">
           <use xlink:href="assets/sprites/icons.svg#next"></use>
         </svg>

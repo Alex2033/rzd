@@ -13,19 +13,25 @@
         <svg width="1rem" height="1rem">
           <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
         </svg>
-        <span>Точки обслуживания</span>
+        <span>{{ "SERVICE_POINTS" | translate | titlecase }}</span>
       </a>
-      <a class="close" [routerLink]="['/cabinet', 'questionnaires']">Закрыть</a>
+      <a class="close" [routerLink]="['/cabinet', 'questionnaires']">{{
+        "CLOSE" | translate
+      }}</a>
     </div>
 
     <div class="page-heading">
-      <h1 class="page-title">Услуги</h1>
+      <h1 class="page-title">{{ "SERVICES" | translate }}</h1>
       <div
         class="change-selection-mode"
         *ngIf="order.items?.length > 1 && services.length"
         (click)="changeSelectionMode()"
       >
-        {{ selectEach ? "Выбрать для всех" : "Выбрать для каждого" }}
+        {{
+          selectEach
+            ? ("SELECT_FOR_ALL" | translate)
+            : ("SELECT_FOR_EACH" | translate)
+        }}
       </div>
     </div>
 
@@ -59,7 +65,7 @@
               <div
                 *ngIf="
                   service.shortName ===
-                  'В случае необходимости дополнительного контроля результата и высокой загрузки лаборатории срок исполнения экспресс-теста может быть увеличен'
+                  ('ADDITIONAL_CONTROL_THE_RESULT' | translate)
                 "
                 class="service-short-name"
               >
@@ -93,8 +99,7 @@
         </div>
         <div
           *ngIf="
-            service.shortName ===
-            'В случае необходимости дополнительного контроля результата и высокой загрузки лаборатории срок исполнения экспресс-теста может быть увеличен'
+            service.shortName === ('ADDITIONAL_CONTROL_THE_RESULT' | translate)
           "
           class="service-short-name"
         >
@@ -109,7 +114,7 @@
     *ngIf="!services.length && servicesLoaded"
   >
     <p>
-      В данной точке нет доступных вам услуг, вернитесь и выберите другую точку.
+      {{ "NO_SERVICES_AVAILABLE_THIS_POINT" | translate }}
     </p>
   </div>
 
@@ -118,7 +123,7 @@
     *ngIf="servicesLoaded && services.length"
   >
     <div class="total-sum">
-      <span>Итого:</span>
+      <span>{{ "TOTAL" | translate }}:</span>
       <span class="service-price">{{ sum ? sum : 0 }}&#8381;</span>
     </div>
   </div>
@@ -135,7 +140,7 @@
       !(enableOrderCreation$ | async)
     "
   >
-    <span>Далее</span>
+    <span>{{ "BUTTON.NEXT" | translate }}</span>
     <svg width="1.6rem" height="1.6rem">
       <use xlink:href="assets/sprites/icons.svg#next"></use>
     </svg>

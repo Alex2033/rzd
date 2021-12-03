@@ -12,6 +12,7 @@ import { combineLatest, ReplaySubject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { OrdersService } from 'src/app/shared/services/orders.service';
 import { DocumentsOrderInterface } from 'src/app/shared/types/documents-order.interface';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-document',
@@ -37,7 +38,8 @@ export class DocumentComponent implements OnInit, OnDestroy {
     private ordersService: OrdersService,
     private route: ActivatedRoute,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {

@@ -1,11 +1,11 @@
 <div class="page-content">
   <div class="page-container" [hidden]="isLoading">
-    <h1 class="page-title">Анкеты</h1>
+    <h1 class="page-title">{{ "PROFILES" | translate }}</h1>
     <div class="subtitle-text">
       <p>
         {{
           questionnaires.length
-            ? "Выберите анкету для заказа услуг"
+            ? ("SELECT_A_PROFILE" | translate)
             : "Вы не добавили ни одной анкеты."
         }}
       </p>
@@ -67,14 +67,20 @@
                     </div>
                     {{ questionnaire.name }} {{ questionnaire.patronymic }}
                   </ng-container>
-                  <ng-template #templateAdultName> (не заполнено) </ng-template>
+                  <ng-template #templateAdultName>
+                    ({{ "NOT_COMPLETED" | translate }})
+                  </ng-template>
                 </div>
                 <div class="questionnaire-age" *ngIf="questionnaire.age < 200">
                   {{ questionnaire.age }}
                   <span
                     appPluralRu
                     [value]="questionnaire.age"
-                    [arVariants]="['год', 'года', 'лет']"
+                    [arVariants]="[
+                      translate.instant('YEAR'),
+                      translate.instant('YEARS'),
+                      translate.instant('MANY_YEARS')
+                    ]"
                   ></span>
                 </div>
                 <div
@@ -93,7 +99,7 @@
                   </a>
                 </div>
                 <div class="draft" *ngIf="questionnaire.draft">
-                  Анкета заполнена не полностью
+                  {{ "PROFILE_IS_INCOMPLETE" | translate }}
                 </div>
               </div>
             </div>
@@ -167,7 +173,7 @@
                       {{ child.name }} {{ child.patronymic }}
                     </ng-container>
                     <ng-template #templateChildName>
-                      (не заполнено)
+                      ({{ "NOT_COMPLETED" | translate }})
                     </ng-template>
                   </div>
                   <div class="questionnaire-age" *ngIf="child.age < 200">
@@ -175,7 +181,11 @@
                     <span
                       appPluralRu
                       [value]="child.age"
-                      [arVariants]="['год', 'года', 'лет']"
+                      [arVariants]="[
+                        translate.instant('YEAR'),
+                        translate.instant('YEARS'),
+                        translate.instant('MANY_YEARS')
+                      ]"
                     ></span>
                   </div>
                   <div class="corporate-client" *ngIf="child.is_corp_client">
@@ -191,7 +201,7 @@
                     </a>
                   </div>
                   <div class="draft" *ngIf="child.draft">
-                    Анкета заполнена не полностью
+                    {{ "PROFILE_IS_INCOMPLETE" | translate }}
                   </div>
                 </div>
               </div>
@@ -236,7 +246,7 @@
       <svg width="1.6rem" height="1.6rem">
         <use xlink:href="assets/sprites/icons.svg#plus"></use>
       </svg>
-      <span>Добавить анкету</span>
+      <span>{{ "ADD_PROFILE" | translate }}</span>
     </button>
     <button
       (click)="goToServicesRegistration()"
@@ -245,7 +255,7 @@
         !checkedQuestionnairesIds.length || !(enableOrderCreation$ | async)
       "
     >
-      <span>Выбор услуг</span>
+      <span>{{ "CHOICE_OF_SERVICES" | translate }}</span>
       <svg width="1.6rem" height="1.6rem">
         <use xlink:href="assets/sprites/icons.svg#next"></use>
       </svg>

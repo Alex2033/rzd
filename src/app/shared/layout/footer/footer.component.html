@@ -2,10 +2,10 @@
   <div class="page-container">
     <div class="footer-block">
       <div class="footer-description">
-        <p class="footer-description-caption">
-          Остались вопросы? <br />
-          Напишите нам
-        </p>
+        <p
+          class="footer-description-caption"
+          [innerHTML]="'FOOTER.QUESTIONS' | translate"
+        ></p>
         <a
           href="mailto:info.lab@rzd-medicine.ru"
           class="footer-description-link"
@@ -14,7 +14,9 @@
         </a>
       </div>
       <div class="footer-description">
-        <p class="footer-description-caption">или позвоните</p>
+        <p class="footer-description-caption">
+          {{ "FOOTER.CALL" | translate }}
+        </p>
         <a href="tel:88002343333" class="footer-description-link"
           >8 800 234 - 33 - 33</a
         >
@@ -24,14 +26,16 @@
       <nav class="footer-nav">
         <ul class="footer-nav-list">
           <li class="footer-nav-item nav-questions" [routerLink]="['/']">
-            <a href="#test-necessity">Для чего нужен ПЦР тест?</a>
-            <a href="#how-works">Как происходит сдача теста?</a>
+            <a href="#test-necessity">{{ "FOOTER.PCR_TEST" | translate }}</a>
+            <a href="#how-works">{{ "FOOTER.TEST_TAKEN" | translate }}</a>
           </li>
           <li class="footer-nav-item">
-            <a [routerLink]="['/services']">УСЛУГИ</a>
+            <a [routerLink]="['/services']">{{ "SERVICES" | translate }}</a>
           </li>
           <li class="footer-nav-item">
-            <a [routerLink]="['/service-points']">ТОЧКИ ОБСЛУЖИВАНИЯ</a>
+            <a [routerLink]="['/service-points']">{{
+              "SERVICE_POINTS" | translate
+            }}</a>
           </li>
           <li class="footer-nav-item" [routerLink]="['/']">
             <a href="#faq">FAQ</a>
@@ -41,17 +45,21 @@
               href="assets/files/Приложение №5 Правила подготовки.pdf"
               download
               target="_blank"
-              >ПРАВИЛА ПОДГОТОВКИ</a
+              >{{ "FOOTER.BEFORE_TEST" | translate }}</a
             >
           </li>
           <li class="footer-nav-item">
-            <a [routerLink]="['/legal-information']">ИНФОРМАЦИЯ</a>
+            <a [routerLink]="['/legal-information']">{{
+              "INFORMATION" | translate
+            }}</a>
           </li>
         </ul>
       </nav>
     </div>
     <div class="footer-block footer-bottom">
-      <div class="footer-bottom-text">«РЖД - Медицина», 2021</div>
+      <div class="footer-bottom-text">
+        «{{ "RZD_MEDICINE" | translate }}», 2021
+      </div>
       <ul class="footer-socials">
         <li class="footer-social">
           <a href="https://vk.com/rzd_medicine" target="_blank">
@@ -82,10 +90,7 @@
         href="assets/files/1.Лицензия на медицинскую деятельность ЧУЗ ЦКБ РЖД-Медицина от 27.07.2020г. (новейшая).pdf"
         download
         target="_blank"
-        >Лицензия #ЛО-77-01-020135 от 27.07.20 на осуществление медицинской
-        деятельности. Место нахождения и места осуществления лицензируемого вида
-        деятельности - 129128, г. Москва, ул. Будайская, дом 2. Адреса мест
-        осуществления деятельности согласно приложению.</a
+        >{{ "LICENSE_FOR_IMPLEMENTATION" | translate }}</a
       >
     </div>
   </div>

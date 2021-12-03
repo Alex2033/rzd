@@ -16,6 +16,7 @@ import { HowGetResultsComponent } from './pages/how-get-results/how-get-results.
 import { BarcodeModalComponent } from './components/barcode-modal/barcode-modal.component';
 import { SupportServiceComponent } from './pages/support-service/support-service.component';
 import { SupportResponseComponent } from './pages/support-response/support-response.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { SupportResponseComponent } from './pages/support-response/support-respo
     MatBottomSheetModule,
     FormsModule,
     ReactiveFormsModule,
+    TranslateModule,
   ],
 })
 export class OrdersModule {}

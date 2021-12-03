@@ -2,14 +2,17 @@
   <form class="login-form" (submit)="login()" [formGroup]="loginForm">
     <!-- login content -->
     <div class="page-container" *ngIf="!submitted">
-      <h1 class="page-title">Вход</h1>
+      <h1 class="page-title">{{ "LOGIN" | translate }}</h1>
 
       <!-- login controls -->
       <div class="form-controls">
         <!-- phone -->
         <div class="form-control">
           <mat-form-field appearance="outline">
-            <mat-label>Телефон<span class="primary-color">*</span></mat-label>
+            <mat-label
+              >{{ "PHONE_NUMBER" | translate
+              }}<span class="primary-color">*</span></mat-label
+            >
 
             <input
               matInput
@@ -38,25 +41,27 @@
                 [errors]="phoneControl.errors"
                 [errorMessages]="{
                   minlength:
-                    'Минимальная длина ' +
+                    ('MIN_LENGTH_PRE' | translate) +
+                    ' ' +
                     phoneControl.errors.minlength?.requiredLength +
-                    ' символов',
-                  required: 'Введите номер телефона',
+                    ' ' +
+                    ('MIN_LENGTH_POST' | translate),
+                  required: ('ENTER_YOUR_PHONE' | translate),
                   not_found: phoneControl.errors?.not_found,
                   exists_without_confirm:
                     phoneControl.errors?.exists_without_confirm,
                   blocked: phoneControl.errors?.blocked,
-                  pattern: 'Неверный формат телефона',
-                  phone_bad_format: 'Неверный формат телефона'
+                  pattern: ('INVALID_PHONE_FORMAT' | translate),
+                  phone_bad_format: ('INVALID_PHONE_FORMAT' | translate)
                 }"
               ></app-error-messages
             ></mat-error>
           </mat-form-field>
 
           <p>
-            <a class="register-link" [routerLink]="['/auth', 'register']"
-              >Еще нет аккаунта? Зарегистрироваться</a
-            >
+            <a class="register-link" [routerLink]="['/auth', 'register']">{{
+              "DOESNT_HAVE_ACCOUNT" | translate
+            }}</a>
           </p>
         </div>
       </div>
@@ -82,7 +87,7 @@
         class="button register-button"
         [disabled]="phoneControl.invalid || isLoading"
       >
-        <span>Далее</span>
+        <span>{{ "BUTTON.NEXT" | translate }}</span>
         <svg width="1.6rem" height="1.6rem">
           <use xlink:href="assets/sprites/icons.svg#next"></use>
         </svg>

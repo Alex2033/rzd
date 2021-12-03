@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { QuestionnairesService } from '../../../../../shared/services/questionnaires.service';
 import { QuestionnaireContentInterface } from '../../types/questionnaire-content.interface';
@@ -17,7 +18,8 @@ export class ChooseAdultComponent implements OnInit {
 
   constructor(
     private questionnairesService: QuestionnairesService,
-    private router: Router
+    private router: Router,
+    public translate: TranslateService
   ) {}
 
   ngOnInit(): void {

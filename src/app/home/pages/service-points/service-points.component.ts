@@ -9,12 +9,20 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, Subscription, combineLatest } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { Observable, combineLatest, ReplaySubject } from 'rxjs';
+import {
+  map,
+  skipWhile,
+  startWith,
+  switchMap,
+  takeUntil,
+  tap,
+} from 'rxjs/operators';
 import { slideUpAnimation } from 'src/app/shared/animations/slide-up.animation';
 import { ServicePointsService } from 'src/app/shared/services/service-points.service';
 import { ServicePointInterface } from '../../../shared/types/service-point.interface';
 import { YaReadyEvent } from 'angular8-yandex-maps';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-service-points',
@@ -28,7 +36,7 @@ export class ServicePointsComponent
   @ViewChildren('cards') cards: QueryList<ElementRef>;
 
   public searchText: string = '';
-  public points$: Observable<ServicePointInterface[]>;
+  public points: ServicePointInterface[];
   public addressMode: string = 'map';
   public selectedPoint: ServicePointInterface;
   public mapOptions: object = {
@@ -39,42 +47,73 @@ export class ServicePointsComponent
     iconLayout: 'default#image',
   };
 
-  private cardsSub: Subscription;
   private selectedPlacemark;
   private map: YaReadyEvent<ymaps.Map>;
   private geoObjects: any[] = [];
   private uniqueGeoObjects: any[] = [];
+  private firstTime: boolean = true;
+  private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
+  private serviceId: number;
 
   constructor(
     private servicePoints: ServicePointsService,
     private route: ActivatedRoute,
-    private location: LocationService
+    private location: LocationService,
+    public translate: TranslateService
   ) {}
 
   ngOnInit(): void {
-    this.points$ = combineLatest([
-      this.route.queryParams,
-      this.location.currentLocation$,
-    ]).pipe(
-      switchMap(([params]) =>
-        this.servicePoints.getServicePoints(+params.serviceId)
-      ),
-      tap(() => {
-        this.setMapBounds();
-      })
-    );
+    this.getPoints();
+    this.langChange();
   }
 
   ngAfterViewInit(): void {
-    this.cardsSub = this.cards.changes.subscribe(() => {
+    this.cards.changes.pipe(takeUntil(this.destroy)).subscribe(() => {
       this.focusBlock();
     });
   }
 
   ngOnDestroy(): void {
-    if (this.cardsSub) {
-      this.cardsSub.unsubscribe();
-    }
+    this.destroy.next(null);
+    this.destroy.complete();
+  }
+
+  getPoints(): void {
+    combineLatest([this.route.queryParams, this.location.currentLocation$])
+      .pipe(
+        switchMap(([params]) => {
+          this.serviceId = +params.serviceId;
+          return this.servicePoints.getServicePoints(this.serviceId);
+        }),
+        tap(() => {
+          this.setMapBounds();
+        })
+      )
+      .subscribe((points) => {
+        console.log('points:', points);
+        this.points = points;
+      });
+  }
+
+  langChange(): void {
+    this.translate.onLangChange
+      .pipe(
+        startWith(''),
+        map((event, index) => [event, index]),
+        tap(([event, index]) => {
+          if (index > 0) {
+            this.firstTime = false;
+          }
+        }),
+        skipWhile(() => this.firstTime),
+        switchMap(() => {
+          return this.servicePoints.getServicePoints(this.serviceId);
+        }),
+        takeUntil(this.destroy)
+      )
+      .subscribe((points) => {
+        this.points = points;
+      });
   }
 
   setMapBounds(): void {

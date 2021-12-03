@@ -29,6 +29,7 @@ import { AngularYandexMapsModule } from 'angular8-yandex-maps';
 import { QrCodeInfoComponent } from './pages/qr-code-info/qr-code-info.component';
 import { EmptyQuestionnairesComponent } from './pages/empty-questionnaires/empty-questionnaires.component';
 import { SafeHtmlPipe } from '../../../shared/pipes/safe-html.pipe';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { SafeHtmlPipe } from '../../../shared/pipes/safe-html.pipe';
     MatButtonModule,
     AngularYandexMapsModule,
     MatCheckboxModule,
+    TranslateModule,
   ],
   providers: [DatePipe],
 })

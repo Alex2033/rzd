@@ -25,17 +25,17 @@
   <ul class="user-nav">
     <li class="user-nav-item">
       <a [routerLink]="['/cabinet', 'questionnaires']" (click)="closeMenu()">
-        <span class="user-nav-text">анкеты</span>
+        <span class="user-nav-text">{{ "PROFILES" | translate }}</span>
       </a>
     </li>
     <li class="user-nav-item">
       <a [routerLink]="['/cabinet', 'orders']" (click)="closeMenu()">
-        <span class="user-nav-text">заказы</span>
+        <span class="user-nav-text">{{ "ORDERS" | translate }}</span>
       </a>
     </li>
     <li class="user-nav-item" *ngIf="false">
       <a [routerLink]="['/cabinet', 'queue']" (click)="closeMenu()">
-        <span class="user-nav-text">моя очередь</span>
+        <span class="user-nav-text">{{ "ELECTRONIC_QUEUE" | translate }}</span>
       </a>
     </li>
   </ul>
@@ -55,6 +55,6 @@
     <svg width="2rem" height="2rem">
       <use xlink:href="assets/sprites/icons.svg#logout"></use>
     </svg>
-    <span>Выйти</span>
+    <span>{{ "LOGOUT" | translate }}</span>
   </button>
 </div>

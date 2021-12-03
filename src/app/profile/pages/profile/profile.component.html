@@ -1,12 +1,12 @@
 <div class="page-content" *ngIf="user$ | async as user">
   <div class="page-container">
-    <h1 class="subtitle profile-title">Мой профиль</h1>
+    <h1 class="subtitle profile-title">{{ "MY_PROFILE" | translate }}</h1>
   </div>
 
   <div class="user-data">
     <!-- name -->
     <div class="user-data-field" [routerLink]="['/profile', 'edit-name']">
-      <div class="user-label">Имя</div>
+      <div class="user-label">{{ "NAME" | translate }}</div>
       <div class="user-body">
         <div class="user-info">{{ user.name }}</div>
         <svg width="1.4rem" height="1.4rem">
@@ -17,7 +17,7 @@
 
     <!-- phone -->
     <div class="user-data-field" [routerLink]="['/profile', 'edit-phone']">
-      <div class="user-label">Телефон</div>
+      <div class="user-label">{{ "MOBILE" | translate }}</div>
       <div class="user-body">
         <div class="user-info">{{ user.phone }}</div>
         <svg width="1.4rem" height="1.4rem">
