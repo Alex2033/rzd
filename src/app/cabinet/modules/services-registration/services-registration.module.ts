@@ -30,6 +30,7 @@ import { QrCodeInfoComponent } from './pages/qr-code-info/qr-code-info.component
 import { EmptyQuestionnairesComponent } from './pages/empty-questionnaires/empty-questionnaires.component';
 import { SafeHtmlPipe } from '../../../shared/pipes/safe-html.pipe';
 import { TranslateModule } from '@ngx-translate/core';
+import { MaskModule } from 'src/app/shared/directives/mask/mask.module';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,6 @@ import { TranslateModule } from '@ngx-translate/core';
     MatDatepickerModule,
     MatFormFieldModule,
     MatInputModule,
-    MatNativeDateModule,
     FormsModule,
     PluralRuModule,
     SignaturePadModule,
@@ -66,6 +66,7 @@ import { TranslateModule } from '@ngx-translate/core';
     AngularYandexMapsModule,
     MatCheckboxModule,
     TranslateModule,
+    MaskModule,
   ],
   providers: [DatePipe],
 })

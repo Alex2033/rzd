@@ -102,13 +102,14 @@
         [matDatepicker]="picker"
         [min]="min"
         [max]="max"
+        ngxMask="00.00.0000"
       />
       <mat-datepicker-toggle matSuffix [for]="picker">
         <svg matDatepickerToggleIcon width="2rem" height="2.2rem">
           <use xlink:href="assets/sprites/icons.svg#calendar-today"></use>
         </svg>
       </mat-datepicker-toggle>
-      <mat-datepicker [touchUi]="true" #picker></mat-datepicker>
+      <mat-datepicker #picker></mat-datepicker>
 
       <mat-error
         ><app-error-messages

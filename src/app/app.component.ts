@@ -19,6 +19,7 @@ import {
 import { MenuService } from './shared/services/menu.service';
 import { GoogleTagManagerService } from 'angular-google-tag-manager';
 import { TranslateService } from '@ngx-translate/core';
+import { DateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-root',
@@ -49,15 +50,29 @@ export class AppComponent implements OnInit, OnDestroy {
     private settings: SettingsService,
     private location: LocationService,
     private gtmService: GoogleTagManagerService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private dateAdapter: DateAdapter<Date>
   ) {
+    this.translate.use(localStorage.getItem('langId') || '1');
+    this.setLocale(localStorage.getItem('langId') || '1');
     this.getQueryParams();
   }
 
   ngOnInit(): void {
-    this.translate.use(localStorage.getItem('langId') || '1');
     this.initializeValues();
     console.log(document.referrer);
+  }
+
+  setLocale(lang: string): void {
+    switch (lang) {
+      case '2':
+        this.dateAdapter.setLocale('en-US');
+        break;
+
+      default:
+        this.dateAdapter.setLocale('ru');
+        break;
+    }
   }
 
   getQueryParams(): void {

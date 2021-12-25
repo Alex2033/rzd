@@ -1,5 +1,5 @@
 import { HeaderModule } from './shared/layout/header/header.module';
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,8 +20,15 @@ import { AuthInterceptor } from './auth/interceptors/auth.interceptor';
 import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import {
+  CustomDatePickerAdapter,
+  CUSTOM_DATE_FORMATS,
+} from './shared/date-adapter';
+import localeEn from '@angular/common/locales/en';
 
 registerLocaleData(localeRu, 'ru');
+registerLocaleData(localeEn, 'en-US');
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -58,7 +65,8 @@ export function HttpLoaderFactory(http: HttpClient) {
       multi: true,
       useClass: AuthInterceptor,
     },
-    { provide: LOCALE_ID, useValue: 'ru' },
+    { provide: DateAdapter, useClass: CustomDatePickerAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },
   ],
   bootstrap: [AppComponent],
 })

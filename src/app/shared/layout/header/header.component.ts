@@ -13,6 +13,7 @@ import { MenuService } from '../../services/menu.service';
 import { LanguageInterface } from '../../types/language.interface';
 import { Router } from '@angular/router';
 import { startWith, takeUntil } from 'rxjs/operators';
+import { DateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-header',
@@ -44,6 +45,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private menuService: MenuService,
     private router: Router,
     private translate: TranslateService,
+    private dateAdapter: DateAdapter<Date>,
     public location: LocationService,
     public account: AccountService
   ) {}
@@ -72,7 +74,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   setHeaderHeightVar(): void {
     combineLatest([this.router.events, this.location.currentLocation$])
       .pipe(takeUntil(this.destroy))
-      .subscribe(([events, currentLocation]) => {
+      .subscribe(() => {
         setTimeout(() => {
           document.documentElement.style.setProperty(
             '--header-content-height',
@@ -84,8 +86,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   setActiveLanguage(language: LanguageInterface): void {
     this.translate.use(language.langId);
+    this.setLocale(language.langId);
     localStorage.setItem('langId', language.langId);
     this.showDropdown = false;
+  }
+
+  setLocale(lang: string): void {
+    switch (lang) {
+      case '2':
+        this.dateAdapter.setLocale('en-US');
+        break;
+
+      default:
+        this.dateAdapter.setLocale('ru');
+        break;
+    }
   }
 
   setNavigationMenu(val: boolean): void {

@@ -13,10 +13,10 @@ import { PluralRuModule } from 'src/app/shared/directives/plural-ru/plural-ru.mo
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ErrorMessagesModule } from 'src/app/shared/modules/error-messages/error-messages.module';
-import { MatNativeDateModule } from '@angular/material/core';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxMaskModule } from 'ngx-mask';
+import { MaskModule } from 'src/app/shared/directives/mask/mask.module';
 
 import { QuestionnairesListComponent } from './pages/questionnaires-list/questionnaires-list.component';
 import { DeleteComponent } from './components/delete/delete.component';
@@ -66,12 +66,12 @@ import { TranslateModule } from '@ngx-translate/core';
     MatInputModule,
     ErrorMessagesModule,
     MatDatepickerModule,
-    MatNativeDateModule,
     TextFieldModule,
     MatSelectModule,
     SmsConfirmModule,
     NgxMaskModule.forRoot(),
     TranslateModule,
+    MaskModule,
   ],
   providers: [DatePipe],
 })

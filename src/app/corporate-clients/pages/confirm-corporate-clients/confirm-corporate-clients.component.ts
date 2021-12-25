@@ -12,18 +12,12 @@ import { ReplaySubject } from 'rxjs';
 import { CorporateClientsService } from 'src/app/shared/services/corporate-clients.service';
 import { B2BClientInterface } from 'src/app/shared/types/b2b-client.interface';
 import { CorporateClientInterface } from 'src/app/shared/types/corporate-client.interface';
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { AppDateAdapter, APP_DATE_FORMATS } from 'src/app/shared/date-adapter';
 import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-confirm-corporate-clients',
   templateUrl: './confirm-corporate-clients.component.html',
   styleUrls: ['./confirm-corporate-clients.component.scss'],
-  providers: [
-    { provide: DateAdapter, useClass: AppDateAdapter },
-    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
-  ],
 })
 export class ConfirmCorporateClientsComponent implements OnInit, OnDestroy {
   public client: CorporateClientInterface;
