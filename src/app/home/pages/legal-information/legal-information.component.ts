@@ -16,7 +16,7 @@ export class LegalInformationComponent implements OnInit {
     },
     {
       name: 'Договор оферты',
-      file: 'assets/files/moscow/Договор оферты.docx',
+      file: 'assets/files/moscow/Приложение №1 к приказу ПУБЛИЧНАЯ ОФЕРТА ЧУЗ ЦКБ РЖД-Медицина.pdf',
     },
     {
       name: 'Приказ № 414/ОД от 04.10.2021',
