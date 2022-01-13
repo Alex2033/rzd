@@ -72,6 +72,10 @@ export class LegalInformationComponent implements OnInit {
       name: 'Политика обработки персональных данных',
       file: 'assets/files/kaliningrad/pd_politika.pdf',
     },
+    {
+      name: 'Лицензия на медицинскую деятельность',
+      file: 'assets/files/kaliningrad/1781195_lic_md_2020.pdf',
+    },
   ];
 
   constructor(private location: LocationService) {}

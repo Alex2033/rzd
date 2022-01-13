@@ -21,7 +21,7 @@ const prodLocation = {
 export const environment: EnvironmentInterface = {
   production: false,
   api: '/',
-  isProdMode: false,
+  isProdMode: true,
 };
 
 export const defaultLocation = environment.isProdMode
