@@ -19,6 +19,8 @@ import { ServiceInterface } from 'src/app/shared/types/service.interface';
 import { ServicesService } from '../../../shared/services/services.service';
 import { ServicePointInterface } from '../../../shared/types/service-point.interface';
 import { YaReadyEvent } from 'angular8-yandex-maps';
+import { environment } from 'src/environments/environment.prod';
+import { CityInterface } from 'src/app/shared/types/city.interface';
 
 @Component({
   selector: 'app-index',
@@ -42,6 +44,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
     iconLayout: 'default#image',
   };
   public selectedPoint: ServicePointInterface;
+  public faqDocumentLink: string;
 
   private selectedPlacemark;
   private map: YaReadyEvent<ymaps.Map>;
@@ -63,6 +66,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
       this.initializeValues();
     });
     this.initializeValues();
+    this.locationChanges();
     this.isAuth = this.account.isAuth();
   }
 
@@ -99,6 +103,34 @@ export class IndexComponent implements OnInit, AfterViewInit {
         this.map.target.setZoom(9);
       }, 0);
     }
+  }
+
+  locationChanges(): void {
+    this.location.currentLocation$.subscribe((location: CityInterface) => {
+      switch (location.id) {
+        case environment.isProdMode ? 1122 : 1101:
+          this.faqDocumentLink =
+            'assets/files/Заявление на возврат (шаблон).doc';
+          break;
+
+        case environment.isProdMode ? 1123 : 1102:
+          this.faqDocumentLink =
+            'assets/files/Новосибирск Заявление на возврат  (1).doc';
+          break;
+
+        case environment.isProdMode ? 1143 : 1111:
+          this.faqDocumentLink = 'assets/files/КЛН Заявление на возврат .doc';
+          break;
+
+        case 1163:
+          this.faqDocumentLink =
+            'assets/files/Екатеринбург Заявление на возврат  (1).doc';
+          break;
+
+        default:
+          break;
+      }
+    });
   }
 
   openRefundsPanel(

@@ -460,7 +460,15 @@
       </mat-expansion-panel-header>
       <div class="custom-expansion-text">
         <p>
-          {{ "HOME.FAQ.MAKING_REFUNDS_TEXT_PRE" | translate }}
+          {{ "HOME.FAQ.MAKING_REFUNDS_TEXT_PRE_DOC_LINK" | translate }}
+          <a
+            [href]="faqDocumentLink"
+            download
+            target="_blank"
+            class="expansion-points-link"
+            >{{ "HOME.FAQ.MAKING_REFUNDS_DOC_LINK" | translate }}</a
+          >
+          {{ "HOME.FAQ.MAKING_REFUNDS_TEXT_POST_DOC_LINK" | translate }}
           <a [routerLink]="['/service-points']" class="expansion-points-link">{{
             "HOME.FAQ.MAKING_REFUNDS_LINK" | translate
           }}</a
