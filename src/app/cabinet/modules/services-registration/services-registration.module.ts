@@ -31,6 +31,7 @@ import { EmptyQuestionnairesComponent } from './pages/empty-questionnaires/empty
 import { SafeHtmlPipe } from '../../../shared/pipes/safe-html.pipe';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaskModule } from 'src/app/shared/directives/mask/mask.module';
+import { LoaderModule } from 'src/app/shared/modules/loader/loader.module';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { MaskModule } from 'src/app/shared/directives/mask/mask.module';
     MatCheckboxModule,
     TranslateModule,
     MaskModule,
+    LoaderModule,
   ],
   providers: [DatePipe],
 })

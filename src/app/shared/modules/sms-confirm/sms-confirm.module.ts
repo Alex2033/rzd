@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { SmsConfirmComponent } from './sms-confirm.component';
 import { NgxCaptchaModule } from 'ngx-captcha';
+import { LoaderModule } from '../loader/loader.module';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { NgxCaptchaModule } from 'ngx-captcha';
     RouterModule,
     TranslateModule,
     NgxCaptchaModule,
+    LoaderModule,
   ],
   declarations: [SmsConfirmComponent],
   exports: [SmsConfirmComponent],

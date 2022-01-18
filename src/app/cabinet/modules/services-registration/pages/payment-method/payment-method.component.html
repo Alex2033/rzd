@@ -70,12 +70,4 @@
 </div>
 
 <!-- loader -->
-<div class="loader-container" [hidden]="!isLoading">
-  <div class="loader">
-    <div class="box"></div>
-    <div class="box"></div>
-    <div class="box"></div>
-    <div class="box"></div>
-    <div class="box"></div>
-  </div>
-</div>
+<app-loader *ngIf="isLoading"></app-loader>

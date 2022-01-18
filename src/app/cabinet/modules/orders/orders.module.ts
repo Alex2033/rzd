@@ -17,6 +17,7 @@ import { BarcodeModalComponent } from './components/barcode-modal/barcode-modal.
 import { SupportServiceComponent } from './pages/support-service/support-service.component';
 import { SupportResponseComponent } from './pages/support-response/support-response.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { LoaderModule } from 'src/app/shared/modules/loader/loader.module';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
+    LoaderModule,
   ],
 })
 export class OrdersModule {}
