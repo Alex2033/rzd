@@ -59,18 +59,28 @@
       {{ "GET_NEW_CODE_IN_SEC_POST" | translate }}
     </div>
 
-    <a [routerLink]="['/auth', 'sms-info']" class="no-sms"
-      >{{ "DIDNT_RECEIVE_SMS" | translate }}?</a
-    >
+    <a [routerLink]="['/auth', 'sms-info']" class="no-sms">{{
+      "DIDNT_RECEIVE_SMS" | translate
+    }}</a>
   </ng-container>
+
+  <div class="re-captcha">
+    <ngx-invisible-recaptcha
+      #captchaElem
+      [siteKey]="siteKey"
+      (success)="getNewCode($event)"
+      [useGlobalDomain]="false"
+    >
+    </ngx-invisible-recaptcha>
+  </div>
 </div>
 
 <div class="buttons">
   <button
-    (click)="getNewCode()"
     *ngIf="resendCode"
     type="button"
     class="button"
+    (click)="captchaElem.execute()"
   >
     <span>Отправить код повторно</span>
   </button>

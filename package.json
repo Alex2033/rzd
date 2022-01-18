@@ -29,6 +29,7 @@
     "angular8-yandex-maps": "^12.1.5",
     "jsbarcode": "^3.11.4",
     "ngx-barcode6": "^1.0.18",
+    "ngx-captcha": "^11.0.0",
     "ngx-mask": "^12.0.0",
     "ngx-owl-carousel-o": "^5.0.0",
     "ru-validation-codes": "^2.8.0",

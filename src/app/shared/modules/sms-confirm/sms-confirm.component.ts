@@ -11,11 +11,12 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable, ReplaySubject, Subject, timer } from 'rxjs';
-import { takeUntil, take, map, finalize, tap } from 'rxjs/operators';
+import { takeUntil, take, map, tap } from 'rxjs/operators';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { SmsConfirmInterface } from 'src/app/auth/types/sms-confirm.interface';
 import { CheckPhoneDataInterface } from '../../types/phone-data.interface';
 import { Router } from '@angular/router';
+import { InvisibleReCaptchaComponent } from 'ngx-captcha';
 
 @Component({
   selector: 'app-sms-confirm',
@@ -24,6 +25,7 @@ import { Router } from '@angular/router';
 })
 export class SmsConfirmComponent implements OnInit, OnDestroy {
   @ViewChild('otc') otc: ElementRef;
+  @ViewChild('captchaElem') captchaElem: InvisibleReCaptchaComponent;
 
   @Output() submit: EventEmitter<{}> = new EventEmitter<{}>();
   @Output() submitted: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -41,6 +43,9 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
   public counter$: Observable<number>;
   public isLoading: boolean = false;
   public timeExpired: boolean = false;
+
+  // Ключ капчи
+  public siteKey: string = '6Ldr_x0eAAAAAAJBNa8z-KhLXuZjJi5v3I-v07yZ';
 
   private count: number = 60;
   private readonly stopTimer: Subject<void> = new Subject<void>();
@@ -65,7 +70,11 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
     });
   }
 
-  getNewCode(): void {
+  getNewCode(captchaResponse): void {
+    if (!captchaResponse) {
+      return;
+    }
+
     const phoneData: CheckPhoneDataInterface = {
       phone: this.phoneValue,
       isProfilePhone: true,
