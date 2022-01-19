@@ -9,8 +9,10 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { ReCaptchaV3Service } from 'ngx-captcha';
 import { ReplaySubject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
+import { environment } from 'src/environments/environment.prod';
 import { AccountService } from '../../../shared/services/account.service';
 import { AuthDataInterface } from '../../types/auth.interface';
 
@@ -28,6 +30,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
   public submitted: boolean = false;
   public isLoading: boolean = false;
   public smsInterval: number = 0;
+
+  // Ключ капчи
+  public siteKey: string = environment.isProdMode
+    ? '6LcFviEeAAAAAMt39LLqIAyhCjkQiJdUVXS-pYrt'
+    : '6LePuyEeAAAAACXzCR2WmAFWsU2shpCW_oz18iqd';
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -51,7 +58,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private router: Router,
     private account: AccountService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private reCaptchaV3Service: ReCaptchaV3Service
   ) {}
 
   ngOnInit(): void {
@@ -124,26 +132,37 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   register(): void {
     this.isLoading = true;
-    const newUser: AuthDataInterface = {
-      email: this.email.value,
-      name: this.name.value,
-      phone: this.phone.value,
-    };
 
-    this.account
-      .register(newUser)
-      .pipe(
-        takeUntil(this.destroy),
-        finalize(() => (this.isLoading = false))
-      )
-      .subscribe(
-        () => this.registerSuccess(),
-        (err) => {
-          if (err instanceof HttpErrorResponse) {
-            this.setErrors(err);
-          }
-        }
-      );
+    this.reCaptchaV3Service.execute(
+      this.siteKey,
+      'register',
+      (token) => {
+        const newUser: AuthDataInterface = {
+          email: this.email.value,
+          name: this.name.value,
+          phone: this.phone.value,
+          token,
+        };
+
+        this.account
+          .register(newUser)
+          .pipe(
+            takeUntil(this.destroy),
+            finalize(() => (this.isLoading = false))
+          )
+          .subscribe(
+            () => this.registerSuccess(),
+            (err) => {
+              if (err instanceof HttpErrorResponse) {
+                this.setErrors(err);
+              }
+            }
+          );
+      },
+      {
+        useGlobalDomain: false,
+      }
+    );
   }
 
   registerSuccess(): void {

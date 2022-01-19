@@ -63,16 +63,6 @@
       "DIDNT_RECEIVE_SMS" | translate
     }}</a>
   </ng-container>
-
-  <div class="re-captcha">
-    <ngx-invisible-recaptcha
-      #captchaElem
-      [siteKey]="siteKey"
-      (success)="getNewCode($event)"
-      [useGlobalDomain]="false"
-    >
-    </ngx-invisible-recaptcha>
-  </div>
 </div>
 
 <div class="buttons">
@@ -80,7 +70,7 @@
     *ngIf="resendCode"
     type="button"
     class="button"
-    (click)="captchaElem.execute()"
+    (click)="getNewCode()"
   >
     <span>Отправить код повторно</span>
   </button>
