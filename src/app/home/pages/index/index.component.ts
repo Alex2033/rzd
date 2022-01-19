@@ -45,6 +45,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
   };
   public selectedPoint: ServicePointInterface;
   public faqDocumentLink: string;
+  public isNovosibirsk: boolean = false;
 
   private selectedPlacemark;
   private map: YaReadyEvent<ymaps.Map>;
@@ -109,20 +110,24 @@ export class IndexComponent implements OnInit, AfterViewInit {
     this.location.currentLocation$.subscribe((location: CityInterface) => {
       switch (location.id) {
         case environment.isProdMode ? 1122 : 1101:
+          this.isNovosibirsk = false;
           this.faqDocumentLink =
             'assets/files/Заявление на возврат (шаблон).doc';
           break;
 
         case environment.isProdMode ? 1123 : 1102:
+          this.isNovosibirsk = true;
           this.faqDocumentLink =
             'assets/files/Новосибирск Заявление на возврат  (1).doc';
           break;
 
         case environment.isProdMode ? 1143 : 1111:
+          this.isNovosibirsk = false;
           this.faqDocumentLink = 'assets/files/КЛН Заявление на возврат .doc';
           break;
 
         case 1163:
+          this.isNovosibirsk = false;
           this.faqDocumentLink =
             'assets/files/Екатеринбург Заявление на возврат  (1).doc';
           break;
