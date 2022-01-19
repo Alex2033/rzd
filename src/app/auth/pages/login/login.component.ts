@@ -9,9 +9,12 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { ReCaptchaV3Service } from 'ngx-captcha';
 import { ReplaySubject } from 'rxjs';
 import { takeUntil, finalize } from 'rxjs/operators';
 import { AccountService } from '../../../shared/services/account.service';
+import { LoginDataInterface } from '../../types/login-data.interface';
+import { captchaKey } from 'src/app/globals';
 
 @Component({
   selector: 'app-login',
@@ -35,7 +38,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private router: Router,
     private account: AccountService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private reCaptchaV3Service: ReCaptchaV3Service
   ) {}
 
   ngOnInit(): void {
@@ -77,22 +81,36 @@ export class LoginComponent implements OnInit, OnDestroy {
   login(): void {
     this.isLoading = true;
 
-    this.account
-      .login(this.phone.value)
-      .pipe(
-        finalize(() => (this.isLoading = false)),
-        takeUntil(this.destroy)
-      )
-      .subscribe(
-        () => {
-          this.loginSuccess();
-        },
-        (err) => {
-          if (err instanceof HttpErrorResponse) {
-            this.setErrors(err);
-          }
-        }
-      );
+    this.reCaptchaV3Service.execute(
+      captchaKey,
+      'login',
+      (token) => {
+        const data: LoginDataInterface = {
+          phone: this.phone.value,
+          token,
+        };
+
+        this.account
+          .login(data)
+          .pipe(
+            finalize(() => (this.isLoading = false)),
+            takeUntil(this.destroy)
+          )
+          .subscribe(
+            () => {
+              this.loginSuccess();
+            },
+            (err) => {
+              if (err instanceof HttpErrorResponse) {
+                this.setErrors(err);
+              }
+            }
+          );
+      },
+      {
+        useGlobalDomain: false,
+      }
+    );
   }
 
   loginSuccess(): void {

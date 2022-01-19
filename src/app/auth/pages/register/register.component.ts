@@ -12,7 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ReCaptchaV3Service } from 'ngx-captcha';
 import { ReplaySubject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
-import { environment } from 'src/environments/environment.prod';
+import { captchaKey } from 'src/app/globals';
 import { AccountService } from '../../../shared/services/account.service';
 import { AuthDataInterface } from '../../types/auth.interface';
 
@@ -30,11 +30,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   public submitted: boolean = false;
   public isLoading: boolean = false;
   public smsInterval: number = 0;
-
-  // Ключ капчи
-  public siteKey: string = environment.isProdMode
-    ? '6LcFviEeAAAAAMt39LLqIAyhCjkQiJdUVXS-pYrt'
-    : '6LePuyEeAAAAACXzCR2WmAFWsU2shpCW_oz18iqd';
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -134,7 +129,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.isLoading = true;
 
     this.reCaptchaV3Service.execute(
-      this.siteKey,
+      captchaKey,
       'register',
       (token) => {
         const newUser: AuthDataInterface = {

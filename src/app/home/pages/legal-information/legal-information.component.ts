@@ -78,6 +78,21 @@ export class LegalInformationComponent implements OnInit {
     },
   ];
 
+  public ekaterinburgDocs: object[] = [
+    {
+      name: 'Оферта с ценами',
+      file: 'assets/files/ekaterinburg/Оферта с ценами.docx',
+    },
+    {
+      name: 'Приложение 5 подготовка',
+      file: 'assets/files/ekaterinburg/Приложение 5 подготовка.docx',
+    },
+    {
+      name: 'Приказ №1261 от 15.12.2021',
+      file: 'assets/files/ekaterinburg/15.12 Приказ №1261-п новая форма тестирования ПЦР жд вокзал.PDF',
+    },
+  ];
+
   constructor(private location: LocationService) {}
 
   ngOnInit() {
@@ -93,6 +108,10 @@ export class LegalInformationComponent implements OnInit {
 
         case environment.isProdMode ? 1143 : 1111:
           this.docs = [...this.kaliningradDocs];
+          break;
+
+        case 1163:
+          this.docs = [...this.ekaterinburgDocs];
           break;
 
         default:

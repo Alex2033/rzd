@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { LoginDataInterface } from 'src/app/auth/types/login-data.interface';
 import { environment } from 'src/environments/environment';
 import { AuthResponseInterface } from '../../auth/types/auth-response.interface';
 import { AuthDataInterface } from '../../auth/types/auth.interface';
@@ -76,10 +77,8 @@ export class AccountService {
     );
   }
 
-  login(phone: string): Observable<void> {
-    return this.http.post<void>(environment.api + 'api/account/login', {
-      phone,
-    });
+  login(data: LoginDataInterface): Observable<void> {
+    return this.http.post<void>(environment.api + 'api/account/login', data);
   }
 
   setUserSettings(res: AuthResponseInterface): void {
