@@ -218,9 +218,10 @@
       [codeForm]="registerForm.get('code')"
       *ngIf="submitted"
       (submitted)="changeSubmitted($event)"
-      [phoneValue]="phoneControl.value"
+      [value]="isSms ? phoneControl.value : emailControl.value"
       [smsInterval]="smsInterval"
       (submit)="submit()"
+      [isSms]="isSms"
     ></app-sms-confirm>
 
     <div class="buttons">

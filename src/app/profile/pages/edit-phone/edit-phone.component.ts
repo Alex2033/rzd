@@ -11,8 +11,8 @@ import { ReplaySubject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { AuthResponseInterface } from 'src/app/auth/types/auth-response.interface';
-import { CheckPhoneDataInterface } from 'src/app/shared/types/phone-data.interface';
 import { TranslateService } from '@ngx-translate/core';
+import { CheckCodeDataInterface } from 'src/app/shared/types/code-data.interface';
 
 @Component({
   selector: 'app-edit-phone',
@@ -71,7 +71,7 @@ export class EditPhoneComponent implements OnInit, OnDestroy {
   checkPhone(): void {
     this.isLoading = true;
 
-    const phoneData: CheckPhoneDataInterface = {
+    const phoneData: CheckCodeDataInterface = {
       phone: this.editForm.get('phone').value,
       isProfilePhone: true,
     };

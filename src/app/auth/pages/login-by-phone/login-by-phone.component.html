@@ -1,0 +1,101 @@
+<div class="page-content">
+  <form class="login-form" (submit)="login()" [formGroup]="loginForm">
+    <!-- login content -->
+    <div class="page-container" *ngIf="!submitted">
+      <h1 class="page-title">Вход по телефону</h1>
+
+      <!-- login controls -->
+      <div class="form-controls">
+        <!-- phone -->
+        <div class="form-control">
+          <mat-form-field appearance="outline">
+            <mat-label
+              >{{ "PHONE_NUMBER" | translate
+              }}<span class="primary-color">*</span></mat-label
+            >
+
+            <input
+              matInput
+              type="text"
+              name="notASearchField"
+              autocomplete="off"
+              inputmode="tel"
+              formControlName="phone"
+              (keypress)="handleKeypress($event)"
+            />
+
+            <button
+              *ngIf="phoneControl.value"
+              (click)="phoneControl.setValue(null)"
+              type="button"
+              class="icon-button clear-button"
+            >
+              <svg width="2rem" height="2rem">
+                <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+              </svg>
+            </button>
+
+            <mat-error
+              ><app-error-messages
+                *ngIf="phoneControl.touched && phoneControl.invalid"
+                [errors]="phoneControl.errors"
+                [errorMessages]="{
+                  minlength:
+                    ('MIN_LENGTH_PRE' | translate) +
+                    ' ' +
+                    phoneControl.errors.minlength?.requiredLength +
+                    ' ' +
+                    ('MIN_LENGTH_POST' | translate),
+                  required: ('ENTER_YOUR_PHONE' | translate),
+                  not_found: phoneControl.errors?.not_found,
+                  exists_without_confirm:
+                    phoneControl.errors?.exists_without_confirm,
+                  blocked: phoneControl.errors?.blocked,
+                  pattern: ('INVALID_PHONE_FORMAT' | translate),
+                  phone_bad_format: ('INVALID_PHONE_FORMAT' | translate)
+                }"
+              ></app-error-messages
+            ></mat-error>
+          </mat-form-field>
+
+          <p>
+            <a class="register-link" (click)="loginToByEmail()"
+              >Войти по E-mail</a
+            >
+            <a class="register-link" [routerLink]="['/auth', 'register']">{{
+              "DOESNT_HAVE_ACCOUNT" | translate
+            }}</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- sms confirm -->
+    <app-sms-confirm
+      [codeForm]="loginForm.get('code')"
+      *ngIf="submitted"
+      [isLogin]="true"
+      [isSms]="true"
+      (submitted)="changeSubmitted($event)"
+      [value]="phoneControl.value"
+      [smsInterval]="smsInterval"
+      (submit)="submit()"
+    ></app-sms-confirm>
+
+    <div class="buttons">
+      <button
+        *ngIf="!submitted"
+        type="button"
+        [class.is-loading]="isLoading"
+        (click)="login()"
+        class="button register-button"
+        [disabled]="phoneControl.invalid || isLoading"
+      >
+        <span>{{ "BUTTON.NEXT" | translate }}</span>
+        <svg width="1.6rem" height="1.6rem">
+          <use xlink:href="assets/sprites/icons.svg#next"></use>
+        </svg>
+      </button>
+    </div>
+  </form>
+</div>

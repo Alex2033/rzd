@@ -10,8 +10,14 @@ import {
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ReCaptchaV3Service } from 'ngx-captcha';
-import { ReplaySubject } from 'rxjs';
-import { finalize, takeUntil } from 'rxjs/operators';
+import { from, of, ReplaySubject, throwError } from 'rxjs';
+import {
+  catchError,
+  finalize,
+  switchMap,
+  takeUntil,
+  tap,
+} from 'rxjs/operators';
 import { captchaKey } from 'src/app/globals';
 import { AccountService } from '../../../shared/services/account.service';
 import { AuthDataInterface } from '../../types/auth.interface';
@@ -30,6 +36,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   public submitted: boolean = false;
   public isLoading: boolean = false;
   public smsInterval: number = 0;
+  public isSms: boolean;
 
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -93,7 +100,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     if (savedData) {
       this.registerForm.patchValue(savedData);
-      this.submitted = true;
+      // this.submitted = true;
     }
   }
 
@@ -128,40 +135,56 @@ export class RegisterComponent implements OnInit, OnDestroy {
   register(): void {
     this.isLoading = true;
 
-    this.reCaptchaV3Service.execute(
-      captchaKey,
-      'register',
-      (token) => {
-        const newUser: AuthDataInterface = {
-          email: this.email.value,
-          name: this.name.value,
-          phone: this.phone.value,
-          token,
-        };
+    let newUser: AuthDataInterface = {
+      email: this.email.value,
+      name: this.name.value,
+      phone: this.phone.value,
+      PT: '',
+      token: '',
+    };
 
-        this.account
-          .register(newUser)
-          .pipe(
-            takeUntil(this.destroy),
-            finalize(() => (this.isLoading = false))
-          )
-          .subscribe(
-            () => this.registerSuccess(),
-            (err) => {
-              if (err instanceof HttpErrorResponse) {
-                this.setErrors(err);
-              }
-            }
-          );
-      },
-      {
-        useGlobalDomain: false,
-      }
-    );
+    this.account
+      .prepareRegister({
+        email: this.email.value,
+        name: this.name.value,
+        phone: this.phone.value,
+      })
+      .pipe(
+        switchMap((PT: string) => {
+          newUser['PT'] = PT;
+          this.setRegisterValueToStorage();
+          return this.loadRecaptcha();
+        }),
+        switchMap((token: string) => {
+          if (token) {
+            return this.account.register({ ...newUser, token });
+          } else {
+            return throwError("There's no the token");
+          }
+        }),
+        takeUntil(this.destroy),
+        finalize(() => (this.isLoading = false))
+      )
+      .subscribe(
+        (isSms: boolean) => {
+          this.isSms = isSms;
+          this.submitted = true;
+        },
+        (err) => {
+          if (err instanceof HttpErrorResponse) {
+            this.setErrors(err);
+          }
+        }
+      );
   }
 
-  registerSuccess(): void {
-    this.submitted = true;
+  loadRecaptcha(): Promise<string> {
+    return this.reCaptchaV3Service.executeAsPromise(captchaKey, 'register', {
+      useGlobalDomain: false,
+    });
+  }
+
+  setRegisterValueToStorage(): void {
     this.registerForm.get('code').reset();
     localStorage.setItem(
       'registerForm',
@@ -171,6 +194,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   setErrors(err: HttpErrorResponse): void {
     const { error, value } = err.error;
+
+    const findTerm = (term) => {
+      if (error.toLowerCase().includes(term.toLowerCase())) {
+        return error;
+      }
+    };
 
     switch (error) {
       case 'EMAIL_ALREADY_EXISTS':
@@ -206,6 +235,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
       case 'SMS_INTERVAL':
         this.smsInterval = value;
         this.submitted = true;
+        break;
+      case findTerm('FORBIDDEN'):
+        this.router.navigate(['/auth', 'register-error']);
         break;
       default:
         break;

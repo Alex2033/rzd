@@ -30,6 +30,6 @@ export class UserMenuComponent implements OnInit {
   logout(): void {
     this.closeMenu();
     this.account.logout();
-    this.router.navigate(['/auth', 'login']);
+    this.router.navigate(['/auth', 'login-by-phone']);
   }
 }

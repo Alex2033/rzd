@@ -10,12 +10,15 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Observable, ReplaySubject, Subject, timer } from 'rxjs';
-import { takeUntil, take, map, tap } from 'rxjs/operators';
+import { Observable, ReplaySubject, Subject, throwError, timer } from 'rxjs';
+import { takeUntil, take, map, tap, switchMap } from 'rxjs/operators';
 import { AccountService } from 'src/app/shared/services/account.service';
-import { SmsConfirmInterface } from 'src/app/auth/types/sms-confirm.interface';
-import { CheckPhoneDataInterface } from '../../types/phone-data.interface';
+import { CodeConfirmInterface } from 'src/app/auth/types/code-confirm.interface';
+import { CheckCodeDataInterface } from '../../types/code-data.interface';
 import { Router } from '@angular/router';
+import { ReCaptchaV3Service } from 'ngx-captcha';
+import { captchaKey } from 'src/app/globals';
+import { LoginDataInterface } from 'src/app/auth/types/login-data.interface';
 
 @Component({
   selector: 'app-sms-confirm',
@@ -29,8 +32,9 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
   @Output() submitted: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Input() codeForm: FormGroup;
-  @Input() phoneValue: string;
+  @Input() value: string;
   @Input() smsInterval: number;
+  @Input() isSms: boolean = true;
 
   // todo: После того как сделать страницей, это убрать
   @Input() isLogin: boolean = false;
@@ -46,7 +50,11 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
   private readonly stopTimer: Subject<void> = new Subject<void>();
   private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
-  constructor(private account: AccountService, private router: Router) {}
+  constructor(
+    private account: AccountService,
+    private router: Router,
+    private reCaptchaV3Service: ReCaptchaV3Service
+  ) {}
 
   ngOnInit(): void {
     this.setTimer();
@@ -65,18 +73,66 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
     });
   }
 
-  getNewCode(): void {
-    const phoneData: CheckPhoneDataInterface = {
-      phone: this.phoneValue,
+  resend(): void {
+    const data: CheckCodeDataInterface = {
+      [this.isSms ? 'phone' : 'email']: this.value,
       isProfilePhone: true,
     };
 
     let type: string = 'reinvite';
-    if (this.isLogin) type = 'login';
-    if (this.isEditPhone) type = 'check_phone';
+    if (this.isLogin) {
+      type = 'login';
+      this.login();
+    } else {
+      if (this.isEditPhone) type = 'check_phone';
+      const value: string | CheckCodeDataInterface =
+        type === 'check_phone' ? data : this.value;
+      this.getNewCode(type, value);
+    }
 
-    const value = type === 'check_phone' ? phoneData : this.phoneValue;
+    this.setTimer();
+  }
 
+  login(): void {
+    const loginData: LoginDataInterface = {
+      phone: this.isSms ? this.value : '',
+      useSms: this.isSms,
+      PT: '',
+      token: '',
+      email: this.isSms ? '' : this.value,
+    };
+
+    this.account
+      .prepareLogin(loginData)
+      .pipe(
+        switchMap((PT: string) => {
+          loginData['PT'] = PT;
+          this.newCodeSuccess();
+          return this.loadRecaptcha();
+        }),
+        switchMap((token: string) => {
+          if (token) {
+            return this.account.login({ ...loginData, token });
+          } else {
+            return throwError("There's no the token");
+          }
+        }),
+        takeUntil(this.destroy)
+      )
+      .subscribe(
+        () => {
+          this.newCodeSuccess();
+        },
+        (err) => {
+          if (err instanceof HttpErrorResponse) {
+            this.handleError(err.error.error);
+            this.isLoading = false;
+          }
+        }
+      );
+  }
+
+  getNewCode(type: string, value: string | CheckCodeDataInterface): void {
     this.account
       .getNewCode(type, value)
       .pipe(takeUntil(this.destroy))
@@ -91,7 +147,12 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
           }
         }
       );
-    this.setTimer();
+  }
+
+  loadRecaptcha(): Promise<string> {
+    return this.reCaptchaV3Service.executeAsPromise(captchaKey, 'login', {
+      useGlobalDomain: false,
+    });
   }
 
   newCodeSuccess(): void {
@@ -183,8 +244,8 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
 
       const code: string = Object.values(this.codeForm.value).join('');
 
-      const confirmCode: SmsConfirmInterface = {
-        phone: this.phoneValue,
+      const confirmCode: CodeConfirmInterface = {
+        [this.isSms ? 'phone' : 'email']: this.value,
         code,
       };
 
@@ -198,7 +259,7 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
     }
   }
 
-  confirm(type: string, confirmCode: SmsConfirmInterface): void {
+  confirm(type: string, confirmCode: CodeConfirmInterface): void {
     this.account
       .confirm(type, confirmCode)
       .pipe(takeUntil(this.destroy))

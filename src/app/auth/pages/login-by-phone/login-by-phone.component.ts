@@ -10,18 +10,18 @@ import {
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ReCaptchaV3Service } from 'ngx-captcha';
-import { ReplaySubject } from 'rxjs';
-import { takeUntil, finalize } from 'rxjs/operators';
+import { ReplaySubject, throwError } from 'rxjs';
+import { takeUntil, finalize, switchMap } from 'rxjs/operators';
 import { AccountService } from '../../../shared/services/account.service';
 import { LoginDataInterface } from '../../types/login-data.interface';
 import { captchaKey } from 'src/app/globals';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: 'app-login-by-phone',
+  templateUrl: './login-by-phone.component.html',
+  styleUrls: ['./login-by-phone.component.scss'],
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginByPhoneComponent implements OnInit, OnDestroy {
   public loginForm: FormGroup;
   public phoneControl: AbstractControl;
   public isLoading: boolean = false;
@@ -81,40 +81,52 @@ export class LoginComponent implements OnInit, OnDestroy {
   login(): void {
     this.isLoading = true;
 
-    this.reCaptchaV3Service.execute(
-      captchaKey,
-      'login',
-      (token) => {
-        const data: LoginDataInterface = {
-          phone: this.phone.value,
-          token,
-        };
+    const data: LoginDataInterface = {
+      phone: this.phone.value,
+      useSms: true,
+      PT: '',
+      token: '',
+      email: '',
+    };
 
-        this.account
-          .login(data)
-          .pipe(
-            finalize(() => (this.isLoading = false)),
-            takeUntil(this.destroy)
-          )
-          .subscribe(
-            () => {
-              this.loginSuccess();
-            },
-            (err) => {
-              if (err instanceof HttpErrorResponse) {
-                this.setErrors(err);
-              }
-            }
-          );
-      },
-      {
-        useGlobalDomain: false,
-      }
-    );
+    this.account
+      .prepareLogin(data)
+      .pipe(
+        switchMap((PT: string) => {
+          data['PT'] = PT;
+          this.loginSuccess();
+          return this.loadRecaptcha();
+        }),
+        switchMap((token: string) => {
+          if (token) {
+            return this.account.login({ ...data, token });
+          } else {
+            return throwError("There's no the token");
+          }
+        }),
+        takeUntil(this.destroy),
+        finalize(() => (this.isLoading = false))
+      )
+      .subscribe(
+        (data) => {
+          console.log('data:', data);
+          this.submitted = true;
+        },
+        (err) => {
+          if (err instanceof HttpErrorResponse) {
+            this.setErrors(err);
+          }
+        }
+      );
+  }
+
+  loadRecaptcha(): Promise<string> {
+    return this.reCaptchaV3Service.executeAsPromise(captchaKey, 'login', {
+      useGlobalDomain: false,
+    });
   }
 
   loginSuccess(): void {
-    this.submitted = true;
     this.loginForm.get('code').reset();
     localStorage.setItem('loginForm', JSON.stringify(this.loginForm.value));
   }
@@ -178,5 +190,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (event.which === 40 || event.which === 41 || event.which === 45) {
       event.preventDefault();
     }
+  }
+
+  loginToByEmail(): void {
+    this.router.navigate(['/auth', 'login-by-email']);
+    localStorage.removeItem('loginForm');
   }
 }

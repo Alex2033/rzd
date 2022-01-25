@@ -52,7 +52,7 @@ export class ConfirmCorporateClientsComponent implements OnInit, OnDestroy {
         },
         (err) => {
           if (err instanceof HttpErrorResponse) {
-            this.router.navigate(['/auth', 'login']);
+            this.router.navigate(['/auth', 'login-by-phone']);
           }
         }
       );

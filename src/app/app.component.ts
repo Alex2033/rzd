@@ -120,13 +120,11 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   removeAuthLocalStorage(url: string): void {
-    if (!url.includes('sms-info')) {
-      if (!url.includes('register')) {
-        localStorage.removeItem('registerForm');
-      }
-      if (!url.includes('login')) {
-        localStorage.removeItem('loginForm');
-      }
+    if (!url.includes('register')) {
+      localStorage.removeItem('registerForm');
+    }
+    if (!url.includes('login')) {
+      localStorage.removeItem('loginForm');
     }
   }
 

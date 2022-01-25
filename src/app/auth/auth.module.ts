@@ -9,16 +9,18 @@ import { MatInputModule } from '@angular/material/input';
 import { SmsConfirmModule } from '../shared/modules/sms-confirm/sms-confirm.module';
 
 import { SmsInfoComponent } from './pages/sms-info/sms-info.component';
-import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { RegisterErrorComponent } from './pages/register-error/register-error.component';
+import { LoginByPhoneComponent } from './pages/login-by-phone/login-by-phone.component';
+import { LoginByEmailComponent } from './pages/login-by-email/login-by-email.component';
 
 @NgModule({
   declarations: [
-    LoginComponent,
+    LoginByPhoneComponent,
     RegisterComponent,
     SmsInfoComponent,
     RegisterErrorComponent,
+    LoginByEmailComponent,
   ],
   imports: [
     CommonModule,

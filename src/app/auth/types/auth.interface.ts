@@ -3,4 +3,5 @@ export interface AuthDataInterface {
   name: string;
   phone: string;
   token: string;
+  PT: string;
 }

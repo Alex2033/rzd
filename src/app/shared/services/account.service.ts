@@ -3,11 +3,12 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { LoginDataInterface } from 'src/app/auth/types/login-data.interface';
+import { PrepareRegisterInterface } from 'src/app/auth/types/prepare-register.interface';
 import { environment } from 'src/environments/environment';
 import { AuthResponseInterface } from '../../auth/types/auth-response.interface';
 import { AuthDataInterface } from '../../auth/types/auth.interface';
-import { SmsConfirmInterface } from '../../auth/types/sms-confirm.interface';
-import { CheckPhoneDataInterface } from '../types/phone-data.interface';
+import { CodeConfirmInterface } from '../../auth/types/code-confirm.interface';
+import { CheckCodeDataInterface } from '../types/code-data.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -32,13 +33,31 @@ export class AccountService {
     this.user$.next(savedUser);
   }
 
-  register(data: AuthDataInterface): Observable<{}> {
-    return this.http.post<{}>(environment.api + 'api/account/register', data);
+  register(data: AuthDataInterface): Observable<boolean> {
+    console.log('data:', data);
+    return this.http.post<boolean>(
+      environment.api + 'api/account/register',
+      data
+    );
+  }
+
+  prepareRegister(data: PrepareRegisterInterface): Observable<string> {
+    return this.http.post(
+      environment.api + 'api/account/prepareRegister',
+      data,
+      { responseType: 'text' }
+    );
+  }
+
+  prepareLogin(data: LoginDataInterface): Observable<string> {
+    return this.http.post(environment.api + 'api/account/prepareLogin', data, {
+      responseType: 'text',
+    });
   }
 
   confirm(
     type: string,
-    data: SmsConfirmInterface
+    data: CodeConfirmInterface
   ): Observable<AuthResponseInterface> {
     return this.http
       .post<AuthResponseInterface>(
@@ -56,12 +75,12 @@ export class AccountService {
 
   getNewCode(
     type: string,
-    phone: string | CheckPhoneDataInterface
+    phone: string | CheckCodeDataInterface
   ): Observable<void> {
-    let data: CheckPhoneDataInterface;
+    let data: CheckCodeDataInterface;
 
     if (type === 'check_phone') {
-      data = { ...(phone as CheckPhoneDataInterface) };
+      data = { ...(phone as CheckCodeDataInterface) };
     }
 
     return this.http.post<void>(
@@ -70,15 +89,15 @@ export class AccountService {
     );
   }
 
-  checkPhone(data: CheckPhoneDataInterface): Observable<void> {
+  checkPhone(data: CheckCodeDataInterface): Observable<void> {
     return this.http.post<void>(
       environment.api + 'api/account/check_phone',
       data
     );
   }
 
-  login(data: LoginDataInterface): Observable<void> {
-    return this.http.post<void>(environment.api + 'api/account/login', data);
+  login(data: LoginDataInterface): Observable<boolean> {
+    return this.http.post<boolean>(environment.api + 'api/account/login', data);
   }
 
   setUserSettings(res: AuthResponseInterface): void {

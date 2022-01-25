@@ -14,7 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ReplaySubject } from 'rxjs';
 import { takeUntil, finalize } from 'rxjs/operators';
 import { AccountService } from 'src/app/shared/services/account.service';
-import { CheckPhoneDataInterface } from 'src/app/shared/types/phone-data.interface';
+import { CheckCodeDataInterface } from 'src/app/shared/types/code-data.interface';
 import { EditableFieldInterface } from '../../types/editable-field.interface';
 import { CreateSheetComponent } from '../create-sheet/create-sheet.component';
 
@@ -82,7 +82,7 @@ export class EditPhoneModalComponent implements OnInit {
   checkPhone(): void {
     this.isLoading = true;
 
-    const phoneData: CheckPhoneDataInterface = {
+    const phoneData: CheckCodeDataInterface = {
       phone: this.form.get('phone').value,
       isProfilePhone: false,
     };

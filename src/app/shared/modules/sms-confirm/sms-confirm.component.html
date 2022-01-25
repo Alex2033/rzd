@@ -17,8 +17,12 @@
   <ng-container *ngIf="!timeExpired">
     <div class="sms-description">
       <p>
-        {{ "ENTER_CODE_FROM_SMS" | translate }}
-        <strong class="primary-color">{{ phoneValue }}</strong>
+        {{
+          isSms
+            ? ("ENTER_CODE_FROM_SMS" | translate)
+            : "Введите код, полученный в E-mail, отправленный на"
+        }}
+        <strong class="primary-color">{{ value }}</strong>
       </p>
     </div>
 
@@ -60,7 +64,7 @@
     </div>
 
     <a [routerLink]="['/auth', 'sms-info']" class="no-sms">{{
-      "DIDNT_RECEIVE_SMS" | translate
+      "DIDNT_RECEIVE_CODE" | translate
     }}</a>
   </ng-container>
 </div>
@@ -70,7 +74,7 @@
     *ngIf="resendCode"
     type="button"
     class="button"
-    (click)="getNewCode()"
+    (click)="resend()"
   >
     <span>Отправить код повторно</span>
   </button>

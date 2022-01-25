@@ -2,31 +2,29 @@
   <form class="login-form" (submit)="login()" [formGroup]="loginForm">
     <!-- login content -->
     <div class="page-container" *ngIf="!submitted">
-      <h1 class="page-title">{{ "LOGIN" | translate }}</h1>
+      <h1 class="page-title">Вход по E-mail</h1>
 
       <!-- login controls -->
       <div class="form-controls">
-        <!-- phone -->
+        <!-- email -->
         <div class="form-control">
           <mat-form-field appearance="outline">
             <mat-label
-              >{{ "PHONE_NUMBER" | translate
+              >{{ "EMAIL" | translate
               }}<span class="primary-color">*</span></mat-label
             >
 
             <input
               matInput
-              type="text"
-              name="notASearchField"
-              autocomplete="off"
-              inputmode="tel"
-              formControlName="phone"
-              (keypress)="handleKeypress($event)"
+              inputmode="email"
+              type="email"
+              name="email"
+              formControlName="email"
             />
 
             <button
-              *ngIf="phoneControl.value"
-              (click)="phoneControl.setValue(null)"
+              *ngIf="emailControl.value"
+              (click)="emailControl.setValue(null)"
               type="button"
               class="icon-button clear-button"
             >
@@ -37,28 +35,24 @@
 
             <mat-error
               ><app-error-messages
-                *ngIf="phoneControl.touched && phoneControl.invalid"
-                [errors]="phoneControl.errors"
+                *ngIf="emailControl.touched && emailControl.invalid"
+                [errors]="emailControl.errors"
                 [errorMessages]="{
-                  minlength:
-                    ('MIN_LENGTH_PRE' | translate) +
-                    ' ' +
-                    phoneControl.errors.minlength?.requiredLength +
-                    ' ' +
-                    ('MIN_LENGTH_POST' | translate),
-                  required: ('ENTER_YOUR_PHONE' | translate),
-                  not_found: phoneControl.errors?.not_found,
-                  exists_without_confirm:
-                    phoneControl.errors?.exists_without_confirm,
-                  blocked: phoneControl.errors?.blocked,
-                  pattern: ('INVALID_PHONE_FORMAT' | translate),
-                  phone_bad_format: ('INVALID_PHONE_FORMAT' | translate)
+                  required: ('ENTER_YOUR_EMAIL' | translate),
+                  email_bad_format: emailControl.errors?.email_bad_format,
+                  email_not_found: emailControl.errors?.email_not_found,
+                  incorrect_email_length:
+                    emailControl.errors?.incorrect_email_length,
+                  pattern: ('INVALID_FORMAT' | translate)
                 }"
               ></app-error-messages
             ></mat-error>
           </mat-form-field>
 
           <p>
+            <a class="register-link" (click)="loginToByPhone()"
+              >Войти по телефону</a
+            >
             <a class="register-link" [routerLink]="['/auth', 'register']">{{
               "DOESNT_HAVE_ACCOUNT" | translate
             }}</a>
@@ -72,8 +66,9 @@
       [codeForm]="loginForm.get('code')"
       *ngIf="submitted"
       [isLogin]="true"
+      [isSms]="false"
       (submitted)="changeSubmitted($event)"
-      [phoneValue]="phoneControl.value"
+      [value]="emailControl.value"
       [smsInterval]="smsInterval"
       (submit)="submit()"
     ></app-sms-confirm>
@@ -85,7 +80,7 @@
         [class.is-loading]="isLoading"
         (click)="login()"
         class="button register-button"
-        [disabled]="phoneControl.invalid || isLoading"
+        [disabled]="emailControl.invalid || isLoading"
       >
         <span>{{ "BUTTON.NEXT" | translate }}</span>
         <svg width="1.6rem" height="1.6rem">

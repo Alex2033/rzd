@@ -74,7 +74,7 @@
       [isEditPhone]="true"
       [smsInterval]="smsInterval"
       (submitted)="changeSubmitted($event)"
-      [phoneValue]="form.get('phone').value"
+      [value]="form.get('phone').value"
       (submit)="submit()"
     ></app-sms-confirm>
   </form>
