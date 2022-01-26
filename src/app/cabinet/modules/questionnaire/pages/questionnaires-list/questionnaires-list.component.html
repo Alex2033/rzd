@@ -9,6 +9,9 @@
             : "Вы не добавили ни одной анкеты."
         }}
       </p>
+      <p class="questionnaires-maximum-text">
+        При оформлении заказа можно выбрать максимум 10 анкет.
+      </p>
     </div>
     <div class="document-image" *ngIf="!questionnaires.length">
       <img
@@ -244,7 +247,9 @@
       (click)="goToServicesRegistration()"
       class="button"
       [disabled]="
-        !checkedQuestionnairesIds.length || !(enableOrderCreation$ | async)
+        !checkedQuestionnairesIds.length ||
+        !(enableOrderCreation$ | async) ||
+        checkedQuestionnairesIds.length > 10
       "
     >
       <span>{{ "CHOICE_OF_SERVICES" | translate }}</span>
