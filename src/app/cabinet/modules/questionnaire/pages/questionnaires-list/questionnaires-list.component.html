@@ -1,5 +1,10 @@
 <div class="page-content">
-  <div class="page-container" [hidden]="isLoading">
+  <div
+    class="page-container questionnaires-header"
+    [class.fixed]="fixed"
+    #stickyHeader
+    [hidden]="isLoading"
+  >
     <h1 class="page-title">{{ "PROFILES" | translate }}</h1>
     <div class="subtitle-text">
       <p>

@@ -1,6 +1,13 @@
 import { SettingsService } from './../../../../../shared/services/settings.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
@@ -25,12 +32,16 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./questionnaires-list.component.scss'],
 })
 export class QuestionnairesListComponent implements OnInit, OnDestroy {
+  @ViewChild('stickyHeader') stickyHeader: ElementRef;
+
   public questionnaires: QuestionnaireInterface[] = [];
   public checkedQuestionnairesIds: QuestionnaireOrderInterface[] = [];
   public isLoading: boolean = false;
   public enableOrderCreation$: Observable<boolean>;
+  public fixed: boolean = false;
 
   private destroy$ = new Subject<void>();
+  private headerHeight: number = 0;
 
   constructor(
     private questionnairesService: QuestionnairesService,
@@ -206,5 +217,22 @@ export class QuestionnairesListComponent implements OnInit, OnDestroy {
     this.servicesRegistration.order = {} as OrderInterface;
     this.servicesRegistration.setOrder({ id: 0, ...questionnaires });
     this.router.navigate(['/cabinet', 'services-registration', 'info']);
+  }
+
+  @HostListener('window:scroll', ['$event']) checkScroll() {
+    this.headerHeight =
+      this.stickyHeader.nativeElement.getBoundingClientRect().top;
+
+    const windowScroll =
+      window.pageYOffset ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop ||
+      0;
+
+    if (windowScroll > this.headerHeight / 1.5) {
+      this.fixed = true;
+    } else {
+      this.fixed = false;
+    }
   }
 }
