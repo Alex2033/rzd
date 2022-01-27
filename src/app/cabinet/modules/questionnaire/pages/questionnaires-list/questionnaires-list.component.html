@@ -14,7 +14,10 @@
             : "Вы не добавили ни одной анкеты."
         }}
       </p>
-      <p class="questionnaires-maximum-text">
+      <p
+        *ngIf="checkedQuestionnairesIds.length > 10"
+        class="questionnaires-maximum-text"
+      >
         При оформлении заказа можно выбрать максимум 10 анкет.
       </p>
     </div>

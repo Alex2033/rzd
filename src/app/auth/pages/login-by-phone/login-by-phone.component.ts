@@ -132,7 +132,13 @@ export class LoginByPhoneComponent implements OnInit, OnDestroy {
   }
 
   private setErrors(err: HttpErrorResponse): void {
-    const { error, value } = err.error;
+    const { error, value } = JSON.parse(err.error);
+
+    const findTerm = (term) => {
+      if (error.toLowerCase().includes(term.toLowerCase())) {
+        return error;
+      }
+    };
 
     switch (error) {
       case 'PHONE_NOT_FOUND':
@@ -156,6 +162,10 @@ export class LoginByPhoneComponent implements OnInit, OnDestroy {
         this.router.navigate(['/server-error', error]);
         break;
 
+      case findTerm('FORBIDDEN'):
+        this.router.navigate(['/auth', 'login-error']);
+        break;
+
       default:
         break;
     }
@@ -172,6 +182,7 @@ export class LoginByPhoneComponent implements OnInit, OnDestroy {
           blocked: 'Пользователь заблокирован',
         });
         break;
+
       default:
         break;
     }

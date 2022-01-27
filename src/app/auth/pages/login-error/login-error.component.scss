@@ -1,0 +1,13 @@
+@import "theme";
+
+.login-error-text {
+  margin-top: 0.8rem;
+  line-height: 1.375;
+  color: $dark;
+
+  > * {
+    &:not(:first-child) {
+      margin-top: 2.8rem;
+    }
+  }
+}

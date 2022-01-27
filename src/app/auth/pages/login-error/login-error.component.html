@@ -1,0 +1,26 @@
+<div class="page-content">
+  <div class="page-container">
+    <a (click)="back()" class="back-link">
+      <svg width="1rem" height="1rem">
+        <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
+      </svg>
+      <span>{{ "BACK" | translate }}</span>
+    </a>
+
+    <h1 class="page-title">Проблема входа</h1>
+
+    <div class="login-error-text">
+      <p>К сожалению по техническим причинам вход не может быть выполнен.</p>
+      <p>
+        Вы можете попробовать снова еще раз. Рекомендуем попробовать сделать это
+        в другом браузере.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="buttons">
+  <button (click)="back()" type="button" class="button">
+    <span>Попробовать снова</span>
+  </button>
+</div>

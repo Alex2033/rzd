@@ -133,7 +133,13 @@ export class LoginByEmailComponent implements OnInit, OnDestroy {
   }
 
   private setErrors(err: HttpErrorResponse): void {
-    const { error, value } = err.error;
+    const { error, value } = JSON.parse(err.error);
+
+    const findTerm = (term) => {
+      if (error.toLowerCase().includes(term.toLowerCase())) {
+        return error;
+      }
+    };
 
     switch (error) {
       case 'EMAIL_NOT_FOUND':
@@ -157,6 +163,10 @@ export class LoginByEmailComponent implements OnInit, OnDestroy {
       case 'SMS_INTERVAL':
         this.smsInterval = value;
         this.submitted = true;
+        break;
+
+      case findTerm('FORBIDDEN'):
+        this.router.navigate(['/auth', 'login-error']);
         break;
 
       default:

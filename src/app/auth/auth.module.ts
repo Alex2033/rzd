@@ -13,6 +13,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { RegisterErrorComponent } from './pages/register-error/register-error.component';
 import { LoginByPhoneComponent } from './pages/login-by-phone/login-by-phone.component';
 import { LoginByEmailComponent } from './pages/login-by-email/login-by-email.component';
+import { LoginErrorComponent } from './pages/login-error/login-error.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { LoginByEmailComponent } from './pages/login-by-email/login-by-email.com
     SmsInfoComponent,
     RegisterErrorComponent,
     LoginByEmailComponent,
+    LoginErrorComponent,
   ],
   imports: [
     CommonModule,
