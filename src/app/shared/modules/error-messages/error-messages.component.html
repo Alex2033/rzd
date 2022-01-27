@@ -1,10 +1,11 @@
 <ng-container *ngIf="errors">
   <ng-container *ngFor="let error of errors | keyvalue">
-    <ng-container
+    <div
+      class="error-message"
       *ngIf="errorMessages && errorMessages[error.key]; else defaultMessages"
     >
       {{ errorMessages[error.key] }}
-    </ng-container>
+    </div>
     <ng-template #defaultMessages>
       <ng-container [ngSwitch]="error.key">
         <ng-container *ngSwitchCase="'required'">

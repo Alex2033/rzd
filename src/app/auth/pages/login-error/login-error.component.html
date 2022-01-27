@@ -1,6 +1,10 @@
 <div class="page-content">
   <div class="page-container">
-    <a (click)="back()" class="back-link">
+    <a
+      [routerLink]="['/auth', url]"
+      [queryParams]="{ isError: true }"
+      class="back-link"
+    >
       <svg width="1rem" height="1rem">
         <use xlink:href="assets/sprites/icons.svg#chevron-left"></use>
       </svg>
@@ -20,7 +24,12 @@
 </div>
 
 <div class="buttons">
-  <button (click)="back()" type="button" class="button">
+  <button
+    [routerLink]="['/auth', url]"
+    [queryParams]="{ isError: true }"
+    type="button"
+    class="button"
+  >
     <span>Попробовать снова</span>
   </button>
 </div>

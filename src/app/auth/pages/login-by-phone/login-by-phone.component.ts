@@ -7,7 +7,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ReCaptchaV3Service } from 'ngx-captcha';
 import { ReplaySubject, throwError } from 'rxjs';
@@ -39,12 +39,13 @@ export class LoginByPhoneComponent implements OnInit, OnDestroy {
     private router: Router,
     private account: AccountService,
     private translate: TranslateService,
-    private reCaptchaV3Service: ReCaptchaV3Service
+    private reCaptchaV3Service: ReCaptchaV3Service,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.createForm();
-    this.getFormLocalStorage();
+    this.getQueryParams();
     this.phoneControl = this.phone;
   }
 
@@ -53,13 +54,18 @@ export class LoginByPhoneComponent implements OnInit, OnDestroy {
     this.destroy.complete();
   }
 
-  getFormLocalStorage(): void {
-    const savedData = JSON.parse(localStorage.getItem('loginForm'));
+  getQueryParams(): void {
+    this.route.queryParams.subscribe((params: Params) => {
+      const savedData = JSON.parse(localStorage.getItem('loginForm'));
 
-    if (savedData) {
-      this.loginForm.patchValue(savedData);
-      this.submitted = true;
-    }
+      if (savedData) {
+        this.loginForm.patchValue(savedData);
+
+        if (!params['isError']) {
+          this.submitted = true;
+        }
+      }
+    });
   }
 
   createForm(): void {
@@ -94,7 +100,6 @@ export class LoginByPhoneComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap((PT: string) => {
           data['PT'] = PT;
-          this.loginSuccess();
           return this.loadRecaptcha();
         }),
         switchMap((token: string) => {
@@ -105,11 +110,13 @@ export class LoginByPhoneComponent implements OnInit, OnDestroy {
           }
         }),
         takeUntil(this.destroy),
-        finalize(() => (this.isLoading = false))
+        finalize(() => {
+          this.setLoginData();
+          this.isLoading = false;
+        })
       )
       .subscribe(
-        (data) => {
-          console.log('data:', data);
+        () => {
           this.submitted = true;
         },
         (err) => {
@@ -126,13 +133,13 @@ export class LoginByPhoneComponent implements OnInit, OnDestroy {
     });
   }
 
-  loginSuccess(): void {
+  setLoginData(): void {
     this.loginForm.get('code').reset();
     localStorage.setItem('loginForm', JSON.stringify(this.loginForm.value));
   }
 
   private setErrors(err: HttpErrorResponse): void {
-    const { error, value } = JSON.parse(err.error);
+    const { error, value } = this.parseError(err);
 
     const findTerm = (term) => {
       if (error.toLowerCase().includes(term.toLowerCase())) {
@@ -163,7 +170,9 @@ export class LoginByPhoneComponent implements OnInit, OnDestroy {
         break;
 
       case findTerm('FORBIDDEN'):
-        this.router.navigate(['/auth', 'login-error']);
+        this.router.navigate(['/auth', 'login-error'], {
+          queryParams: { from: 'login-by-phone' },
+        });
         break;
 
       default:
@@ -185,6 +194,14 @@ export class LoginByPhoneComponent implements OnInit, OnDestroy {
 
       default:
         break;
+    }
+  }
+
+  parseError(err: HttpErrorResponse): any | null {
+    try {
+      return JSON.parse(err.error);
+    } catch (e) {
+      return err.error;
     }
   }
 

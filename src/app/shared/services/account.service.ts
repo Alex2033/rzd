@@ -75,17 +75,18 @@ export class AccountService {
 
   getNewCode(
     type: string,
-    phone: string | CheckCodeDataInterface
+    value: string | CheckCodeDataInterface,
+    format?: string
   ): Observable<void> {
     let data: CheckCodeDataInterface;
 
     if (type === 'check_phone') {
-      data = { ...(phone as CheckCodeDataInterface) };
+      data = { ...(value as CheckCodeDataInterface) };
     }
 
     return this.http.post<void>(
       environment.api + `api/account/${type}`,
-      data ? data : { phone }
+      data ? data : { [format]: value }
     );
   }
 

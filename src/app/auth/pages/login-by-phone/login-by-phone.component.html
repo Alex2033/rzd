@@ -57,17 +57,15 @@
               ></app-error-messages
             ></mat-error>
           </mat-form-field>
-
-          <p>
-            <a class="register-link" (click)="loginToByEmail()"
-              >Войти по E-mail</a
-            >
-            <a class="register-link" [routerLink]="['/auth', 'register']">{{
-              "DOESNT_HAVE_ACCOUNT" | translate
-            }}</a>
-          </p>
         </div>
       </div>
+
+      <p class="login-links">
+        <a class="register-link" (click)="loginToByEmail()">Войти по E-mail</a>
+        <a class="register-link" [routerLink]="['/auth', 'register']">{{
+          "DOESNT_HAVE_ACCOUNT" | translate
+        }}</a>
+      </p>
     </div>
 
     <!-- sms confirm -->
@@ -91,10 +89,7 @@
         class="button register-button"
         [disabled]="phoneControl.invalid || isLoading"
       >
-        <span>{{ "BUTTON.NEXT" | translate }}</span>
-        <svg width="1.6rem" height="1.6rem">
-          <use xlink:href="assets/sprites/icons.svg#next"></use>
-        </svg>
+        <span>Получить код</span>
       </button>
     </div>
   </form>

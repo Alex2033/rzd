@@ -1,10 +1,22 @@
 @import "theme";
 
+:host {
+  ::ng-deep {
+    .form-control
+      .mat-form-field-appearance-outline
+      .mat-form-field-subscript-wrapper {
+      position: absolute;
+      margin-top: 2.1rem;
+    }
+  }
+}
+
 .register-link {
   color: $primary-light;
-  margin-top: 1.7rem;
+  margin-top: 1.6rem;
   display: block;
   text-decoration: none;
+  cursor: pointer;
   font-size: 1.2rem;
   line-height: 1.34;
 }

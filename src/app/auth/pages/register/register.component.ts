@@ -152,7 +152,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap((PT: string) => {
           newUser['PT'] = PT;
-          this.setRegisterValueToStorage();
           return this.loadRecaptcha();
         }),
         switchMap((token: string) => {
@@ -163,7 +162,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
           }
         }),
         takeUntil(this.destroy),
-        finalize(() => (this.isLoading = false))
+        finalize(() => {
+          this.setRegisterValueToStorage();
+          this.isLoading = false;
+        })
       )
       .subscribe(
         (isSms: boolean) => {
@@ -193,7 +195,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   setErrors(err: HttpErrorResponse): void {
-    const { error, value } = err.error;
+    const { error, value } = this.parseError(err);
 
     const findTerm = (term) => {
       if (error.toLowerCase().includes(term.toLowerCase())) {
@@ -241,6 +243,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
         break;
       default:
         break;
+    }
+  }
+
+  parseError(err: HttpErrorResponse): any | null {
+    try {
+      return JSON.parse(err.error);
+    } catch (e) {
+      return err.error;
     }
   }
 

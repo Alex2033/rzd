@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-login-error',
@@ -7,11 +7,13 @@ import { Location } from '@angular/common';
   styleUrls: ['./login-error.component.scss'],
 })
 export class LoginErrorComponent implements OnInit {
-  constructor(private location: Location) {}
+  url: string;
 
-  ngOnInit() {}
+  constructor(private route: ActivatedRoute) {}
 
-  back(): void {
-    this.location.back();
+  ngOnInit(): void {
+    this.route.queryParams.subscribe((params: Params) => {
+      this.url = params['from'];
+    });
   }
 }

@@ -87,7 +87,7 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
       if (this.isEditPhone) type = 'check_phone';
       const value: string | CheckCodeDataInterface =
         type === 'check_phone' ? data : this.value;
-      this.getNewCode(type, value);
+      this.getNewCode(type, value, this.isSms ? 'phone' : 'email');
     }
 
     this.setTimer();
@@ -132,9 +132,13 @@ export class SmsConfirmComponent implements OnInit, OnDestroy {
       );
   }
 
-  getNewCode(type: string, value: string | CheckCodeDataInterface): void {
+  getNewCode(
+    type: string,
+    value: string | CheckCodeDataInterface,
+    format?: string
+  ): void {
     this.account
-      .getNewCode(type, value)
+      .getNewCode(type, value, format)
       .pipe(takeUntil(this.destroy))
       .subscribe(
         () => {

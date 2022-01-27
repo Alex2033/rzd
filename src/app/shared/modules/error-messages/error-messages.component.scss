@@ -1,0 +1,5 @@
+.error-message {
+  &:not(:first-child) {
+    display: none;
+  }
+}

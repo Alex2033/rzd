@@ -7,7 +7,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ReCaptchaV3Service } from 'ngx-captcha';
 import { ReplaySubject, throwError } from 'rxjs';
@@ -39,12 +39,13 @@ export class LoginByEmailComponent implements OnInit, OnDestroy {
     private router: Router,
     private account: AccountService,
     private translate: TranslateService,
-    private reCaptchaV3Service: ReCaptchaV3Service
+    private reCaptchaV3Service: ReCaptchaV3Service,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.createForm();
-    this.getFormLocalStorage();
+    this.getQueryParams();
     this.emailControl = this.email;
   }
 
@@ -53,13 +54,18 @@ export class LoginByEmailComponent implements OnInit, OnDestroy {
     this.destroy.complete();
   }
 
-  getFormLocalStorage(): void {
-    const savedData = JSON.parse(localStorage.getItem('loginForm'));
+  getQueryParams(): void {
+    this.route.queryParams.subscribe((params: Params) => {
+      const savedData = JSON.parse(localStorage.getItem('loginForm'));
 
-    if (savedData) {
-      this.loginForm.patchValue(savedData);
-      this.submitted = true;
-    }
+      if (savedData) {
+        this.loginForm.patchValue(savedData);
+
+        if (!params['isError']) {
+          this.submitted = true;
+        }
+      }
+    });
   }
 
   createForm(): void {
@@ -95,7 +101,6 @@ export class LoginByEmailComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap((PT: string) => {
           data['PT'] = PT;
-          this.loginSuccess();
           return this.loadRecaptcha();
         }),
         switchMap((token: string) => {
@@ -106,7 +111,10 @@ export class LoginByEmailComponent implements OnInit, OnDestroy {
           }
         }),
         takeUntil(this.destroy),
-        finalize(() => (this.isLoading = false))
+        finalize(() => {
+          this.setLoginData();
+          this.isLoading = false;
+        })
       )
       .subscribe(
         (data) => {
@@ -127,13 +135,13 @@ export class LoginByEmailComponent implements OnInit, OnDestroy {
     });
   }
 
-  loginSuccess(): void {
+  setLoginData(): void {
     this.loginForm.get('code').reset();
     localStorage.setItem('loginForm', JSON.stringify(this.loginForm.value));
   }
 
   private setErrors(err: HttpErrorResponse): void {
-    const { error, value } = JSON.parse(err.error);
+    const { error, value } = this.parseError(err);
 
     const findTerm = (term) => {
       if (error.toLowerCase().includes(term.toLowerCase())) {
@@ -144,7 +152,7 @@ export class LoginByEmailComponent implements OnInit, OnDestroy {
     switch (error) {
       case 'EMAIL_NOT_FOUND':
         this.email.setErrors({
-          not_unique_email: 'Этот email не найден',
+          email_not_found: 'Этот email не найден',
         });
         break;
 
@@ -166,11 +174,21 @@ export class LoginByEmailComponent implements OnInit, OnDestroy {
         break;
 
       case findTerm('FORBIDDEN'):
-        this.router.navigate(['/auth', 'login-error']);
+        this.router.navigate(['/auth', 'login-error'], {
+          queryParams: { from: 'login-by-email' },
+        });
         break;
 
       default:
         break;
+    }
+  }
+
+  parseError(err: HttpErrorResponse): any | null {
+    try {
+      return JSON.parse(err.error);
+    } catch (e) {
+      return err.error;
     }
   }
 
