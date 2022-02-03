@@ -80,6 +80,22 @@ export class LegalInformationComponent implements OnInit {
 
   public ekaterinburgDocs: object[] = [
     {
+      name: 'Лицензия на медицинскую деятельность',
+      file: 'assets/files/ekaterinburg/Выписка из реестра лицензий ЛО-66-01-006646.pdf',
+    },
+    {
+      name: 'Согласие пациента на обработку персональных данных',
+      file: 'assets/files/ekaterinburg/Согласие пациента на обработку  персональных  данных.docx',
+    },
+    {
+      name: 'Политика обработки и защиты персональных данных',
+      file: 'assets/files/ekaterinburg/Политика обработки и защиты персональных данных.pdf',
+    },
+    {
+      name: 'Карточка предприятия',
+      file: 'assets/files/ekaterinburg/Карточка предприятия март 2021 (1).pdf',
+    },
+    {
       name: 'Оферта с ценами',
       file: 'assets/files/ekaterinburg/Оферта с ценами.docx',
     },
