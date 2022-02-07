@@ -13,16 +13,64 @@
     <div class="page-container">
       <div class="introduce-text">
         <p>
-          {{ "HOME.WELCOME" | translate }}
+          {{
+            "HOME.WELCOME"
+              | translate
+                : {
+                    number:
+                      locationId === 1122 ||
+                      locationId === 1123 ||
+                      locationId === 1194 ||
+                      locationId === 1143
+                        ? 4
+                        : 3
+                  }
+          }}
         </p>
         <p>
-          <span [innerHTML]="'HOME.URGENT' | translate"></span>
+          <span
+            class="introduce-service"
+            *ngIf="locationId !== 1194 && locationId !== 1163"
+            [innerHTML]="'HOME.URGENT' | translate"
+          ></span>
           <br />
-          <span [innerHTML]="'HOME.EXPRESS' | translate"></span>
+          <span
+            class="introduce-service"
+            [innerHTML]="'HOME.EXPRESS' | translate"
+          ></span>
           <br />
-          <span [innerHTML]="'HOME.STANDARD' | translate"></span>
+          <span
+            class="introduce-service"
+            [innerHTML]="
+              'HOME.STANDARD'
+                | translate
+                  : {
+                      text:
+                        currentLang === '1'
+                          ? locationId === 1143
+                            ? 'Оптимальное'
+                            : 'Стандартное'
+                          : currentLang === '2'
+                          ? locationId === 1143
+                            ? 'Optimal'
+                            : 'Standard'
+                          : null
+                    }
+            "
+          ></span>
           <br />
-          <span [innerHTML]="'HOME.ANTIGEN' | translate"></span>
+          <span
+            class="introduce-service"
+            [class.no-bold]="
+              locationId === 1194 ||
+              locationId === 1163 ||
+              locationId === 1122 ||
+              locationId === 1123 ||
+              locationId === 1143
+            "
+            *ngIf="locationId !== 1197"
+            [innerHTML]="'HOME.ANTIGEN' | translate"
+          ></span>
         </p>
 
         <p>

@@ -1,10 +1,10 @@
 {
   "HOME": {
     "TITLE": "Take the COVID-19 test at the airport or railway station",
-    "WELCOME": "Three types of PCR tests for COVID-19 are available:",
+    "WELCOME": "{{number}} types of PCR tests for COVID-19 are available:",
     "URGENT": "<strong>Urgent</strong>(result within 1,5 hours)",
     "EXPRESS": "<strong>Express</strong>(result within 3 hours)",
-    "STANDARD": "<strong>Standard</strong>(result within 24 hours)",
+    "STANDARD": "<strong>{{text}}</strong>(result within 24 hours)",
     "ANTIGEN": "<strong>Test for SARS-CoV-2 antigen (result within 1 hour)</strong>",
     "REGISTER_INFO": "You may set up your personal account and quickly apply for PCR test for yourself and your family using saved data",
     "DISCOUNT_COUPON": "To use a discount coupon, please contact the medical center manager",

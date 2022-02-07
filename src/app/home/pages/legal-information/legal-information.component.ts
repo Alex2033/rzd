@@ -109,6 +109,33 @@ export class LegalInformationComponent implements OnInit {
     },
   ];
 
+  public krasnoyarskDocs: object[] = [
+    {
+      name: 'Реквизиты учреждения',
+      file: 'assets/files/krasnoyarsk/Карточка организации (с печатью).pdf',
+    },
+    {
+      name: 'Лицензия на медицинскую деятельность',
+      file: 'assets/files/krasnoyarsk/Лицензия на медицинскую деятельность.pdf',
+    },
+    {
+      name: 'Правила подготовки',
+      file: 'assets/files/krasnoyarsk/Приложение 5, условия пцр тестирования.pdf',
+    },
+    {
+      name: 'Согласие на обработку персональных данных',
+      file: 'assets/files/krasnoyarsk/Приложение 4, согласие на обработку п.д.pdf',
+    },
+    {
+      name: 'Публичная оферта',
+      file: 'assets/files/krasnoyarsk/Приложение 1, Публичная оферта.pdf',
+    },
+    {
+      name: 'Приказ №11-О от 11.01.2022',
+      file: 'assets/files/krasnoyarsk/Приказ №11-О.pdf',
+    },
+  ];
+
   constructor(private location: LocationService) {}
 
   ngOnInit() {
@@ -128,6 +155,10 @@ export class LegalInformationComponent implements OnInit {
 
         case 1163:
           this.docs = [...this.ekaterinburgDocs];
+          break;
+
+        case 1197:
+          this.docs = [...this.krasnoyarskDocs];
           break;
 
         default:

@@ -32,6 +32,26 @@
   }
 }
 
+.introduce-service {
+  &.no-bold {
+    ::ng-deep {
+      span {
+        font-weight: 400;
+      }
+    }
+  }
+
+  ::ng-deep {
+    span {
+      font-weight: 600;
+    }
+  }
+}
+
+.no-bold {
+  font-weight: 400;
+}
+
 .introduce-title {
   background-color: darken($accent, 7.5%);
   margin-right: 2rem;

@@ -45,6 +45,8 @@ export class IndexComponent implements OnInit, AfterViewInit {
   };
   public selectedPoint: ServicePointInterface;
   public faqDocumentLink: string;
+  public locationId: number;
+  public currentLang: string;
 
   private selectedPlacemark;
   private map: YaReadyEvent<ymaps.Map>;
@@ -62,9 +64,12 @@ export class IndexComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this.translate.onLangChange.pipe(takeUntil(this.destroy)).subscribe(() => {
-      this.initializeValues();
-    });
+    this.translate.onLangChange
+      .pipe(takeUntil(this.destroy))
+      .subscribe((lang) => {
+        this.currentLang = lang.lang;
+        this.initializeValues();
+      });
     this.initializeValues();
     this.locationChanges();
     this.isAuth = this.account.isAuth();
@@ -83,6 +88,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
   }
 
   initializeValues(): void {
+    this.currentLang = this.translate.currentLang;
     this.services$ = this.location.currentLocation$.pipe(
       switchMap(() => this.services.getServices())
     );
@@ -107,6 +113,8 @@ export class IndexComponent implements OnInit, AfterViewInit {
 
   locationChanges(): void {
     this.location.currentLocation$.subscribe((location: CityInterface) => {
+      this.locationId = location.id;
+
       switch (location.id) {
         case environment.isProdMode ? 1122 : 1101:
           this.faqDocumentLink =
