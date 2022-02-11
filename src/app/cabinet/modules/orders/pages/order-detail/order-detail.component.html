@@ -100,12 +100,12 @@
     <a
       [routerLink]="['/cabinet', 'orders', 'support-service', order.id]"
       class="support-link"
-      >{{ 'SUPPORT' | translate }}</a
+      >{{ "SUPPORT" | translate }}</a
     >
 
     <div class="order-info">
       <div class="order-date">
-        {{ order.dt_creation | date: "d MMMM y, HH:mm" }}
+        {{ order.dt_creation | localizeDate: "d MMMM y, HH:mm" }}
       </div>
     </div>
     <div class="order-address">{{ order.address }}</div>
@@ -117,7 +117,8 @@
       <div class="questionnaire-wrapper">
         <div class="questionnaire-top">
           <div class="ext-id" *ngIf="questionnaire.ext_id">
-            {{ 'LABORATORY_APPLICATION' | translate }} № {{ questionnaire.ext_id }}
+            {{ "LABORATORY_APPLICATION" | translate }} №
+            {{ questionnaire.ext_id }}
           </div>
           <div class="questionnaire-fio">{{ questionnaire.fio }}</div>
         </div>

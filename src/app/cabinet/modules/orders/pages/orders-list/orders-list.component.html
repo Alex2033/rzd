@@ -124,7 +124,7 @@
           </div>
           <div class="order-info">
             <div class="order-date">
-              {{ order.dt_creation | date: "d MMMM y, HH:mm" }}
+              {{ order.dt_creation | localizeDate: "d MMMM y, HH:mm" }}
             </div>
             <div class="order-address">{{ order.shortAddress }}</div>
           </div>

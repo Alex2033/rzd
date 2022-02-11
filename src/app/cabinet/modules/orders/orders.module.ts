@@ -18,6 +18,7 @@ import { SupportServiceComponent } from './pages/support-service/support-service
 import { SupportResponseComponent } from './pages/support-response/support-response.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { LoaderModule } from 'src/app/shared/modules/loader/loader.module';
+import { LocalizeDateModule } from 'src/app/shared/pipes/localize-date/localize-date.module';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { LoaderModule } from 'src/app/shared/modules/loader/loader.module';
     ReactiveFormsModule,
     TranslateModule,
     LoaderModule,
+    LocalizeDateModule,
   ],
 })
 export class OrdersModule {}
