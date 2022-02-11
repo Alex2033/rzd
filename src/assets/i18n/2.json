@@ -269,6 +269,7 @@
   "PICK_UP_TEST_RESULT": "You can pick up the result in printed form at the medical center or receive it to the email address specified during registration. If the result is not received on the specified e-mail address, call the number",
   "ORDER": "Order",
   "HOW_TO_GET_RESULTS": "How do I get the results?",
+  "ALL": "All",
   "DRAFT": "Draft",
   "PAYMENT_ERROR": "Payment error",
   "CONFIRMED": "Confirmed",
