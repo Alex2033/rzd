@@ -6,6 +6,7 @@ export interface QuestionnaireContentInterface {
   email: string;
   phone: string;
   sex: string;
+  passport_series: string;
   passport_number: string;
   passport_org: string;
   passport_date: string;

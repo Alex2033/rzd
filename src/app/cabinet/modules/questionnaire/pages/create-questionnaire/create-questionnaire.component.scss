@@ -22,3 +22,9 @@
   margin-left: 0.8rem;
   fill: $primary;
 }
+
+.next-button {
+  &:disabled {
+    background-color: $accent;
+  }
+}

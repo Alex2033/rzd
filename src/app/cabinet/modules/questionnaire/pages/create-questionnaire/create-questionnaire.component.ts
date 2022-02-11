@@ -109,6 +109,7 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
         sex: new FormControl(null, [Validators.required]),
       }),
       document: new FormGroup({
+        passport_series: new FormControl(null, Validators.required),
         passport_number: new FormControl(null, Validators.required),
         passport_org: new FormControl(null, Validators.required),
         passport_date: new FormControl(null, [Validators.required]),
@@ -269,7 +270,7 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
 
   updateAllFields(group, id: number): void {
     Object.keys(group.controls).forEach((key) => {
-      let formControl = group.controls[key];
+      let formControl: AbstractControl = group.controls[key];
 
       if (formControl instanceof FormGroup) {
         this.updateAllFields(formControl, id);
@@ -336,6 +337,7 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
     if (key === 'doc_type') {
       const document = this.createForm.get('document');
 
+      document.get('passport_series').setValue(null, { emitEvent: false });
       document.get('passport_number').setValue(null, { emitEvent: false });
       document.get('passport_org').setValue(null, { emitEvent: false });
       document.get('passport_date').setValue(null, { emitEvent: false });
@@ -500,6 +502,7 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
     }
 
     basicData.get('doc_type').valueChanges.subscribe((val: string) => {
+      this.toggleSeriesValidators(val);
       this.setActiveDoctype(val);
     });
   }
@@ -511,6 +514,21 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
     this.setLanguageValidator();
     basicData.get('name').updateValueAndValidity({ emitEvent: false });
     basicData.get('surname').updateValueAndValidity({ emitEvent: false });
+  }
+
+  toggleSeriesValidators(val: string): void {
+    console.log('val:', val);
+    const series: AbstractControl = this.createForm
+      .get('document')
+      .get('passport_series');
+
+    if (val === 'Паспорт иностранного гражданина' || val === 'Другое') {
+      series.clearValidators();
+    } else {
+      series.updateValueAndValidity({ emitEvent: false });
+    }
+
+    console.log(series.value);
   }
 
   setLanguageValidator(): void {

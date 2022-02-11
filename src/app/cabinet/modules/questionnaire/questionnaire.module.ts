@@ -33,7 +33,6 @@ import { InfoMessageComponent } from './pages/info-message/info-message.componen
 import { EditPhoneModalComponent } from './components/edit-phone-modal/edit-phone-modal.component';
 import { EditEmailModalComponent } from './components/edit-email-modal/edit-email-modal.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { LoaderModule } from 'src/app/shared/modules/loader/loader.module';
 
 @NgModule({
   declarations: [
@@ -73,7 +72,6 @@ import { LoaderModule } from 'src/app/shared/modules/loader/loader.module';
     NgxMaskModule.forRoot(),
     TranslateModule,
     MaskModule,
-    LoaderModule,
   ],
   providers: [DatePipe],
 })

@@ -16,17 +16,70 @@ export class DocumentStepComponent implements OnInit {
 
   public snilsMask: string = '000-000-000 00';
 
-  get mask(): string {
+  get inputType(): string | null {
+    switch (this.activeDoctype?.val) {
+      case 'Паспорт гражданина РФ':
+      case 'Загранпаспорт гражданина РФ':
+      case 'Свидетельство о рождении':
+        return 'numeric';
+
+      default:
+        return null;
+    }
+  }
+
+  get seriesLength(): number | null {
+    switch (this.activeDoctype?.val) {
+      case 'Загранпаспорт гражданина РФ':
+        return 2;
+
+      case 'Свидетельство о рождении':
+        return null;
+
+      default:
+        return 4;
+    }
+  }
+
+  get numberLength(): number | null {
+    switch (this.activeDoctype?.val) {
+      case 'Загранпаспорт гражданина РФ':
+        return 7;
+
+      case 'Паспорт иностранного гражданина':
+      case 'Другое':
+        return 100;
+
+      default:
+        return 6;
+    }
+  }
+
+  get seriesMask(): string {
     switch (this.activeDoctype?.val) {
       case 'Загранпаспорт гражданина РФ':
       case 'Паспорт иностранного гражданина':
-        return '00 0000000';
+        return '00';
 
       case 'Свидетельство о рождении':
-        return 'II-AA 000000 или IIV-AA 000000';
+        return 'II-AA или IIV-AA';
 
       default:
-        return '0000 000000';
+        return '0000';
+    }
+  }
+
+  get numberMask(): string {
+    switch (this.activeDoctype?.val) {
+      case 'Загранпаспорт гражданина РФ':
+      case 'Паспорт иностранного гражданина':
+        return '0000000';
+
+      case 'Свидетельство о рождении':
+        return '000000 или 000000';
+
+      default:
+        return '000000';
     }
   }
 

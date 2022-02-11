@@ -1,17 +1,72 @@
 <div class="create-form-description">{{ "DOCUMENT" | translate }}</div>
 
 <div class="form-controls" [formGroup]="documentStep">
-  <!-- passport number -->
-  <div class="form-control">
+  <!-- document series -->
+  <div
+    class="form-control"
+    *ngIf="
+      !(
+        activeDoctype?.val === 'Паспорт иностранного гражданина' ||
+        activeDoctype?.val === 'Другое'
+      )
+    "
+  >
     <mat-form-field appearance="outline">
       <mat-label
-        >{{ "SERIES_AND_DOCUMENT" | translate
+        >{{ "DOCUMENT_SERIES" | translate
         }}<span class="primary-color">*</span></mat-label
       >
 
       <input
+        [attr.inputmode]="inputType"
+        [maxlength]="seriesLength"
         matInput
-        [placeholder]="mask"
+        [placeholder]="seriesMask"
+        type="text"
+        formControlName="passport_series"
+      />
+
+      <button
+        *ngIf="documentStep.get('passport_series').value"
+        (click)="documentStep.get('passport_series').setValue(null)"
+        type="button"
+        class="icon-button clear-button"
+      >
+        <svg width="2rem" height="2rem">
+          <use xlink:href="assets/sprites/icons.svg#close-round"></use>
+        </svg>
+      </button>
+
+      <mat-error
+        ><app-error-messages
+          *ngIf="
+            documentStep.get('passport_series').touched &&
+            documentStep.get('passport_series').invalid
+          "
+          [errors]="documentStep.get('passport_series').errors"
+          [errorMessages]="{
+            bad_format: documentStep.get('passport_series').errors?.bad_format,
+            bad_value: documentStep.get('passport_series').errors?.bad_value,
+            required: ('ENTER_SERIES' | translate)
+          }"
+        ></app-error-messages
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- document number -->
+  <div class="form-control">
+    <mat-form-field appearance="outline">
+      <mat-label
+        >{{ "DOCUMENT_NUMBER" | translate
+        }}<span class="primary-color">*</span></mat-label
+      >
+
+      <input
+        [attr.inputmode]="inputType"
+        [maxlength]="numberLength"
+        matInput
+        [placeholder]="numberMask"
         type="text"
         formControlName="passport_number"
       />
@@ -37,7 +92,7 @@
           [errorMessages]="{
             bad_format: documentStep.get('passport_number').errors?.bad_format,
             bad_value: documentStep.get('passport_number').errors?.bad_value,
-            required: ('ENTER_SERIES_AND_DOCUMENT' | translate)
+            required: ('ENTER_DOCUMENT_NUMBER' | translate)
           }"
         ></app-error-messages
       ></mat-error>
