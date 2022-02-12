@@ -23,9 +23,9 @@ import { environment } from 'src/environments/environment.prod';
 import { CityInterface } from 'src/app/shared/types/city.interface';
 
 @Component({
-  selector: 'app-index',
-  templateUrl: './index.component.html',
-  styleUrls: ['./index.component.scss'],
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss'],
   animations: [slideUpAnimation()],
 })
 export class IndexComponent implements OnInit, AfterViewInit {

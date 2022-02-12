@@ -8,7 +8,7 @@ import { PluralRuModule } from '../shared/directives/plural-ru/plural-ru.module'
 import { FormsModule } from '@angular/forms';
 import { AngularYandexMapsModule } from 'angular8-yandex-maps';
 
-import { IndexComponent } from './pages/index/index.component';
+import { IndexComponent } from './pages/home/home.component';
 import { FooterComponent } from '../shared/layout/footer/footer.component';
 import { ServicesComponent } from './pages/services/services.component';
 import { ServicePointsComponent } from './pages/service-points/service-points.component';

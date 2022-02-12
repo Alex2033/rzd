@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { IndexComponent } from './pages/index/index.component';
+import { IndexComponent } from './pages/home/home.component';
 import { LegalInformationComponent } from './pages/legal-information/legal-information.component';
 import { ServiceDetailComponent } from './pages/service-detail/service-detail.component';
 import { ServicePointDetailComponent } from './pages/service-point-detail/service-point-detail.component';
