@@ -10,7 +10,6 @@ import { ErrorMessagesModule } from 'src/app/shared/modules/error-messages/error
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatNativeDateModule } from '@angular/material/core';
 import { BlockingScreenComponent } from './pages/blocking-screen/blocking-screen.component';
 import { SelectPointComponent } from './pages/select-point/select-point.component';
 import { SelectServicesComponent } from './pages/select-services/select-services.component';
