@@ -50,6 +50,9 @@ export class DocumentStepComponent implements OnInit {
       case 'Другое':
         return 100;
 
+      case 'Вид на жительство':
+        return 9;
+
       default:
         return 6;
     }
@@ -74,9 +77,6 @@ export class DocumentStepComponent implements OnInit {
       case 'Загранпаспорт гражданина РФ':
       case 'Паспорт иностранного гражданина':
         return '0000000';
-
-      case 'Свидетельство о рождении':
-        return '000000 или 000000';
 
       default:
         return '000000';

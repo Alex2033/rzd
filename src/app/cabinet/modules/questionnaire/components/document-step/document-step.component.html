@@ -7,7 +7,8 @@
     *ngIf="
       !(
         activeDoctype?.val === 'Паспорт иностранного гражданина' ||
-        activeDoctype?.val === 'Другое'
+        activeDoctype?.val === 'Другое' ||
+        activeDoctype?.val === 'Вид на жительство'
       )
     "
   >
@@ -47,6 +48,8 @@
           [errorMessages]="{
             bad_format: documentStep.get('passport_series').errors?.bad_format,
             bad_value: documentStep.get('passport_series').errors?.bad_value,
+            doc_series_bad_format:
+              documentStep.get('passport_series').errors?.doc_series_bad_format,
             required: ('ENTER_SERIES' | translate)
           }"
         ></app-error-messages
@@ -92,6 +95,8 @@
           [errorMessages]="{
             bad_format: documentStep.get('passport_number').errors?.bad_format,
             bad_value: documentStep.get('passport_number').errors?.bad_value,
+            doc_number_bad_format:
+              documentStep.get('passport_number').errors?.doc_number_bad_format,
             required: ('ENTER_DOCUMENT_NUMBER' | translate)
           }"
         ></app-error-messages

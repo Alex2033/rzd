@@ -117,11 +117,11 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
         snils: new FormControl(null, snilsValidator),
       }),
       actualResidence: new FormGroup({
-        adress_fact_country: new FormControl(null, Validators.required),
-        adress_fact_city: new FormControl(null, Validators.required),
-        adress_fact_street: new FormControl(null, Validators.required),
-        adress_fact_building: new FormControl(null, Validators.required),
-        adress_fact_flat: new FormControl(null),
+        adress_fact_country: new FormControl('', Validators.required),
+        adress_fact_city: new FormControl('', Validators.required),
+        adress_fact_street: new FormControl('', Validators.required),
+        adress_fact_building: new FormControl('', Validators.required),
+        adress_fact_flat: new FormControl(''),
       }),
       registerAddress: new FormGroup({
         no_reg_address: new FormControl(null),
@@ -234,7 +234,7 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
 
     controls.forEach((control) => {
       control.keys.forEach((key) => {
-        if (!control.form.get(key).value && parent.content[key] !== '') {
+        if (!control.form.get(key).value) {
           if (key === 'adress_single') {
             control.form
               .get(key)
@@ -322,6 +322,18 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
         });
         break;
 
+      case 'DOC_NUMBER_BAD_FORMAT':
+        formControl.setErrors({
+          doc_number_bad_format: 'Неверный формат номера документа',
+        });
+        break;
+
+      case 'DOC_SERIES_BAD_FORMAT':
+        formControl.setErrors({
+          doc_series_bad_format: 'Неверный формат серии документа',
+        });
+        break;
+
       default:
         break;
     }
@@ -342,8 +354,8 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
       document.get('passport_org').setValue(null, { emitEvent: false });
       document.get('passport_date').setValue(null, { emitEvent: false });
 
-      document.get('oms').setValue(null);
-      document.get('snils').setValue(null);
+      document.get('oms').setValue('');
+      document.get('snils').setValue('');
     }
 
     const updatedField: UpdatedFieldInterface = {
@@ -517,22 +529,41 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
   }
 
   toggleSeriesValidators(val: string): void {
-    console.log('val:', val);
     const series: AbstractControl = this.createForm
       .get('document')
       .get('passport_series');
 
-    if (val === 'Паспорт иностранного гражданина' || val === 'Другое') {
+    if (
+      val === 'Паспорт иностранного гражданина' ||
+      val === 'Другое' ||
+      val === 'Вид на жительство'
+    ) {
+      console.log('qwd');
+
       series.clearValidators();
     } else {
       series.updateValueAndValidity({ emitEvent: false });
     }
-
-    console.log(series.value);
   }
 
   setLanguageValidator(): void {
     const basicData = this.createForm.get('basicData');
+
+    if (this.activeDoctype.val === 'Вид на жительство') {
+      basicData
+        .get('name')
+        .setValidators([
+          Validators.required,
+          Validators.pattern('^[a-zA-Z-а-яА-ЯёЁ _-]*$'),
+        ]);
+      basicData
+        .get('surname')
+        .setValidators([
+          Validators.required,
+          Validators.pattern('^[a-zA-Z-а-яА-ЯёЁ _-]*$'),
+        ]);
+      return;
+    }
 
     if (this.activeDoctype.fioLat) {
       basicData
