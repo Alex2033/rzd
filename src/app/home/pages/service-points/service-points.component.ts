@@ -90,7 +90,6 @@ export class ServicePointsComponent
         })
       )
       .subscribe((points) => {
-        console.log('points:', points);
         this.points = points;
       });
   }

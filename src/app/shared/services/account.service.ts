@@ -34,7 +34,6 @@ export class AccountService {
   }
 
   register(data: AuthDataInterface): Observable<boolean> {
-    console.log('data:', data);
     return this.http.post<boolean>(
       environment.api + 'api/account/register',
       data

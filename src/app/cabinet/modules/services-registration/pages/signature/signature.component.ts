@@ -55,7 +55,6 @@ export class SignatureComponent implements OnInit, OnDestroy {
       )
       .subscribe((res) => {
         this.doc = res.find((d) => d.id_anketa === this.anketaId);
-        console.log('this.doc:', this.doc);
       });
   }
 

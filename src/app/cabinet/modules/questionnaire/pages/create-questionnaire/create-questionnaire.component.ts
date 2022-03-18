@@ -513,6 +513,10 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
       this.setActiveDoctype(basicData.get('doc_type').value);
     }
 
+    if (this.activeDoctype) {
+      this.toggleSeriesValidators(this.activeDoctype.val);
+    }
+
     basicData.get('doc_type').valueChanges.subscribe((val: string) => {
       this.toggleSeriesValidators(val);
       this.setActiveDoctype(val);
@@ -538,10 +542,9 @@ export class CreateQuestionnaireComponent implements OnInit, OnDestroy {
       val === 'Другое' ||
       val === 'Вид на жительство'
     ) {
-      console.log('qwd');
-
       series.clearValidators();
     } else {
+      series.setValidators([Validators.required]);
       series.updateValueAndValidity({ emitEvent: false });
     }
   }

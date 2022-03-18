@@ -20,7 +20,6 @@ export class DocumentStepComponent implements OnInit {
     switch (this.activeDoctype?.val) {
       case 'Паспорт гражданина РФ':
       case 'Загранпаспорт гражданина РФ':
-      case 'Свидетельство о рождении':
         return 'numeric';
 
       default:
