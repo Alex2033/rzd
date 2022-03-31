@@ -23,7 +23,11 @@
                       locationId === 1194 ||
                       locationId === 1143
                         ? 4
-                        : 3
+                        : locationId === 1163 ||
+                          locationId === 1111
+                          ? 2
+                          : 4
+
                   }
           }}
         </p>
@@ -63,14 +67,23 @@
             class="introduce-service"
             [class.no-bold]="
               locationId === 1194 ||
-              locationId === 1163 ||
               locationId === 1122 ||
               locationId === 1123 ||
               locationId === 1143
             "
-            *ngIf="locationId !== 1197"
+            *ngIf="locationId !== 1197 && locationId !== 1163 && locationId !== 1111"
             [innerHTML]="'HOME.ANTIGEN' | translate"
           ></span>
+        </p>
+        <p>
+          <span
+            [innerHTML]="'HOME.FAST_TEST' | translate"
+          ></span>
+        </p>
+        <p
+          *ngIf="locationId === 1163 || locationId === 1111"
+          >
+          <span><b>Обращаем ваше внимание, пункт ПЦР-тестирования на вокзале города Екатеринбург с 1-го апреля будет работать в графике: с 8:00 до 20:00.</b></span>
         </p>
 
 
