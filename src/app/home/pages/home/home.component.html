@@ -77,14 +77,20 @@
         </p>
         <p>
           <span
+            *ngIf="locationId === 1122 || locationId === 1111"
             [innerHTML]="'HOME.FAST_TEST' | translate"
           ></span>
         </p>
         <p
           *ngIf="locationId === 1163 || locationId === 1111"
           >
-          <span><b>Обращаем ваше внимание, пункт ПЦР-тестирования на вокзале города Екатеринбург с 1-го апреля будет работать в графике: с 8:00 до 20:00.</b></span>
+          <span><b [innerHTML]="'HOME.TIME_EKB' | translate"></b></span>
         </p>
+        <!-- <p
+          *ngIf="locationId === 1123 || locationId === 1102"
+          >
+          <span><b [innerHTML]="'HOME.TERMORARITY_NOT_WORKING' | translate"></b></span>
+        </p> -->
 
 
         <p>
