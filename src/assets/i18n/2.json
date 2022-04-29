@@ -7,6 +7,7 @@
     "STANDARD": "<strong>{{text}}</strong>(result within 24 hours)",
     "ANTIGEN": "Test for SARS-CoV-2 antigen (result within 1 hour)",
     "FAST_TEST": "An urgent test for COVID-19 is available at Leningradsky, Belorussky, Paveletsky railway stations and at Terminal C of Sheremetyevo Airport.",
+    "TIME_NOVOSIB": "Please note that the work schedule of the PCR testing point at the Novosibirsk-Glavny railway station has changed. From 16.04 we work from 7:30 to 19:30 daily.",
     "TIME_EKB": "Please note that the PCR testing point at the railway station in the city of Yekaterinburg from April 1 will work on a schedule: from 8:00 to 20:00.",
     "TERMORARITY_NOT_WORKING": "Temporarily, due to technical reasons, we do not provide the PCR testing service at the railway station and at the airport. Consider this information when placing orders. Information about the resumption of work will be posted on the website.",
     "REGISTER_INFO": "You may set up your personal account and quickly apply for PCR test for yourself and your family using saved data",

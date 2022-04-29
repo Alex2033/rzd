@@ -75,22 +75,22 @@
             [innerHTML]="'HOME.ANTIGEN' | translate"
           ></span>
         </p>
-        <p>
+        <!-- <p>
           <span
             *ngIf="locationId === 1122 || locationId === 1111"
             [innerHTML]="'HOME.FAST_TEST' | translate"
           ></span>
-        </p>
+        </p> -->
         <p
           *ngIf="locationId === 1163 || locationId === 1111"
           >
           <span><b [innerHTML]="'HOME.TIME_EKB' | translate"></b></span>
         </p>
-        <!-- <p
+        <p
           *ngIf="locationId === 1123 || locationId === 1102"
           >
-          <span><b [innerHTML]="'HOME.TERMORARITY_NOT_WORKING' | translate"></b></span>
-        </p> -->
+          <span><b [innerHTML]="'HOME.TIME_NOVOSIB' | translate"></b></span>
+        </p>
 
 
         <p>
